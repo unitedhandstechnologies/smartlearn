@@ -9,7 +9,6 @@ import { BasicStockIcon, LineBarIcon } from 'src/Assets';
 import { ButtonComp, MuiCardComp } from 'src/components';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { useEffect, useState } from 'react';
 import MentorProfile from './MentorProfile';
 import { useLocation, useNavigate } from 'react-router';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
@@ -28,14 +27,13 @@ const MentorCreatedCourses = () => {
   const classes = useStyles();
   const { state }: any = useLocation();
   const navigateTo = useNavigate();
-  console.log(state, 'stae');
 
-  const upcomingWorkShops = state.courses.filter(
+  const upcomingWorkShops = state?.courses?.filter(
     (course) =>
       course.course_type === COURSE_TYPE_NAME[4] &&
       course.mentor_id === state.id
   );
-  const course = state.courses.filter(
+  const course = state?.courses?.filter(
     (course) =>
       course.course_type !== COURSE_TYPE_NAME[4] &&
       course.mentor_id === state.id
@@ -66,7 +64,7 @@ const MentorCreatedCourses = () => {
           <MentorProfile />
         </Grid>
         <Grid item xs={12} sm={7} md={8.7}>
-          {upcomingWorkShops.length ? (
+          {upcomingWorkShops?.length ? (
             <>
               <Grid
                 container
@@ -129,7 +127,7 @@ const MentorCreatedCourses = () => {
                   }
                 }}
               >
-                {upcomingWorkShops.map((item, index) => {
+                {upcomingWorkShops?.map((item, index) => {
                   return (
                     <Grid key={index} item xs={12} sm={12} md={5.5}>
                       <MuiCardComp
@@ -191,8 +189,8 @@ const MentorCreatedCourses = () => {
               }
             }}
           >
-            {course.length
-              ? course.map((item, index) => {
+            {course?.length
+              ? course?.map((item, index) => {
                   return (
                     <Grid key={index} item xs={12} sm={12} md={5.5}>
                       <MuiCardComp
@@ -211,7 +209,7 @@ const MentorCreatedCourses = () => {
                             ? 'English'
                             : item.language_id === 2
                             ? 'Hindi'
-                            : 'Gjarati'
+                            : 'Gujarati'
                         }
                         date={`${item.starting_date} - ${item.ending_date}`}
                         zoomLink={item.meeting_link}
