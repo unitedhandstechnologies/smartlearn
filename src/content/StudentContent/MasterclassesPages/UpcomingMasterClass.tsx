@@ -217,7 +217,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
               }
             }}
           >
-            Upcoming
+            Upcoming{" "}
             <span style={{ color: theme.Colors.secondary }}>masterclasses</span>
           </Typography>
           <Grid

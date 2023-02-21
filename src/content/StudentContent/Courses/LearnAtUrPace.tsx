@@ -1,7 +1,19 @@
 import { makeStyles, useTheme } from '@material-ui/core';
-import { Grid } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  InputBase,
+  InputAdornment,
+  IconButton
+} from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
-import { ArrowNext, BarIcon, BasicStockIcon, LineBarIcon } from 'src/Assets';
+import {
+  ArrowNext,
+  BarIcon,
+  BasicStockIcon,
+  LineBarIcon,
+  SearchIconImg
+} from 'src/Assets';
 import { ButtonComp, Heading, MuiCardComp } from 'src/components';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
@@ -156,8 +168,8 @@ const useStyle = makeStyles((theme) => ({
       maxWidth: '33.3%',
       flexBasis: '33.3%'
     }
-  },
-}))
+  }
+}));
 
 const headerChipItem = [
   {
@@ -178,15 +190,20 @@ type CourseProps = {
 const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
+  const [searchValue, setSearchValue] = useState('');
+
+  const getSearchValue = (searchValue) => {
+    console.log(searchValue);
+    setSearchValue(searchValue);
+  };
 
   const openMenuItem = (id) => {
     console.log(id, 'test');
   };
 
   const onClickCardImage = (rowData) => {
-    console.log('rowData',rowData);
-    
-  }
+    console.log('rowData', rowData);
+  };
 
   const getFilterCourse = useMemo(() => {
     let recordedCourse = courseDetails.filter((item) => {
@@ -198,7 +215,7 @@ const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
   return (
     <Grid container justifyContent={'center'} direction="column" rowSpacing={3}>
       <Grid style={{ margin: theme.spacing(4, 0) }}>
-        <Heading
+        {/* <Heading
           headingText={'Learn at your pace with recorded courses'}
           headerFontSize={'40px'}
           headerFontWeight={500}
@@ -208,16 +225,83 @@ const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
               fontSize: 15
             }
           }}
-        />
-        <Grid container style={{ paddingBottom: '20px', gap: '10px' }}>
-          {headerChipItem.map((item, index) => (
-            <ChipIconcomp
-              key={index}
-              chipText={item.name}
-              checkboxText={item.checkboxText}
-              onClick={() => openMenuItem(item.id)}
+        /> */}
+        <Typography
+          sx={{
+            fontSize: '40px',
+            fontWenghit: theme.fontWeight.medium,
+            color: theme.Colors.blackBerry,
+            lineHeight: '48px',
+            [theme.breakpoints.down('xs')]: {
+              fontSize: 25
+            }
+          }}
+        >
+          Learn at your pace
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: '40px',
+            fontWenghit: theme.fontWeight.medium,
+            color: theme.Colors.blackBerry,
+            lineHeight: '48px',
+            padding: '0px 0px 20px 0px',
+            [theme.breakpoints.down('xs')]: {
+              fontSize: 25
+            }
+          }}
+        >
+          with recorded courses
+        </Typography>
+        <Grid
+          container
+          sx={{
+            [theme.breakpoints.down('xs')]: {
+              flexDirection: 'column'
+            }
+          }}
+        >
+          <Grid
+            container
+            item
+            xs
+            style={{ paddingBottom: '20px', gap: '10px' }}
+          >
+            {headerChipItem.map((item, index) => (
+              <ChipIconcomp
+                key={index}
+                chipText={item.name}
+                checkboxText={item.checkboxText}
+                onClick={() => openMenuItem(item.id)}
+              />
+            ))}
+          </Grid>
+          <Grid item paddingBottom={2}>
+            <InputBase
+              onChange={(e) => getSearchValue(e.target.value)}
+              value={searchValue}
+              placeholder={'Search'}
+              sx={{
+                width: 65,
+                transition: '0.5s',
+                ':hover': {
+                  width: 300,
+                  border: '1px solid #3C78F0',
+                  borderRadius: 50,
+                  fontSize: 20,
+                  fontWeight: 400,
+                  padding: theme.spacing(0.3, 0.5)
+                }
+              }}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton>
+                    <img src={SearchIconImg} />
+                  </IconButton>
+                </InputAdornment>
+              }
             />
-          ))}
+          </Grid>
         </Grid>
         <Grid>
           <img src={LineBarIcon} alt="" />

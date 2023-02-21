@@ -1,7 +1,18 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core';
-import { Grid } from '@mui/material';
-import { ArrowNext, BasicStockIcon, LineBarIcon } from 'src/Assets';
+import {
+  Grid,
+  Typography,
+  InputBase,
+  InputAdornment,
+  IconButton
+} from '@mui/material';
+import {
+  ArrowNext,
+  BasicStockIcon,
+  LineBarIcon,
+  SearchIconImg
+} from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
 import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
@@ -167,8 +178,13 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
   const theme = useTheme();
   const classes = useStyles();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
+  const [searchValue, setSearchValue] = useState('');
+
+  const getSearchValue = (searchValue) => {
+    console.log(searchValue);
+    setSearchValue(searchValue);
+  };
   const navigateTo = useNavigate();
-  console.log(workshopDetails, 'workshopDetails');
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
   };
@@ -215,17 +231,45 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
             }
           }}
         />
-        <Grid style={{ paddingBottom: '20px' }}>
-          <MultiSelectChip
-            chipItems={FILTER_CHIPS}
-            selectedChipItem={chipValue}
-            handleChange={handleChangeChipValue}
-            chipStyle={{
-              padding: theme.spacing(2, 0.8),
-              height: theme.MetricsSizes.large,
-              fontSize: theme.MetricsSizes.regular
-            }}
-          />
+        <Grid container direction="row">
+          <Grid style={{ paddingBottom: '20px' }}>
+            <MultiSelectChip
+              chipItems={FILTER_CHIPS}
+              selectedChipItem={chipValue}
+              handleChange={handleChangeChipValue}
+              chipStyle={{
+                padding: theme.spacing(2, 0.8),
+                height: theme.MetricsSizes.large,
+                fontSize: theme.MetricsSizes.regular
+              }}
+            />
+          </Grid>
+          <Grid item paddingBottom={2}>
+            <InputBase
+              onChange={(e) => getSearchValue(e.target.value)}
+              value={searchValue}
+              placeholder={'Search'}
+              sx={{
+                width: 65,
+                transition: '0.5s',
+                ':hover': {
+                  width: 300,
+                  border: '1px solid #3C78F0',
+                  borderRadius: 50,
+                  fontSize: 20,
+                  fontWeight: 400,
+                  padding: theme.spacing(0.3, 0.5)
+                }
+              }}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton>
+                    <img src={SearchIconImg} />
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </Grid>
         </Grid>
         <Grid>
           <img src={LineBarIcon} alt="" />

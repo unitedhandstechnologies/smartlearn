@@ -64,7 +64,12 @@ const FAQs = ({ faqDetails }: FaqProps) => {
       </Grid>
       <Grid container spacing={2}>
         {faq.map((item, index) => (
-          <Faq key={index} question={item.question} answer={item.answer} />
+          <Faq
+            key={index}
+            question={item.question}
+            answer={item.answer}
+            borderTop={index === 0 ? '1px solid #F2F4F7' : 'none'}
+          />
         ))}
       </Grid>
     </Grid>

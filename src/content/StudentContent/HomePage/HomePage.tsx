@@ -22,6 +22,7 @@ import { toast } from 'react-hot-toast';
 import StartYourLearningBanner from './StartYourLearningBanner';
 import HomeBanner from './HomeBanner';
 import { BackgroundLine } from 'src/Assets';
+import WishListCourse from '../Profile/WishListCourse';
 
 const HomePage = () => {
   const theme = useTheme();
@@ -29,12 +30,17 @@ const HomePage = () => {
   const [courseDetails, setCourseDetails] = useState([]);
   const [mentorDetails, setMentorDetails] = useState([]);
   const [faqDetails, setFaqDetails] = useState([]);
+  const [ratingData, setRatingData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   // const { searchValue } = useSearchVal();
   // const debValue = useDebounce(searchValue, 2000)
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
+      setCourseDetails([]);
+      setMentorDetails([]);
+      setFaqDetails([]);
+      setRatingData([]);
       // const params: any = {};
       // if(debValue !== '') {
       //   params.searchString = debValue
@@ -44,7 +50,8 @@ const HomePage = () => {
           DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
         ),
         API_SERVICES.homeUserService.getAll(),
-        API_SERVICES.pageManagementService.getAllFaq(LANGUAGE_ID.english)
+        API_SERVICES.pageManagementService.getAllFaq(LANGUAGE_ID.english),
+        API_SERVICES.homeUserService.getAllRatings()
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.courses?.length) {
@@ -62,6 +69,11 @@ const HomePage = () => {
       if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[2]?.data?.faq?.length) {
           setFaqDetails(response[2]?.data?.faq);
+        }
+      }
+      if (response[3]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (response[3]?.data?.ratings?.length) {
+          setRatingData(response[3]?.data?.ratings);
         }
       }
     } catch (err) {
@@ -118,7 +130,7 @@ const HomePage = () => {
           direction="column"
           style={{ padding: theme.spacing(10, 7), background: '#F2F4F7' }}
         >
-          <Reviews />
+          <Reviews ratingData={ratingData} />
         </Grid>
         <StartYourLearningBanner />
         <Grid
@@ -127,6 +139,7 @@ const HomePage = () => {
           style={{ padding: theme.spacing(7, 7) }}
         >
           <FAQs faqDetails={faqDetails} />
+          <WishListCourse/>
         </Grid>
       </Grid>
     );

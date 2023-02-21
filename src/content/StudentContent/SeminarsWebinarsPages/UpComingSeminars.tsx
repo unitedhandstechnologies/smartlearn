@@ -1,6 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core';
-import { Grid } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  InputBase,
+  InputAdornment,
+  IconButton
+} from '@mui/material';
 import {
   ArrowNext,
   BasicStockIcon,
@@ -13,7 +19,8 @@ import {
   BarChartFillIcon,
   LocationIcon,
   BeginnerIcon,
-  IntermediateIcon
+  IntermediateIcon,
+  SearchIconImg
 } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
 import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
@@ -259,6 +266,12 @@ const UpComingSeminars = ({ courseDetails }: CourseProps) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
+  const [searchValue, setSearchValue] = useState('');
+
+  const getSearchValue = (searchValue) => {
+    console.log(searchValue);
+    setSearchValue(searchValue);
+  };
 
   const handleOpen = (event, item) => {
     setMenuItem({
@@ -332,7 +345,6 @@ const UpComingSeminars = ({ courseDetails }: CourseProps) => {
   //   return seminarCourse
   // },[courseDetails])
 
-
   useEffect(() => {
     if (courseDetails?.length) {
       setCourses(courseDetails);
@@ -363,18 +375,54 @@ const UpComingSeminars = ({ courseDetails }: CourseProps) => {
               }
             }}
           />
-          <Grid container item style={{ paddingBottom: '20px', gap: '10px' }}>
-            {headerChipItem.map((item, index) => (
-              <ChipIconcomp
-                key={index}
-                chipText={item.name}
-                checkboxText={
-                  headerChipItem[index].labelItems[chipFilterItem[index]].label
+          <Grid
+            container
+            sx={{
+              [theme.breakpoints.down('xs')]: {
+                flexDirection: 'column'
+              }
+            }}
+          >
+            <Grid container item xs style={{ paddingBottom: '20px', gap: '10px' }}>
+              {headerChipItem.map((item, index) => (
+                <ChipIconcomp
+                  key={index}
+                  chipText={item.name}
+                  checkboxText={
+                    headerChipItem[index].labelItems[chipFilterItem[index]]
+                      .label
+                  }
+                  onClick={(event) => handleOpen(event, item)}
+                  img={item.img}
+                />
+              ))}
+            </Grid>
+            <Grid item paddingBottom={2}>
+              <InputBase
+                onChange={(e) => getSearchValue(e.target.value)}
+                value={searchValue}
+                placeholder={'Search'}
+                sx={{
+                  width: 65,
+                  transition: '0.5s',
+                  ':hover': {
+                    width: 300,
+                    border: '1px solid #3C78F0',
+                    borderRadius: 50,
+                    fontSize: 20,
+                    fontWeight: 400,
+                    padding: theme.spacing(0.3, 0.5)
+                  }
+                }}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <img src={SearchIconImg} />
+                    </IconButton>
+                  </InputAdornment>
                 }
-                onClick={(event) => handleOpen(event, item)}
-                img={item.img}
               />
-            ))}
+            </Grid>
           </Grid>
           <Grid>
             <img src={LineBarIcon} alt="" />

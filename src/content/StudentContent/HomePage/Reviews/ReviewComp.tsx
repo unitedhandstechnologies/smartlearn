@@ -67,6 +67,7 @@ type Props = {
   subTextStyle?: any;
   nameStyle?: any;
   spacingRating?: any;
+  ratingValue?: any;
 };
 
 export const ReviewBox = ({
@@ -79,6 +80,7 @@ export const ReviewBox = ({
   subText,
   rating,
   review,
+  ratingValue,
   spacingRating
 }: Props) => {
   const theme = useTheme();
@@ -117,7 +119,7 @@ export const ReviewBox = ({
           </Grid>
         )}
         {imgUrl && (
-          <Grid item sx={{paddingRight: 5}}>
+          <Grid item sx={{ paddingRight: 5 }}>
             <img src={imgUrl} alt="Not Found" />
           </Grid>
         )}
@@ -134,7 +136,10 @@ export const ReviewBox = ({
             >
               {name}
               {rating && (
-                <Rating sx={{ color: '#F2C94C', paddingLeft: '25px' }} />
+                <Rating
+                  defaultValue={ratingValue}
+                  sx={{ color: '#F2C94C', paddingLeft: '25px' }}
+                />
               )}
             </Typography>
           </Grid>

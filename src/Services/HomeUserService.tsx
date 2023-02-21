@@ -10,5 +10,13 @@ export const homeUserService = {
       params: params
     });
     return apiRequest(options);
+  },
+  getAllRatings: async (params: any = {}) => {
+    const options = await apiOptions({
+      url: `${Config.BASE_URL}/api/getAllRatings`,
+      method: 'get',
+      params: params
+    });
+    return apiRequest(options);
   }
 };

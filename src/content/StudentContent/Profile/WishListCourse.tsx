@@ -1,6 +1,6 @@
 import { Grid, IconButton, useTheme } from '@material-ui/core';
 import React from 'react';
-import { ButtonComp, Heading, MuiCardComp } from 'src/components';
+import { ButtonComp, Heading, ListItemCell, MuiCardComp } from 'src/components';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const courses = [
@@ -152,6 +152,9 @@ const WishListCourse = () => {
   const renderCardAction = () => {
     return (
       <Grid container style={{ padding: '20px 0px' }}>
+        <Grid item>
+          <ListItemCell title={'39,000'} subTitle={'including GST'}/>
+        </Grid>
         <Grid item xs>
           <ButtonComp
             buttonText="View Certificate"

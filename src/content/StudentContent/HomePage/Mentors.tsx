@@ -27,7 +27,7 @@ type Props = {
   mentorDetails?: any[];
   courseDetails?: any[];
   onMentorClick?: (item: any) => void;
-  headingText?: string;
+  headingText?: any;
   viewButtonPosition?: string;
   sliceValue?: number;
 };
@@ -46,7 +46,7 @@ const Mentors = ({
 
   const handleMentorClick = (item) => {
     navigateTo('/home/Mentor-CourseProfile', {
-      state: { ...item,courses:courseDetails },
+      state: { ...item, courses: courseDetails },
       replace: true
     });
   };
@@ -105,6 +105,7 @@ const Mentors = ({
               buttonText={'View All'}
               btnWidth="fit-content"
               height={'50px'}
+              style={{ borderColor: '#3C78F0' }}
             />
           ) : null}
         </Grid>
@@ -115,17 +116,28 @@ const Mentors = ({
         spacing={4}
         sx={{
           marginTop: '20',
-          alignItems: 'center',
+          alignItems: 'center'
         }}
       >
         {mentors.length
           ? mentors.slice(0, sliceValue).map((item, index) => {
               return (
-                <Grid  key={index} item xs={12} sm={2} md={3} className={classes.eachItem}>
+                <Grid
+                  key={index}
+                  item
+                  xs={12}
+                  sm={2}
+                  md={3}
+                  className={classes.eachItem}
+                >
                   <ImageListItem
-                    sx={{ height: 348, width: '100%', marginTop: 5,cursor: "pointer" }}
+                    sx={{
+                      height: 348,
+                      width: '100%',
+                      marginTop: 5,
+                      cursor: 'pointer'
+                    }}
                     key={index}
-                  
                     onClick={() => handleMentorClick(item)}
                   >
                     <img src={item.image_url} alt="" />

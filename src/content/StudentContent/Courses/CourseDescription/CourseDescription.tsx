@@ -331,14 +331,27 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
         </Grid>
         <Grid paddingTop={4}>
           <Heading headingText={'Skills covered'} {...headingProps} />
-          <Grid container gap={1}>
-            {chipItem.map((item, index) => (
-              <ChipComp
-                key={index}
-                label={item}
-                style={{ borderColor: '#3CC878' }}
-              />
-            ))}
+          <Grid item container spacing={1}>
+            {courseDescription?.category_name ? (
+              <Grid item>
+                <ChipComp
+                  label={courseDescription?.category_name}
+                  style={{ borderColor: '#3CC878' }}
+                />
+              </Grid>
+            ) : null}
+            {courseDescription?.sub_category_name ? (
+              <Grid item xs>
+                <ChipComp
+                  label={courseDescription?.sub_category_name}
+                  style={{
+                    borderColor: '#3CC878',
+                    fontSize: theme.MetricsSizes.small_xxx,
+                    fontWeight: theme.fontWeight.regular
+                  }}
+                />
+              </Grid>
+            ) : null}
           </Grid>
         </Grid>
         <Grid paddingTop={4}>
@@ -382,13 +395,13 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
           />
         )} */}
         {quizData?.length ? (
-          <Grid container item sx={{marginTop: 5}}>
+          <Grid container item sx={{ marginTop: 5 }}>
             <ButtonComp
               buttonText="Test Topics"
               btnWidth={'100%'}
               backgroundColor={theme.Colors.lightWhiteGrey}
               buttonTextColor={theme.Colors.darkGrayishBlue}
-              onClickButton={()=>{}}
+              onClickButton={() => {}}
             />
           </Grid>
         ) : null}

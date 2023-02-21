@@ -59,7 +59,7 @@ const review = [
   // }
 ];
 
-const Reviews = () => {
+const Reviews = ({ ratingData }) => {
   const theme = useTheme();
   const [currentIndex, setCurrentIndex] = useState(0);
   const length = review?.length ?? 0;
@@ -82,7 +82,7 @@ const Reviews = () => {
   };
 
   return (
-    <Grid >
+    <Grid>
       <Grid
         container
         justifyContent={'space-between'}
@@ -134,15 +134,16 @@ const Reviews = () => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        {review.map((item, index) => {
+        {ratingData.map((item, index) => {
           return (
             <Grid item xs={12} sm={6} key={index}>
               <ReviewBox
-                name={item.name}
-                subText={item.subText}
-                review={item.review}
-                imgUrl={item.img}
+                name={item.mentor_name}
+                subText={item.course_name}
+                review={item.command}
+                imgUrl={item.user_image}
                 rating={true}
+                ratingValue={item.mentor_rating}
               />
             </Grid>
           );

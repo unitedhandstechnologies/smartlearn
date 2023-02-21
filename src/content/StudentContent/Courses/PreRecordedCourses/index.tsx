@@ -55,13 +55,17 @@ const PreRecordedCourses = () => {
   const classes = useStyles();
   const navigateTo = useNavigate();
   const { state }: any = useLocation();
-  let data = {...state?.formData}
-  
+  let data = { ...state?.formData };
+
   return (
     <Grid sx={{ padding: 4 }}>
       <ButtonComp
         buttonText={'All courses'}
-        startIcon={<ArrowBackIcon />}
+        startIcon={
+          <span style={{ color: theme.Colors.secondary, paddingTop: 7 }}>
+            <ArrowBackIcon />
+          </span>
+        }
         backgroundColor={'transparent'}
         buttonTextColor={'#78828C'}
         buttonFontFamily={'Switzer'}
@@ -129,7 +133,7 @@ const PreRecordedCourses = () => {
       </Grid>
       <Grid container paddingTop={20}>
         <Grid item xs={12} md={9}>
-          <CourseDescription courseDescription={data}/>
+          <CourseDescription courseDescription={data} />
         </Grid>
         <Grid container item xs={12} md={3}>
           <CourseRight />

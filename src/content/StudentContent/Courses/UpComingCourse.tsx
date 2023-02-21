@@ -1,6 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core';
-import { Grid } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  InputBase,
+  InputAdornment,
+  IconButton
+} from '@mui/material';
 import {
   ArrowNext,
   BasicStockIcon,
@@ -13,7 +19,8 @@ import {
   BarChartFillIcon,
   LocationIcon,
   BeginnerIcon,
-  IntermediateIcon
+  IntermediateIcon,
+  SearchIconImg
 } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
 import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
@@ -166,14 +173,14 @@ import CourseBanner from './CourseBanner';
 //   }
 // ];
 
-const useStyle = makeStyles ((theme) => ({
+const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-grid-xs-4': {
       maxWidth: '33.3%',
       flexBasis: '33.3%'
     }
-  },
-}))
+  }
+}));
 const headerChipItem = [
   {
     name: 'Difficulty',
@@ -241,7 +248,7 @@ const headerChipItem = [
       {
         id: 3,
         label: 'Gujarati'
-      },
+      }
     ]
   }
 ];
@@ -258,6 +265,12 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
+  const [searchValue, setSearchValue] = useState('');
+
+  const getSearchValue = (searchValue) => {
+    console.log(searchValue);
+    setSearchValue(searchValue);
+  };
 
   const handleOpen = (event, item) => {
     setMenuItem({
@@ -278,9 +291,9 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
   };
 
   const handleView = () => {
-    if(view === 6){
+    if (view === 6) {
       setView(courses.length);
-    }else{
+    } else {
       setView(6);
     }
   };
@@ -354,18 +367,60 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
               }
             }}
           />
-          <Grid container item style={{ paddingBottom: '20px', gap: '10px' }}>
-            {headerChipItem.map((item, index) => (
-              <ChipIconcomp
-                key={index}
-                chipText={item.name}
-                checkboxText={
-                  headerChipItem[index].labelItems[chipFilterItem[index]].label
+          <Grid
+            container
+            sx={{
+              [theme.breakpoints.down('xs')]: {
+                flexDirection: 'column'
+              }
+            }}
+          >
+            <Grid
+              container
+              item
+              xs
+              style={{ paddingBottom: '20px', gap: '10px' }}
+            >
+              {headerChipItem.map((item, index) => (
+                <ChipIconcomp
+                  key={index}
+                  chipText={item.name}
+                  checkboxText={
+                    headerChipItem[index].labelItems[chipFilterItem[index]]
+                      .label
+                  }
+                  onClick={(event) => handleOpen(event, item)}
+                  img={item.img}
+                />
+              ))}
+            </Grid>
+
+            <Grid item paddingBottom={2}>
+              <InputBase
+                onChange={(e) => getSearchValue(e.target.value)}
+                value={searchValue}
+                placeholder={'Search'}
+                sx={{
+                  width: 65,
+                  transition: '0.5s',
+                  ':hover': {
+                    width: 300,
+                    border: '1px solid #3C78F0',
+                    borderRadius: 50,
+                    fontSize: 20,
+                    fontWeight: 400,
+                    padding: theme.spacing(0.3, 0.5)
+                  }
+                }}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton>
+                      <img src={SearchIconImg} />
+                    </IconButton>
+                  </InputAdornment>
                 }
-                onClick={(event) => handleOpen(event, item)}
-                img={item.img}
               />
-            ))}
+            </Grid>
           </Grid>
           <Grid>
             <img src={LineBarIcon} alt="" />
@@ -373,55 +428,55 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
         </Grid>
 
         <Grid
-        container
-        //justifyContent={'center'}
-        spacing={4}
-        sx={{
-          paddingBottom: '30px',
-          [theme.breakpoints.down('xs')]: {
-            justifyContent: 'center'
-          }
-        }}
-      >
-        {courses.length
-          ? courses.slice(0, 6).map((item, index) => {
-              return (
-                <Grid
-                  key={index}
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  className={classes.eachItem}
-                >
-                  <MuiCardComp
+          container
+          //justifyContent={'center'}
+          spacing={4}
+          sx={{
+            paddingBottom: '30px',
+            [theme.breakpoints.down('xs')]: {
+              justifyContent: 'center'
+            }
+          }}
+        >
+          {courses.length
+            ? courses.slice(0, 6).map((item, index) => {
+                return (
+                  <Grid
                     key={index}
-                    imgUrl={item.image_url ? item.image_url : BasicStockIcon}
-                    rightText={item.course_type}
-                    leftText={item.cost_type}
-                    heading={item.category_name}
-                    title={item.course_name}
-                    subText={item.course_description}
-                    courseLevel={item.course_level_name}
-                    courseLanguage={
-                      item.language_id === 1
-                        ? 'English'
-                        : item.language_id === 2
-                        ? 'Hindi'
-                        : 'Gjarati'
-                    }
-                    date={`${item.starting_date} - ${item.ending_date}`}
-                    zoomLink={item.meeting_link}
-                    locationName={item.meeting_location}
-                    subCategory={item.sub_category_name}
-                    courseType={item.course_type}
-                    onClickCardImage={() => onClickCardImage(item)}
-                  />
-                </Grid>
-              );
-            })
-          : null}
-      </Grid>
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    className={classes.eachItem}
+                  >
+                    <MuiCardComp
+                      key={index}
+                      imgUrl={item.image_url ? item.image_url : BasicStockIcon}
+                      rightText={item.course_type}
+                      leftText={item.cost_type}
+                      heading={item.category_name}
+                      title={item.course_name}
+                      subText={item.course_description}
+                      courseLevel={item.course_level_name}
+                      courseLanguage={
+                        item.language_id === 1
+                          ? 'English'
+                          : item.language_id === 2
+                          ? 'Hindi'
+                          : 'Gjarati'
+                      }
+                      date={`${item.starting_date} - ${item.ending_date}`}
+                      zoomLink={item.meeting_link}
+                      locationName={item.meeting_location}
+                      subCategory={item.sub_category_name}
+                      courseType={item.course_type}
+                      onClickCardImage={() => onClickCardImage(item)}
+                    />
+                  </Grid>
+                );
+              })
+            : null}
+        </Grid>
         <Grid item>
           <ButtonComp
             style={{ border: '1.5px solid #3C78F0' }}
@@ -431,9 +486,13 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
             backgroundColor={theme.Colors.white}
             buttonTextColor={'#3C78F0'}
             btnBorderRadius={'4px'}
-            buttonText={view === 6 ? "View All" : "Back"}
+            buttonText={view === 6 ? 'View All' : 'Back'}
             btnWidth="100%"
-            iconImage={view === 6 ? <img src={ArrowNext} style={{ marginLeft: '8px' }} /> : null}
+            iconImage={
+              view === 6 ? (
+                <img src={ArrowNext} style={{ marginLeft: '8px' }} />
+              ) : null
+            }
             onClick={handleView}
           />
         </Grid>

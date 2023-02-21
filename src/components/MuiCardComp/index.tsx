@@ -4,6 +4,7 @@ import {
   CardActionArea,
   CardActions,
   CardContent,
+  IconButton,
   Typography
 } from '@mui/material';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -23,8 +24,10 @@ import { COURSE_TYPE_NAME } from 'src/Config/constant';
 import ButtonComp from '../ButtonComp';
 import Heading from '../Heading';
 import IconTextComp from '../IconTextComp';
+import ListItemCell from '../ListItemCell';
 import { ChipComp } from '../MultiSelectChip/ChipComp';
 import ProgressBar from '../ProgressBar';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const TopBox = ({ leftText, rightText }) => {
   return (
@@ -78,6 +81,7 @@ type Props = {
   subCategory?: string;
   progressValue?: number;
   onClickCardImage?: (val: any) => void;
+  prize?: any;
 };
 const MuiCardComp = ({
   imgUrl,
@@ -98,6 +102,7 @@ const MuiCardComp = ({
   subCategory,
   courseType,
   progressValue,
+  prize,
   onClickCardImage
 }: Props) => {
   const theme = useTheme();
@@ -118,6 +123,7 @@ const MuiCardComp = ({
               alt=""
               style={{
                 height: 228,
+                opacity: 0.7,
                 ...imageStyle
               }}
             />
@@ -246,6 +252,41 @@ const MuiCardComp = ({
           ) : null}
         </Grid>
       </CardActions>
+      <Grid container style={{ padding: '20px 0px' }}>
+        <Grid item style={{marginRight: 10}}>
+          <ListItemCell
+            title={leftText === 'PAID' ? prize : leftText}
+            subTitle={leftText === 'PAID' ? 'including GST' : null}
+          />
+        </Grid>
+        <Grid item xs>
+          <ButtonComp
+            buttonText="Start Learning"
+            btnWidth={'100%'}
+            backgroundColor={theme.Colors.secondary}
+            btnBorderRadius={'4px'}
+          />
+        </Grid>
+        <Grid
+          item
+          style={{
+            borderRadius: '6px',
+            background: '#F2F4F7',
+            marginLeft: 10
+          }}
+        >
+          <IconButton
+            style={{
+              color: '#3C78F0',
+              background: 'transparent'
+            }}
+            disableRipple
+            onClick={(e) => console.log('e', e)}
+          >
+            <FavoriteIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
       {renderCardActions ? renderCardActions() : null}
     </Card>
   );

@@ -1,4 +1,4 @@
-import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { Grid, makeStyles, Typography, useTheme } from '@material-ui/core';
 import React, { useState } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -30,13 +30,23 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Faq = ({ question, answer }) => {
+const Faq = ({ question, answer, borderTop }) => {
   const classes = useStyles();
+  const theme = useTheme();
   const [active, setActive] = useState<boolean>(false);
 
   return (
-    <Grid container spacing={2} style={{padding: '15px 0px'}}>
-      <Grid container item onClick={() => setActive(!active)} >
+    <Grid
+      container
+      spacing={2}
+      style={{
+        padding: '15px 0px',
+        borderBottom: '1px solid',
+        borderColor: theme.Colors.whiteLightGrey,
+        borderTop: borderTop
+      }}
+    >
+      <Grid container item onClick={() => setActive(!active)}>
         <Grid item xs>
           <Typography
             className={!active ? classes.questionStyle : classes.activeQuestion}
@@ -45,16 +55,23 @@ const Faq = ({ question, answer }) => {
           </Typography>
         </Grid>
         <Grid item className={classes.iconStyle}>
-          {active ? <RemoveIcon fontSize='small'/> : <AddIcon fontSize='small'/>}
+          {active ? (
+            <RemoveIcon fontSize="small" />
+          ) : (
+            <AddIcon fontSize="small" />
+          )}
         </Grid>
       </Grid>
       {active ? (
         <Grid item>
           {/* <Typography className={classes.answerStyle}>{answer}</Typography> */}
-          <RichTextInput value={answer}
-        readOnly={true} displayToolBar={"none"} 
-        heightValue = {'auto'} borderSize={'0px'}
-         />
+          <RichTextInput
+            value={answer}
+            readOnly={true}
+            displayToolBar={'none'}
+            heightValue={'auto'}
+            borderSize={'0px'}
+          />
         </Grid>
       ) : null}
     </Grid>

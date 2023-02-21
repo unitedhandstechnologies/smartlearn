@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { useTheme } from '@material-ui/core';
 import { Loader } from 'src/components';
 import { API_SERVICES } from 'src/Services';
@@ -56,7 +56,21 @@ const Masterclasses = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  const title = (
+    <Typography
+      sx={{
+        fontSize: '40px',
+        fontWeight: 500,
+        color: '#3C414B',
+        [theme.breakpoints.down('xs')]: {
+          fontSize: 25
+        }
+      }}
+    >
+      Best in the industry{' '}
+      <span style={{ color: theme.Colors.secondary }}>mentors</span>
+    </Typography>
+  );
   if (loading) {
     return <Loader />;
   } else {
@@ -74,7 +88,7 @@ const Masterclasses = () => {
               course.course_type === COURSE_TYPE_NAME[2] ||
               course.course_type === COURSE_TYPE_NAME[4]
           )}
-          headingText={'Best in the industry mentors'}
+          headingText={title}
           viewButtonPosition={'bottom'}
           sliceValue={12}
         />

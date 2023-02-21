@@ -275,6 +275,7 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
                     locationName={item.meeting_location}
                     subCategory={item.sub_category_name}
                     courseType={item.course_type}
+                    prize={item.amount}
                     onClickCardImage={() => onClickCardImage(item)}
                   />
                 </Grid>
