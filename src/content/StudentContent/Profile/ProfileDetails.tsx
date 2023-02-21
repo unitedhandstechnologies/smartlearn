@@ -6,7 +6,7 @@ import {
   Typography
 } from '@material-ui/core';
 import { EditOutlined } from '@material-ui/icons';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Avatar1 } from 'src/Assets';
 import {
   ButtonComp,
@@ -15,6 +15,7 @@ import {
   TextInputComponent
 } from 'src/components';
 import { useEdit } from 'src/hooks/useEdit';
+import { StudentInfoContext } from 'src/contexts/StudentContext';
 
 const useStyles = makeStyles((theme) => ({
   forgotTxt: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer'
   },
   buttonStyle: {
-    padding: '70px 0px 70px 0px'
+    paddingTop: '10px'
   },
   cancelButtonStyle: {
     color: theme.Colors.redPrimary,
@@ -47,21 +48,22 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.MetricsSizes.small_x,
     display: 'flex',
     alignItems: 'center'
-  },
+  }
 }));
 
 const ProfileDetails = () => {
   const classes = useStyles();
+  const { studentDetails } = useContext(StudentInfoContext);
   const initialValues = {
-    image_url: '',
-    first_name: '',
-    last_name: '',
-    phone_number: '',
-    email_id: ''
+    image_url: studentDetails.image_url || '',
+    first_name: studentDetails.first_name || '',
+    last_name: studentDetails.last_name || '',
+    phone_number: studentDetails.phone_number || '',
+    email_id: studentDetails.email_id || ''
   };
   const edit = useEdit(initialValues);
   const [isEdit, setIsEdit] = useState<number>(0);
-
+  console.log(studentDetails, ' profile');
   const onEditClick = (editEvent: any) => {
     edit.reset();
     setIsEdit(parseInt(editEvent.currentTarget.id));
@@ -98,23 +100,23 @@ const ProfileDetails = () => {
   const EditComp = ({ btnId }: { btnId?: number }) => {
     return isEdit === btnId ? (
       <Grid container>
-        <Grid item >
-        <Button
-          id={btnId.toString()}
-          className={classes.cancelButtonStyle}
-          onClick={handleClickCancelBtn}
-        >
-          {'Cancel'}
-        </Button>
+        <Grid item>
+          <Button
+            id={btnId.toString()}
+            className={classes.cancelButtonStyle}
+            onClick={handleClickCancelBtn}
+          >
+            {'Cancel'}
+          </Button>
         </Grid>
-        <Grid item >
-        <Button
-          id={btnId.toString()}
-          className={classes.saveButtonStyle}
-          onClick={handleSave}
-        >
-          {'Save'}
-        </Button>
+        <Grid item>
+          <Button
+            id={btnId.toString()}
+            className={classes.saveButtonStyle}
+            onClick={handleSave}
+          >
+            {'Save'}
+          </Button>
         </Grid>
       </Grid>
     ) : (
@@ -133,13 +135,37 @@ const ProfileDetails = () => {
         headerFontFamily={'IBM Plex Serif'}
         headingColor={'#3C414B'}
       />
-      <Grid>
-        <img src={Avatar1} alt="Not found" width={160} height={160} />
+      <Grid
+        xs={2}
+        item
+        style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}
+      >
+        <img
+          src={Avatar1}
+          alt="Not found"
+          width={160}
+          height={160}
+          style={{ marginLeft: 5 }}
+        />
+        <Typography
+          style={{
+            color: '#3C78F0',
+            fontSize: 18,
+            fontFamily: 'Switzer',
+            fontWeight: 400,
+            textAlign: 'center',
+            paddingTop: 5,
+            cursor: 'pointer'
+          }}
+          //onClick={}
+        >
+          Edit
+        </Typography>
       </Grid>
-      <Grid container spacing={3} item>
+      <Grid container spacing={2} item style={{ paddingTop: 15 }}>
         <Grid item xs>
           <TextInputComponent
-            inputLabel="First Nmae"
+            inputLabel="First Name"
             value={edit.getValue('first_name')}
             inputRef={(ele) => {
               if (ele) {
@@ -154,14 +180,12 @@ const ProfileDetails = () => {
                 handleSave();
               }
             }}
-            iconEnd={
-              <EditComp btnId={1} />
-            }
+            iconEnd={<EditComp btnId={1} />}
           />
         </Grid>
         <Grid item xs>
           <TextInputComponent
-            inputLabel="Last Nmae"
+            inputLabel="Last Name"
             value={edit.getValue('last_name')}
             inputRef={(ele) => {
               if (ele) {
@@ -184,8 +208,32 @@ const ProfileDetails = () => {
           />
         </Grid>
       </Grid>
-      <Grid container spacing={3} item>
-        <Grid item xs>
+      <Grid container spacing={2} item style={{ paddingTop: 15 }}>
+        <Grid item xs={1}>
+          <TextInputComponent
+            inputLabel="Code"
+            value={'+91'}
+            inputRef={(ele) => {
+              if (ele) {
+                ele.focus();
+              }
+            }}
+            name="phone_number"
+            onChange={handleChange}
+            disabled={isEdit !== 3}
+            // iconEnd={
+            //   <IconButton id="3" onClick={onEditClick}>
+            //     <EditOutlined />
+            //   </IconButton>
+            // }
+            onKeyPress={(event) => {
+              if (event.key === 'Enter') {
+                handleSave();
+              }
+            }}
+          />
+        </Grid>
+        <Grid item xs={5}>
           <TextInputComponent
             inputLabel="Phone Number"
             value={edit.getValue('phone_number')}
@@ -209,7 +257,7 @@ const ProfileDetails = () => {
             }}
           />
         </Grid>
-        <Grid item xs>
+        <Grid item xs={6}>
           <TextInputComponent
             inputLabel="Email Id"
             value={edit.getValue('email_id')}
@@ -234,7 +282,7 @@ const ProfileDetails = () => {
           />
         </Grid>
       </Grid>
-      <Grid container>
+      <Grid container style={{ paddingTop: 15 }}>
         <Heading
           headingText={'Change Password'}
           headerFontSize={'24px'}
@@ -243,15 +291,21 @@ const ProfileDetails = () => {
           headingColor={'#3C414B'}
         />
       </Grid>
-      <Grid container spacing={3} item>
+      <Grid container spacing={3} item style={{ paddingTop: 15 }}>
         <Grid item xs>
-          <TextInputComponent inputLabel="Old Password" />
+          <TextInputComponent
+            inputLabel="Old Password"
+            placeholder={'Enter old password'}
+          />
           <Typography className={classes.forgotTxt}>
             Forgot Password?
           </Typography>
         </Grid>
         <Grid item xs>
-          <TextInputComponent inputLabel="New Password" />
+          <TextInputComponent
+            inputLabel="New Password"
+            placeholder={'Enter new password'}
+          />
         </Grid>
         <Grid item xs={12} className={classes.buttonStyle}>
           <ButtonComp buttonText="Save" />

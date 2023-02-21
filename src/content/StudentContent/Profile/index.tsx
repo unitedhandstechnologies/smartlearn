@@ -76,13 +76,15 @@ const Profile = () => {
           headerFontFamily={'IBM Plex Serif'}
           headingColor={'#3C414B'}
         />
-        <Grid style={{padding: '0px 0px 20px 0px'}}><img src={BlueLine} /></Grid>
+        <Grid style={{ padding: '0px 0px 20px 0px' }}>
+          <img src={BlueLine} />
+        </Grid>
       </>
     );
   };
 
   return (
-    <Grid>
+    <Grid style={{ paddingTop: 20 }}>
       <MuiTabComponent
         renderHeader={renderHeader}
         tabContent={tabContent}

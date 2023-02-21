@@ -35,10 +35,14 @@ const ProfileMenu = (props: Props) => {
     console.log(event.target.innerText, 'event');
     if (event.target.innerText === 'Profile') {
       navigateTo('/home/profile');
+      handleClose();
+    } else if (event.target.innerText === 'Your wishlist') {
+      handleClose();
     } else if (event.target.innerText === 'Logout') {
       updateStudentInfo(INITIAL_STATE.studentDetails);
       localStorage.clear();
       navigateTo('/home');
+      handleClose();
       toast.success('Profile Logout sucessfully');
     }
   };
