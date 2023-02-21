@@ -56,11 +56,7 @@ const PreRecordedCourses = () => {
   const navigateTo = useNavigate();
   const { state }: any = useLocation();
   let data = {...state?.formData}
-  let couserId = {...state?.course_id}
-
-  console.log('data',data);
   
-
   return (
     <Grid sx={{ padding: 4 }}>
       <ButtonComp
@@ -133,7 +129,7 @@ const PreRecordedCourses = () => {
       </Grid>
       <Grid container paddingTop={20}>
         <Grid item xs={12} md={9}>
-          <CourseDescription />
+          <CourseDescription courseDescription={data}/>
         </Grid>
         <Grid container item xs={12} md={3}>
           <CourseRight />

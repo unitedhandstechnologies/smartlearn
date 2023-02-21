@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3)
   },
   selectedTabStyle: {
-    color: theme.Colors.whitePure,
+    color: theme.Colors.white,
     background: theme.Colors.secondary,
     fontWeight: theme.fontWeight.bold,
     borderRadius: theme.MetricsSizes.tiny

@@ -12,7 +12,7 @@ import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 const useAccordionStyles = makeStyles((theme: Theme) => ({
   summary: {
     position: 'relative',
-    backgroundColor: 'lightgrey',    
+    backgroundColor: theme.Colors.lightGrey,    
     padding: '0 15px',
     '& .MuiAccordionSummary-content': {
       margin: 0

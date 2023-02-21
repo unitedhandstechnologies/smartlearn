@@ -196,7 +196,7 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
   const onClickCardImage = (rowData) => {
     if (rowData.course_type === COURSE_TYPE_NAME[6]) {
       navigateTo('/home/pre-recordedCourse', {
-        state: { formData: { ...rowData }, courseId: state?.course_id },
+        state: { formData: { ...rowData } },
         replace: true
       });
     }

@@ -108,6 +108,7 @@ declare module '@material-ui/core/styles' {
       whiteLightGrey: string;
       blackBerry: string;
       mediumGreenShade: string;
+      darkGrayishBlue: string;
     };
     general: {
       borderRadiusSm: number;
@@ -207,6 +208,7 @@ declare module '@material-ui/core/styles' {
       whiteLightGrey: string;
       blackBerry: string;
       mediumGreenShade: string;
+      darkGrayishBlue: string;
     };
     general: {
       borderRadiusSm: number;
