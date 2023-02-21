@@ -45,7 +45,8 @@ const useStyles = makeStyles((theme)=>({
 const CourseTitleDetails = ({
   lessonData,
   sectionData,
-  studentDetails
+  studentDetails,
+  setVideoToPlay
 })=> {
 
   const classes = useStyles();
@@ -129,6 +130,7 @@ const CourseTitleDetails = ({
                           style={{ gap: 10 }}
                           alignItems="center"
                           direction={'row'}
+                          onClick={()=>{setVideoToPlay(item.video_url)}}
                         >
                           <Grid item display={'flex'} alignItems={'center'} justifyContent={'center'}>
                           <CircularProgressWithLabel 

@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
 import { Loader } from 'src/components';
+import ReactPlayer from 'react-player'
 
 const useStyles = makeStyles((theme) =>({
   outerContainer: {
@@ -17,19 +18,23 @@ const useStyles = makeStyles((theme) =>({
     flexDirection : 'row',
     
   },
+  playerContainer :{
+    padding : '32px',
+  },
 }));
 
 
 
 const CourseBegin = () => {
     
-        const classes = useStyles();
+    const classes = useStyles();
     const theme = useTheme();
     const [loading, setLoading] = useState(true);
     const [courseData, setCourseData] = useState([]);
+    const [videoToPlay, setVideoToPlay] = useState();
 
     const fetchData = useCallback(async () => {
-        let id = 21;
+      let id = 21;
       try {
        
         const response: any = await API_SERVICES.courseManagementService.getById(
@@ -45,6 +50,8 @@ const CourseBegin = () => {
       }
     },[]);
 
+    
+
   useEffect(() => {    
       fetchData();
     }, []);
@@ -54,10 +61,19 @@ const CourseBegin = () => {
   return (
     <Grid container>
       <Grid item xs={3} className={classes.outerContainer}>
-        <CourseDetails courseData = {courseData} />
+        <CourseDetails courseData = {courseData} setVideoToPlay={setVideoToPlay} />
       </Grid>
-      <Grid item xs={9}>
-        
+      <Grid item xs={9} >
+        <Grid className={classes.playerContainer}>
+          <ReactPlayer 
+            url={videoToPlay} 
+            playing={true} 
+            controls={true}
+            light={true}
+            width={'100%'}
+            height={'100%'}
+            />
+        </Grid>
       </Grid>
     </Grid>
   );

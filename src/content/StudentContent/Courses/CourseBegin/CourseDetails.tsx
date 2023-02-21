@@ -28,6 +28,7 @@ const LessonGrid = styled(Grid)(({theme}) => ({
 
 const CourseDetails = ({
   courseData,
+  setVideoToPlay
   //studentDetails
 }) => {
   const theme = useTheme();
@@ -38,45 +39,44 @@ const CourseDetails = ({
 const studentDetails = {
   remainingDuration : "11hrs 45mins 30 sec",
 };
-
-  const fetchSectionData = async () => {
-    try {
-      setSectionData([]);
-      const response: any =
-        await API_SERVICES.sectionAndLessonService.getAllSection(
-          courseData.course.id,
-          LANGUAGE_ID.english
-        );
-      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-          setSectionData(response.data.Section);
-        }
+const fetchSectionData = async () => {
+  try {
+    setSectionData([]);
+    const response: any =
+      await API_SERVICES.sectionAndLessonService.getAllSection(
+        courseData.course.id,
+        LANGUAGE_ID.english
+      );
+    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        setSectionData(response.data.Section);
       }
-      catch (err) {
-      toast.error(err?.message);
     }
-  };
+    catch (err) {
+    toast.error(err?.message);
+  }
+};
 
-  const fetchLessonData = async () => {
-    try {
-      setLessonData([]);
-      const response: any =
-        await API_SERVICES.sectionAndLessonService.getAllLessonByCourseId(
-          courseData.course.id,
-          LANGUAGE_ID.english
-        );
-      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-          setLessonData(response.data.Lessons);
-        }
-      
-    } catch (err) {
-      toast.error(err?.message);
-    }
-  };
+const fetchLessonData = async () => {
+  try {
+    setLessonData([]);
+    const response: any =
+      await API_SERVICES.sectionAndLessonService.getAllLessonByCourseId(
+        courseData.course.id,
+        LANGUAGE_ID.english
+      );
+    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        setLessonData(response.data.Lessons);
+      }
+    
+  } catch (err) {
+    toast.error(err?.message);
+  }
+};
 
-  useEffect(() => {   
-    fetchSectionData();
-    fetchLessonData();
-  }, []);
+useEffect(() => {   
+  fetchSectionData();
+  fetchLessonData();
+}, []);
 
                
 
@@ -86,6 +86,7 @@ const studentDetails = {
         sectionData = {sectionData} 
         lessonData = {lessonData} 
         studentDetails = {studentDetails}
+        setVideoToPlay = {setVideoToPlay}
       />
     )
   };
