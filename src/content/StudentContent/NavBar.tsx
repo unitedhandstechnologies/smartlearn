@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   AppBar,
   Box,
@@ -28,7 +28,7 @@ import CartPopover from './HomePage/userNavBarBox/CartPopup';
 import NotificationPopover from './Courses/Notifications/StudentNotification';
 import { CartImg } from 'src/Assets';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import useStudentInfo from 'src/hooks/useStudentInfo';
+import { StudentInfoContext } from 'src/contexts/StudentContext';
 
 const pages = [
   { label: 'Courses', path: 'courses' },
@@ -42,7 +42,7 @@ function NavBar() {
   const [open, setOpen] = React.useState(false);
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
-  const { loggedInUser } = useStudentInfo();
+  const { studentDetails } = useContext(StudentInfoContext);
 
   const handleCartClick = (event) => {
     setCartOpen(event.currentTarget);
@@ -65,7 +65,7 @@ function NavBar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  console.log(loggedInUser, 'test nv');
+
   const theme = useTheme();
   return (
     <>
@@ -145,41 +145,47 @@ function NavBar() {
               </Button>
             ))}
           </Box>
-
-          <Box
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              alignItems: 'center',
-              gap: 1
-            }}
-          >
-            <ButtonComp
-              variant="outlined"
-              btnWidth={78}
-              height={40}
-              buttonFontFamily="Switzer"
-              buttonFontSize={theme.MetricsSizes.regular}
-              backgroundColor={theme.Colors.white}
-              buttonTextColor={'#3C78F0'}
-              buttonText={'Login'}
-              btnBorderRadius={4}
-              onClickButton={() => navigateTo('/home/user-login')}
-            />
-            <Box sx={{ display: { xs: 'none', lg: 'flex' } }}>
+          {studentDetails.id === 0 && (
+            <Box
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                alignItems: 'center',
+                gap: 1
+              }}
+            >
               <ButtonComp
-                btnWidth={240}
+                variant="outlined"
+                btnWidth={78}
                 height={40}
                 buttonFontFamily="Switzer"
-                buttonFontSize={theme.MetricsSizes.small_xxx}
-                backgroundColor={'#3C78F0'}
-                buttonTextColor={theme.Colors.white}
+                buttonFontSize={theme.MetricsSizes.regular}
+                backgroundColor={theme.Colors.white}
+                buttonTextColor={'#3C78F0'}
+                buttonText={'Login'}
                 btnBorderRadius={4}
-                buttonText={'Start learning for free'}
-                onClickButton={() => {}}
+                onClickButton={() => navigateTo('/home/user-login')}
               />
+              <Box sx={{ display: { xs: 'none', lg: 'flex' } }}>
+                <ButtonComp
+                  btnWidth={240}
+                  height={40}
+                  buttonFontFamily="Switzer"
+                  buttonFontSize={theme.MetricsSizes.small_xxx}
+                  backgroundColor={'#3C78F0'}
+                  buttonTextColor={theme.Colors.white}
+                  btnBorderRadius={4}
+                  buttonText={'Start learning for free'}
+                  onClickButton={() => {}}
+                />
+              </Box>
             </Box>
-            {loggedInUser && <UserCart />}
-          </Box>
+          )}
+          {studentDetails.id !== 0 && (
+            <UserCart
+              userName={studentDetails.user_name}
+              image={studentDetails.image_url}
+            />
+          )}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -244,7 +250,7 @@ function NavBar() {
                 backgroundColor={theme.Colors.white}
                 buttonTextColor={'#3C78F0'}
                 buttonText={'Login'}
-                onClickButton={() => {}}
+                onClickButton={() => navigateTo('/home/user-login')}
               />
             </ListItemButton>
             <ListItemButton>

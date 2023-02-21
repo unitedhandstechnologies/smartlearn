@@ -19,10 +19,11 @@ import IconTextComp from 'src/components/IconTextComp';
 type Props = {
   userName?: string;
   badgeContent?: number;
+  image?: string;
 };
 
 const UserCart = (props: Props) => {
-  const { userName, badgeContent } = props;
+  const { userName, badgeContent, image } = props;
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
   const [profileOpen, setProfileOpen] = useState(null);
@@ -80,7 +81,7 @@ const UserCart = (props: Props) => {
       </Grid>
       <Grid style={{ paddingLeft: 8 }}>
         <IconButton aria-label="profile" onClick={handleProfileClick}>
-          <img src={UserProfile} width={'32px'} height={'32px'} />{' '}
+          <img src={image || UserProfile} width={'32px'} height={'32px'} />{' '}
         </IconButton>
       </Grid>
       <Grid>

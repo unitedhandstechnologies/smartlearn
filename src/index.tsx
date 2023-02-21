@@ -9,14 +9,17 @@ import { UserInfoProvider } from './contexts/UserContext';
 import './Translations/i18n';
 import 'react-calendar/dist/Calendar.css';
 import './CalendarCustomStyle.css';
+import { StudentInfoProvider } from './contexts/StudentContext';
 
 ReactDOM.render(
   <HelmetProvider>
     <SidebarProvider>
       <UserInfoProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <StudentInfoProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </StudentInfoProvider>
       </UserInfoProvider>
     </SidebarProvider>
   </HelmetProvider>,

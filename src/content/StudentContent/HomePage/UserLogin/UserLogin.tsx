@@ -12,6 +12,7 @@ import { HTTP_STATUSES } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
 import Divider from '@mui/material/Divider';
 import useStudentInfo from 'src/hooks/useStudentInfo';
+import toast from 'react-hot-toast';
 const UserLogin = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
@@ -46,12 +47,12 @@ const UserLogin = () => {
           );
           updateStudentInfo(response?.data.users[0].id);
           if (getUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-            // updateUserInfo((prevState) => {
-            //   return { ...prevState, ...getUserRes?.data?.user };
-            // });
+            updateStudentInfo((prevState: any) => {
+              return { ...prevState, ...getUserRes?.data?.user };
+            });
           }
         }
-
+        toast.success('Profile Login sucessfully');
         navigateTo('/home', { replace: true });
       }
     } catch (e) {
