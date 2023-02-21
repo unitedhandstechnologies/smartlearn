@@ -122,7 +122,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
           courseDescription?.id,
           DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
         ),
-        API_SERVICES.quizService.getAllQuiz(LANGUAGE_ID.english)
+        API_SERVICES.quizService.getAllQuiz(LANGUAGE_ID.english, courseDescription?.course_id)
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.Lessons?.length) {
@@ -136,6 +136,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
       }
       if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
         {
+          console.log('courseDescription', response[2])
           if (response[2]?.data?.quiz?.length) {
             setQuizData(response[2]?.data?.quiz);
           }

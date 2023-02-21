@@ -61,9 +61,9 @@ export const quizService = {
     return apiRequest(options);
   },
 
-  getAllQuiz: async ( languageId: number) => {
+  getAllQuiz: async ( languageId: number, courseId: number) => {
     const options = await apiOptions({
-      url: `${Config.BASE_URL}/api/getAllQuiz/language/${languageId}`,
+      url: `${Config.BASE_URL}/api/getAllQuiz/language/${languageId}/course/${courseId}`,
       method: 'get'
     });
     return apiRequest(options);

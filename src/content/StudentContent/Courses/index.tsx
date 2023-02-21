@@ -11,6 +11,7 @@ import { DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-hot-toast';
 import PreRecordedCourses from './PreRecordedCourses';
+import Quiz from './QASection/Quiz';
 
 const Courses = () => {
   const theme = useTheme();
@@ -53,6 +54,7 @@ const Courses = () => {
       >
         <UpComingCourse courseDetails={courseDetails} />
         <LearnAtUrPace courseDetails={courseDetails} />
+        <Quiz courseDetails={courseDetails} />
         <CourseBegin />
       </Grid>
     );

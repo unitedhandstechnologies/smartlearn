@@ -83,7 +83,7 @@ const CourseViewModal = (props: Props) => {
           rowData?.id,
           LANGUAGE_ID.english
         ),
-        API_SERVICES.quizService.getAllQuiz(LANGUAGE_ID.english)
+        API_SERVICES.quizService.getAllQuiz(LANGUAGE_ID.english, rowData?.course_id)
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.Lessons?.length) {
