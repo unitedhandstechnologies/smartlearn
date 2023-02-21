@@ -69,6 +69,8 @@ export interface AccordionCompProps extends AccordionProps {
   accContentDetail: () => React.ReactNode;
   renderAccordionTitle: () => React.ReactNode;
   accordianSummaryClassName?: any;
+  iconColor?: any;
+  isSectionCompleted?: boolean;
 }
 
 export const AccordionItem = (props) => {
@@ -81,6 +83,7 @@ export const AccordionItem = (props) => {
     activeItemIds,
     activeColor,
     iconPosition = 'right',
+    iconColor,
     renderExpandIcons,
     accordionClassName,
     accordionSummaryClassName,
@@ -89,6 +92,7 @@ export const AccordionItem = (props) => {
     accContentDetail,
     renderAccordionTitle,
     accordianTitleClassName,
+    isSectionCompleted,
     ...Rest
   }: AccordionCompProps = props;
 
@@ -108,9 +112,9 @@ export const AccordionItem = (props) => {
     if (renderExpandIcons) {
       return renderExpandIcons(isActive);
     } else if (isActive) {
-      return <ExpandLess />;
+      return <ExpandLess color={iconColor} />;
     } else {
-      return <ExpandMore />;
+      return <ExpandMore color={iconColor} />;
     }
   };
 

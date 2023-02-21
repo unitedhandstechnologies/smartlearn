@@ -9,7 +9,9 @@ import {
 } from '@mui/material';
 import {
   ExpandMore as ExpandMoreIcon,
-  CheckCircle as CheckCircleIcon
+  CheckCircle as CheckCircleIcon,
+  ExpandLess,
+  ExpandMore
 } from '@mui/icons-material';
 
 import { CourseSubTitleDetailsProps, CourseTitleDetailsProps } from 'src/content/StudentContent/types';
@@ -19,6 +21,8 @@ import React from 'react';
 import { useTheme} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgressWithLabel from './CircularProgressWithLable';
+import { videoLine } from 'src/Assets/Images';
+import { greenTick } from 'src/Assets/Images';
 
 const useStyles = makeStyles((theme)=>({
 
@@ -124,18 +128,40 @@ const CourseTitleDetails = ({
                           xs={12}
                           style={{ gap: 10 }}
                           alignItems="center"
+                          direction={'row'}
                         >
+                          <Grid item display={'flex'} alignItems={'center'} justifyContent={'center'}>
                           <CircularProgressWithLabel 
                             title={getSectionLessonValue(sectionNumber, index)}
                              value={89} />
-           
+                             </Grid>
+                             <Grid item>
+                          <Grid container direction={'column'}>
+                            <Grid item xs={6}>
                           <Typography
                           style={{
                             color: theme.Colors.blackPrimary,
                             fontWeight: 400,
                             fontSize : '16px'
-                          }}> {`${item.lesson_name}`}</Typography>
+                          }}> {`${item.lesson_name}`}
                           
+                          </Typography>
+                          </Grid>
+                          <Grid item xs={6}>
+                          <img src={videoLine} ></img>
+                          <Typography
+                          component={'span'}
+                          style={{
+                            color: theme.Colors.blackPrimary,
+                            fontWeight: 400,
+                            fontSize : '12px'
+                            
+                          }}> 45mins 30secs{/* {`${item.lesson_name}`} */}
+                          
+                          </Typography>
+                          </Grid>
+                           </Grid>
+                          </Grid>
                           </Grid>
 
                       );
@@ -156,6 +182,16 @@ const CourseTitleDetails = ({
             accordianTitleClassName = {classes.accordianTitleStyle}
             accordionSummaryClassName = {classes.accordionSummaryStyle}
             accordionDetailClassName = {classes.accordionDetailStyles}
+            iconColor = {"primary"}
+            isSectionCompleted = {true}
+            renderExpandIcons = {(isActive)=>{
+              if (isActive) {
+                return <ExpandLess color={"primary"} />;
+              } else {
+                return <img src={greenTick} ></img>;
+              }
+
+            }}
     />
   );
 };

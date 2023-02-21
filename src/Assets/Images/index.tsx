@@ -104,6 +104,8 @@ import BackgroundLine from './backgroundLine.png';
 import SearchIconImg from './SearchIconImg.svg'
 import stickyNoteLine from './stickyNoteLine.svg';
 import timeLine from './timeLine.svg';
+import greenTick from './greenTick.svg';
+import videoLine from './videoLine.svg';
 
 
 export {
@@ -212,5 +214,7 @@ export {
   BackgroundLine,
   SearchIconImg,
   timeLine,
-  stickyNoteLine
+  stickyNoteLine,
+  greenTick,
+  videoLine
 };
