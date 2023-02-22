@@ -9,7 +9,6 @@ import { capitalizeFirstLetter } from 'src/Utils';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { useTranslation } from 'react-i18next';
 
-
 type Props = {
   edit?: any;
   isError?: boolean;
@@ -17,7 +16,7 @@ type Props = {
   categories?: any[];
   labelName?: string;
   types?: any;
-  type?:any;
+  type?: any;
 };
 
 const TextInput = ({
@@ -25,9 +24,9 @@ const TextInput = ({
   isError,
   tabValue,
   labelName,
-  categories, 
+  categories,
   types,
-  type,
+  type
 }: Props) => {
   const theme = useTheme();
   const { t, i18n } = useTranslation();
@@ -45,14 +44,14 @@ const TextInput = ({
   const parentCategoryError = isError && !edit.getValue('category_id');
   const imageError = isError && !edit.allFilled('image_url');
 
-
   const onUploadFiles = async (event: any) => {
     let formData = new FormData();
     let image = event.target.files[0];
     setProfileImage(image.name);
     formData.append('file', image);
     console.log('image', image);
-    if (image.size < (2 * 1024 * 1024)) {     //image size should be below 2 MB
+    if (image.size < 2 * 1024 * 1024) {
+      //image size should be below 2 MB
       const uploadImageRes: any =
         await API_SERVICES.imageUploadService.uploadImage(formData);
       if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -75,11 +74,11 @@ const TextInput = ({
       image_url: ''
     });
     setProfileImage('No file choosen');
-    if( !edit.allFilled('image_url')){
-      return
-   }else{
-     toast.success(`${t('Toast.imageRemovedSuccessfully')}`);
-   }
+    if (!edit.allFilled('image_url')) {
+      return;
+    } else {
+      toast.success(`${t('Toast.imageRemovedSuccessfully')}`);
+    }
   };
 
   return (
@@ -94,14 +93,18 @@ const TextInput = ({
                 : profileImage
             }
             isError={imageError}
-            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB" }
+            helperText={
+              imageError
+                ? 'Please upload the profile image'
+                : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB'
+            }
             disabled
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <ButtonComp
                     backgroundColor={theme.Colors.primary}
-                    buttonText={'Browe'}
+                    buttonText={'Browse'}
                     buttonFontSize={theme.MetricsSizes.small_xxx}
                     buttonTextColor="white"
                     buttonFontWeight={theme.fontWeight.medium}

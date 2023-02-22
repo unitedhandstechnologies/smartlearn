@@ -338,7 +338,7 @@ const InstructorManagementCreateModal = (props: Props) => {
                   <InputAdornment position="start">
                     <ButtonComp
                       backgroundColor={theme.Colors.primary}
-                      buttonText={'Browe'}
+                      buttonText={'Browse'}
                       buttonFontSize={theme.MetricsSizes.small_xxx}
                       buttonTextColor="white"
                       buttonFontWeight={theme.fontWeight.medium}
@@ -360,7 +360,11 @@ const InstructorManagementCreateModal = (props: Props) => {
               }}
               required
               isError={imageError}
-              helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB"}            
+              helperText={
+                imageError
+                  ? 'Please upload the profile image'
+                  : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB'
+              }
             />
           </Grid>
           <Grid item xs={6}>
@@ -375,7 +379,11 @@ const InstructorManagementCreateModal = (props: Props) => {
               inputLabel={t('qualification')}
               labelColor={theme.Colors.primary}
               value={edit.getValue('qualification')}
-              onChange={(e) => edit.update({ qualification: capitalizeFirstLetter(e.target.value) })}
+              onChange={(e) =>
+                edit.update({
+                  qualification: capitalizeFirstLetter(e.target.value)
+                })
+              }
             />
           </Grid>
           <Grid item xs={12}>

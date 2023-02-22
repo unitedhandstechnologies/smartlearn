@@ -138,7 +138,11 @@ const ProfileDetails = () => {
       <Grid
         xs={2}
         item
-        style={{ padding: 10, alignItems: 'center', justifyContent: 'center' }}
+        style={{
+          paddingLeft: 10,
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
       >
         <img
           src={Avatar1}
@@ -147,7 +151,7 @@ const ProfileDetails = () => {
           height={160}
           style={{ marginLeft: 5 }}
         />
-        <Typography
+        {/* <Typography
           style={{
             color: '#3C78F0',
             fontSize: 18,
@@ -160,7 +164,18 @@ const ProfileDetails = () => {
           //onClick={}
         >
           Edit
-        </Typography>
+        </Typography> */}
+        <ButtonComp
+          backgroundColor={'white'}
+          buttonText="Edit"
+          buttonFontSize={18}
+          buttonTextColor="#3C78F0"
+          buttonFontWeight={400}
+          disableElevation={true}
+          //onBrowseButtonClick={onUploadFiles}
+          isBrowseButton
+          height={'30px'}
+        />
       </Grid>
       <Grid container spacing={2} item style={{ paddingTop: 15 }}>
         <Grid item xs>

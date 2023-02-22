@@ -67,11 +67,11 @@ const AddBannerModel = ({
     'banner_name_gujarati'
   ];
   const edit = useEdit(initialValues);
-  const imageError = error && !edit.allFilled('banner_image') 
+  const imageError = error && !edit.allFilled('banner_image');
 
   const nameError = error && !edit.allFilled('banner_name');
   const GujaratinameError = error && !edit.allFilled('banner_name_gujarati');
-  const hindinameError =  error && !edit.allFilled('banner_name_hindi');
+  const hindinameError = error && !edit.allFilled('banner_name_hindi');
 
   const removeBanner = () => {
     setIsMissingImageEntry(true);
@@ -79,11 +79,11 @@ const AddBannerModel = ({
       banner_image: ''
     });
     setBannerImage('No file choosen');
-    if( !edit.allFilled('banner_image')){
-      return
-   }else{
-     toast.success(`${t('Toast.imageRemovedSuccessfully')}`);
-   }
+    if (!edit.allFilled('banner_image')) {
+      return;
+    } else {
+      toast.success(`${t('Toast.imageRemovedSuccessfully')}`);
+    }
   };
 
   const onUploadFiles = async (event: any) => {
@@ -91,24 +91,24 @@ const AddBannerModel = ({
     let image = event.target.files[0];
     setBannerImage(image.name);
     formData.append('file', image);
-    if (image.size < (2 * 1024 * 1024)) {
-    const uploadImageRes: any =
-      await API_SERVICES.bannerManagementService.uploadImage(formData);
-    if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-      toast.success(`${t('Toast.imageUploadSuccessfully')}`);
-      if (uploadImageRes?.data?.images) {
-        edit.update({
-          banner_image: uploadImageRes?.data?.images[0].Location
-        });
-        setIsMissingImageEntry(false);
+    if (image.size < 2 * 1024 * 1024) {
+      const uploadImageRes: any =
+        await API_SERVICES.bannerManagementService.uploadImage(formData);
+      if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+        toast.success(`${t('Toast.imageUploadSuccessfully')}`);
+        if (uploadImageRes?.data?.images) {
+          edit.update({
+            banner_image: uploadImageRes?.data?.images[0].Location
+          });
+          setIsMissingImageEntry(false);
+        }
       }
-    }
-  } else {
-    let imgsize = image.size / (1024 * 1024);
-    alert(`Sorry, this image doesn't look like the size we wanted. It's 
+    } else {
+      let imgsize = image.size / (1024 * 1024);
+      alert(`Sorry, this image doesn't look like the size we wanted. It's 
     ${imgsize.toFixed(2)}Mb but we require below 2Mb size image.`);
-  }
-};;
+    }
+  };
 
   const TextInput = () => {
     return (
@@ -122,20 +122,18 @@ const AddBannerModel = ({
             inputLabel={t('setting.bannerImage')}
             value={
               types[type].handleType === 2
-                ? edit.getValue('banner_image').split('/')[3] 
+                ? edit.getValue('banner_image').split('/')[3]
                 : bannerImage
             }
             disabled
             isError={imageError}
-            helperText={
-              imageError 
-            }
+            helperText={imageError}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <ButtonComp
                     backgroundColor={theme.Colors.primary}
-                    buttonText={'Browe'}
+                    buttonText={'Browse'}
                     buttonFontSize={theme.MetricsSizes.small_xxx}
                     buttonTextColor="white"
                     buttonFontWeight={theme.fontWeight.medium}
@@ -166,9 +164,7 @@ const AddBannerModel = ({
               value={edit.getValue('banner_name')}
               autoFocus
               isError={nameError}
-              helperText={
-                nameError && 'Please enter your banner name'
-              }
+              helperText={nameError && 'Please enter your banner name'}
               onChange={(e) => {
                 if (e.target.value) setIsMissingNameEntry(false);
                 edit.update({
@@ -186,9 +182,7 @@ const AddBannerModel = ({
               value={edit.getValue('banner_name_hindi')}
               autoFocus
               isError={hindinameError}
-              helperText={
-                hindinameError && 'Please enter banner name' 
-              }
+              helperText={hindinameError && 'Please enter banner name'}
               onChange={(e) => {
                 if (e.target.value) setIsMissingNameEntry(false);
                 edit.update({
@@ -206,9 +200,7 @@ const AddBannerModel = ({
               value={edit.getValue('banner_name_gujarati')}
               autoFocus
               isError={GujaratinameError}
-              helperText={
-                GujaratinameError && 'Please enter banner name'
-              }
+              helperText={GujaratinameError && 'Please enter banner name'}
               onChange={(e) => {
                 if (e.target.value) setIsMissingNameEntry(false);
                 edit.update({
@@ -285,7 +277,39 @@ const AddBannerModel = ({
   };
 
   const handleCreate = async () => {
-      try {
+    try {
+      let banner_details = [
+        {
+          language_id: 1,
+          banner_name: edit.getValue('banner_name')
+        },
+        {
+          language_id: 2,
+          banner_name: edit.getValue('banner_name_hindi')
+        },
+        {
+          language_id: 3,
+          banner_name: edit.getValue('banner_name_gujarati')
+        }
+      ];
+      let data = {
+        banner_image: edit.getValue('banner_image'),
+        banner_details,
+        banner_type: 1,
+        banner_status: 1
+      };
+      if (!edit.allFilled(...RequiredFields)) {
+        setError(true);
+        return toast.error('Please fill all the required fields');
+      }
+      let response: any;
+      if (types[type].handleType === 1) {
+        response = await API_SERVICES.bannerManagementService.create({
+          data: data,
+          successMessage: t('Toast.bannerCreatedSuccessfully'),
+          failureMessage: t('Toast.failedtoUpdate')
+        });
+      } else if (types[type].handleType === 2) {
         let banner_details = [
           {
             language_id: 1,
@@ -306,55 +330,23 @@ const AddBannerModel = ({
           banner_type: 1,
           banner_status: 1
         };
-        if (!edit.allFilled(...RequiredFields)) {
-          setError(true);
-          return toast.error('Please fill all the required fields');
-        }
-        let response: any;
-        if (types[type].handleType === 1) {
-          response = await API_SERVICES.bannerManagementService.create({
+        response = await API_SERVICES.bannerManagementService.update(
+          rowData?.banner_id,
+          {
             data: data,
-            successMessage: t('Toast.bannerCreatedSuccessfully'),
+            successMessage: t('Toast.bannerEditedSuccessfully'),
             failureMessage: t('Toast.failedtoUpdate')
-          });
-        } else if (types[type].handleType === 2) {
-          let banner_details = [
-            {
-              language_id: 1,
-              banner_name: edit.getValue('banner_name')
-            },
-            {
-              language_id: 2,
-              banner_name: edit.getValue('banner_name_hindi')
-            },
-            {
-              language_id: 3,
-              banner_name: edit.getValue('banner_name_gujarati')
-            }
-          ];
-          let data = {
-            banner_image: edit.getValue('banner_image'),
-            banner_details,
-            banner_type: 1,
-            banner_status: 1
-          };
-          response = await API_SERVICES.bannerManagementService.update(
-            rowData?.banner_id,
-            {
-              data: data,
-              successMessage: t('Toast.bannerEditedSuccessfully'),
-              failureMessage: t('Toast.failedtoUpdate')
-            }
-          );
-        }
-
-        if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-          updateData();
-          handleClose();
-        }
-      } catch (err) {
-        toast.error(err?.message);
+          }
+        );
       }
+
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        updateData();
+        handleClose();
+      }
+    } catch (err) {
+      toast.error(err?.message);
+    }
   };
 
   const renderAction = () => {

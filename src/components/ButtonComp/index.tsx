@@ -92,7 +92,8 @@ const ButtonComp = (props: Props) => {
   if (isBrowseButton)
     return (
       <Button className={classes.container} component="label" variant={variant}>
-        Browse
+        {buttonText ? buttonText : 'Browse'}
+
         <input
           type="file"
           multiple={isMultipleUpload}
