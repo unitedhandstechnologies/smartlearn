@@ -97,41 +97,28 @@ const PreRecordedCourses = () => {
         />
       </Grid>
       <Grid
-        xs={12}
-        sx={{
-          bottom: 80,
-          marginLeft: 8,
-          background: 'white',
-          position: 'absolute',
-          [theme.breakpoints.down('sm')]: {
-            bottom: '0px'
-          }
-        }}
-      >
-        <CourseRating review={review} />
-      </Grid>
-      <Grid
-        item
+        container
+        justifyContent={'flex-end'}
         position={'absolute'}
         xs={12}
         sx={{
-          bottom: 10,
-          marginLeft: 115,
-          // zIndex: 1,
-          // top: 0,
-          // //position: 'sticky',
-          [theme.breakpoints.down('sm')]: {
-            flexDirection: 'row',
-            position: 'relative',
-            marginTop: 8,
-            marginLeft: 0,
-            width: '325px'
+          zIndex: 1,
+          paddingBottom:15,
+          bottom: 0,
+          paddingRight: 10,
+          [theme.breakpoints.down(1250)]: {
+            display: 'none'
+          },
+          [theme.breakpoints.down('xs')]: {
+            position: "relative",
+            width:"100%",
+            display:"flex"
           }
         }}
       >
         <ApplyNow />
       </Grid>
-      <Grid container paddingTop={20}>
+      <Grid container paddingTop={15}>
         <Grid item xs={12} md={9}>
           <CourseDescription courseDescription={data} />
         </Grid>

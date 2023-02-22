@@ -324,7 +324,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
       </Grid> */}
 
       <Grid item xs={12}>
-        <Grid paddingTop={4}>
+        <Grid paddingTop={0}>
           <Heading headingText={'Course description'} {...headingProps} />
           <Typography style={typographyStylProps}>
             {courseDescription?.course_description}
