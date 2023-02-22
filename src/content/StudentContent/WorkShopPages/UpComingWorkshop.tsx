@@ -231,8 +231,17 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
             }
           }}
         />
-        <Grid container direction="row">
-          <Grid style={{ paddingBottom: '20px' }}>
+        <Grid
+          container 
+          justifyContent={"space-between"}
+          sx={{
+            [theme.breakpoints.down('xs')]: {
+              flexDirection: 'column',
+              gap:2
+            }
+          }}
+        >
+          <Grid>
             <MultiSelectChip
               chipItems={FILTER_CHIPS}
               selectedChipItem={chipValue}
@@ -242,36 +251,50 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
                 height: theme.MetricsSizes.large,
                 fontSize: theme.MetricsSizes.regular
               }}
+              containerStyle={{
+                [theme.breakpoints.down('xs')]: {
+                  flexDirection: 'column',
+                  gap: 5
+                }
+              }}
             />
           </Grid>
-          <Grid item paddingBottom={2}>
+          <Grid item paddingRight={2}>
             <InputBase
               onChange={(e) => getSearchValue(e.target.value)}
               value={searchValue}
               placeholder={'Search'}
               sx={{
-                width: 65,
+                width: 50,
+                height: 35,
                 transition: '0.5s',
                 ':hover': {
-                  width: 300,
+                  width: 290,
                   border: '1px solid #3C78F0',
                   borderRadius: 50,
-                  fontSize: 20,
+                  fontSize: 16,
                   fontWeight: 400,
                   padding: theme.spacing(0.3, 0.5)
-                }
+                },
+                [theme.breakpoints.down('xs')]: {
+                  width: "100%",
+                  border: '1px solid #3C78F0',
+                  borderRadius: 50,
+                  fontSize: 16,
+                  fontWeight: 400,
+                  padding: theme.spacing(0.3, 0.5)                }      
               }}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton>
-                    <img src={SearchIconImg} />
+                    <img src={SearchIconImg} width={"35px"} height={"35px"} />
                   </IconButton>
                 </InputAdornment>
               }
             />
           </Grid>
         </Grid>
-        <Grid>
+        <Grid paddingTop={2}>
           <img src={LineBarIcon} alt="" />
         </Grid>
       </Grid>

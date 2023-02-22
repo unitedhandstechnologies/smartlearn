@@ -169,6 +169,7 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
   const { state }: any = useLocation();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
   const navigateTo = useNavigate();
+  const [view, setView] = useState(6);
 
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
@@ -192,6 +193,14 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
       return webinarSeminar;
     }
   }, [chipValue, courseDetails]);
+
+  const handleView = () => {
+    if (view === 6) {
+      setView(getCourses.length);
+    } else {
+      setView(6);
+    }
+  };
 
   const onClickCardImage = (rowData) => {
     if (rowData.course_type === COURSE_TYPE_NAME[6]) {
@@ -226,6 +235,12 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
               height: theme.MetricsSizes.large,
               fontSize: theme.MetricsSizes.regular
             }}
+            containerStyle={{
+              [theme.breakpoints.down('xs')]: {
+                flexDirection: 'column',
+                gap: 5
+              }      
+            }}
           />
         </Grid>
         <Grid>
@@ -244,7 +259,7 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
         }}
       >
         {getCourses.length
-          ? getCourses.slice(0, 6).map((item, index) => {
+          ? getCourses.slice(0, view).map((item, index) => {
               return (
                 <Grid
                   key={index}
@@ -292,11 +307,15 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
           backgroundColor={theme.Colors.white}
           buttonTextColor={'#3C78F0'}
           btnBorderRadius={'4px'}
-          buttonText={'View All'}
+          buttonText={view === 6 ? 'View All' : 'Back'}
           btnWidth="100%"
-          iconImage={<img src={ArrowNext} style={{ marginLeft: '8px' }} />}
-          onClickButton={() => {}}
-        />
+          iconImage={
+            view === 6 ? (
+              <img src={ArrowNext} style={{ marginLeft: '8px' }} />
+            ) : null
+          }
+          onClick={handleView}
+          />
       </Grid>
     </Grid>
   );

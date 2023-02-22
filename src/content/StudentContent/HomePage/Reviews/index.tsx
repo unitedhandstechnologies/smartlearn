@@ -63,7 +63,10 @@ const Reviews = ({ ratingData }) => {
   const theme = useTheme();
   const [currentIndex, setCurrentIndex] = useState(0);
   const length = review?.length ?? 0;
+  const [view, setView] = useState(2);
   const show = 3;
+
+  console.log(ratingData, "ratingdata");
 
   const handleNextClick = () => {
     if (currentIndex < length) {
@@ -74,6 +77,14 @@ const Reviews = ({ ratingData }) => {
       }
     }
   };
+
+  // const handleView = () => {
+  //   if (view === 6) {
+  //     setView(courses.length);
+  //   } else {
+  //     setView(6);
+  //   }
+  // };
 
   const handlePrevClick = () => {
     if (currentIndex > 0) {
@@ -134,7 +145,7 @@ const Reviews = ({ ratingData }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        {ratingData.map((item, index) => {
+        {ratingData.slice(0, 2).map((item, index) => {
           return (
             <Grid item xs={12} sm={6} key={index}>
               <ReviewBox

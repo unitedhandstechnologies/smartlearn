@@ -286,7 +286,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
           }}
         >
           {courses.length
-            ? courses.slice(0, 6).map((item, index) => {
+            ? courses.slice(0, view).map((item, index) => {
                 return (
                   <Grid
                     key={index}

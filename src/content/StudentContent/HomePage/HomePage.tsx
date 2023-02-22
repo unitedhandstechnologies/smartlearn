@@ -139,7 +139,7 @@ const HomePage = () => {
           style={{ padding: theme.spacing(7, 7) }}
         >
           <FAQs faqDetails={faqDetails} />
-          <WishListCourse/>
+          {/* <WishListCourse/> */}
         </Grid>
       </Grid>
     );

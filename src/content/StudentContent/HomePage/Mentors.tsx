@@ -45,7 +45,7 @@ const Mentors = ({
   const navigateTo = useNavigate();
 
   const handleMentorClick = (item) => {
-    navigateTo('/home/Mentor-CourseProfile', {
+    navigateTo('/home/mentor-courseProfile', {
       state: { ...item, courses: courseDetails },
       replace: true
     });
@@ -138,7 +138,7 @@ const Mentors = ({
                       cursor: 'pointer'
                     }}
                     key={index}
-                    onClick={() => handleMentorClick(item)}
+                    onClick={() => viewButtonPosition === 'bottom' ? handleMentorClick(item) : null}
                   >
                     <img src={item.image_url} alt="" />
                     <ImageListItemBar

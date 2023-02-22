@@ -80,7 +80,7 @@ const MultiSelectChip = (props: Props) => {
 
   return (
     <Box
-      style={{
+      sx={{
         display: 'flex',
         ...containerStyle
       }}
