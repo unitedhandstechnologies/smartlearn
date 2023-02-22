@@ -47,7 +47,8 @@ export const RichTextInput = ({
   displayToolBar,
   borderSize,
   heightValue,
-  paddingValue
+  paddingValue,
+  label
 }: {
   onChange?: any;
   value: any;
@@ -57,6 +58,7 @@ export const RichTextInput = ({
   borderSize?: string;
   heightValue?: string;
   paddingValue?: string;
+  label?:string;
 }) => {
   const props = {
     displayValue: displayToolBar,
@@ -71,11 +73,12 @@ export const RichTextInput = ({
   const icons = Quill.import('ui/icons');
   return (
     <div className={classes.editorRoot}>
+      <label style={{color:theme.Colors.primary,fontSize:14}}>Page Content</label>
       <ReactQuill
         onChange={onChange}
         value={value}
         modules={modules}
-        readOnly={readOnly}
+        readOnly={readOnly}        
       />
     </div>
   );

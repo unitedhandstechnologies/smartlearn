@@ -15,8 +15,8 @@ const useStyles = makeStyles((theme: Theme) => {
     },
     imgStyle: {
       borderRadius: theme.MetricsSizes.small_x,
-      width: '300px',
-      height: '180px'
+      width: '341px',
+      height: '228px'
     }
   };
 });
@@ -58,7 +58,7 @@ const CategoryModal = (props: Props) => {
       },
       {
         content: 'Category Image',
-        value: <img src={rowData?.image_url} width={250} height={250}/>
+        value: <img src={rowData?.image_url} width={341} height={228}/>
       }
     ];
     return (

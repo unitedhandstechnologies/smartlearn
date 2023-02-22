@@ -77,6 +77,8 @@ const CreatePrimaryDetails = ({
   const startDateError = error && !edit.allFilled('starting_date');
   const endDateError = error && !edit.allFilled('ending_date');
 
+  console.log(mentors,"mentorname")
+
   const courseType = [
     { courseTypeId: 1, courseTypeName: 'Seminar' },
     { courseTypeId: 2, courseTypeName: 'Masterclass' },
@@ -119,7 +121,7 @@ const CreatePrimaryDetails = ({
     let img = new Image();
     img.src = window.URL.createObjectURL(event.target.files[0]);
     img.onload = async () => {
-      if (img.width <= 250 && img.height <= 100) {
+      if (img.width <= 341 && img.height <= 228) {
         const uploadImageRes: any =
           await API_SERVICES.imageUploadService.uploadImage(formData);
         if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -132,7 +134,7 @@ const CreatePrimaryDetails = ({
         }
       } else {
         alert(`Sorry, this image doesn't look like the size we wanted. It's 
-        ${img.width} x ${img.height} but we require 250 x 100 size image or below this size.`);
+        ${img.width} x ${img.height} but we require 341 x 228 size image or below this size.`);
       }
     };
   };
@@ -159,7 +161,7 @@ const CreatePrimaryDetails = ({
             selectItems={
               mentors.length &&
               mentors?.map((item: any) => ({
-                label: item?.first_name,
+                label: item?.first_name + item?.last_name ,
                 value: item?.id
               }))
             }

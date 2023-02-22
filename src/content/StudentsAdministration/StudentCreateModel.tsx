@@ -171,17 +171,15 @@ const StudentCreateModal = (props: Props) => {
 
   const onUploadFiles = async (event: any) => {
     let formData = new FormData();
-    let image = event.target.files[0];
-    setProfileImage(image.name);
-    formData.append('file', image);
+    formData.append('file', event.target.files[0]);
     let img = new Image();
     img.src = window.URL.createObjectURL(event.target.files[0]);
     img.onload = async () => {
-      if (img.width <= 250 && img.height <= 250) {
+      if (img.width <= 272 && img.height <= 348) {
         const uploadImageRes: any =
           await API_SERVICES.imageUploadService.uploadImage(formData);
         if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-          toast.success(`${t('Toast.imageUploadSuccessfully')}`);
+          toast.success(`${'Image Upload Successfully'}`);
           if (uploadImageRes?.data?.images) {
             edit.update({
               image_url: uploadImageRes?.data?.images[0].Location
@@ -190,11 +188,10 @@ const StudentCreateModal = (props: Props) => {
         }
       } else {
         alert(`Sorry, this image doesn't look like the size we wanted. It's 
-        ${img.width} x ${img.height} but we require 250 x 250 size image or below this size.`);
+        ${img.width} x ${img.height} but we require 272 x 348 size image or below this size.`);
       }
     };
   };
-
   const removeProfile = () => {
     edit.update({
       image_url: ''
@@ -326,6 +323,12 @@ const StudentCreateModal = (props: Props) => {
               startAdornment: (
                 <InputAdornment position="start">
                   <ButtonComp
+                    backgroundColor={theme.Colors.primary}
+                    buttonText={'Browse'}
+                    buttonFontSize={theme.MetricsSizes.small_xxx}
+                    buttonTextColor="white"
+                    buttonFontWeight={theme.fontWeight.medium}
+                    disableElevation={true}
                     onBrowseButtonClick={onUploadFiles}
                     isBrowseButton
                     height={'30px'}

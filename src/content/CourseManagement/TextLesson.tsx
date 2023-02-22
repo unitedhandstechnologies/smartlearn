@@ -87,7 +87,6 @@ const TextLesson = ({ edit, isError, tabValue }: Props) => {
           inputLabel={'Lesson Name'}
           labelColor={theme.Colors.primary}
           value={getLessonVal}
-          required = {tabValue===1}
           onChange={(e) => {
             let value = capitalizeFirstLetter(e.target.value);
             if (tabValue === 1) {
@@ -109,7 +108,6 @@ const TextLesson = ({ edit, isError, tabValue }: Props) => {
           labelColor={theme.Colors.primary}
           value={getVideoVal?.split('/')[3] ?? ''}
           isError={(tabValue === 1)&&videoUrlError}
-          required = {tabValue===1}
           helperText={((tabValue === 1)&&videoUrlError )? 'Please select the video file':''}
           InputProps={{
             startAdornment: (

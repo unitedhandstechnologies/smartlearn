@@ -163,7 +163,7 @@ function CategoryManagement() {
           rowData?.category_id,
           {
             successMessage: 'Category Deleted Successfully',
-            failureMessage: 'This category could not be deleted'
+            failureMessage: "Category already has been using can't delete"
           }
         );
       if (deleteUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {

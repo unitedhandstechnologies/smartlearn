@@ -71,8 +71,7 @@ const AddNewLessonModal = ({
   const edit = useEdit(initialValues);
 
   const RequiredFields = [
-    'engLessonName',
-    'engVideoUrl',
+    
      ];
 
   const tabs = [

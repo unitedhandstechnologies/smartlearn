@@ -22,10 +22,10 @@ import {
     const [loading, setLoading] = useState(false);
 
     const answerOptions = [
-      { optionId: 1, optionName: 'Option_1' },
-      { optionId: 2, optionName: 'Option_2' },
-      { optionId: 3, optionName: 'Option_3' },
-      { optionId: 4, optionName: 'Option_4' },
+      { optionId: 1, optionName: 'Option 1' },
+      { optionId: 2, optionName: 'Option 2' },
+      { optionId: 3, optionName: 'Option 3' },
+      { optionId: 4, optionName: 'Option 4' },
     ];
 
     const getQuestionVal =

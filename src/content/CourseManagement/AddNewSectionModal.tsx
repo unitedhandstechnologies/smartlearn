@@ -65,7 +65,7 @@ const AddNewSectionModal = ({
   };
 
   const edit = useEdit(initialValues);
-  const RequiredFields = ['engSectionName'];
+  const RequiredFields = [];
   const tabs = [
     {
       label: 'English',
@@ -242,7 +242,6 @@ const TextInput = React.memo(({ tabValue, edit, isError }: TextProps) => {
       }}
       isError={sectionError}
       helperText={sectionError && 'Please enter the Section Title'}
-      required = {tabValue===1}
     />
   );
 });

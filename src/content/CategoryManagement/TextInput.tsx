@@ -46,27 +46,26 @@ const TextInput = ({
 
   const onUploadFiles = async (event: any) => {
     let formData = new FormData();
-    let image = event.target.files[0];
-    setProfileImage(image.name);
-    formData.append('file', image);
-    console.log('image', image);
-    if (image.size < 2 * 1024 * 1024) {
-      //image size should be below 2 MB
-      const uploadImageRes: any =
-        await API_SERVICES.imageUploadService.uploadImage(formData);
-      if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-        toast.success(`${'Image Upload Successfully'}`);
-        if (uploadImageRes?.data?.images) {
-          edit.update({
-            image_url: uploadImageRes?.data?.images[0].Location
-          });
+    formData.append('file', event.target.files[0]);
+    let img = new Image();
+    img.src = window.URL.createObjectURL(event.target.files[0]);
+    img.onload = async () => {
+      if (img.width <= 341 && img.height <= 228) {
+        const uploadImageRes: any =
+          await API_SERVICES.imageUploadService.uploadImage(formData);
+        if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+          toast.success(`${'Image Upload Successfully'}`);
+          if (uploadImageRes?.data?.images) {
+            edit.update({
+              image_url: uploadImageRes?.data?.images[0].Location
+            });
+          }
         }
+      } else {
+        alert(`Sorry, this image doesn't look like the size we wanted. It's 
+        ${img.width} x ${img.height} but we require 341 x 228 size image or below this size.`);
       }
-    } else {
-      let imgsize = image.size / (1024 * 1024);
-      alert(`Sorry, this image doesn't look like the size we wanted. It's 
-      ${imgsize.toFixed(2)}Mb but we require below 2Mb size image.`);
-    }
+    };
   };
 
   const removeProfile = () => {
