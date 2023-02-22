@@ -138,29 +138,40 @@ const CourseBegin = () => {
 
     
     const handlePlayNext = () => {
-      console.log("index of playing file",videoToPlayIndex);
-      console.log("videoToPlayIndex.sectionNumber",videoToPlayIndex.sectionNumber);
-      console.log("videoList",videoList.length);
+      console.log("videoList",videoList)
+      console.log("index of playing file",videoToPlayIndex)   
       
       let nextLessonIndex : number = videoToPlayIndex.lessonNumber;  
       let nextSectionIndex : number =  videoToPlayIndex.sectionNumber; 
-      if (nextLessonIndex-1 < videoList[nextSectionIndex].length)  {
-        nextLessonIndex++;        
+      if (nextLessonIndex < videoList[nextSectionIndex].length)  {
+        nextLessonIndex++;   
+        setVideoToPlayIndex({sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex })
+        setVideoToPlay(videoList[videoToPlayIndex.lessonNumber][videoToPlayIndex.sectionNumber]); 
+        console.log("selected video id",nextSectionIndex,nextLessonIndex)    
         return;
       }else {
-        if (nextSectionIndex-1 < videoList.length){
+        if (nextSectionIndex < videoList.length){
           nextSectionIndex++;
           nextLessonIndex=0;
+          setVideoToPlayIndex({sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex })
+          setVideoToPlay(videoList[videoToPlayIndex.lessonNumber][videoToPlayIndex.sectionNumber]);
+          console.log("selected video id",nextSectionIndex,nextLessonIndex)
+          return;
         } else{
+          setVideoToPlayIndex({sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex })
+          setVideoToPlay(videoList[videoToPlayIndex.lessonNumber][videoToPlayIndex.sectionNumber]);
           nextSectionIndex=0;
           nextLessonIndex=0;
+          console.log("selected video id",nextSectionIndex,nextLessonIndex)
+          return;
         }
-
       }
+      
     };
 
     const getVideoOfIndex = () => {
-        
+      console.log("video url",videoList[videoToPlayIndex.lessonNumber][videoToPlayIndex.sectionNumber])
+       return videoList[videoToPlayIndex.lessonNumber][videoToPlayIndex.sectionNumber]
 
     };
 
@@ -169,6 +180,7 @@ const CourseBegin = () => {
   useEffect(() => {    
       fetchData();
     }, []);
+
     if (loading) {
       return <Loader />;
     } else {
