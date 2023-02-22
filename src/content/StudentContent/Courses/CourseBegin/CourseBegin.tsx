@@ -9,6 +9,7 @@ import { Loader } from 'src/components';
 import ReactPlayer from 'react-player'
 import React from 'react';
 import { number } from 'prop-types';
+import CourseMainPage from './CourseMainPage';
 
 const useStyles = makeStyles((theme) =>({
   outerContainer: {
@@ -137,66 +138,29 @@ const CourseBegin = () => {
     },[]);
 
     
-    const handlePlayNext = () => {
-      console.log("index of playing file",videoToPlayIndex);
-      console.log("videoToPlayIndex.sectionNumber",videoToPlayIndex.sectionNumber);
-      console.log("videoList",videoList.length);
-      
-      let nextLessonIndex : number = videoToPlayIndex.lessonNumber;  
-      let nextSectionIndex : number =  videoToPlayIndex.sectionNumber; 
-      if (nextLessonIndex-1 < videoList[nextSectionIndex].length)  {
-        nextLessonIndex++;        
-        return;
-      }else {
-        if (nextSectionIndex-1 < videoList.length){
-          nextSectionIndex++;
-          nextLessonIndex=0;
-        } else{
-          nextSectionIndex=0;
-          nextLessonIndex=0;
-        }
-
-      }
-    };
-
-    const getVideoOfIndex = () => {
-        
-
-    };
-
+   
     
 
   useEffect(() => {    
       fetchData();
     }, []);
+
     if (loading) {
       return <Loader />;
     } else {
 
   return (
-  
-    <Grid container className={classes.mainContainer}>
-       <Grid item xs={12} sm={3} className={classes.outerContainer}>
-        <CourseDetails courseData = {courseData}
-          setVideoToPlay={setVideoToPlay} setVideoList= {setVideoList}
-          sectionData ={sectionData} lessonData={lessonData}
-          handleAutoPlay = {setAutoPlay}
-          setVideoToPlayIndex = {setVideoToPlayIndex}
-          />
-      </Grid>
-      <Grid item xs={12} sm={9} >
-        <Grid className={classes.playerContainer}>
-          <ReactPlayer 
-            url={videoToPlay} 
-            playing={true} 
-            controls={true}
-            width={'100%'}
-            height={'100%'}
-            onEnded={handlePlayNext}
-            />
-        </Grid>
-      </Grid>
-    </Grid>
+    <CourseMainPage 
+      courseData = {courseData}
+      videoList = {videoList}
+      videoToPlay = {videoToPlay}
+      lessonData= {lessonData}
+      sectionData = {sectionData}
+      videoToPlayIndex = {videoToPlayIndex}
+      setVideoToPlayIndex ={setVideoToPlayIndex}
+      setVideoToPlay ={setVideoToPlay}
+      setVideoList = {setVideoList}
+    />
   );
 }};
 

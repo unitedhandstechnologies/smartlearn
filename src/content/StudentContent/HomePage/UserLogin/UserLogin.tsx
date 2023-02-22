@@ -84,6 +84,21 @@ const UserLogin = () => {
           >
             Login to Continue
           </Typography>
+          <Grid container item style={{ justifyContent: 'end' }}>
+            <ButtonComp
+              buttonText="Instructor Login"
+              backgroundColor="#3C78F0"
+              buttonTextColor={theme.Colors.white}
+              buttonFontSize={16}
+              buttonFontWeight={400}
+              btnWidth="30%"
+              height="40px"
+              buttonFontFamily="Switzer"
+              onClickButton={() =>
+                navigateTo('/admin/login', { replace: true })
+              }
+            />
+          </Grid>
           <Typography
             style={{
               fontSize: 18,
@@ -305,8 +320,18 @@ const UserLogin = () => {
           </Grid>
         </Grid>
       </Grid>
-      {/* <Grid item xs={6}>
-        <RightContainer />
+      {/* <Grid item xs={2}>
+        <ButtonComp
+          buttonText="Instructor Login"
+          backgroundColor="#3C78F0"
+          buttonTextColor={theme.Colors.white}
+          buttonFontSize={16}
+          buttonFontWeight={400}
+          btnWidth="100%"
+          height="40px"
+          buttonFontFamily="Switzer"
+          onClickButton={() => navigateTo('/admin/login', { replace: true })}
+        />
       </Grid> */}
     </Grid>
   );

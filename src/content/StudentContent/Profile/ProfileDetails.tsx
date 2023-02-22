@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer'
   },
   buttonStyle: {
-    paddingTop: '10px',
+    paddingTop: '15px',
 
     textTransform: 'none'
   },
@@ -72,6 +72,7 @@ const ProfileDetails = () => {
   const edit = useEdit(initialValues);
   const [isEdit, setIsEdit] = useState<number>(0);
   console.log(studentDetails, ' profile');
+
   const onEditClick = (editEvent: any) => {
     edit.reset();
     setIsEdit(parseInt(editEvent.currentTarget.id));
@@ -79,11 +80,6 @@ const ProfileDetails = () => {
 
   const handleChange = (event) => {
     edit.update({ [event.target.name]: event.target.value });
-    if (event.key === 'enter') {
-      console.log('inside');
-
-      handleSave();
-    }
   };
 
   const handleSave = async () => {
@@ -188,7 +184,7 @@ const ProfileDetails = () => {
         <Avatar
           alt=""
           src={edit.getValue('image_url') || Avatar1}
-          style={{ width: 160, height: 160, padding: 15 }}
+          style={{ width: 150, height: 150 }}
         />
         {/* <Typography
           style={{
@@ -231,11 +227,6 @@ const ProfileDetails = () => {
             onChange={handleChange}
             name="first_name"
             disabled={isEdit !== 1}
-            onKeyPress={(event) => {
-              if (event.key === 'Enter') {
-                handleSave();
-              }
-            }}
             iconEnd={<EditComp btnId={1} />}
           />
         </Grid>
@@ -251,16 +242,13 @@ const ProfileDetails = () => {
             onChange={handleChange}
             name="last_name"
             disabled={isEdit !== 2}
-            iconEnd={
-              <IconButton id="2" onClick={onEditClick}>
-                <EditOutlined />
-              </IconButton>
-            }
-            onKeyPress={(event) => {
-              if (event.key === 'Enter') {
-                handleSave();
-              }
-            }}
+            // iconEnd={
+            //   <IconButton id="2" onClick={onEditClick}>
+            //     <EditOutlined />
+            //   </IconButton>
+            // }
+
+            iconEnd={<EditComp btnId={2} />}
           />
         </Grid>
       </Grid>
