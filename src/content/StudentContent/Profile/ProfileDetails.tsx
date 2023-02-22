@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Button,
   Grid,
   IconButton,
@@ -16,6 +17,10 @@ import {
 } from 'src/components';
 import { useEdit } from 'src/hooks/useEdit';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
+import { API_SERVICES } from 'src/Services';
+import { HTTP_STATUSES } from 'src/Config/constant';
+import toast from 'react-hot-toast';
+import Divider from '@mui/material/Divider';
 
 const useStyles = makeStyles((theme) => ({
   forgotTxt: {
@@ -25,7 +30,9 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer'
   },
   buttonStyle: {
-    paddingTop: '10px'
+    paddingTop: '10px',
+
+    textTransform: 'none'
   },
   cancelButtonStyle: {
     color: theme.Colors.redPrimary,
@@ -34,8 +41,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.MetricsSizes.small_xx,
     textTransform: 'none',
     background: 'none',
-    padding: 0,
-    marginBottom: theme.MetricsSizes.small_x
+    padding: 3
+    //marginBottom: theme.MetricsSizes.small_x
   },
   saveButtonStyle: {
     color: theme.Colors.secondary,
@@ -44,8 +51,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.MetricsSizes.small_xx + 1,
     textTransform: 'none',
     background: 'none',
-    padding: 0,
-    marginBottom: theme.MetricsSizes.small_x,
+    padding: 3,
+    //marginBottom: theme.MetricsSizes.small_x,
     display: 'flex',
     alignItems: 'center'
   }
@@ -54,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
 const ProfileDetails = () => {
   const classes = useStyles();
   const { studentDetails } = useContext(StudentInfoContext);
+  const [profileImage, setProfileImage] = useState('No file choosen');
   const initialValues = {
     image_url: studentDetails.image_url || '',
     first_name: studentDetails.first_name || '',
@@ -91,6 +99,31 @@ const ProfileDetails = () => {
     //   setIsEdit(0);
     // }
   };
+  const onUploadFiles = async (event: any) => {
+    let formData = new FormData();
+    let image = event.target.files[0];
+    setProfileImage(image.name);
+    formData.append('file', image);
+    let img = new Image();
+    img.src = window.URL.createObjectURL(event.target.files[0]);
+    img.onload = async () => {
+      if (img.width <= 250 && img.height <= 250) {
+        const uploadImageRes: any =
+          await API_SERVICES.imageUploadService.uploadImage(formData);
+        if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+          toast.success('image Edit Successfully');
+          if (uploadImageRes?.data?.images) {
+            edit.update({
+              image_url: uploadImageRes?.data?.images[0].Location
+            });
+          }
+        }
+      } else {
+        alert(`Sorry, this image doesn't look like the size we wanted. It's
+      ${img.width} x ${img.height} but we require 250 x 250 size image or below this size.`);
+      }
+    };
+  };
 
   const handleClickCancelBtn = () => {
     edit.reset();
@@ -99,8 +132,8 @@ const ProfileDetails = () => {
 
   const EditComp = ({ btnId }: { btnId?: number }) => {
     return isEdit === btnId ? (
-      <Grid container>
-        <Grid item>
+      <Grid container spacing={2} style={{ padding: 4 }}>
+        <Grid item xs={6}>
           <Button
             id={btnId.toString()}
             className={classes.cancelButtonStyle}
@@ -109,7 +142,7 @@ const ProfileDetails = () => {
             {'Cancel'}
           </Button>
         </Grid>
-        <Grid item>
+        <Grid item xs={6}>
           <Button
             id={btnId.toString()}
             className={classes.saveButtonStyle}
@@ -137,19 +170,25 @@ const ProfileDetails = () => {
       />
       <Grid
         xs={2}
+        container
         item
         style={{
-          paddingLeft: 10,
+          padding: 10,
           alignItems: 'center',
           justifyContent: 'center'
         }}
       >
-        <img
-          src={Avatar1}
+        {/* <img
+          src={edit.getValue('image_url') || Avatar1}
           alt="Not found"
           width={160}
           height={160}
           style={{ marginLeft: 5 }}
+        /> */}
+        <Avatar
+          alt=""
+          src={edit.getValue('image_url') || Avatar1}
+          style={{ width: 160, height: 160, padding: 15 }}
         />
         {/* <Typography
           style={{
@@ -165,16 +204,18 @@ const ProfileDetails = () => {
         >
           Edit
         </Typography> */}
+
         <ButtonComp
-          backgroundColor={'white'}
+          backgroundColor={'#FFFFFF'}
           buttonText="Edit"
           buttonFontSize={18}
           buttonTextColor="#3C78F0"
           buttonFontWeight={400}
-          disableElevation={true}
-          //onBrowseButtonClick={onUploadFiles}
+          //disableElevation={true}
+          onBrowseButtonClick={onUploadFiles}
           isBrowseButton
           height={'30px'}
+          className={classes.buttonStyle}
         />
       </Grid>
       <Grid container spacing={2} item style={{ paddingTop: 15 }}>
@@ -297,6 +338,7 @@ const ProfileDetails = () => {
           />
         </Grid>
       </Grid>
+      <Divider sx={{ color: '#F2F4F7', marginTop: 5, height: '1px' }} />
       <Grid container style={{ paddingTop: 15 }}>
         <Heading
           headingText={'Change Password'}

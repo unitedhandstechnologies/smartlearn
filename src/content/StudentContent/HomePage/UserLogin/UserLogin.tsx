@@ -53,7 +53,7 @@ const UserLogin = () => {
           }
         }
         toast.success('Profile Login sucessfully');
-        navigateTo('/home', { replace: true });
+        navigateTo('/home/profilehome', { replace: true });
       }
     } catch (e) {
       console.log(e, '---login err-----');

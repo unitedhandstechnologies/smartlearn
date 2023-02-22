@@ -13,6 +13,7 @@ import PreRecordedCourses from 'src/content/StudentContent/Courses/PreRecordedCo
 import WorkShopDetails from '../content/StudentContent/WorkShopPages/WorkShopDetails';
 import MentorCreatedCourses from 'src/content/StudentContent/MasterclassesPages/MentorCourses';
 import MentorCourseDescription from 'src/content/StudentContent/MasterclassesPages/MentorCourseDescription';
+import ProfileHome from 'src/content/StudentContent/Profile/ProfileHome';
 
 export const HomeRoutes: RouteObject[] = [
   {
@@ -37,7 +38,8 @@ export const HomeRoutes: RouteObject[] = [
       { path: 'user-registration', element: <Registration /> },
       { path: 'profile', element: <Profile /> },
       { path: 'pre-recordedCourse', element: <PreRecordedCourses /> },
-      { path: 'workshopDetails', element: <WorkShopDetails /> }
+      { path: 'workshopDetails', element: <WorkShopDetails /> },
+      { path: 'profilehome', element: <ProfileHome /> }
     ]
   }
 ];

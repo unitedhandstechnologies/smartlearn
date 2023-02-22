@@ -1,10 +1,11 @@
-import { Grid, makeStyles, useTheme } from '@material-ui/core';
-import React, { useState } from 'react';
+import { Avatar, Grid, makeStyles, useTheme } from '@material-ui/core';
+import React, { useContext, useState } from 'react';
 import { Avatar1, BlueLine } from 'src/Assets';
 import { Heading, MuiTabComponent } from 'src/components';
 import MyLibrary from './MyLibrary';
 import PaymentHistory from './PaymentHistory';
 import ProfileDetails from './ProfileDetails';
+import { StudentInfoContext } from 'src/contexts/StudentContext';
 
 const useStyles = makeStyles((theme) => ({
   gridStyle: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const { studentDetails } = useContext(StudentInfoContext);
   const tabContent = [
     {
       label: 'Profile',
@@ -67,10 +69,10 @@ const Profile = () => {
     return (
       <>
         <Grid>
-          <img src={Avatar1} alt="Not found" width={100} height={100} />
+          <Avatar alt="" src={Avatar1} style={{ width: 100, height: 100 }} />
         </Grid>
         <Heading
-          headingText={'Profile details'}
+          headingText={`${studentDetails.first_name} ${studentDetails.last_name}`}
           headerFontSize={'32px'}
           headerFontWeight={500}
           headerFontFamily={'IBM Plex Serif'}

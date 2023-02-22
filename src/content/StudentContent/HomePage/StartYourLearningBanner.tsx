@@ -56,7 +56,8 @@ const StartYourLearningBanner = () => {
         sx={{
           [theme.breakpoints.down('xs')]: {
             justifyContent: 'center'
-          }
+          },
+          zIndex: 1
         }}
       >
         <ButtonComp
