@@ -126,7 +126,7 @@ const Mentors = ({
                   key={index}
                   item
                   xs={12}
-                  sm={2}
+                  sm={3}
                   md={3}
                   className={classes.eachItem}
                 >

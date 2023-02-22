@@ -32,9 +32,9 @@ import { StudentInfoContext } from 'src/contexts/StudentContext';
 
 const pages = [
   { label: 'Courses', path: 'courses' },
-  { label: 'Workshops', path: 'Workshops' },
-  { label: 'Seminars/Webinars', path: 'Seminars/Webinars' },
-  { label: 'Masterclasses', path: 'Masterclasses' }
+  { label: 'Workshops', path: 'workshops' },
+  { label: 'Seminars/Webinars', path: 'seminars-webinars' },
+  { label: 'Masterclasses', path: 'masterclasses' }
 ];
 
 function NavBar() {

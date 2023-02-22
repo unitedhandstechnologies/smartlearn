@@ -26,10 +26,13 @@ export const HomeRoutes: RouteObject[] = [
       { path: '', element: <HomePage /> },
       { path: 'courses', element: <Courses /> },
       { path: 'workshops', element: <WorkShop /> },
-      { path: 'seminars/webinars', element: <Seminars /> },
+      { path: 'seminars-webinars', element: <Seminars /> },
       { path: 'masterclasses', element: <Masterclasses /> },
       { path: 'mentor-courseProfile', element: <MentorCreatedCourses /> },
-      { path: 'mentor-courseProfile/masterClass-courseDetails', element: <MentorCourseDescription /> },
+      {
+        path: 'mentor-courseProfile/masterClass-courseDetails',
+        element: <MentorCourseDescription />
+      },
       { path: 'user-login', element: <UserLogin /> },
       { path: 'user-registration', element: <Registration /> },
       { path: 'profile', element: <Profile /> },
