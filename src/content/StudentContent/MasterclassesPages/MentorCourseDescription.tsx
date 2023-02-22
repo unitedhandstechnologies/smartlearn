@@ -93,19 +93,31 @@ const MentorCourseDescription = () => {
         container
         justifyContent={'flex-end'}
         position={'absolute'}
+        width={'94%'}
         xs={12}
         sx={{
           zIndex: 1,
+          paddingBottom: 8,
           bottom: 0,
-          paddingRight: 10,
-          [theme.breakpoints.down(1100)]: {
-            display: 'none'
+          [theme.breakpoints.down('md')]: {
+            paddingTop: 5,
+            justifyContent: 'center',
+            position: 'relative',
+            width:"100%"
           }
         }}
       >
         <ApplyNow />
       </Grid>
-      <Grid container paddingTop={3}>
+      <Grid
+        container
+        paddingTop={22}
+        sx={{
+          [theme.breakpoints.down('md')]: {
+            paddingTop: 1
+          }
+        }}
+      >
         <Grid item xs={12} md={9}>
           <CourseDescription />
         </Grid>
