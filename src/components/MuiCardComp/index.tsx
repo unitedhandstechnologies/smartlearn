@@ -252,18 +252,29 @@ const MuiCardComp = ({
           ) : null}
         </Grid>
       </CardActions>
-      <Grid container style={{ padding: '20px 0px' }}>
-        <Grid item style={{marginRight: 10}}>
-          <ListItemCell
-            title={leftText === 'PAID' ? prize : leftText}
-            subTitle={leftText === 'PAID' ? 'including GST' : null}
-          />
+      <Grid
+        container
+        style={{
+          padding: '20px 0px',
+          display: 'flex',
+          alignContent: 'center',
+          gap: 10
+        }}
+      >
+        <Grid item style={{ marginRight: 10 }}>
+          {leftText === 'PAID' ? (
+            <ListItemCell title={prize} subTitle={'including GST'} />
+          ) : (
+            <h1 style={{ color: '#1c1d1f', textAlign: 'center' }}>Free</h1>
+          )}
         </Grid>
         <Grid item xs>
           <ButtonComp
-            buttonText="Start Learning"
+            height={40}
+            buttonText="Start learning"
             btnWidth={'100%'}
             backgroundColor={theme.Colors.secondary}
+            buttonFontSize={16}
             btnBorderRadius={'4px'}
           />
         </Grid>
@@ -277,11 +288,13 @@ const MuiCardComp = ({
         >
           <IconButton
             style={{
-              color: '#3C78F0',
-              background: 'transparent'
+              // color: '#3C78F0',
+              background: 'transparent',
+              [theme.breakpoints.down('md')]: {
+                display: 'none'
+              }
             }}
             disableRipple
-            onClick={(e) => console.log('e', e)}
           >
             <FavoriteIcon />
           </IconButton>

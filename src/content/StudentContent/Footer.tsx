@@ -9,7 +9,7 @@ import {
   Twitter
 } from '../../Assets/Images';
 import Typography from '@mui/material/Typography';
-import { ButtonComp, TextInputComponent, BoxComp } from '../../components';
+import { ButtonComp, TextInputComponent } from '../../components';
 import Divider from '@mui/material/Divider';
 import { useTheme } from '@material-ui/core/styles';
 
