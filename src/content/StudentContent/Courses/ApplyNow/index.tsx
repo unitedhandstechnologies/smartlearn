@@ -12,8 +12,8 @@ import FavIcon from '../../../../Assets/Images/FavIcon.svg';
 
 const classes = {
   containerStyle: {
-    width: '325px',
-    height: '365px',
+    width: '25%',
+    height: '100%',
     boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.09)',
     borderRadius: '4px',
     padding: 4

@@ -180,7 +180,6 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
   };
 
   const getSearchValue = (searchValue) => {
-    console.log(searchValue);
     setSearchValue(searchValue);
   };
 
@@ -217,7 +216,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
               }
             }}
           >
-            Upcoming{" "}
+            Upcoming{' '}
             <span style={{ color: theme.Colors.secondary }}>masterclasses</span>
           </Typography>
           <Grid
@@ -246,7 +245,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
                 ))}
               </Grid>
             </Grid>
-            <Grid paddingBottom={2}>
+            <Grid paddingBottom={4}>
               <InputBase
                 onChange={(e) => getSearchValue(e.target.value)}
                 value={searchValue}
@@ -258,7 +257,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
                     width: 300,
                     border: '1px solid #3C78F0',
                     borderRadius: 50,
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: 400,
                     padding: theme.spacing(0.3, 0.5)
                   }

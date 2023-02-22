@@ -1,7 +1,31 @@
 import { Typography, useTheme, Avatar, makeStyles } from '@material-ui/core';
 import { Grid, Box } from '@mui/material';
 import React from 'react';
-import { whiteLine } from 'src/Assets';
+import { chatIcon, Star, whiteLine, Intermediate, Online } from 'src/Assets';
+import CourseRating from './CourseRating/Index';
+
+const review = [
+  {
+    name: '4.5',
+    subText: 'Ratings',
+    img: Star
+  },
+  {
+    name: 'English',
+    subText: 'Course language',
+    img: chatIcon
+  },
+  {
+    name: 'Intermediate',
+    subText: 'Difficulty level',
+    img: Intermediate
+  },
+  {
+    name: 'Online',
+    subText: 'Study mode',
+    img: Online
+  }
+];
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -55,7 +79,8 @@ const CourseBanner = ({
         xs={12}
         md={6}
         direction="column"
-        justifyContent="center"
+        paddingTop={mentorProfile ? 3 : 0}
+        justifyContent={mentorProfile ? 'flex-start' : 'center'}
         alignItems="flex-start"
         sx={{ zIndex: 1 }}
       >
@@ -151,11 +176,13 @@ const CourseBanner = ({
       >
         <Grid
           sx={{
+            height: `${mentorProfile ? '150%' : '100%'}`,
             background: '#002350',
             width: '150px'
           }}
         />
       </Grid>
+      {mentorProfile ? <CourseRating review={review} /> : null}
       <Grid
         sx={{
           height: '100%',
@@ -171,7 +198,7 @@ const CourseBanner = ({
           sx={{
             transform: 'skewX(-40deg)',
             background: '#78B4FF',
-            width: '50px'
+            width: '80px'
           }}
         />
         <Grid

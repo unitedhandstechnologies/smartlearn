@@ -12,6 +12,7 @@ import Profile from 'src/content/StudentContent/Profile';
 import PreRecordedCourses from 'src/content/StudentContent/Courses/PreRecordedCourses';
 import WorkShopDetails from '../content/StudentContent/WorkShopPages/WorkShopDetails';
 import MentorCreatedCourses from 'src/content/StudentContent/MasterclassesPages/MentorCourses';
+import MentorCourseDescription from 'src/content/StudentContent/MasterclassesPages/MentorCourseDescription';
 
 export const HomeRoutes: RouteObject[] = [
   {
@@ -28,6 +29,7 @@ export const HomeRoutes: RouteObject[] = [
       { path: 'seminars/webinars', element: <Seminars /> },
       { path: 'masterclasses', element: <Masterclasses /> },
       { path: 'mentor-courseProfile', element: <MentorCreatedCourses /> },
+      { path: 'mentor-courseProfile/masterClass-courseDetails', element: <MentorCourseDescription /> },
       { path: 'user-login', element: <UserLogin /> },
       { path: 'user-registration', element: <Registration /> },
       { path: 'profile', element: <Profile /> },

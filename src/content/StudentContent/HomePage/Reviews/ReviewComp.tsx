@@ -87,7 +87,7 @@ export const ReviewBox = ({
   return (
     <Box
       sx={{
-        padding: '25px',
+        padding: '20px',
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
@@ -119,7 +119,7 @@ export const ReviewBox = ({
           </Grid>
         )}
         {imgUrl && (
-          <Grid item sx={{ paddingRight: 5 }}>
+          <Grid item sx={{paddingRight: 3}}>
             <img src={imgUrl} alt="Not Found" />
           </Grid>
         )}
@@ -156,7 +156,7 @@ export const ReviewBox = ({
             {subText}
             <Typography
               sx={{
-                padding: '10px 5px 0px 0px'
+                padding: '5px 5px 0px 0px'
               }}
             >
               {review}
