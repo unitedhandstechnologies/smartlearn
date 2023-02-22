@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -46,9 +46,14 @@ const CourseTitleDetails = ({
   lessonData,
   sectionData,
   studentDetails,
-  setVideoToPlay
+  setVideoToPlay,
+  setVideoList,
+  handleAutoPlay,
+  setVideoToPlayIndex
 })=> {
 
+  console.log("lessonData dfg",lessonData)
+  console.log("sectionData dzfgsdfg",sectionData)
   const classes = useStyles();
   //const icon = completed ? <CheckCircleIcon /> : <ExpandMoreIcon />;
 
@@ -73,13 +78,10 @@ const CourseTitleDetails = ({
 
   )};
 
-  const getAccordionContents: any = React.useMemo(() => {
-    console.log("sectionData",sectionData);
+  
 
-    console.log("lessonData", lessonData);
-    
-    
-    console.log("inside get accordian")
+  const getAccordionContents: any = React.useMemo(() => {
+  
     return sectionData?.length
       ? sectionData.map((item, index) => {
         const sectionNumber = index + 1;
@@ -119,8 +121,6 @@ const CourseTitleDetails = ({
               <Grid container direction="column" spacing={2}>
                 {getLessonData.length
                   ? getLessonData.map((item, index) => {
-
-
                       return (
                         <Grid
                           item
@@ -130,7 +130,9 @@ const CourseTitleDetails = ({
                           style={{ gap: 10 }}
                           alignItems="center"
                           direction={'row'}
-                          onClick={()=>{setVideoToPlay(item.video_url)}}
+                          onClick={()=>{handleAutoPlay(false);
+                            setVideoToPlay(item.video_url);
+                            setVideoToPlayIndex({sectionNumber:sectionNumber-1,lessonNumber : index})}}
                         >
                           <Grid item display={'flex'} alignItems={'center'} justifyContent={'center'}>
                           <CircularProgressWithLabel 
@@ -172,10 +174,22 @@ const CourseTitleDetails = ({
                  
               </Grid>
             )
+           
           };
-        })
+          
+        }
+       
+        )
+        
       : [];
+      
   }, [sectionData, lessonData]);
+
+  
+  useEffect(() => {    
+
+  }, []);
+
   return (
  
     <MuiAccordionComp

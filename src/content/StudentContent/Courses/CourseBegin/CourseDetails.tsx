@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import CourseTitleDetails from 'src/content/StudentContent/Courses/CourseBegin/CourseTitleDetails';
 import { Grid, makeStyles, styled, useTheme } from '@material-ui/core';
@@ -6,6 +6,8 @@ import { stickyNoteLine , timeLine } from 'src/Assets/Images'
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
 import toast from 'react-hot-toast';
+import React from 'react';
+import { Loader } from 'src/components';
 
 const TopicsListGrid = styled(Grid)(({ theme }) => ({
   padding : '24px 0px'
@@ -28,18 +30,21 @@ const LessonGrid = styled(Grid)(({theme}) => ({
 
 const CourseDetails = ({
   courseData,
-  setVideoToPlay
+  setVideoToPlay,
+  setVideoList,
+  lessonData,
+  sectionData,
+  handleAutoPlay,
+  setVideoToPlayIndex
   //studentDetails
 }) => {
   const theme = useTheme();
-  const [lessonData, setLessonData] = useState<any[]>([]);
-  const [sectionData, setSectionData] = useState<any[]>([]);
 
-  
+ 
 const studentDetails = {
   remainingDuration : "11hrs 45mins 30 sec",
 };
-const fetchSectionData = async () => {
+/* const fetchSectionData = useCallback(async () => {
   try {
     setSectionData([]);
     const response: any =
@@ -54,9 +59,9 @@ const fetchSectionData = async () => {
     catch (err) {
     toast.error(err?.message);
   }
-};
+},[courseData]);
 
-const fetchLessonData = async () => {
+const fetchLessonData = useCallback(async () => {
   try {
     setLessonData([]);
     const response: any =
@@ -71,12 +76,45 @@ const fetchLessonData = async () => {
   } catch (err) {
     toast.error(err?.message);
   }
-};
+ 
+},[sectionData]);
+
+const getVideoList = useCallback(() => {
+    
+  console.log("set list calledhvjh")
+  console.log("lessonData",lessonData)
+  console.log("sectionData",sectionData)
+    let tempVideoList = Array(sectionData?.length).fill(0).map((sectionData,index) =>      
+  new Array((lessonData.length
+    ? lessonData.filter(
+        (lessonItm) => lessonItm.section_id === sectionData.section_id
+        
+      )
+    : []).length) );
+  
+    if(sectionData?.length){
+         sectionData.map((item, index) => {
+          const sectionNumber = index + 1;
+            let getLessonData: any = lessonData.length
+              ? lessonData.filter(
+                  (lessonItm) => lessonItm.section_id === item.section_id
+                )
+              : [];
+              if(getLessonData.length) {
+                     getLessonData.map((item, index) => {
+                      console.log("item.video_url",item.video_url)
+                      tempVideoList[sectionNumber-1][index] = item.video_url;
+                      console.log("tempVideoList",tempVideoList) } )}
+        }) }
+  console.log("tempVideoList");
+  setVideoList(tempVideoList);
+  setLoading(false);
+  },[lessonData]) ;
 
 useEffect(() => {   
-  fetchSectionData();
-  fetchLessonData();
-}, []);
+
+}, []); */
+
 
                
 
@@ -87,10 +125,16 @@ useEffect(() => {
         lessonData = {lessonData} 
         studentDetails = {studentDetails}
         setVideoToPlay = {setVideoToPlay}
+        setVideoList = {setVideoList}
+        handleAutoPlay = {handleAutoPlay}
+        setVideoToPlayIndex = {setVideoToPlayIndex}
       />
     )
   };
 
+
+
+    
   return (
     <Grid >
       <Typography 
