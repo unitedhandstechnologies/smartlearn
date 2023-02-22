@@ -48,7 +48,7 @@ const CourseTitleDetails = ({
   studentDetails,
   setVideoToPlay,
   setVideoList,
-  handleAutoPlay,
+  //handleAutoPlay,
   setVideoToPlayIndex
 })=> {
 
@@ -130,7 +130,7 @@ const CourseTitleDetails = ({
                           style={{ gap: 10 }}
                           alignItems="center"
                           direction={'row'}
-                          onClick={()=>{handleAutoPlay(false);
+                          onClick={()=>{
                             setVideoToPlay(item.video_url);
                             setVideoToPlayIndex({sectionNumber:sectionNumber-1,lessonNumber : index})}}
                         >
