@@ -69,10 +69,14 @@ const Profile = () => {
     return (
       <>
         <Grid>
-          <Avatar alt="" src={Avatar1} style={{ width: 100, height: 100 }} />
+          <Avatar
+            alt=""
+            src={studentDetails.image_url || Avatar1}
+            style={{ width: 100, height: 100 }}
+          />
         </Grid>
         <Heading
-          headingText={`${studentDetails.first_name} ${studentDetails.last_name}`}
+          headingText={studentDetails.first_name}
           headerFontSize={'32px'}
           headerFontWeight={500}
           headerFontFamily={'IBM Plex Serif'}

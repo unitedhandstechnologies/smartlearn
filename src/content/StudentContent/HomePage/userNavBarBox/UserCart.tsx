@@ -1,4 +1,4 @@
-import { Badge, Grid, Typography, Box } from '@material-ui/core';
+import { Badge, Grid, Typography, Box, Avatar } from '@material-ui/core';
 import {
   CartImg,
   UserProfile,
@@ -75,13 +75,18 @@ const UserCart = (props: Props) => {
       <Grid>
         <IconButton aria-label="cart" onClick={handleCartClick}>
           <Badge badgeContent={badgeContent || 4} color="secondary">
-            <img src={CartImg} width={'23.92px'} height={'24.24px'} />
+            <img src={CartImg} width={25} height={25} />
           </Badge>
         </IconButton>
       </Grid>
       <Grid style={{ paddingLeft: 8 }}>
         <IconButton aria-label="profile" onClick={handleProfileClick}>
-          <img src={image || UserProfile} width={'32px'} height={'32px'} />{' '}
+          {/* <img src={image || UserProfile} width={'32px'} height={'32px'} />{' '} */}
+          <Avatar
+            alt=""
+            src={image || UserProfile}
+            style={{ width: '32px', height: '32px' }}
+          />
         </IconButton>
       </Grid>
       <Grid>

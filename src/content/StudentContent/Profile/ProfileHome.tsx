@@ -24,6 +24,7 @@ import Mentors from '../HomePage/Mentors';
 import Reviews from '../HomePage/Reviews';
 import StartYourLearningBanner from '../HomePage/StartYourLearningBanner';
 import FAQs from '../HomePage/FAQs';
+import Rateyourcourse from './Rateyourcourse';
 
 const ProfileHome = () => {
   const theme = useTheme();
@@ -33,6 +34,7 @@ const ProfileHome = () => {
   const [faqDetails, setFaqDetails] = useState([]);
   const [ratingData, setRatingData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [bellOpen, setBellOpen] = useState(null);
   // const { searchValue } = useSearchVal();
   // const debValue = useDebounce(searchValue, 2000)
   const fetchData = useCallback(async () => {
@@ -83,7 +85,12 @@ const ProfileHome = () => {
       setLoading(false);
     }
   }, []);
-
+  const handleBellClick = (event) => {
+    setBellOpen(event.currentTarget);
+  };
+  const handleBellClose = () => {
+    setBellOpen(null);
+  };
   useEffect(() => {
     fetchData();
   }, []);
@@ -157,6 +164,12 @@ const ProfileHome = () => {
             <ButtonComp
               buttonText="Rate your experience"
               style={{ zIndex: 1 }}
+              onClick={handleBellClick}
+            />
+            <Rateyourcourse
+              notifications={notifications}
+              anchorEl={bellOpen}
+              handleClose={handleBellClose}
             />
           </Grid>
         </Grid>
@@ -232,3 +245,17 @@ const ProfileHome = () => {
   }
 };
 export default memo(ProfileHome);
+const notifications = [
+  {
+    title: '1.How was your experience with the course?',
+    content: ''
+  },
+  {
+    title: '2. How was your experience with your instructor?',
+    content: ''
+  },
+  {
+    title: '3. How can we improve to provide you a better experience?',
+    content: ''
+  }
+];
