@@ -57,7 +57,7 @@ const UserCart = (props: Props) => {
           value={item.name}
           valueColor={`${index === 2 ? '#78828C' : '#3C414B'}`}
         />
-        {index === 1 ? <Divider style={{ paddingTop: 10 }} /> : null}
+        {index === 1 ? <Divider style={{ marginTop: 8 }} /> : null}
       </Grid>
     );
   };
@@ -94,13 +94,14 @@ const UserCart = (props: Props) => {
           style={{
             fontSize: '16px',
             fontWeight: 400,
-            color: '#3C414B'
+            color: '#3C414B',
+            padding: 4
           }}
         >
           {userName || 'Cameron'}
         </Typography>
       </Grid>
-      <Divider orientation="vertical" style={{ width: 15, height: 35 }} />
+      <Divider orientation="vertical" style={{ width: 1, height: 30 }} />
       <Grid style={{ paddingLeft: 2 }}>
         <IconButton aria-label="Bell" onClick={handleBellClick}>
           <img src={BellImg} width={'23.33px'} height={'24.5px'} />

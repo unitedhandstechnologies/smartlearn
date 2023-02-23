@@ -166,11 +166,6 @@ const ProfileHome = () => {
               style={{ zIndex: 1 }}
               onClick={handleBellClick}
             />
-            <Rateyourcourse
-              notifications={notifications}
-              anchorEl={bellOpen}
-              handleClose={handleBellClose}
-            />
           </Grid>
         </Grid>
         <Grid container direction="column" paddingTop={4}>
@@ -238,6 +233,11 @@ const ProfileHome = () => {
           style={{ padding: theme.spacing(7, 7) }}
         >
           <FAQs faqDetails={faqDetails} />
+          <Rateyourcourse
+            notifications={notifications}
+            anchorEl={bellOpen}
+            handleClose={handleBellClose}
+          />
           {/* <WishListCourse /> */}
         </Grid>
       </Grid>

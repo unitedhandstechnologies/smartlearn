@@ -4,7 +4,8 @@ import {
   Grid,
   IconButton,
   makeStyles,
-  Typography
+  Typography,
+  useTheme
 } from '@material-ui/core';
 import { EditOutlined } from '@material-ui/icons';
 import React, { useContext, useState } from 'react';
@@ -30,9 +31,8 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer'
   },
   buttonStyle: {
-    paddingTop: '15px',
-
-    textTransform: 'none'
+    marginTop: '25px',
+    padding: theme.spacing(0, 1, 0, 0)
   },
   cancelButtonStyle: {
     color: theme.Colors.redPrimary,
@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProfileDetails = () => {
+  const theme = useTheme();
   const classes = useStyles();
   const { studentDetails } = useContext(StudentInfoContext);
   const [profileImage, setProfileImage] = useState('No file choosen');
@@ -149,7 +150,7 @@ const ProfileDetails = () => {
         </Grid>
       </Grid>
     ) : (
-      <IconButton id="1" onClick={onEditClick}>
+      <IconButton id={btnId.toString()} onClick={onEditClick}>
         <EditOutlined />
       </IconButton>
     );
@@ -174,17 +175,17 @@ const ProfileDetails = () => {
           justifyContent: 'center'
         }}
       >
-        {/* <img
-          src={edit.getValue('image_url') || Avatar1}
-          alt="Not found"
-          width={160}
-          height={160}
-          style={{ marginLeft: 5 }}
-        /> */}
         <Avatar
           alt=""
           src={edit.getValue('image_url') || Avatar1}
-          style={{ width: 150, height: 150 }}
+          style={{
+            width: 150,
+            height: 150,
+            [theme.breakpoints.down('sm')]: {
+              width: 50,
+              height: 50
+            }
+          }}
         />
         {/* <Typography
           style={{
@@ -202,16 +203,16 @@ const ProfileDetails = () => {
         </Typography> */}
 
         <ButtonComp
-          backgroundColor={'#FFFFFF'}
+          backgroundColor={'transparent'}
           buttonText="Edit"
           buttonFontSize={18}
           buttonTextColor="#3C78F0"
           buttonFontWeight={400}
-          //disableElevation={true}
+          disableElevation={true}
           onBrowseButtonClick={onUploadFiles}
           isBrowseButton
           height={'30px'}
-          className={classes.buttonStyle}
+          btnWidth={'fit-content'}
         />
       </Grid>
       <Grid container spacing={2} item style={{ paddingTop: 15 }}>
@@ -264,17 +265,18 @@ const ProfileDetails = () => {
             }}
             name="phone_number"
             onChange={handleChange}
-            disabled={isEdit !== 3}
+            //disabled={isEdit !== 3}
             // iconEnd={
             //   <IconButton id="3" onClick={onEditClick}>
             //     <EditOutlined />
             //   </IconButton>
             // }
-            onKeyPress={(event) => {
-              if (event.key === 'Enter') {
-                handleSave();
-              }
-            }}
+            // onKeyPress={(event) => {
+            //   if (event.key === 'Enter') {
+            //     handleSave();
+            //   }
+            // }}
+            //iconEnd={<EditComp btnId={3} />}
           />
         </Grid>
         <Grid item xs={5}>
@@ -289,16 +291,17 @@ const ProfileDetails = () => {
             name="phone_number"
             onChange={handleChange}
             disabled={isEdit !== 3}
-            iconEnd={
-              <IconButton id="3" onClick={onEditClick}>
-                <EditOutlined />
-              </IconButton>
-            }
-            onKeyPress={(event) => {
-              if (event.key === 'Enter') {
-                handleSave();
-              }
-            }}
+            // iconEnd={
+            //   <IconButton id="3" onClick={onEditClick}>
+            //     <EditOutlined />
+            //   </IconButton>
+            // }
+            // onKeyPress={(event) => {
+            //   if (event.key === 'Enter') {
+            //     handleSave();
+            //   }
+            // }}
+            iconEnd={<EditComp btnId={3} />}
           />
         </Grid>
         <Grid item xs={6}>
@@ -313,16 +316,17 @@ const ProfileDetails = () => {
             onChange={handleChange}
             name="email_id"
             disabled={isEdit !== 4}
-            iconEnd={
-              <IconButton id="4" onClick={onEditClick}>
-                <EditOutlined />
-              </IconButton>
-            }
-            onKeyPress={(event) => {
-              if (event.key === 'Enter') {
-                handleSave();
-              }
-            }}
+            iconEnd={<EditComp btnId={4} />}
+            // iconEnd={
+            //   <IconButton id="4" onClick={onEditClick}>
+            //     <EditOutlined />
+            //   </IconButton>
+            // }
+            // onKeyPress={(event) => {
+            //   if (event.key === 'Enter') {
+            //     handleSave();
+            //   }
+            // }}
           />
         </Grid>
       </Grid>

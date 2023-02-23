@@ -175,21 +175,21 @@ const StudentCreateModal = (props: Props) => {
     let img = new Image();
     img.src = window.URL.createObjectURL(event.target.files[0]);
     img.onload = async () => {
-      if (img.width <= 270 && img.width >= 200 && img.height <= 350 && img.height >=250) {
-        const uploadImageRes: any =
-          await API_SERVICES.imageUploadService.uploadImage(formData);
-        if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-          toast.success(`${'Image Upload Successfully'}`);
-          if (uploadImageRes?.data?.images) {
-            edit.update({
-              image_url: uploadImageRes?.data?.images[0].Location
-            });
-          }
+      // if (img.width <= 270 && img.width >= 200 && img.height <= 350 && img.height >=250) {
+      const uploadImageRes: any =
+        await API_SERVICES.imageUploadService.uploadImage(formData);
+      if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+        toast.success(`${'Image Upload Successfully'}`);
+        if (uploadImageRes?.data?.images) {
+          edit.update({
+            image_url: uploadImageRes?.data?.images[0].Location
+          });
         }
-      } else {
-        alert(`Sorry, this image doesn't look like the size we wanted. It's 
-        ${img.width} x ${img.height} but we require size image between 270 x 350 to 200 x 250 .`);
       }
+      // } else {
+      //   alert(`Sorry, this image doesn't look like the size we wanted. It's
+      //   ${img.width} x ${img.height} but we require size image between 270 x 350 to 200 x 250 .`);
+      // }
     };
   };
   const removeProfile = () => {
@@ -219,9 +219,7 @@ const StudentCreateModal = (props: Props) => {
             }
             required
             isError={firstNameError}
-            helperText={
-              firstNameError && 'Please enter your vfirst name'
-            }
+            helperText={firstNameError && 'Please enter your vfirst name'}
           />
           <Grid item xs={12}>
             <TextInputComponent
@@ -235,9 +233,7 @@ const StudentCreateModal = (props: Props) => {
                 })
               }
               isError={lastNameError}
-              helperText={
-                lastNameError && 'Please enter your last name'
-              }
+              helperText={lastNameError && 'Please enter your last name'}
             />
           </Grid>
         </Grid>
@@ -346,7 +342,11 @@ const StudentCreateModal = (props: Props) => {
             }}
             required
             isError={imageError}
-            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB"}
+            helperText={
+              imageError
+                ? 'Please upload the profile image'
+                : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB'
+            }
           />
         </Grid>
         <Grid item xs={5}>
@@ -361,7 +361,11 @@ const StudentCreateModal = (props: Props) => {
             inputLabel={t('qualification')}
             labelColor={theme.Colors.primary}
             value={edit.getValue('qualification')}
-            onChange={(e) => edit.update({ qualification: capitalizeFirstLetter(e.target.value) })}
+            onChange={(e) =>
+              edit.update({
+                qualification: capitalizeFirstLetter(e.target.value)
+              })
+            }
           />
         </Grid>
         <Grid item xs={12}>

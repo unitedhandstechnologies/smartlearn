@@ -43,7 +43,7 @@ const ProfileMenu = (props: Props) => {
       localStorage.clear();
       navigateTo('/home');
       handleClose();
-      toast.success('Profile Logout sucessfully');
+      toast.success('Profile Logout successfully');
     }
   };
   const getMenuItems = () => {

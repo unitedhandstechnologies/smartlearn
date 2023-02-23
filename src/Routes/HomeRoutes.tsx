@@ -14,6 +14,7 @@ import WorkShopDetails from '../content/StudentContent/WorkShopPages/WorkShopDet
 import MentorCreatedCourses from 'src/content/StudentContent/MasterclassesPages/MentorCourses';
 import MentorCourseDescription from 'src/content/StudentContent/MasterclassesPages/MentorCourseDescription';
 import ProfileHome from 'src/content/StudentContent/Profile/ProfileHome';
+import ForgetPassword from 'src/content/StudentContent/RegistrationPage/ForgetPassword';
 
 export const HomeRoutes: RouteObject[] = [
   {
@@ -39,7 +40,8 @@ export const HomeRoutes: RouteObject[] = [
       { path: 'profile', element: <Profile /> },
       { path: 'pre-recordedCourse', element: <PreRecordedCourses /> },
       { path: 'workshopDetails', element: <WorkShopDetails /> },
-      { path: 'profilehome', element: <ProfileHome /> }
+      { path: 'profilehome', element: <ProfileHome /> },
+      { path: 'forgetpassword', element: <ForgetPassword /> }
     ]
   }
 ];

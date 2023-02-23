@@ -1,4 +1,4 @@
-import { Avatar, Grid, makeStyles, useTheme } from '@material-ui/core';
+import { Avatar, makeStyles, useTheme } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
 import { Avatar1, BlueLine } from 'src/Assets';
 import { Heading, MuiTabComponent } from 'src/components';
@@ -6,6 +6,7 @@ import MyLibrary from './MyLibrary';
 import PaymentHistory from './PaymentHistory';
 import ProfileDetails from './ProfileDetails';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
+import { Grid } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   gridStyle: {
@@ -68,7 +69,13 @@ const Profile = () => {
 
     return (
       <>
-        <Grid>
+        <Grid
+          sx={{
+            [theme.breakpoints.down('sm')]: {
+              flexDirection: 'column'
+            }
+          }}
+        >
           <Avatar
             alt=""
             src={studentDetails.image_url || Avatar1}

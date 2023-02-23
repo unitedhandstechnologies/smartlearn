@@ -45,14 +45,13 @@ const UserLogin = () => {
           const getUserRes: any = await API_SERVICES.adminUserService.getById(
             response?.data.users[0].id
           );
-          updateStudentInfo(response?.data.users[0].id);
           if (getUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
             updateStudentInfo((prevState: any) => {
               return { ...prevState, ...getUserRes?.data?.user };
             });
           }
         }
-        toast.success('Profile Login sucessfully');
+        toast.success('Profile Login successfully');
         navigateTo('/home/profilehome', { replace: true });
       }
     } catch (e) {
@@ -68,7 +67,9 @@ const UserLogin = () => {
       style={{
         display: 'flex',
         justifyContent: 'center',
-        [theme.breakpoints.down('sm')]: { flexDirection: 'column' }
+        [theme.breakpoints.down('sm')]: {
+          flexDirection: 'column'
+        }
       }}
     >
       <Grid item xs={6}>
@@ -91,7 +92,7 @@ const UserLogin = () => {
               buttonTextColor={theme.Colors.white}
               buttonFontSize={16}
               buttonFontWeight={400}
-              btnWidth="30%"
+              btnWidth={'fit-content'}
               height="40px"
               buttonFontFamily="Switzer"
               onClickButton={() =>
@@ -218,7 +219,7 @@ const UserLogin = () => {
               paddingTop: 5,
               cursor: 'pointer'
             }}
-            onClick={() => navigateTo('/home/user-registration')}
+            onClick={() => navigateTo('/home/forgetpassword')}
           >
             Forgot password?
           </Typography>

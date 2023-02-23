@@ -4,6 +4,7 @@ import { ListItemCell } from 'src/components';
 import MuiTable from 'src/components/MuiTable';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import { Typography } from '@mui/material';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -123,12 +124,25 @@ const PaymentHistory = () => {
     }
   ];
   return (
-    <MuiTable
-      columns={columns}
-      rows={rows}
-      autoHeight={true}
-      hideFooterPagination={true}
-    />
+    <>
+      <Typography
+        sx={{
+          fontSize: 32,
+          fontWeight: 500,
+          fontFamily: 'IBM Plex Serif',
+          color: '#3C414B',
+          paddingBottom: 5
+        }}
+      >
+        Payment history
+      </Typography>
+      <MuiTable
+        columns={columns}
+        rows={rows}
+        autoHeight={true}
+        hideFooterPagination={true}
+      />
+    </>
   );
 };
 

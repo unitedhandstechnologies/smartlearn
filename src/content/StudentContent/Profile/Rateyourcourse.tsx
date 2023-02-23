@@ -59,7 +59,11 @@ const Rateyourcourse = (props: Props) => {
             </Grid>
           );
         })}
-        <TextField label="Type in here your experience" multiline fullWidth />
+        <TextField
+          placeholder="Type in here your experience"
+          multiline
+          fullWidth
+        />
         <ButtonComp
           buttonText="Submit review"
 
