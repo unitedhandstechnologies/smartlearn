@@ -103,7 +103,7 @@ function AdminDashboard() {
       //     }
       //   }
       //   if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
-      //     if (response[1]?.data) {
+      //     if (?.data) {
       //       setRevenueCount(response[1]?.data);
       //     }
       //   }

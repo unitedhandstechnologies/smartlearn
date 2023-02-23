@@ -26,9 +26,7 @@ const Courses = () => {
       );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.courses?.length) {
-          console.log('res', response?.data);
-
-          setCourseDetails(response?.data?.courses);
+           setCourseDetails(response?.data?.courses);
         }
       }
     } catch (err) {
@@ -54,7 +52,7 @@ const Courses = () => {
       >
         <UpComingCourse courseDetails={courseDetails} />
         <LearnAtUrPace courseDetails={courseDetails} />
-        <Quiz courseDetails={courseDetails} />
+        {/* <Quiz courseDetails={courseDetails} /> */}
         <CourseBegin />
       </Grid>
     );

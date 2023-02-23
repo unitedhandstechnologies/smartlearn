@@ -16,6 +16,7 @@ import { Loader } from 'src/components';
 import ReactPlayer from 'react-player';
 import React from 'react';
 import { number } from 'prop-types';
+import Quiz from 'src/content/StudentContent/Courses/QASection/Quiz';
 
 const useStyles = makeStyles((theme) => ({
   outerContainer: {
@@ -40,64 +41,58 @@ const MainGrid = styled(Grid)(({ theme }) => ({
   }
 }));
 
-const CourseMainPage = ({
-  courseData,
-  videoList,
-  videoToPlay,
-  lessonData,
-  sectionData,
-  videoToPlayIndex,
-  setVideoToPlay,
-  setVideoToPlayIndex,
-  setVideoList,
-  videoName
-}) => {
-  const classes = useStyles();
-  const theme = useTheme();
 
-  const handlePlayNext = () => {
-    console.log('videoList', videoList);
-    console.log('index of playing file', videoToPlayIndex);
 
-    let nextLessonIndex: number = videoToPlayIndex.lessonNumber;
-    let nextSectionIndex: number = videoToPlayIndex.sectionNumber;
-    if (nextLessonIndex < videoList[nextSectionIndex].length - 1) {
-      nextLessonIndex++;
-      setVideoToPlayIndex({
-        sectionNumber: nextSectionIndex,
-        lessonNumber: nextLessonIndex
-      });
-      setVideoToPlay(videoList[nextSectionIndex][nextLessonIndex]);
-      console.log('selected video id', nextSectionIndex, nextLessonIndex);
-      console.log(videoList[nextSectionIndex][nextLessonIndex]);
-
-      return;
-    } else {
-      if (nextSectionIndex < videoList.length - 1) {
-        nextSectionIndex++;
-        nextLessonIndex = 0;
-        setVideoToPlayIndex({
-          sectionNumber: nextSectionIndex,
-          lessonNumber: nextLessonIndex
-        });
-        setVideoToPlay(videoList[nextSectionIndex][nextLessonIndex]);
-        console.log('selected video id', nextSectionIndex, nextLessonIndex);
-        return;
-      } else {
-        nextSectionIndex = 0;
-        nextLessonIndex = 0;
-        setVideoToPlayIndex({
-          sectionNumber: nextSectionIndex,
-          lessonNumber: nextLessonIndex
-        });
-        setVideoToPlay(videoList[nextSectionIndex][nextLessonIndex]);
-
-        console.log('selected video id', nextSectionIndex, nextLessonIndex);
-      }
+const CourseMainPage = (
+    {
+        courseData,
+        videoList,
+        videoToPlay,
+        lessonData,
+        sectionData,
+        videoToPlayIndex,
+        setVideoToPlay,
+        setVideoToPlayIndex,
+        setVideoList,
+        videoName,
+        quizData,
+        testTopic,
+        setTestTopic
     }
-  };
+) => {
+    
+    const classes = useStyles();
+    const theme = useTheme();
+    const quizDataToDisplay = quizData;
+   
 
-  useEffect(() => {}, [videoToPlay]);
+    
+    const handlePlayNext = () => {    
+      let nextLessonIndex : number = videoToPlayIndex.lessonNumber;  
+      let nextSectionIndex : number =  videoToPlayIndex.sectionNumber; 
+      if (nextLessonIndex < videoList[nextSectionIndex].length-1)  {
+        nextLessonIndex++;   
+        setVideoToPlayIndex({sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex })
+        setVideoToPlay(videoList[nextSectionIndex][nextLessonIndex]); 
+        return;
+      }else {
+        if (nextSectionIndex < videoList.length-1){
+          nextSectionIndex++;
+          nextLessonIndex=0;
+          setVideoToPlayIndex({sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex })
+          setVideoToPlay(videoList[nextSectionIndex][nextLessonIndex]);           return;
+        } else{
+            nextSectionIndex=0;
+            nextLessonIndex=0;
+          setVideoToPlayIndex({sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex })
+          setVideoToPlay(videoList[nextSectionIndex][nextLessonIndex]);        
+        }
+      }
+    };
+  
+
+   useEffect(() => {          
+    }, [videoToPlay]); 
 
   return (
     <Grid container className={classes.mainContainer}>
@@ -111,23 +106,17 @@ const CourseMainPage = ({
           //handleAutoPlay = {setAutoPlay}
           setVideoToPlayIndex={setVideoToPlayIndex}
           videoToPlayIndex={videoToPlayIndex}
-        />
+          quizData={quizData}
+          setTestTopic = {setTestTopic}
+          />
       </Grid>
-      <Grid item xs={12} sm={9}>
-        <Typography
-          style={{
-            padding: '0px 32px',
-            fontSize: theme.MetricsSizes.medium
-          }}
-        >
-          {videoToPlayIndex?.sectionNumber + 1} .{' '}
-          {videoToPlayIndex?.lessonNumber + 1}{' '}
-          {
-            videoName[videoToPlayIndex.sectionNumber][
-              videoToPlayIndex.lessonNumber
-            ]
-          }
-        </Typography>
+      <Grid item xs={12} sm={9} >
+        { !testTopic ? (
+          <>
+      <Typography style={{
+        padding:'0px 32px',
+        fontSize: theme.MetricsSizes.medium
+      }}>{videoToPlayIndex.sectionNumber+1} . {videoToPlayIndex.lessonNumber+1} {videoName[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber]}</Typography>
         <Grid className={classes.playerContainer}>
           <ReactPlayer
             url={videoToPlay}
@@ -138,6 +127,8 @@ const CourseMainPage = ({
             onEnded={handlePlayNext}
           />
         </Grid>
+        </>
+        ): null }{/* <Quiz quizData = {quizDataToDisplay} /> */} 
       </Grid>
     </Grid>
   );

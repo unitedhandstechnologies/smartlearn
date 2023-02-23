@@ -37,7 +37,9 @@ const CourseDetails = ({
   //handleAutoPlay,
   setVideoToPlayIndex,
   //studentDetails,
-  videoToPlayIndex
+  videoToPlayIndex,
+  quizData,
+  setTestTopic
 }) => {
   const theme = useTheme();
 
@@ -45,80 +47,7 @@ const CourseDetails = ({
 const studentDetails = {
   remainingDuration : "11hrs 45mins 30 sec",
 };
-/* const fetchSectionData = useCallback(async () => {
-  try {
-    setSectionData([]);
-    const response: any =
-      await API_SERVICES.sectionAndLessonService.getAllSection(
-        courseData.course.id,
-        LANGUAGE_ID.english
-      );
-    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        setSectionData(response.data.Section);
-      }
-    }
-    catch (err) {
-    toast.error(err?.message);
-  }
-},[courseData]);
-
-const fetchLessonData = useCallback(async () => {
-  try {
-    setLessonData([]);
-    const response: any =
-      await API_SERVICES.sectionAndLessonService.getAllLessonByCourseId(
-        courseData.course.id,
-        LANGUAGE_ID.english
-      );
-    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        setLessonData(response.data.Lessons);
-      }
-    
-  } catch (err) {
-    toast.error(err?.message);
-  }
- 
-},[sectionData]);
-
-const getVideoList = useCallback(() => {
-    
-  console.log("set list calledhvjh")
-  console.log("lessonData",lessonData)
-  console.log("sectionData",sectionData)
-    let tempVideoList = Array(sectionData?.length).fill(0).map((sectionData,index) =>      
-  new Array((lessonData.length
-    ? lessonData.filter(
-        (lessonItm) => lessonItm.section_id === sectionData.section_id
-        
-      )
-    : []).length) );
-  
-    if(sectionData?.length){
-         sectionData.map((item, index) => {
-          const sectionNumber = index + 1;
-            let getLessonData: any = lessonData.length
-              ? lessonData.filter(
-                  (lessonItm) => lessonItm.section_id === item.section_id
-                )
-              : [];
-              if(getLessonData.length) {
-                     getLessonData.map((item, index) => {
-                      console.log("item.video_url",item.video_url)
-                      tempVideoList[sectionNumber-1][index] = item.video_url;
-                      console.log("tempVideoList",tempVideoList) } )}
-        }) }
-  console.log("tempVideoList");
-  setVideoList(tempVideoList);
-  setLoading(false);
-  },[lessonData]) ;
-
-useEffect(() => {   
-
-}, []); */
-
-
-               
-
+          
   const topics = (sectionData, lessonData) => {
     return (
       <CourseTitleDetails 
@@ -130,6 +59,8 @@ useEffect(() => {
         //handleAutoPlay = {handleAutoPlay}videoToPlayIndex
         setVideoToPlayIndex = {setVideoToPlayIndex}
         videoToPlayIndex = {videoToPlayIndex}
+        quizData = {quizData}
+        setTestTopic = {setTestTopic}
       />
     )
   };
@@ -143,7 +74,8 @@ useEffect(() => {
         sx={{    
           fontWeight : 500,
           fontSize : '24px'}}
-      >{courseData.course_language[0].course_name}
+      >{console.log("courseData",courseData)}
+        {courseData.course_language[LANGUAGE_ID.english].course_name}
       </Typography>
 
       <LessonGrid container >

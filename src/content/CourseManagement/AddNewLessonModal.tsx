@@ -106,19 +106,22 @@ const AddNewLessonModal = ({
             lesson_name: edit.getValue('engLessonName'),
             language_id: 1,
             video_url: edit.getValue('engVideoUrl'),
-            pdf_url: edit.getValue('engPdfUrl')
+            pdf_url: edit.getValue('engPdfUrl'),
+            duration: 67.87
           },
           {
             lesson_name: edit.getValue('hinLessonName'),
             language_id: 2,
             video_url: edit.getValue('hinVideoUrl'),
-            pdf_url: edit.getValue('hinPdfUrl')
+            pdf_url: edit.getValue('hinPdfUrl'),
+            duration: 56.8
           },
           {
             lesson_name: edit.getValue('gujLessonName'),
             language_id: 3,
             video_url: edit.getValue('gujVideoUrl'),
-            pdf_url: edit.getValue('gujPdfUrl')
+            pdf_url: edit.getValue('gujPdfUrl'),
+            duration: 56.7
           }
         ]
       };

@@ -52,25 +52,30 @@ const CourseBegin = () => {
     const [videoToPlay, setVideoToPlay] = useState();
     const [lessonData, setLessonData] = useState<any[]>([]);
     const [sectionData, setSectionData] = useState<any[]>([]);
+    const [quizData, setQuizData] = useState<any[]>([]);
+    const [testTopic , setTestTopic ] = useState(false);
     const [autoPlay, setAutoPlay] = useState(true);
 
     const [videoToPlayIndex, setVideoToPlayIndex ] = useState({sectionNumber:0,lessonNumber:0});
 
     const fetchData = useCallback(async () => {
-      let id = 1;
-      try {
-       
-        const response: any = await API_SERVICES.courseManagementService.getById(
-          id
-        );        
-        if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-          setCourseData(response?.data);
+      let id = 6;
+      try {      
+        const response: any = await Promise.all([
+          API_SERVICES.courseManagementService.getById(id),
+          API_SERVICES.quizService.getAllQuiz(LANGUAGE_ID.english,id)    
+        ]);
+        if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
+          setQuizData(response[1]?.data?.quiz);
+        }
+        if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
+          setCourseData(response[0]?.data);
 
           try {
             setSectionData([]);
             const responseSection: any =
               await API_SERVICES.sectionAndLessonService.getAllSection(
-                response?.data?.course.id,
+                response[0]?.data?.course.id,
                 LANGUAGE_ID.english
               );
             if (responseSection?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -79,7 +84,7 @@ const CourseBegin = () => {
                   setLessonData([]);
                   const responseLesson: any =
                     await API_SERVICES.sectionAndLessonService.getAllLessonByCourseId(
-                      response?.data?.course.id,
+                      response[0]?.data?.course.id,
                       LANGUAGE_ID.english
                     );
                   if (responseLesson?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -166,6 +171,9 @@ const CourseBegin = () => {
       setVideoToPlay ={setVideoToPlay}
       setVideoList = {setVideoList}
       videoName = { videoName }
+      quizData ={ quizData }
+      setTestTopic = {setTestTopic}
+      testTopic = {testTopic}
     />
   );
 }};

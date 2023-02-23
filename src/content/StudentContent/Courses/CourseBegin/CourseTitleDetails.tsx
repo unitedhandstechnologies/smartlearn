@@ -21,7 +21,7 @@ import React from 'react';
 import { useTheme} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgressWithLabel from './CircularProgressWithLable';
-import { videoLine } from 'src/Assets/Images';
+import { TestTopic, TrophyLine, videoLine } from 'src/Assets/Images';
 import { greenTick } from 'src/Assets/Images';
 
 const useStyles = makeStyles((theme)=>({
@@ -45,12 +45,14 @@ const useStyles = makeStyles((theme)=>({
 const CourseTitleDetails = ({
   lessonData,
   sectionData,
+  quizData,
   studentDetails,
   setVideoToPlay,
   setVideoList,
   //handleAutoPlay,
   setVideoToPlayIndex,
-  videoToPlayIndex
+  videoToPlayIndex,
+  setTestTopic
 })=> {
 
   console.log("lessonData dfg",lessonData)
@@ -78,6 +80,53 @@ const CourseTitleDetails = ({
 </Typography>
 
   )};
+
+  const getAccordionQuizCertificateContents: any = React.useMemo(() => {
+   
+    return(
+      [{
+        id : sectionData?.length + 1,
+        renderAccordionTitle: () => (
+          <Grid 
+            container 
+            alignItems="center" 
+            style={{ gap: '10px' }}
+            onClick={()=>{setTestTopic(true)}}
+          >               
+          <img src={TestTopic} />
+          <Divider orientation='vertical' flexItem style={{color : theme.Colors.redPrimary}} />
+          <Typography
+          style={{
+            color: theme.Colors.blackPrimary,
+            fontWeight: 400,
+            fontSize : '18px'
+          }}
+          >Test Topic</Typography>
+      </Grid>)
+      },
+      {
+        id : sectionData?.length + 2,
+        renderAccordionTitle: () => (
+          <Grid 
+            container 
+            alignItems="center" 
+            style={{ gap: '10px' }}
+            onClick={()=>{setTestTopic(false)}}
+            >               
+          <img src={TrophyLine} />
+          <Divider orientation='vertical' flexItem style={{color : theme.Colors.redPrimary}} />
+          <Typography
+          style={{
+            color: theme.Colors.blackPrimary,
+            fontWeight: 400,
+            fontSize : '18px'
+          }}
+          >Get Your Certificate</Typography>
+      </Grid>)
+      }]
+    )
+  },[quizData]);
+
 
   
 
@@ -132,6 +181,7 @@ const CourseTitleDetails = ({
                           alignItems="center"
                           direction={'row'}
                           onClick={()=>{
+                            setTestTopic(false);
                             setVideoToPlay(item.video_url);
                             setVideoToPlayIndex({sectionNumber:sectionNumber-1,lessonNumber : index})}}
                         >
@@ -192,7 +242,7 @@ const CourseTitleDetails = ({
   }, []);
 
   return (
- 
+    <>
     <MuiAccordionComp
             config={getAccordionContents}
             isBorder = {false}            
@@ -211,6 +261,26 @@ const CourseTitleDetails = ({
               }
             }}
     />
+
+    {console.log(getAccordionQuizCertificateContents)}
+    <MuiAccordionComp
+            config={getAccordionQuizCertificateContents}
+            isBorder = {false}            
+            accordianTitleClassName = {classes.accordianTitleStyle}
+            accordionSummaryClassName = {classes.accordionSummaryStyle}
+            accordionDetailClassName = {classes.accordionDetailStyles}
+            iconColor = {"primary"}
+            isSectionCompleted = {true}
+            
+            renderExpandIcons = {(isActive)=>{
+              if (isActive) {
+                return null ;
+              } else {
+                return null;
+              }
+            }}
+             />
+    </>
   );
 };
 

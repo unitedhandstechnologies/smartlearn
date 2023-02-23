@@ -106,6 +106,8 @@ import stickyNoteLine from './stickyNoteLine.svg';
 import timeLine from './timeLine.svg';
 import greenTick from './greenTick.svg';
 import videoLine from './videoLine.svg';
+import TestTopic from './testTopic.svg';
+import TrophyLine from './trophyLine.svg';
 
 
 export {
@@ -216,5 +218,7 @@ export {
   timeLine,
   stickyNoteLine,
   greenTick,
-  videoLine
+  videoLine,
+  TrophyLine,
+  TestTopic
 };

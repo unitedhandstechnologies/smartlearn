@@ -51,6 +51,7 @@ const MuiAccordionComp = (props: Props) => {
   const [activeItemIds, setActiveItemIds] = useState([]);
   let activeItem = customActiveAccItem ?? [];
 
+  console.log("confog",config)
   const onOpen = (id: string | number) => {
     if (activeItem.length) {
       return;
