@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { Box, Grid, makeStyles, styled, useTheme } from '@material-ui/core';
+import { Box, Grid, makeStyles, styled, Typography, useTheme } from '@material-ui/core';
 
 import CourseDetails from 'src/content/StudentContent/Courses/CourseBegin/CourseDetails';
 import toast from 'react-hot-toast';
@@ -50,7 +50,8 @@ const CourseMainPage = (
         videoToPlayIndex,
         setVideoToPlay,
         setVideoToPlayIndex,
-        setVideoList
+        setVideoList,
+        videoName
     }
 ) => {
     
@@ -94,14 +95,6 @@ const CourseMainPage = (
       
     };
 
-    const getVideoOfIndex = () => {
-      console.log("video url",videoList[videoToPlayIndex.lessonNumber][videoToPlayIndex.sectionNumber])
-       return videoList[videoToPlayIndex.lessonNumber][videoToPlayIndex.sectionNumber]
-
-    };
-
-    
-
    useEffect(() => {    
       
     }, [videoToPlay]); 
@@ -121,6 +114,10 @@ const CourseMainPage = (
           />
       </Grid>
       <Grid item xs={12} sm={9} >
+      <Typography style={{
+        padding:'0px 32px',
+        fontSize: theme.MetricsSizes.medium
+      }}>{videoToPlayIndex.sectionNumber+1} . {videoToPlayIndex.lessonNumber+1} {videoName[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber]}</Typography>
         <Grid className={classes.playerContainer}>
           <ReactPlayer 
             url={videoToPlay} 
