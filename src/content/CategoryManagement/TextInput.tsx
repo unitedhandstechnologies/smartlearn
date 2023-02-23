@@ -50,7 +50,7 @@ const TextInput = ({
     let img = new Image();
     img.src = window.URL.createObjectURL(event.target.files[0]);
     img.onload = async () => {
-      if (img.width <= 341 && img.height <= 228) {
+      if (img.width <= 350 && img.width >=300 && img.height <= 250 && img.height >=200) {
         const uploadImageRes: any =
           await API_SERVICES.imageUploadService.uploadImage(formData);
         if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -63,7 +63,7 @@ const TextInput = ({
         }
       } else {
         alert(`Sorry, this image doesn't look like the size we wanted. It's 
-        ${img.width} x ${img.height} but we require 341 x 228 size image or below this size.`);
+        ${img.width} x ${img.height} but we require size image between 350 x 250 to 300 x 200.`);
       }
     };
   };
