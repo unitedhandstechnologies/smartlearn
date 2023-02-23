@@ -37,6 +37,7 @@ const InstructorModal = (props: Props) => {
       { content: t('lastName'), value: rowData?.last_name },
       { content: t('email'), value: rowData?.email_id },
       { content: t('phoneNumber'), value: rowData?.phone_number },
+      { content: t('about'), value: rowData?.about },
       {
         content: t('date'),
         value: `${getMonth} ${getDate}, ${getYear}`

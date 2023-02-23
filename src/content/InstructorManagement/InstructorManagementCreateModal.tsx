@@ -200,7 +200,7 @@ const InstructorManagementCreateModal = (props: Props) => {
     let img = new Image();
     img.src = window.URL.createObjectURL(event.target.files[0]);
     img.onload = async () => {
-      if (img.width <= 272 && img.height <= 348) {
+      if (img.width <= 270 && img.width >= 200 && img.height <= 350 && img.height >=200) {
         const uploadImageRes: any =
           await API_SERVICES.imageUploadService.uploadImage(formData);
         if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -213,7 +213,7 @@ const InstructorManagementCreateModal = (props: Props) => {
         }
       } else {
         alert(`Sorry, this image doesn't look like the size we wanted. It's 
-        ${img.width} x ${img.height} but we require 272 x 348 size image or below this size.`);
+        ${img.width} x ${img.height} but we require 272 x 350 size image or below this size.`);
       }
     };
   };

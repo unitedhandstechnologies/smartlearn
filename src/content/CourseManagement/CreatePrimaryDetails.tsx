@@ -161,7 +161,7 @@ const CreatePrimaryDetails = ({
             selectItems={
               mentors.length &&
               mentors?.map((item: any) => ({
-                label: item?.first_name + item?.last_name ,
+                label: item?.first_name + ' ' + item?.last_name,
                 value: item?.id
               }))
             }
@@ -177,7 +177,9 @@ const CreatePrimaryDetails = ({
               }
               let mentorName = mentors.filter(
                 (item) => item.id === Number(e.target.value)
-              )[0].first_name;
+              )[0].first_name + ' ' + mentors.filter(
+                (item) => item.id === Number(e.target.value)
+              )[0].last_name
               edit.update({
                 mentor_id: e.target.value,
                 mentor_name: mentorName
