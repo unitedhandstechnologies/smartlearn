@@ -117,6 +117,7 @@ const CourseMainPage = (
           sectionData ={sectionData} lessonData={lessonData}
           //handleAutoPlay = {setAutoPlay}
           setVideoToPlayIndex = {setVideoToPlayIndex}
+          videoToPlayIndex={videoToPlayIndex}
           />
       </Grid>
       <Grid item xs={12} sm={9} >

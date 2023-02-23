@@ -49,7 +49,8 @@ const CourseTitleDetails = ({
   setVideoToPlay,
   setVideoList,
   //handleAutoPlay,
-  setVideoToPlayIndex
+  setVideoToPlayIndex,
+  videoToPlayIndex
 })=> {
 
   console.log("lessonData dfg",lessonData)
@@ -200,13 +201,14 @@ const CourseTitleDetails = ({
             accordionDetailClassName = {classes.accordionDetailStyles}
             iconColor = {"primary"}
             isSectionCompleted = {true}
+            //customActiveAccItem = {[videoToPlayIndex.sectionNumber]}
+
             renderExpandIcons = {(isActive)=>{
               if (isActive) {
                 return <ExpandLess color={"primary"} />;
               } else {
                 return <img src={greenTick} ></img>;
               }
-
             }}
     />
   );

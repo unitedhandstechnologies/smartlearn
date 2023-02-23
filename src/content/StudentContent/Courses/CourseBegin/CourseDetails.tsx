@@ -35,8 +35,9 @@ const CourseDetails = ({
   lessonData,
   sectionData,
   //handleAutoPlay,
-  setVideoToPlayIndex
-  //studentDetails
+  setVideoToPlayIndex,
+  //studentDetails,
+  videoToPlayIndex
 }) => {
   const theme = useTheme();
 
@@ -126,8 +127,9 @@ useEffect(() => {
         studentDetails = {studentDetails}
         setVideoToPlay = {setVideoToPlay}
         setVideoList = {setVideoList}
-        //handleAutoPlay = {handleAutoPlay}
+        //handleAutoPlay = {handleAutoPlay}videoToPlayIndex
         setVideoToPlayIndex = {setVideoToPlayIndex}
+        videoToPlayIndex = {videoToPlayIndex}
       />
     )
   };
