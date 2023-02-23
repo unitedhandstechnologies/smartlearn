@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { makeStyles, useTheme, Theme, IconButton } from '@material-ui/core';
+import {
+  makeStyles,
+  useTheme,
+  Theme,
+  IconButton,
+  Avatar
+} from '@material-ui/core';
 import { Box, Grid, Rating, Typography } from '@mui/material';
 import Carousel from 'src/components/Carousel';
 
@@ -124,7 +130,7 @@ export const ReviewBox = ({
         )}
         {imgUrl && (
           <Grid item sx={{ paddingRight: 3 }}>
-            <img src={imgUrl} alt="Not Found" />
+            <Avatar src={imgUrl} alt="Not Found" />
           </Grid>
         )}
         <Grid item xs>
