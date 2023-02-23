@@ -9,6 +9,7 @@ import {
 } from '../../../../Assets/Images';
 import { ButtonComp, Heading } from 'src/components';
 import FavIcon from '../../../../Assets/Images/FavIcon.svg';
+import { useNavigate } from 'react-router';
 
 const classes = {
   containerStyle: {
@@ -104,10 +105,12 @@ const dataPrice = [
 ];
 
 type Props = {
-  course? : any;
-}
+  course?: any;
+};
 
 const ApplyNow = ({ course }: Props) => {
+  console.log(course?.course_id, 'course');
+  const navigateTo = useNavigate();
   const theme = useTheme();
   return (
     <Grid
@@ -132,21 +135,21 @@ const ApplyNow = ({ course }: Props) => {
             }
           }}
         >
-            <Grid>
-              <TypographyText sx={{ ...classes.price }}>
-                ₹{course.amount}
-              </TypographyText>
-            </Grid>
-            <Grid>
-              <TypographyText sx={{ ...classes.mrp }}>
-                ₹{course.amount}
-              </TypographyText>
-            </Grid>
-            <Grid>
-              <TypographyText sx={{ ...classes.offer }}>
-                {course.discount}% off
-              </TypographyText>
-            </Grid>
+          <Grid>
+            <TypographyText sx={{ ...classes.price }}>
+              ₹{course.amount}
+            </TypographyText>
+          </Grid>
+          <Grid>
+            <TypographyText sx={{ ...classes.mrp }}>
+              ₹{course.amount}
+            </TypographyText>
+          </Grid>
+          <Grid>
+            <TypographyText sx={{ ...classes.offer }}>
+              {course.discount}% off
+            </TypographyText>
+          </Grid>
         </Grid>
         <Grid
           xs={12}
@@ -171,6 +174,12 @@ const ApplyNow = ({ course }: Props) => {
             btnWidth={'100%'}
             btnBorderRadius={4}
             height={'40px'}
+            onClickButton={() => {
+              navigateTo('/home/pre-recordedCourse-details', {
+                state: { ...course },
+                replace: true
+              });
+            }}
           />
         </Grid>
         <Grid sx={{ ...classes.favIcon, ml: 1 }}>
@@ -190,7 +199,9 @@ const ApplyNow = ({ course }: Props) => {
           <TypographyText
             sx={{ fontSize: '18px', fontWeight: 600, padding: 1 }}
           >
-           {course.cours_type !== "Workshop" ? "This course includes:" : "This Workshop includes:"}
+            {course.cours_type !== 'Workshop'
+              ? 'This course includes:'
+              : 'This Workshop includes:'}
           </TypographyText>
         </Grid>
         {data.map((item, index) => {

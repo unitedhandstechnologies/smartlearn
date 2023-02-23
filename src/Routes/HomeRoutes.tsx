@@ -41,7 +41,8 @@ export const HomeRoutes: RouteObject[] = [
       { path: 'pre-recordedCourse', element: <PreRecordedCourses /> },
       { path: 'workshopDetails', element: <WorkShopDetails /> },
       { path: 'profilehome', element: <ProfileHome /> },
-      { path: 'forgetpassword', element: <ForgetPassword /> }
+      { path: 'forgetpassword', element: <ForgetPassword /> },
+      { path: 'pre-recordedCourse-details', element: <CourseBegin /> }
     ]
   }
 ];
