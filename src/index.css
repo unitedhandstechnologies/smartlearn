@@ -3,5 +3,11 @@ body,* {
     padding: 0;
     max-width: '100%';
     margin: 0;
-    font-family: 'DM Sans';
+    font-family: 'Switzer';
+}
+@font-face {
+    font-family: "Switzer";
+    /*Can be any text*/
+    src: local("Switzer-Medium"),
+        url("./Assets/Fonts/Switzer-Medium.ttf") format("truetype");
 }

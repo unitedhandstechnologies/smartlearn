@@ -20,7 +20,7 @@ const defaultColors = {
     700: '#3CC878',
     600: '#388E3C',
     500: '#e2af29',
-    400: '#99C773',
+    400: '#99C773'
   },
   WHITE: {
     900: '#FFFF',
@@ -73,7 +73,7 @@ const Colors = {
   blueGreen: defaultColors.GREEN[800],
   darkGreen: defaultColors.GREEN[600],
   mediumGreen: defaultColors.GREEN[500],
-  lightGreen : defaultColors.GREEN[400],
+  lightGreen: defaultColors.GREEN[400],
   white: defaultColors.WHITE[900],
   blueAsh: defaultColors.BLUE[400],
   greyDark: defaultColors.GREY[800],
@@ -196,43 +196,43 @@ export const PureLightTheme = (options?: ThemeOptions) =>
         }
       },
       typography: {
-        fontFamily: 'DM Sans',
+        fontFamily: 'Switzer',
         h1: {
           fontSize: 35,
-          fontFamily: 'DM Sans'
+          fontFamily: 'Switzer'
         },
         h2: {
           fontSize: 30,
-          fontFamily: 'DM Sans'
+          fontFamily: 'Switzer'
         },
         h3: {
           fontSize: 25,
-          fontFamily: 'DM Sans'
+          fontFamily: 'Switzer'
         },
         h4: {
           fontSize: 16,
-          fontFamily: 'DM Sans'
+          fontFamily: 'Switzer'
         },
         h5: {
           fontSize: 14,
-          fontFamily: 'DM Sans'
+          fontFamily: 'Switzer'
         },
         h6: {
           fontSize: 15,
-          fontFamily: 'DM Sans'
+          fontFamily: 'Switzer'
         },
         body1: {
           fontSize: 14,
-          fontFamily: 'DM Sans'
+          fontFamily: 'Switzer'
         },
         body2: {
           fontSize: 12,
           fontWeight: 500,
-          fontFamily: 'DM Sans'
+          fontFamily: 'Switzer'
         },
         button: {
           fontWeight: 500,
-          fontFamily: 'DM Sans'
+          fontFamily: 'Switzer'
         },
         caption: {
           fontSize: 13,
@@ -240,12 +240,12 @@ export const PureLightTheme = (options?: ThemeOptions) =>
         },
         subtitle1: {
           fontSize: 14,
-          fontFamily: 'DM Sans'
+          fontFamily: 'Switzer'
         },
         subtitle2: {
           fontWeight: 400,
           fontSize: 12,
-          fontFamily: 'DM Sans'
+          fontFamily: 'Switzer'
         },
         overline: {
           fontSize: 13,

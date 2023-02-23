@@ -33,7 +33,7 @@ const useStyles = makeStyles<Theme, ThemeProps>((theme) => {
         fontSize: (props) => props.buttonFontSize || theme.MetricsSizes.regular,
         fontWeight: (props) =>
           props.buttonFontWeight || theme.fontWeight.medium,
-        fontFamily: (props) => props.buttonFontFamily || 'DM Sans'
+        fontFamily: (props) => props.buttonFontFamily || 'Switzer'
       }
     }
   };

@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => {
       borderRadius: theme.MetricsSizes.regular
     },
     accordionClassName: {
-      marginTop: 10
+      marginTop: 10,
+      backgroundColor: 'white'
     },
     quizHeading: {
       fontWeight: theme.fontWeight.bold,
@@ -44,32 +45,6 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const courseDescription =
-  'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.';
-
-const chipItem = ['Stocks investing', 'Basics of options trading'];
-
-const reviews = [
-  {
-    name: 'Tracy Wang',
-    review:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    img: RatingImg
-  },
-  {
-    name: 'Tracy Wang',
-    img: RatingImg,
-    review:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.'
-  },
-  {
-    name: 'Tracy Wang',
-    img: RatingImg,
-    review:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.'
-  }
-];
-
 const objectives = [
   'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
   'Velit officia consequat duis enim velit mollit',
@@ -77,8 +52,6 @@ const objectives = [
   'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet',
   'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet'
 ];
-
-const rating = 4.5;
 
 const headingProps = {
   headingColor: '#3C414B',
@@ -122,7 +95,10 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
           courseDescription?.id,
           DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
         ),
-        API_SERVICES.quizService.getAllQuiz(LANGUAGE_ID.english, courseDescription?.course_id)
+        API_SERVICES.quizService.getAllQuiz(
+          LANGUAGE_ID.english,
+          courseDescription?.course_id
+        )
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.Lessons?.length) {
@@ -136,7 +112,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
       }
       if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
         {
-          console.log('courseDescription', response[2])
+          console.log('courseDescription', response[2]);
           if (response[2]?.data?.quiz?.length) {
             setQuizData(response[2]?.data?.quiz);
           }
@@ -151,24 +127,10 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
     fetchData();
   }, []);
 
-  const renderCont = (url) => {
-    return (
-      <Grid>
-        <video width="600" height="340" controls autoPlay={true}>
-          <source src={url} type="video/mp4" />
-        </video>
-      </Grid>
-    );
-  };
-
-  const handleClose = () => {
-    setOpenVideo({ open: false });
-  };
-
   const getAccordionContents: any = React.useMemo(() => {
     return sectionData?.length
-      ? sectionData.map((item, index) => {
-          let getLessonData: any = lessonData.length
+      ? sectionData?.map((item, index) => {
+          let getLessonData: any = lessonData?.length
             ? lessonData.filter(
                 (lessonItm) => lessonItm.section_id === item.section_id
               )
@@ -177,7 +139,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
           return {
             id: index + 1,
             renderAccordionTitle: () => (
-              <Grid container alignItems="center" style={{ gap: '10px' }}>
+              <Grid container alignItems="center">
                 <Typography
                   variant="h4"
                   style={{
@@ -185,13 +147,13 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                     fontWeight: theme.fontWeight.medium,
                     fontSize: theme.MetricsSizes.regular
                   }}
-                >{`Section:${index + 1} - ${item.section_name}`}</Typography>
+                >{`Lesson :${index + 1} - ${item.section_name}`}</Typography>
               </Grid>
             ),
             accContentDetail: () => (
               <Grid container direction="column" spacing={2}>
-                {getLessonData.length
-                  ? getLessonData.map((item, index) => {
+                {getLessonData?.length
+                  ? getLessonData?.map((item, index) => {
                       return (
                         <Grid
                           item
@@ -207,33 +169,18 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                             style={{
                               fontWeight: 400,
                               fontSize: theme.MetricsSizes.regular,
-                              color: theme.Colors.darkGrayishBlue
+                              color: '#78828C'
                             }}
-                          >{`Lesson:${index + 1} - ${
-                            item.lesson_name
-                          }`}</Typography>
+                          >
+                            {item.lesson_name}
+                          </Typography>
                           <Grid
                             item
                             xs
                             justifyContent="flex-end"
                             style={{ display: 'flex' }}
                           >
-                            <ButtonComp
-                              btnWidth={100}
-                              height={25}
-                              buttonFontSize={theme.MetricsSizes.small_x}
-                              backgroundColor={theme.Colors.lightGrey}
-                              buttonTextColor={theme.Colors.black}
-                              buttonText={t('course.preview')}
-                              onClickButton={() => {
-                                setOpenVideo({
-                                  open: true,
-                                  dialogTitle: item.lesson_name,
-                                  renderDialogContent: () =>
-                                    renderCont(item.video_url)
-                                });
-                              }}
-                            />
+                            <h2>36:25 min</h2>
                           </Grid>
                         </Grid>
                       );
@@ -245,69 +192,6 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
         })
       : [];
   }, [sectionData, lessonData]);
-
-  const getAccordionContentsForQuiz: any = React.useMemo(() => {
-    const getQuizDatass = quizData.length
-      ? quizData.filter(
-          (item) => item.course_id === courseDescription.course_id
-        )
-      : [];
-
-    return getQuizDatass?.length
-      ? getQuizDatass.map((item, index) => {
-          return {
-            id: index + 1,
-            renderAccordionTitle: () => (
-              <Grid container alignItems="center" style={{ gap: '10px' }}>
-                <Typography
-                  variant="h4"
-                  style={{
-                    color: theme.Colors.blackPrimary,
-                    fontWeight: 600
-                  }}
-                >{`Question  :${index + 1} `}</Typography>
-              </Grid>
-            ),
-            accContentDetail: () => (
-              <Grid container direction="column" spacing={2}>
-                {getQuizDatass.length ? (
-                  <Grid
-                    item
-                    key={index}
-                    container
-                    xs={12}
-                    style={{ gap: 10 }}
-                    alignItems="center"
-                  >
-                    <Typography
-                      variant="h5"
-                      style={{
-                        color: theme.Colors.blackPrimary,
-                        fontWeight: 500
-                      }}
-                    >
-                      <Grid container direction="row">
-                        <Grid xs={12}>{`Question : ${item.question}`}</Grid>
-                        <Grid xs={12}>{` Option 1 : ${item.option_1} `} </Grid>
-                        <Grid xs={12}>{` Option 2 : ${item.option_2} `} </Grid>
-                        <Grid xs={12}>{` Option 3 : ${item.option_3} `} </Grid>
-                        <Grid xs={12}>{` Option 4 : ${item.option_4} `} </Grid>
-                      </Grid>
-                    </Typography>
-                    <Grid
-                      item
-                      xs
-                      justifyContent="flex-end"
-                      style={{ display: 'flex' }}
-                    ></Grid>
-                  </Grid>
-                ) : null}
-              </Grid>
-            )
-          };
-        })
-      : [];
-  }, [quizData]);
 
   return (
     <Grid
@@ -376,7 +260,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
         <Grid paddingTop={4}>
           <Heading headingText={'Topics in this course'} {...headingProps} />
           {courseDescription?.course_type === 'Recorded Course' && (
-            <Grid item xs={12}>
+            <Grid item xs={11}>
               <MuiAccordionComp
                 accordionOuterContainerClassName={classes.accordionClassName}
                 config={getAccordionContents}
@@ -384,82 +268,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
             </Grid>
           )}
         </Grid>
-        {/* {openVideo && (
-          <DialogComp
-            open={true}
-            dialogClasses={{ paper: classes.dialogPaper }}
-            dialogTitleStyle={{
-              color: theme.Colors.blackMedium
-            }}
-            onClose={handleClose}
-            {...openVideo}
-          />
-        )} */}
-        {quizData?.length ? (
-          <Grid container item sx={{ marginTop: 5 }}>
-            <ButtonComp
-              buttonText="Test Topics"
-              btnWidth={'100%'}
-              backgroundColor={theme.Colors.lightWhiteGrey}
-              buttonTextColor={theme.Colors.darkGrayishBlue}
-              onClickButton={() => {}}
-            />
-          </Grid>
-        ) : null}
       </Grid>
-      {/* <Grid
-        item
-        xs={3}
-        sx={{
-          [theme.breakpoints.down('xs')]: {
-            flexDirection: 'column'
-          }
-        }}
-      >
-        <Grid container justifyContent={'space-between'} alignItems={'center'}>
-          <Grid>
-            <Heading headingText={'Ratings'} {...headingProps} />
-          </Grid>
-          <Grid>
-            <Grid container gap={1}>
-              <Grid>
-                <Typography style={{ fontSize: 20, fontWeight: 600 }}>
-                  {rating}
-                </Typography>
-              </Grid>
-              <Grid>
-                <StarIcon style={{ color: '#F2C94C' }} />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-        {reviews.map((item, index) => {
-          return (
-            <Grid container gap={2} key={index} paddingTop={3}>
-              <Grid item>
-                <img src={item.img} alt="Not Found" />
-              </Grid>
-              <Grid item xs>
-                <Typography
-                  style={{
-                    fontFamily: 'IBM Plex Serif',
-                    color: '#3C414B',
-                    fontSize: 18,
-                    fontWeight: 600
-                  }}
-                >
-                  {item.name}
-                </Typography>
-                <Rating sx={{ color: '#F2C94C' }} />
-              </Grid>
-              <Typography style={typographyStylProps}>
-                {item.review}
-                <Divider style={{ height: 3, paddingTop: 20 }} />
-              </Typography>
-            </Grid>
-          );
-        })}
-      </Grid> */}
     </Grid>
   );
 };
