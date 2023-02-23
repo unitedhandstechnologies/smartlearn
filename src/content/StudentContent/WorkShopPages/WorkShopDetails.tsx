@@ -92,7 +92,7 @@ const WorkShopDetails = () => {
         position={'absolute'}
         sx={{ bottom: 100, marginLeft: 8, background: 'white' }}
       >
-        <CourseRating review={review} />
+        <CourseRating course={review} />
       </Grid>
       <Grid
         item

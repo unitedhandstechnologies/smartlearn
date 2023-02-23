@@ -103,7 +103,11 @@ const dataPrice = [
   }
 ];
 
-const ApplyNow = () => {
+type Props = {
+  course? : any;
+}
+
+const ApplyNow = ({ course }: Props) => {
   const theme = useTheme();
   return (
     <Grid
@@ -120,7 +124,6 @@ const ApplyNow = () => {
     >
       <Grid container justifyContent={'center'}>
         <Grid
-          item
           container
           alignItems="center"
           sx={{
@@ -129,27 +132,21 @@ const ApplyNow = () => {
             }
           }}
         >
-          {dataPrice.map((item, index) => {
-            return (
-              <Grid key={index}>
-                <Grid>
-                  <TypographyText sx={{ ...classes.price }}>
-                    {item.price}
-                  </TypographyText>
-                </Grid>
-                <Grid>
-                  <TypographyText sx={{ ...classes.mrp }}>
-                    {item.mrp}
-                  </TypographyText>
-                </Grid>
-                <Grid>
-                  <TypographyText sx={{ ...classes.offer }}>
-                    {item.offer}
-                  </TypographyText>
-                </Grid>
-              </Grid>
-            );
-          })}
+            <Grid>
+              <TypographyText sx={{ ...classes.price }}>
+                ₹{course.amount}
+              </TypographyText>
+            </Grid>
+            <Grid>
+              <TypographyText sx={{ ...classes.mrp }}>
+                ₹{course.amount}
+              </TypographyText>
+            </Grid>
+            <Grid>
+              <TypographyText sx={{ ...classes.offer }}>
+                {course.discount}% off
+              </TypographyText>
+            </Grid>
         </Grid>
         <Grid
           xs={12}
@@ -193,7 +190,7 @@ const ApplyNow = () => {
           <TypographyText
             sx={{ fontSize: '18px', fontWeight: 600, padding: 1 }}
           >
-            This course includes:
+           {course.cours_type !== "Workshop" ? "This course includes:" : "This Workshop includes:"}
           </TypographyText>
         </Grid>
         {data.map((item, index) => {

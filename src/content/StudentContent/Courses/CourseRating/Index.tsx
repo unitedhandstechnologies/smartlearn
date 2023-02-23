@@ -1,8 +1,58 @@
 import { Grid, useTheme } from '@mui/material';
 import { ReviewBox } from '../../HomePage/Reviews/ReviewComp';
+import {
+  chatIcon,
+  Star,
+  Online,
+  CalenderImg,
+  BeginnerIcon,
+  IntermediateIcon,
+  BarChartFillIcon,
+  OfflineImg
+} from 'src/Assets';
+import { COURSE_LEVEL_NAME, LANGUAGE_NAME } from 'src/Config/constant';
 
-const CourseRating = ({ review }) => {
+const levelIcons = [
+  BeginnerIcon,
+  BeginnerIcon,
+  IntermediateIcon,
+  BarChartFillIcon
+];
+
+const CourseRating = ({ course }) => {
   const theme = useTheme();
+
+  const reviews = [
+    {
+      name:
+        course.course_type === 'Recorded Course'
+          ? course.ratings || 4.5
+          : course.starting_date,
+      subText:
+        course.course_type === 'Recorded Course'
+          ? 'Rating'
+          : course.course_type === 'Masterclass'
+          ? 'Starts from '
+          : 'Happening on',
+      img: course.course_type === 'Recorded Course' ? Star : CalenderImg
+    },
+    {
+      name: LANGUAGE_NAME[course.language_id],
+      subText: 'Course language',
+      img: chatIcon
+    },
+    {
+      name: COURSE_LEVEL_NAME[course.course_level_id],
+      subText: 'Difficulty level',
+      img: levelIcons[course.course_level_id]
+    },
+    {
+      name: course.course_mode || 'Offline',
+      subText: 'Study mode',
+      img: course.course_mode === 'Online' ? Online : OfflineImg
+    }
+  ];
+
   return (
     <Grid
       container
@@ -22,7 +72,7 @@ const CourseRating = ({ review }) => {
         width: '100%'
       }}
     >
-      {review.map((item, index) => {
+      {reviews.map((item, index) => {
         return (
           <Grid key={index}>
             <ReviewBox

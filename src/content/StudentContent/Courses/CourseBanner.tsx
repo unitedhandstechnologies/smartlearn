@@ -39,19 +39,21 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 type Props = {
-  courseTitle?: any;
-  courseSubTitle?: any;
   course?: any;
+  courseDetails?: any;
+  courseSubTitle?: any;
+  courseTitle?: any;
   mentorName?: any;
   mentorProfile?: any;
   bannerOuterContainerStyle?: any;
 };
 const CourseBanner = ({
   course,
-  courseTitle,
-  courseSubTitle,
-  mentorName,
   mentorProfile,
+  courseSubTitle,
+  courseTitle,
+  courseDetails,
+  mentorName,
   bannerOuterContainerStyle
 }: Props) => {
   const theme = useTheme();
@@ -182,7 +184,7 @@ const CourseBanner = ({
           }}
         />
       </Grid>
-      {mentorProfile ? <CourseRating review={review} /> : null}
+      {mentorProfile ? <CourseRating course={courseDetails} /> : null}
       <Grid
         sx={{
           height: '100%',

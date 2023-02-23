@@ -108,7 +108,8 @@ import greenTick from './greenTick.svg';
 import videoLine from './videoLine.svg';
 import TestTopic from './testTopic.svg';
 import TrophyLine from './trophyLine.svg';
-
+import CalenderImg from './CalenderImg.svg';
+import OfflineImg from './OfflineImg.svg';
 
 export {
   EnrollmentManagementIcon,
@@ -220,5 +221,7 @@ export {
   greenTick,
   videoLine,
   TrophyLine,
-  TestTopic
+  TestTopic,
+  CalenderImg,
+  OfflineImg
 };

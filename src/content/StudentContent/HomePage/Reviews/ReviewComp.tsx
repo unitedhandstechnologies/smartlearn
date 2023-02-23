@@ -96,7 +96,6 @@ export const ReviewBox = ({
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         // width: '576px',
-        height: '293px',
         ...sx
       }}
     >
