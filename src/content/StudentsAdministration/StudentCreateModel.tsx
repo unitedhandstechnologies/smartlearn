@@ -175,21 +175,26 @@ const StudentCreateModal = (props: Props) => {
     let img = new Image();
     img.src = window.URL.createObjectURL(event.target.files[0]);
     img.onload = async () => {
-      // if (img.width <= 270 && img.width >= 200 && img.height <= 350 && img.height >=250) {
-      const uploadImageRes: any =
-        await API_SERVICES.imageUploadService.uploadImage(formData);
-      if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-        toast.success(`${'Image Upload Successfully'}`);
-        if (uploadImageRes?.data?.images) {
-          edit.update({
-            image_url: uploadImageRes?.data?.images[0].Location
-          });
+      if (
+        img.width <= 270 &&
+        img.width >= 200 &&
+        img.height <= 350 &&
+        img.height >= 250
+      ) {
+        const uploadImageRes: any =
+          await API_SERVICES.imageUploadService.uploadImage(formData);
+        if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+          toast.success(`${'Image Upload Successfully'}`);
+          if (uploadImageRes?.data?.images) {
+            edit.update({
+              image_url: uploadImageRes?.data?.images[0].Location
+            });
+          }
         }
+      } else {
+        alert(`Sorry, this image doesn't look like the size we wanted. It's
+        ${img.width} x ${img.height} but we require size image between 270 x 350 to 200 x 250 .`);
       }
-      // } else {
-      //   alert(`Sorry, this image doesn't look like the size we wanted. It's
-      //   ${img.width} x ${img.height} but we require size image between 270 x 350 to 200 x 250 .`);
-      // }
     };
   };
   const removeProfile = () => {

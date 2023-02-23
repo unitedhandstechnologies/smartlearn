@@ -5,9 +5,9 @@ import CloseIcon from '@mui/icons-material/Close';
 
 type Props = {
   popOverTitle?: string;
-  anchorEl: null | HTMLElement;
-  handleClose: () => void;
-  renderContent: () => void;
+  anchorEl?: null | HTMLElement;
+  handleClose?: () => void;
+  renderContent?: () => void;
 };
 
 const PopOver = (props: Props) => {

@@ -14,10 +14,11 @@ type Props = {
   anchorEl: null | HTMLElement;
   notifications: notiPrpos[];
   handleClose: () => void;
+  onClick?: () => void;
 };
 
 const Rateyourcourse = (props: Props) => {
-  const { notifications, anchorEl, handleClose } = props;
+  const { notifications, anchorEl, handleClose, onClick } = props;
 
   const renderComponenet = () => {
     return (
@@ -64,11 +65,7 @@ const Rateyourcourse = (props: Props) => {
           multiline
           fullWidth
         />
-        <ButtonComp
-          buttonText="Submit review"
-
-          //   onClick={handleBellClick}
-        />
+        <ButtonComp buttonText="Submit review" onClick={onClick} />
       </>
     );
   };
