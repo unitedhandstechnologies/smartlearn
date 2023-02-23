@@ -183,7 +183,13 @@ const ApplyNow = ({ course }: Props) => {
                   replace: true
                 });
               } else {
-                navigateTo('/home/user-login', { replace: true });
+                navigateTo('/home/user-login', {
+                  state: {
+                    details: { ...course },
+                    route: '/home/pre-recordedCourse-details'
+                  },
+                  replace: true
+                });
               }
             }}
           />

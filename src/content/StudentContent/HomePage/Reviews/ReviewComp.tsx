@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import { Box, Grid, Rating, Typography } from '@mui/material';
 import Carousel from 'src/components/Carousel';
+import LinesEllipsis from 'react-lines-ellipsis';
 
 const useStyles = makeStyles((theme: Theme) => ({
   carouselStyle: {
@@ -90,6 +91,16 @@ export const ReviewBox = ({
   spacingRating
 }: Props) => {
   const theme = useTheme();
+  const [maxLine, setMaxLine] = useState(5);
+
+  const handleEllipseClick = () => {
+    if(maxLine !== 5){
+      setMaxLine(5);
+    }else{
+      setMaxLine(10);
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -99,9 +110,7 @@ export const ReviewBox = ({
         flexDirection: 'column',
         boxShadow: '0px 4px 24px rgba(0, 35, 80, 0.1)',
         backgroundColor: theme.Colors.white,
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        // width: '576px',
+        height: "100%",
         ...sx
       }}
     >
@@ -122,8 +131,6 @@ export const ReviewBox = ({
               style={{
                 width: '20px',
                 height: '20px'
-                // background: 'rgba(255, 120, 60, 0.15)',
-                // borderRadius: '5px'
               }}
             />
           </Grid>
@@ -166,10 +173,16 @@ export const ReviewBox = ({
             {subText}
             <Typography
               sx={{
-                padding: '5px 5px 0px 0px'
+                padding: '5px 5px 0px 0px',
+                cursor:"pointer"
               }}
             >
-              {review}
+              <LinesEllipsis
+                text={review}
+                maxLine={maxLine}
+                ellipsis="......"
+                onClick={handleEllipseClick}
+              />
             </Typography>
           </Typography>
         </Grid>

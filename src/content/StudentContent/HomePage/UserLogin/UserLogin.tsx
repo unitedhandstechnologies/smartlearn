@@ -6,7 +6,7 @@ import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import IconButton from '@mui/material/IconButton';
 import RightContainer from './RightContainer';
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
@@ -22,6 +22,8 @@ const UserLogin = () => {
     setShowPassword(!showPassword);
   };
   const { i18n } = useTranslation();
+  const { state } : any = useLocation();
+   
   const onClickLogin = useCallback(async () => {
     try {
       //  setLoading(true);
@@ -52,7 +54,14 @@ const UserLogin = () => {
           }
         }
         toast.success('Profile Login successfully');
-        navigateTo('/home/profilehome', { replace: true });
+        if(state){
+          navigateTo(state.route, {
+            state: { ...state.details },
+            replace: true
+          })
+        }else{
+          navigateTo('/home/profilehome', { replace: true });
+        }
       }
     } catch (e) {
       console.log(e, '---login err-----');
