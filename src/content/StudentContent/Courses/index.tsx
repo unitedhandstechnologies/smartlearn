@@ -57,7 +57,7 @@ const Courses = () => {
         <UpComingCourse courseDetails={courseDetails} />
         <LearnAtUrPace courseDetails={courseDetails} />
         {/* <Quiz courseDetails={courseDetails} /> */}
-        <CourseBegin />
+        {/* <CourseBegin /> */}
       </Grid>
     );
   }
