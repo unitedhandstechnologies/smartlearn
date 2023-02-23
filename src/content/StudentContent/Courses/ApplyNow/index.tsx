@@ -1,5 +1,5 @@
 import { Grid, styled, Typography, useTheme, Box } from '@mui/material';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   ClockIcon,
   VideoTutor,
@@ -10,6 +10,7 @@ import {
 import { ButtonComp, Heading } from 'src/components';
 import FavIcon from '../../../../Assets/Images/FavIcon.svg';
 import { useNavigate } from 'react-router';
+import { StudentInfoContext } from 'src/contexts/StudentContext';
 
 const classes = {
   containerStyle: {
@@ -110,6 +111,7 @@ type Props = {
 
 const ApplyNow = ({ course }: Props) => {
   console.log(course?.course_id, 'course');
+  const { studentDetails } = useContext(StudentInfoContext);
   const navigateTo = useNavigate();
   const theme = useTheme();
   return (
@@ -175,10 +177,14 @@ const ApplyNow = ({ course }: Props) => {
             btnBorderRadius={4}
             height={'40px'}
             onClickButton={() => {
-              navigateTo('/home/pre-recordedCourse-details', {
-                state: { ...course },
-                replace: true
-              });
+              if (studentDetails.id !== 0) {
+                navigateTo('/home/pre-recordedCourse-details', {
+                  state: { ...course },
+                  replace: true
+                });
+              } else {
+                navigateTo('/home/user-login', { replace: true });
+              }
             }}
           />
         </Grid>
