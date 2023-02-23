@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 0,
     padding: theme.spacing(0, 1, 0, 0)
   },
-  AvatorStyle: {
+  AvatarStyle: {
     width: '32px',
     height: '32px',
     margin: theme.spacing(0, 1, 0, 1)
@@ -143,7 +143,7 @@ const CourseBanner = ({
             <Avatar
               src={mentorProfile}
               classes={{
-                root: classes.AvatorStyle,
+                root: classes.AvatarStyle,
                 [theme.breakpoints.down('md')]: {
                   display: 'none'
                 }

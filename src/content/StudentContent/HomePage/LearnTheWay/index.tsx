@@ -17,7 +17,7 @@ const LearnWayBox = ({ heading, icon, subText }: Props) => {
         flex: 1,
         display: 'flex',
         flexDirection: 'column',
-        boxShadow: '0px 4px 24px rgba(0, 35, 80, 0.1)',
+        boxShadow: '0px 4px 24px rgba(0, 35, 80, 0.1)'
       }}
     >
       <Grid container spacing={3} direction={'row'}>

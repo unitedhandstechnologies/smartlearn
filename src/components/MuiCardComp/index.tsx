@@ -1,3 +1,4 @@
+import React from 'react';
 import { Grid, useTheme } from '@material-ui/core';
 import {
   Card,
@@ -9,7 +10,6 @@ import {
 } from '@mui/material';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import React from 'react';
 import {
   BarChartFillIcon,
   BarIcon,
@@ -200,7 +200,7 @@ const MuiCardComp = ({
         ) : null}
         {courseType === COURSE_TYPE_NAME[6] ? (
           <Grid style={{ padding: '10px 0px' }}>
-            <IconTextComp icon={ZoomIcon} value={'Onlile'} />
+            <IconTextComp icon={ZoomIcon} value={'Online'} />
           </Grid>
         ) : null}
         {locationName ? (

@@ -16,35 +16,13 @@ import { useLocation, useNavigate } from 'react-router';
 import CourseBanner from '../CourseBanner';
 import CourseDescription from '../CourseDescription/CourseDescription';
 import CourseRight from '../CourseRight';
-const review = [
-  {
-    name: '4.5',
-    subText: 'Ratings',
-    img: Star
-  },
-  {
-    name: 'English',
-    subText: 'Course language',
-    img: chatIcon
-  },
-  {
-    name: 'Intermediate',
-    subText: 'Difficulty level',
-    img: Intermediate
-  },
-  {
-    name: 'Online',
-    subText: 'Study mode',
-    img: Online
-  }
-];
 
 const useStyles = makeStyles((theme) => ({
   button: {
     minWidth: 0,
     padding: theme.spacing(0, 1, 0, 0)
   },
-  AvatorStyle: {
+  AvatarStyle: {
     width: '32px',
     height: '32px',
     margin: theme.spacing(0, 1, 0, 1)
@@ -109,7 +87,7 @@ const PreRecordedCourses = () => {
             paddingTop: 5,
             justifyContent: 'center',
             position: 'relative',
-            width:"100%"
+            width: '100%'
           }
         }}
       >

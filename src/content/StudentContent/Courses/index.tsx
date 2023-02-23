@@ -7,7 +7,11 @@ import UpComingCourse from './UpComingCourse';
 import LearnAtUrPace from './LearnAtUrPace';
 import CourseBegin from 'src/content/StudentContent/Courses/CourseBegin/CourseBegin';
 import { API_SERVICES } from 'src/Services';
-import { DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
+import {
+  DETECT_LANGUAGE,
+  HTTP_STATUSES,
+  LANGUAGE_ID
+} from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-hot-toast';
 import PreRecordedCourses from './PreRecordedCourses';
@@ -26,7 +30,7 @@ const Courses = () => {
       );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.courses?.length) {
-           setCourseDetails(response?.data?.courses);
+          setCourseDetails(response?.data?.courses);
         }
       }
     } catch (err) {

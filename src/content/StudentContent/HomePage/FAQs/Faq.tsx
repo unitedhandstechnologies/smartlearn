@@ -2,7 +2,6 @@ import { Grid, makeStyles, Typography, useTheme } from '@material-ui/core';
 import React, { useState } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { RichTextInput } from 'src/components/RichTextInput';
 
 const useStyles = makeStyles((theme) => ({
   questionStyle: {

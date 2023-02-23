@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 0,
     padding: theme.spacing(0, 1, 0, 0)
   },
-  AvatorStyle: {
+  AvatarStyle: {
     width: '32px',
     height: '32px',
     margin: theme.spacing(0, 1, 0, 1)
@@ -50,9 +50,7 @@ const MentorCourseDescription = () => {
   const navigateTo = useNavigate();
   const { state }: any = useLocation();
   let data = { ...state?.formData };
-  let couserId = { ...state?.course_id };
-
-  console.log('data', data);
+  let courseId = { ...state?.course_id };
 
   return (
     <Grid sx={{ padding: 4 }}>
@@ -103,7 +101,7 @@ const MentorCourseDescription = () => {
             paddingTop: 5,
             justifyContent: 'center',
             position: 'relative',
-            width:"100%"
+            width: '100%'
           }
         }}
       >

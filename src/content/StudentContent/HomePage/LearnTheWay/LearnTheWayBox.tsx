@@ -1,6 +1,6 @@
+import React from 'react';
 import { useTheme } from '@material-ui/core/';
 import { Grid } from '@mui/material';
-import React from 'react';
 import LearnTheWay from '.';
 import {
   CourseIcon,

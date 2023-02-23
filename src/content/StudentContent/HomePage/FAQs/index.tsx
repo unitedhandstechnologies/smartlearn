@@ -4,33 +4,6 @@ import { LineBarIcon } from 'src/Assets';
 import { Heading } from 'src/components';
 import Faq from './Faq';
 
-// const faq = [
-//   {answer:
-//       'consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae congueconsectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue',
-//     question:
-//       'Consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla ?'
-//   },
-//   {
-//     answer:
-//       'consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae congueconsectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue',
-//     question:
-//       'Consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla ?'
-//   },
-//   {
-//     answer:
-//       'consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae congueconsectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue',
-//     question:
-//       'Consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla ?'
-//   },
-//   ,
-//   {
-//     answer:
-//       'consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae congueconsectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae congue',
-//     question:
-//       'Consectetur adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla ?'
-//   }
-// ];
-
 type FaqProps = {
   faqDetails?: any[];
 };
