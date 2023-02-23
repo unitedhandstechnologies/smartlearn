@@ -9,54 +9,23 @@ import { Heading } from 'src/components';
 
 const review = [
   {
-    name: 'A',
+    mentor_name: 'John Doe',
     subText: 'ABC Company',
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
-    img: Avatar1
+    command:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
+    user_image: Avatar1,
+    mentor_rating: 4,
+    course_name: ''
   },
   {
-    name: 'B',
+    mentor_name: 'Kathryn Murphy',
     subText: 'BC Company',
-    img: Avatar1,
-    review:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore'
+    user_image: Avatar1,
+    command:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ',
+    mentor_rating: 4,
+    course_name: ''
   }
-  // {
-  //   name: 'c',
-  //   subText: 'BC Company',
-  //   img: Avatar1,
-  //   review:
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore'
-  // },
-  // {
-  //   name: 'd',
-  //   subText: 'BC Company',
-  //   img: Avatar1,
-  //   review:
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore'
-  // },
-  // {
-  //   name: 'Be',
-  //   subText: 'BC Company',
-  //   img: Avatar1,
-  //   review:
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore'
-  // },
-  // {
-  //   name: 'fB',
-  //   subText: 'BC Company',
-  //   img: Avatar1,
-  //   review:
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore'
-  // },
-  // {
-  //   name: 'gB',
-  //   subText: 'BC Company',
-  //   img: Avatar1,
-  //   review:
-  //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore'
-  // }
 ];
 
 const Reviews = ({ ratingData }) => {
@@ -65,8 +34,6 @@ const Reviews = ({ ratingData }) => {
   const length = review?.length ?? 0;
   const [view, setView] = useState(2);
   const show = 3;
-
-  console.log(ratingData, "ratingdata");
 
   const handleNextClick = () => {
     if (currentIndex < length) {
@@ -145,7 +112,7 @@ const Reviews = ({ ratingData }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        {ratingData.slice(0, 2).map((item, index) => {
+        {review.slice(0, 2).map((item, index) => {
           return (
             <Grid item xs={12} sm={6} key={index}>
               <ReviewBox

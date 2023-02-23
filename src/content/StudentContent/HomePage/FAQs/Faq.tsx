@@ -64,14 +64,7 @@ const Faq = ({ question, answer, borderTop }) => {
       </Grid>
       {active ? (
         <Grid item>
-          {/* <Typography className={classes.answerStyle}>{answer}</Typography> */}
-          <RichTextInput
-            value={answer}
-            readOnly={true}
-            displayToolBar={'none'}
-            heightValue={'auto'}
-            borderSize={'0px'}
-          />
+          <Typography className={classes.answerStyle}>{answer}</Typography>
         </Grid>
       ) : null}
     </Grid>

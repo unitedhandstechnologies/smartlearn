@@ -115,7 +115,10 @@ const HomePage = () => {
         <Grid
           container
           direction="column"
-          style={{ padding: theme.spacing(7, 7) }}
+          style={{
+            padding: theme.spacing(7, 7),
+            background: theme.Colors.white
+          }}
         >
           <LearnTheWayBox />
           <Mentors
@@ -136,7 +139,10 @@ const HomePage = () => {
         <Grid
           container
           direction="column"
-          style={{ padding: theme.spacing(7, 7) }}
+          style={{
+            padding: theme.spacing(7, 7),
+            background: theme.Colors.white
+          }}
         >
           <FAQs faqDetails={faqDetails} />
           {/* <WishListCourse/> */}

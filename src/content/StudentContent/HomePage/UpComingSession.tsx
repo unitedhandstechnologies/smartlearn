@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { makeStyles, useTheme } from '@material-ui/core';
+import { makeStyles, Typography, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import { ArrowNext, BasicStockIcon, LineBarIcon } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
@@ -239,7 +239,7 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
               [theme.breakpoints.down('xs')]: {
                 flexDirection: 'column',
                 gap: 5
-              }      
+              }
             }}
           />
         </Grid>
@@ -298,25 +298,27 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
             })
           : null}
       </Grid>
-      <Grid item>
-        <ButtonComp
-          style={{ border: '1.5px solid #3C78F0' }}
-          variant="outlined"
-          buttonFontFamily="Switzer"
-          buttonFontSize={theme.MetricsSizes.regular}
-          backgroundColor={theme.Colors.white}
-          buttonTextColor={'#3C78F0'}
-          btnBorderRadius={'4px'}
-          buttonText={view === 6 ? 'View All' : 'Back'}
-          btnWidth="100%"
-          iconImage={
-            view === 6 ? (
-              <img src={ArrowNext} style={{ marginLeft: '8px' }} />
-            ) : null
-          }
-          onClick={handleView}
+      {getCourses.length > 6 && (
+        <Grid item>
+          <ButtonComp
+            style={{ border: '1.5px solid #3C78F0' }}
+            variant="outlined"
+            buttonFontFamily="Switzer"
+            buttonFontSize={theme.MetricsSizes.regular}
+            backgroundColor={theme.Colors.white}
+            buttonTextColor={'#3C78F0'}
+            btnBorderRadius={'4px'}
+            buttonText={view === 6 ? 'View All' : 'Back'}
+            btnWidth="100%"
+            iconImage={
+              view === 6 ? (
+                <img src={ArrowNext} style={{ marginLeft: '8px' }} />
+              ) : null
+            }
+            onClick={handleView}
           />
-      </Grid>
+        </Grid>
+      )}
     </Grid>
   );
 };

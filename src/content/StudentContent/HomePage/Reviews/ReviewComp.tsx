@@ -92,6 +92,11 @@ export const ReviewBox = ({
         display: 'flex',
         flexDirection: 'column',
         boxShadow: '0px 4px 24px rgba(0, 35, 80, 0.1)',
+        backgroundColor: theme.Colors.white,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        // width: '576px',
+        height: '293px',
         ...sx
       }}
     >
@@ -119,7 +124,7 @@ export const ReviewBox = ({
           </Grid>
         )}
         {imgUrl && (
-          <Grid item sx={{paddingRight: 3}}>
+          <Grid item sx={{ paddingRight: 3 }}>
             <img src={imgUrl} alt="Not Found" />
           </Grid>
         )}
