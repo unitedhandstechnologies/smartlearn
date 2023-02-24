@@ -328,6 +328,7 @@ const UpComingWebinars = ({ courseDetails }: CourseProps) => {
                       subCategory={item.sub_category_name}
                       courseType={item.course_type}
                       onClickCardImage={() => onClickCardImage(item)}
+                      courseLevelId={item.course_level_id}
                     />
                   </Grid>
                 );

@@ -1,4 +1,4 @@
-import { memo,useCallback,useState,useEffect } from 'react';
+import { memo, useCallback, useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { ButtonComp } from 'src/components';
 import { useTheme, makeStyles } from '@material-ui/core';
@@ -30,18 +30,31 @@ const PreRecordedCourses = () => {
   const classes = useStyles();
   const navigateTo = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
-  const [mentorDetails,setMentorDetails] = useState<any>([]);
+  const [mentorDetails, setMentorDetails] = useState<any>([]);
+  const [courseRating, setCourseRating] = useState<any>([]);
+  const [averageRating, setAverageRating] = useState<number>();
   const { state }: any = useLocation();
   let data = { ...state?.formData };
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const response: any = await API_SERVICES.adminUserService.getById(data.mentor_id);
+      setMentorDetails([]);
+      setCourseRating([]);
+      const response: any = await Promise.all([
+        API_SERVICES.adminUserService.getById(data.mentor_id),
+        API_SERVICES.homeUserService.getAllCourseRating(data?.course_id)
+      ]);
 
-      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        if (response?.data?.user) {
-          setMentorDetails(response?.data?.user);
+      if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (response[0]?.data?.user) {
+          setMentorDetails(response[0]?.data?.user);
         }
+      }
+      if(response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if(response[1]?.data?.ratings?.length){
+          setCourseRating(response[1]?.data?.ratings)
+          setAverageRating(response[1]?.data?.total_ratings)
+        }  
       }
     } catch (err) {
       toast.error(err?.message);
@@ -81,7 +94,7 @@ const PreRecordedCourses = () => {
           display: 'flex',
           flex: 1,
           position: 'relative',
-          paddingTop:3
+          paddingTop: 3
         }}
       >
         <CourseBanner
@@ -102,7 +115,7 @@ const PreRecordedCourses = () => {
         xs={12}
         sx={{
           zIndex: 1,
-          paddingBottom: "3%",
+          paddingBottom: '3%',
           bottom: 0,
           [theme.breakpoints.down('md')]: {
             paddingTop: 5,
@@ -111,8 +124,8 @@ const PreRecordedCourses = () => {
             width: '100%'
           },
           [theme.breakpoints.up(1400)]: {
-            paddingBottom: "12%",
-            alignItems: 'flex-start',
+            paddingBottom: '12%',
+            alignItems: 'flex-start'
           }
         }}
       >
@@ -129,8 +142,8 @@ const PreRecordedCourses = () => {
         <Grid item xs={12} md={9} paddingTop={5}>
           <CourseDescription courseDescription={data} />
         </Grid>
-        <Grid container item xs={12} md={3} paddingTop={"9%"}>
-          <CourseRight />
+        <Grid container item xs={12} md={3} paddingTop={'9%'}>
+          <CourseRight courseRating ={courseRating} averageRating={averageRating}/>
         </Grid>
       </Grid>
     </Grid>

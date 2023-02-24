@@ -62,6 +62,7 @@ const Masterclasses = () => {
         fontSize: '40px',
         fontWeight: 500,
         color: '#3C414B',
+        fontFamily: 'IBM Plex Serif',
         [theme.breakpoints.down('xs')]: {
           fontSize: 25
         }

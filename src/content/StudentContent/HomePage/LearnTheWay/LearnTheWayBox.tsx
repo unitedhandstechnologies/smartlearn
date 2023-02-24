@@ -10,6 +10,7 @@ import {
   WorkShopIcon
 } from '../../../../Assets/Images';
 import { Heading } from '../../../../components';
+import { useNavigate } from 'react-router';
 
 const learn = [
   {
@@ -40,6 +41,27 @@ const learn = [
 
 const LearnTheWayBox = () => {
   const theme = useTheme();
+  const navigateTo = useNavigate();
+  
+  const handleClickIcon = (rowData) => {
+    if (rowData.heading === 'Course') {
+      navigateTo('/home/courses', {
+        replace: true
+      });
+    } else if (rowData.heading === 'Workshops') {
+      navigateTo('/home/workshops', {
+        replace: true
+      });
+    } else if (rowData.heading === 'Seminars / Webinars') {
+      navigateTo('/home/seminars-webinars', {
+        replace: true
+      });
+    } else {
+      navigateTo('/home/masterclasses', {
+        replace: true
+      });
+    }
+  };
   return (
     <Grid>
       <Heading
@@ -74,6 +96,7 @@ const LearnTheWayBox = () => {
                 heading={item.heading}
                 icon={item.icon}
                 subText={item.subText}
+                handleClickIcon={() => handleClickIcon(item)}
               />
             </Grid>
           );

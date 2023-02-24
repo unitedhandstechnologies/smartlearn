@@ -6,9 +6,10 @@ type Props = {
   heading?: string;
   icon?: any;
   subText?: string;
+  handleClickIcon?: (val: any) => void;
 };
 
-const LearnWayBox = ({ heading, icon, subText }: Props) => {
+const LearnWayBox = ({ heading, icon, subText, handleClickIcon }: Props) => {
   const theme = useTheme();
   return (
     <Box
@@ -46,7 +47,10 @@ const LearnWayBox = ({ heading, icon, subText }: Props) => {
           >
             {subText}
           </Typography>
-          <IconButton style={{ color: '#3C78F0', padding: '12px 0px 0px 0px' }}>
+          <IconButton
+            style={{ color: '#3C78F0', padding: '12px 0px 0px 0px' }}
+            onClick={handleClickIcon}
+          >
             <ArrowForwardIcon />
           </IconButton>
         </Grid>

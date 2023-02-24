@@ -16,6 +16,7 @@ import {
   BeginnerIcon,
   CommendIcon,
   DateSvg,
+  IntermediateIcon,
   LocationIcon,
   RupeeSign,
   WhiteDot,
@@ -83,6 +84,7 @@ type Props = {
   progressValue?: number;
   onClickCardImage?: (val: any) => void;
   prize?: any;
+  courseLevelId?: any;
 };
 const MuiCardComp = ({
   imgUrl,
@@ -104,6 +106,7 @@ const MuiCardComp = ({
   courseType,
   progressValue,
   prize,
+  courseLevelId,
   onClickCardImage
 }: Props) => {
   const theme = useTheme();
@@ -214,13 +217,14 @@ const MuiCardComp = ({
           <Grid style={{ padding: '10px 0px' }}>
             <IconTextComp
               icon={
-                courseLevel === 'Advanced'
+                courseLevelId === 3
                   ? BarChartFillIcon
-                  : courseLevel === 'Intermediate'
-                  ? BarIcon
+                  : courseLevelId === 2
+                  ? IntermediateIcon
                   : BeginnerIcon
               }
               value={courseLevel}
+              id={courseLevelId}
             />
           </Grid>
         ) : null}

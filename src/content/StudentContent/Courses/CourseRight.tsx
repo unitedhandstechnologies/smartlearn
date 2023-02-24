@@ -11,7 +11,7 @@ import {
   ZoomIcon
 } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
-import { useTheme } from '@material-ui/core';
+import { Avatar, useTheme } from '@material-ui/core';
 import { Heading, ButtonComp } from 'src/components';
 import StarIcon from '@mui/icons-material/Star';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -128,7 +128,13 @@ const typographyStylProps = {
   color: '#78828C'
 };
 
-const CourseRight = () => {
+type CourseRatingProps = {
+  courseRating?: any;
+  averageRating?: number;
+};
+const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
+  console.log('courseRating', courseRating);
+
   const theme = useTheme();
   return (
     <Grid container>
@@ -149,13 +155,13 @@ const CourseRight = () => {
           <Grid>
             <Grid container gap={1}>
               <Typography style={{ fontSize: 20, fontWeight: 600 }}>
-                {rating}
+                {averageRating}
               </Typography>
               <StarIcon style={{ color: '#F2C94C' }} />
             </Grid>
           </Grid>
         </Grid>
-        {reviews.map((item, index) => {
+        {courseRating.map((item, index) => {
           return (
             <Grid
               item
@@ -172,7 +178,10 @@ const CourseRight = () => {
               }}
             >
               <Grid item>
-                <img src={item.img} alt="Not Found" />
+                <Avatar
+                  src={item.user_image}
+                  style={{ height: 44, width: 44 }}
+                />
               </Grid>
               <Grid item xs>
                 <Typography
@@ -183,13 +192,16 @@ const CourseRight = () => {
                     fontWeight: 600
                   }}
                 >
-                  {item.name}
+                  {item.user_name}
                 </Typography>
-                <Rating sx={{ color: '#F2C94C' }} />
+                <Rating
+                  defaultValue={item.course_rating}
+                  sx={{ color: '#F2C94C' }}
+                />
               </Grid>
 
               <Typography style={typographyStylProps}>
-                {item.review}
+                {item.command}
                 <Divider
                   style={{ height: 2, paddingTop: 20, color: '#B4BEC8' }}
                 />
