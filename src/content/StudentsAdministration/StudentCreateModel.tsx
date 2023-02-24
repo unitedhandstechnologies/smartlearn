@@ -126,7 +126,7 @@ const StudentCreateModal = (props: Props) => {
   const phoneError =
     (error && !edit.allFilled('phone_number')) ||
     (error &&
-      edit.allFilled('phone_number') &&
+      edit.allFilled('phone_number') && 
       !isPhoneNumber(edit.getValue('phone_number')));
 
   const imageError = error && !edit.allFilled('image_url');
@@ -147,6 +147,18 @@ const StudentCreateModal = (props: Props) => {
       if (!edit.allFilled(...RequiredFields)) {
         setError(true);
         return toast.error('Please fill all the required fields');
+      }
+      if(!isPhoneNumber(edit.getValue('phone_number'))){
+        setError(true);
+        return toast.error('Please enter your valid 10 digit mobile number');
+      }else{
+        setError(false);
+      }
+      if (
+        edit.getValue('confirmPassword') !== edit.getValue('password') ||
+        edit.getValue('password').length < 7
+      ) {
+        return setError(true);
       }
       if (types[type].handleType === 1) {
         response = await API_SERVICES.adminUserService.create({
@@ -305,7 +317,7 @@ const StudentCreateModal = (props: Props) => {
               }
               edit.update({ phone_number: e.target.value });
             }}
-            isError={phoneError}
+            isError={phoneError && !isPhoneNumber(edit.getValue('phone_number')) }
             helperText={
               phoneError && 'Please enter your valid 10 digit mobile number'
             }

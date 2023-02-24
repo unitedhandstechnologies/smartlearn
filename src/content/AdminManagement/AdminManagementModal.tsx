@@ -164,6 +164,18 @@ const AdminManagementModal = (props: Props) => {
         setError(true);
         return toast.error('Please fill all the details');
       } 
+      if(!isPhoneNumber(edit.getValue('phone_number'))){
+        setError(true);
+        return toast.error('Please enter your valid 10 digit mobile number');
+      }else{
+        setError(false);
+      }
+      if (
+        edit.getValue('confirmPassword') !== edit.getValue('password') ||
+        edit.getValue('password').length < 7
+      ) {
+        return setError(true);
+      }
       let userData = { ...USER_INITIAL_DATA, ...edit.edits };
       let response: any;
       if (types[type].handleType === 1) {

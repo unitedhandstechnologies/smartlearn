@@ -172,6 +172,18 @@ const InstructorManagementCreateModal = (props: Props) => {
         setError(true);
         return toast.error('Please fill all the required fields');
       }
+      if(!isPhoneNumber(edit.getValue('phone_number'))){
+        setError(true);
+        return toast.error('Please enter your valid 10 digit mobile number');
+      }else{
+        setError(false);
+      }
+      if (
+        edit.getValue('confirmPassword') !== edit.getValue('password') ||
+        edit.getValue('password').length < 7
+      ) {
+        return setError(true);
+      }
       let response: any;
       if (types[type].handleType === 1) {
         response = await API_SERVICES.adminUserService.create({
