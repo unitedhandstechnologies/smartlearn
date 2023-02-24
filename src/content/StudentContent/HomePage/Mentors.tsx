@@ -62,7 +62,6 @@ const Mentors = ({
   return (
     <Grid
       container
-      direction={'column'}
       style={{
         marginBottom: 40,
         paddingBottom: `${viewButtonPosition === 'bottom' ? '100px' : '0px'}`
@@ -75,6 +74,7 @@ const Mentors = ({
             headerFontSize={'40px'}
             headerFontWeight={500}
             headingColor={'#3C414B'}
+            headerFontFamily={'Switzer'}
             style={{
               [theme.breakpoints.down('xs')]: {
                 fontSize: 15
@@ -82,9 +82,6 @@ const Mentors = ({
               padding: '20px 0px 20px 0px'
             }}
           />
-          <Grid>
-            <img src={LineBarIcon} alt="" />
-          </Grid>
         </Grid>
         <Grid
           item
@@ -104,13 +101,20 @@ const Mentors = ({
               endIcon={<ArrowForwardIcon />}
               buttonText={'View All'}
               btnWidth="fit-content"
+              btnBorderRadius={'4px'}
               height={'50px'}
-              style={{ borderColor: '#3C78F0' }}
+              style={{
+                borderColor: '#3C78F0',
+                borderWidth: '1.5px',
+                borderStyle: 'solid'
+              }}
             />
           ) : null}
         </Grid>
       </Grid>
-
+      <Grid>
+        <img src={LineBarIcon} alt="" />
+      </Grid>
       <Grid
         container
         spacing={4}
@@ -138,7 +142,11 @@ const Mentors = ({
                       cursor: 'pointer'
                     }}
                     key={index}
-                    onClick={() => viewButtonPosition === 'bottom' ? handleMentorClick(item) : null}
+                    onClick={() =>
+                      viewButtonPosition === 'bottom'
+                        ? handleMentorClick(item)
+                        : null
+                    }
                   >
                     <img src={item.image_url} alt="" />
                     <ImageListItemBar

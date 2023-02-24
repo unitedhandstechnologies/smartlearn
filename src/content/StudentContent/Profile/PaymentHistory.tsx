@@ -111,7 +111,7 @@ const PaymentHistory = () => {
       flex: 1.5,
       sortable: false,
       disableColumnMenu: true,
-      renderCell: ({ row }) => <ListItemCell title={`${row?.amount}`} />
+      renderCell: ({ row }) => <ListItemCell isSymbol title={`${row?.amount}`} />
     },
     {
       field: 'invoice',

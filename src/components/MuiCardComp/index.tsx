@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, useTheme } from '@material-ui/core';
+import { Grid, InputAdornment, useTheme } from '@material-ui/core';
 import {
   Card,
   CardActionArea,
@@ -17,6 +17,7 @@ import {
   CommendIcon,
   DateSvg,
   LocationIcon,
+  RupeeSign,
   WhiteDot,
   ZoomIcon
 } from 'src/Assets';
@@ -27,7 +28,7 @@ import IconTextComp from '../IconTextComp';
 import ListItemCell from '../ListItemCell';
 import { ChipComp } from '../MultiSelectChip/ChipComp';
 import ProgressBar from '../ProgressBar';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 const TopBox = ({ leftText, rightText }) => {
   return (
@@ -123,7 +124,7 @@ const MuiCardComp = ({
               alt=""
               style={{
                 height: 228,
-                opacity: 0.7,
+                opacity: 0.5,
                 ...imageStyle
               }}
             />
@@ -139,6 +140,7 @@ const MuiCardComp = ({
                   headerFontSize={'32px'}
                   headerFontWeight={700}
                   headingColor={theme.Colors.white}
+                  headerFontFamily={'Switzer'}
                   style={{
                     [theme.breakpoints.down('xs')]: {
                       headerFontSize: 20
@@ -263,9 +265,17 @@ const MuiCardComp = ({
       >
         <Grid item style={{ marginRight: 10 }}>
           {leftText === 'PAID' ? (
-            <ListItemCell title={prize} subTitle={'including GST'} />
+            <ListItemCell
+              isSymbol
+              title={prize}
+              subTitle={'including GST'}
+              titleStyle={{
+                fontSize: theme.MetricsSizes.regular_x,
+                fontWeight: theme.fontWeight.bold
+              }}
+            />
           ) : (
-            <h1 style={{ color: '#1c1d1f', textAlign: 'center' }}>Free</h1>
+            <h1 style={{ color: '#3cc878', textAlign: 'center' }}>Free</h1>
           )}
         </Grid>
         <Grid item xs>
@@ -274,6 +284,7 @@ const MuiCardComp = ({
             buttonText="Start learning"
             btnWidth={'100%'}
             backgroundColor={theme.Colors.secondary}
+            buttonFontWeight={theme.fontWeight.regular}
             buttonFontSize={16}
             btnBorderRadius={'4px'}
           />
@@ -289,6 +300,7 @@ const MuiCardComp = ({
           <IconButton
             style={{
               // color: '#3C78F0',
+              color: theme.Colors.darkGrayishBlue,
               background: 'transparent',
               [theme.breakpoints.down('md')]: {
                 display: 'none'
@@ -296,7 +308,7 @@ const MuiCardComp = ({
             }}
             disableRipple
           >
-            <FavoriteIcon />
+            <FavoriteBorderIcon />
           </IconButton>
         </Grid>
       </Grid>

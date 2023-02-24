@@ -17,7 +17,7 @@ type Props = {
 const useStyles = makeStyles<Theme, Props>((theme) => {
   return {
     headingContainer: {
-      marginBottom: theme.MetricsSizes.tiny_xxx,
+      marginBottom: theme.MetricsSizes.tiny_xxx
     },
     headingStyle: {
       fontFamily: (props) => props.headerFontFamily || 'Roboto',
@@ -45,7 +45,12 @@ const Heading = ({
   headerFontFamily,
   ...rest
 }: HeadingProp) => {
-  const classes = useStyles({ headingColor, headerFontSize, headerFontWeight });
+  const classes = useStyles({
+    headingColor,
+    headerFontSize,
+    headerFontWeight,
+    headerFontFamily
+  });
   const theme: Theme = useTheme();
 
   return (

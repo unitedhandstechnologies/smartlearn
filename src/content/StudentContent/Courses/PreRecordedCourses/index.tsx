@@ -33,7 +33,6 @@ const PreRecordedCourses = () => {
   const [mentorDetails,setMentorDetails] = useState<any>([]);
   const { state }: any = useLocation();
   let data = { ...state?.formData };
-  console.log(data, 'data');
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
@@ -41,7 +40,6 @@ const PreRecordedCourses = () => {
 
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.user) {
-          console.log(response?.data, 'mentor');
           setMentorDetails(response?.data?.user);
         }
       }

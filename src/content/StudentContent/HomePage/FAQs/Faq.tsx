@@ -2,6 +2,7 @@ import { Grid, makeStyles, Typography, useTheme } from '@material-ui/core';
 import React, { useState } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import { RichTextInput } from 'src/components/RichTextInput';
 
 const useStyles = makeStyles((theme) => ({
   questionStyle: {
@@ -63,7 +64,14 @@ const Faq = ({ question, answer, borderTop }) => {
       </Grid>
       {active ? (
         <Grid item>
-          <Typography className={classes.answerStyle}>{answer}</Typography>
+          {/* <Typography className={classes.answerStyle}>{answer}</Typography> */}
+          <RichTextInput
+            value={answer}
+            readOnly={true}
+            displayToolBar={'none'}
+            heightValue={'auto'}
+            borderSize={'0px'}
+          />
         </Grid>
       ) : null}
     </Grid>

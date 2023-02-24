@@ -232,6 +232,7 @@ const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
             fontWenghit: theme.fontWeight.medium,
             color: theme.Colors.blackBerry,
             lineHeight: '48px',
+            fontFamily: 'IBM Plex Serif',
             [theme.breakpoints.down('xs')]: {
               fontSize: 25
             }
@@ -246,6 +247,7 @@ const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
             color: theme.Colors.blackBerry,
             lineHeight: '48px',
             padding: '0px 0px 20px 0px',
+            fontFamily: 'IBM Plex Serif',
             [theme.breakpoints.down('xs')]: {
               fontSize: 25
             }

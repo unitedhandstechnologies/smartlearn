@@ -30,9 +30,15 @@ const USPs = () => {
       /> */}
       <Grid>
         <Typography
-          style={{ fontSize: '40px', fontWeight: 500, color: '#3C414B' }}
+          style={{
+            fontSize: '40px',
+            fontWeight: 500,
+            color: '#3C414B',
+            fontFamily: 'IBM Plex Serif'
+          }}
         >
-          <span style={{fontWeight: 700}}>Learn</span> smart to <span style={{fontWeight: 700}}>earn</span> smart
+          <span style={{ fontWeight: 700 }}>Learn</span> smart to{' '}
+          <span style={{ fontWeight: 700 }}>earn</span> smart
         </Typography>
       </Grid>
       <Grid>

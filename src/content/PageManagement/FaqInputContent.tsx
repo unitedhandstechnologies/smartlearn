@@ -96,7 +96,7 @@ console.log(edit.edits)
                   "underline",
                   { list: "bullet" },
                   { list: "ordered" },
-                  { color: [] },                                    
+                  // { color: [] },                                    
                 ],
               },
             }}

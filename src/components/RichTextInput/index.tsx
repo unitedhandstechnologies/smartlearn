@@ -49,6 +49,7 @@ export const RichTextInput = ({
   borderSize,
   heightValue,
   paddingValue,
+  labelName,
   label
 }: {
   onChange?: any;
@@ -60,6 +61,7 @@ export const RichTextInput = ({
   heightValue?: string;
   paddingValue?: string;
   label?: string;
+  labelName?:string;
 }) => {
   const props = {
     displayValue: displayToolBar,
@@ -75,7 +77,7 @@ export const RichTextInput = ({
   return (
     <div className={classes.editorRoot}>
       <label style={{ color: theme.Colors.primary, fontSize: 14 }}>
-        Page Content
+        {labelName}
       </label>
       <ReactQuill
         onChange={onChange}

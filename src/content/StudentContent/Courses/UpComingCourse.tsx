@@ -208,6 +208,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
             headerFontSize={'40px'}
             headerFontWeight={500}
             headingColor={'#3C414B'}
+            headerFontFamily={'Switzer'}
             style={{
               [theme.breakpoints.down('xs')]: {
                 fontSize: 15

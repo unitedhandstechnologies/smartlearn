@@ -1,5 +1,6 @@
 import { Avatar, Badge, Grid, Typography } from '@material-ui/core';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { RupeeSign } from 'src/Assets';
 
 const useStyles = makeStyles<Theme>((theme: Theme) => ({
   textStyle: {
@@ -28,6 +29,7 @@ type Props = {
   avatarClassNameStyles?: any;
   titleStyle?: React.CSSProperties;
   isBadgeEnable?: boolean;
+  isSymbol?: boolean;
   listStyle?: React.CSSProperties;
 };
 
@@ -43,7 +45,8 @@ const ListItemCell = (props: Props) => {
     avatarClassNameStyles,
     titleStyle,
     isBadgeEnable = false,
-    listStyle
+    listStyle,
+    isSymbol
   } = props;
 
   return (
@@ -65,9 +68,12 @@ const ListItemCell = (props: Props) => {
       <Grid item xs>
         <Grid
           style={{
-            display: 'grid'
+            display: 'flex'
           }}
         >
+          {isSymbol ? (
+            <img src={RupeeSign} />
+          ) : null}
           <Typography
             style={{
               fontWeight: theme.fontWeight.medium,

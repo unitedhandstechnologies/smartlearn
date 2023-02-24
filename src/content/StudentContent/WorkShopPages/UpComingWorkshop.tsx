@@ -225,6 +225,7 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
           headerFontSize={'40px'}
           headerFontWeight={500}
           headingColor={'#3C414B'}
+          headerFontFamily={'Switzer'}
           style={{
             [theme.breakpoints.down('xs')]: {
               fontSize: 15
