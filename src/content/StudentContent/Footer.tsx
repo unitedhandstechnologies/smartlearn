@@ -12,8 +12,9 @@ import Typography from '@mui/material/Typography';
 import { ButtonComp, TextInputComponent } from '../../components';
 import Divider from '@mui/material/Divider';
 import { useTheme } from '@material-ui/core/styles';
+import { useNavigate } from 'react-router';
 
-const pages = ['Courses', 'Workshops', ' Mentors', 'Workshops'];
+const pages = ['Courses', 'Workshops', 'Seminars', 'Masterclasses'];
 
 const Text = styled(Typography)(({ theme }) => ({
   padding: theme.spacing(0.5),
@@ -47,6 +48,20 @@ const DividerFoot = styled(Divider)(({ theme }) => ({
 }));
 export default function Footer() {
   const theme = useTheme();
+  const navigateTo = useNavigate();
+
+  const handleClick = (event) => {
+    if (event.target.innerText === 'Courses') {
+      navigateTo('/home/courses');
+    } else if (event.target.innerText === 'Workshops') {
+      navigateTo('/home/workshops');
+    } else if (event.target.innerText === 'Seminars') {
+      navigateTo('/home/seminars-webinars');
+    } else if (event.target.innerText === 'Masterclasses') {
+      navigateTo('/home/masterclasses');
+    }
+  };
+
   return (
     <Grid sx={{ backgroundColor: '#002350' }}>
       <Grid
@@ -79,7 +94,7 @@ export default function Footer() {
                 justifyContent: 'start',
                 height: 30
               }}
-              // onClick={}
+              onClick={handleClick}
             />
           ))}
         </Grid>

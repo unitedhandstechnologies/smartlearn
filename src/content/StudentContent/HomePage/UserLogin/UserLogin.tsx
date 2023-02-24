@@ -1,4 +1,4 @@
-import { Typography, useTheme, Grid } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
 import { memo, useCallback, useState } from 'react';
 import { LineBarIcon, Google } from 'src/Assets';
 import { ButtonComp, TextInputComponent } from 'src/components';
@@ -13,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import Divider from '@mui/material/Divider';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import toast from 'react-hot-toast';
+import { Grid, Typography } from '@mui/material';
 const UserLogin = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
@@ -84,17 +85,29 @@ const UserLogin = () => {
       <Grid item xs={6}>
         <Grid>
           <Typography
-            style={{
+            sx={{
               fontSize: 32,
               fontWeight: 500,
               fontFamily: 'IBM Plex Serif',
               color: '#3C414B',
-              margin: theme.spacing(2, 0)
+              margin: theme.spacing(2, 0),
+              [theme.breakpoints.down('sm')]: {
+                fontSize: 32
+              }
             }}
           >
-            Log in to your smartLearn account
+            Login to your smartLearn account
           </Typography>
-          <Grid container item style={{ justifyContent: 'end' }}>
+          <Grid
+            container
+            item
+            sx={{
+              justifyContent: 'end',
+              [theme.breakpoints.down('sm')]: {
+                justifyContent: 'center'
+              }
+            }}
+          >
             <ButtonComp
               buttonText="Instructor Login"
               backgroundColor="#3C78F0"
@@ -122,7 +135,7 @@ const UserLogin = () => {
           <Grid style={{ paddingTop: 6 }}>
             <img src={LineBarIcon} height={40} />
           </Grid>
-          <Grid style={{ paddingTop: 6 }}>
+          <Grid style={{ paddingTop: 8 }}>
             <ButtonComp
               startIcon={<img src={Google} />}
               buttonText={'Continue with Google'}
