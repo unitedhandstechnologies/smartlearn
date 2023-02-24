@@ -171,7 +171,7 @@ export const ReviewBox = ({
             }}
           >
             {subText}
-            <Typography
+          {review && (<Typography
               sx={{
                 padding: '5px 5px 0px 0px',
                 cursor:"pointer"
@@ -183,7 +183,7 @@ export const ReviewBox = ({
                 ellipsis="......"
                 onClick={handleEllipseClick}
               />
-            </Typography>
+            </Typography>)}
           </Typography>
         </Grid>
       </Grid>

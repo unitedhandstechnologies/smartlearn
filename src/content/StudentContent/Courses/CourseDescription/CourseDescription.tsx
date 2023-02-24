@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Divider } from '@mui/material';
 import { Grid, Rating, Typography } from '@mui/material';
 import {
   ButtonComp,
@@ -7,23 +6,18 @@ import {
   Heading,
   MuiAccordionComp
 } from 'src/components';
-import { LeftArrow, RatingImg } from 'src/Assets';
+import { PdfImg, VideoImg } from 'src/Assets';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
-import StarIcon from '@mui/icons-material/Star';
-import NotificationPopover from '../Notifications/StudentNotification';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import CourseRating from '../CourseRating/Index';
 import { makeStyles, useTheme } from '@material-ui/core';
 import { toast } from 'react-hot-toast';
 import {
-  CONFIRM_MODAL,
   DETECT_LANGUAGE,
   HTTP_STATUSES,
   LANGUAGE_ID
 } from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
 import { useTranslation } from 'react-i18next';
-import { Delete, PlayCircleFilledOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -36,6 +30,10 @@ const useStyles = makeStyles((theme) => {
     accordionClassName: {
       marginTop: 10,
       backgroundColor: 'white'
+    },
+    accordionDetailsClassName:{
+      backgroundColor: "#FFFFFF",
+      border: "none"
     },
     quizHeading: {
       fontWeight: theme.fontWeight.bold,
@@ -163,7 +161,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                           style={{ gap: 10 }}
                           alignItems="center"
                         >
-                          <PlayCircleFilledOutlined fontSize="medium" />
+                          <img src={item.video_url ? VideoImg : PdfImg} width={"18px"} height={"18px"}/>
                           <Typography
                             variant="h5"
                             style={{
@@ -180,7 +178,16 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                             justifyContent="flex-end"
                             style={{ display: 'flex' }}
                           >
-                            <h2>36:25 min</h2>
+                          <Typography
+                            variant="h5"
+                            style={{
+                              fontWeight: 400,
+                              fontSize: theme.MetricsSizes.regular,
+                              color: '#78828C'
+                            }}
+                          >
+                            {"36.55 min"}
+                          </Typography>
                           </Grid>
                         </Grid>
                       );
@@ -196,6 +203,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
   return (
     <Grid
       container
+      paddingRight={"13px"}
       // justifyContent={'space-between'}
       sx={{
         [theme.breakpoints.down('xs')]: {
@@ -247,8 +255,8 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
           <Heading headingText={'Learning Objectives'} {...headingProps} />
           {objectives.map((item, index) => {
             return (
-              <Grid key={index} container gap={1}>
-                <Grid item paddingTop={0.5}>
+              <Grid key={index} container gap={1} alignItems={"center"}>
+                <Grid item>
                   <FiberManualRecordIcon
                     fontSize="small"
                     style={{ color: '#78828C', padding: 5 }}
@@ -264,10 +272,13 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
         <Grid paddingTop={4}>
           <Heading headingText={'Topics in this course'} {...headingProps} />
           {courseDescription?.course_type === 'Recorded Course' && (
-            <Grid item xs={11}>
+            <Grid item xs={12} md={11.7}>
               <MuiAccordionComp
                 accordionOuterContainerClassName={classes.accordionClassName}
                 config={getAccordionContents}
+                accordionDetailClassName={classes.accordionDetailsClassName}
+                bgColor={"#FFFFFF"}
+                iconColor={"#3C78F0"}
               />
             </Grid>
           )}

@@ -77,7 +77,7 @@ function NavBar() {
               display: { xs: 'none', md: 'flex' }
             }}
             component={Link}
-            to={'/'}
+            to={studentDetails.id === 0 ? '/' : '/home/profilehome'}
           >
             <img
               src={logo}
@@ -103,7 +103,7 @@ function NavBar() {
             variant="h5"
             noWrap
             component={Link}
-            to={'/'}
+            to={studentDetails.id === 0 ? '/' : '/home/profilehome'}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

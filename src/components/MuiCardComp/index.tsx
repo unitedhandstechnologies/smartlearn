@@ -30,6 +30,7 @@ import ListItemCell from '../ListItemCell';
 import { ChipComp } from '../MultiSelectChip/ChipComp';
 import ProgressBar from '../ProgressBar';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import LinesEllipsis from 'react-lines-ellipsis';
 
 const TopBox = ({ leftText, rightText }) => {
   return (
@@ -116,6 +117,7 @@ const MuiCardComp = ({
         color: '#FFF',
         padding: '16px',
         width: '100%',
+        height: '100%',
         ...cardStyle
       }}
     >
@@ -190,7 +192,11 @@ const MuiCardComp = ({
               padding: '8px 0px 16px 0px'
             }}
           >
-            {subText}
+            <LinesEllipsis
+              text={subText}
+              maxLine={2}
+              ellipsis="....."
+            />
           </Typography>
         ) : null}
         {date ? (

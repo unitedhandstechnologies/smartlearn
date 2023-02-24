@@ -68,7 +68,7 @@ const PreRecordedCourses = () => {
   }, []);
 
   return (
-    <Grid sx={{ padding: 4 }}>
+    <Grid sx={{ padding: 5, background:"#FFFFFF" }}>
       <ButtonComp
         buttonText={'All courses'}
         startIcon={

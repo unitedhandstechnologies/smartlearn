@@ -9,10 +9,10 @@ import {
 } from '@material-ui/core';
 import { makeStyles, Theme, useTheme } from '@material-ui/core/styles';
 
-const useAccordionStyles = makeStyles((theme: Theme) => ({
+const useAccordionStyles = makeStyles<Theme,AccordionCompProps>((theme) => ({
   summary: {
     position: 'relative',
-    backgroundColor: theme.Colors.lightGrey,    
+    backgroundColor: (props) => props.bgColor || theme.Colors.lightGrey,    
     padding: '0 15px',
     '& .MuiAccordionSummary-content': {
       margin: 0
@@ -70,6 +70,7 @@ export interface AccordionCompProps extends AccordionProps {
   renderAccordionTitle: () => React.ReactNode;
   accordianSummaryClassName?: any;
   iconColor?: any;
+  bgColor?: any;
   isSectionCompleted?: boolean;
 }
 
@@ -84,6 +85,7 @@ export const AccordionItem = (props) => {
     activeColor,
     iconPosition = 'right',
     iconColor,
+    bgColor,
     renderExpandIcons,
     accordionClassName,
     accordionSummaryClassName,
@@ -97,7 +99,7 @@ export const AccordionItem = (props) => {
   }: AccordionCompProps = props;
 
   const isActive = activeItemIds.includes(activeAccId);
-  const classes = useAccordionStyles();
+  const classes = useAccordionStyles(props);
   const theme = useTheme();
 
   const handleChange = (event, isExpanded) => {
@@ -112,9 +114,9 @@ export const AccordionItem = (props) => {
     if (renderExpandIcons) {
       return renderExpandIcons(isActive);
     } else if (isActive) {
-      return <ExpandLess color={iconColor} />;
+      return <ExpandLess style={{color:iconColor || "#78828C"}}/>;
     } else {
-      return <ExpandMore color={iconColor} />;
+      return <ExpandMore style={{color:iconColor || "#78828C"}}/>;
     }
   };
 

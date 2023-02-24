@@ -44,6 +44,9 @@ const MuiAccordionComp = (props: Props) => {
     customActiveAccItem = [],
     resetAccItems = false,
     accordianTitleClassName,
+    accordionClassName,
+    bgColor,
+    iconColor,
     ...rest
   } = props;
   const theme = useTheme();
@@ -91,8 +94,12 @@ const MuiAccordionComp = (props: Props) => {
                   activeAccId={item.id}
                   activeItemIds={activeItemIds}
                   accordianTitleClassName={accordianTitleClassName}
+                  accordionClassName={accordionClassName}
+                  bgColor={bgColor}
+                  iconColor={iconColor}
                   {...item}
                   {...rest}
+                  
                 />
               </Grid>
             );

@@ -1,4 +1,4 @@
-import { Badge, Grid, Typography, Box, Avatar } from '@material-ui/core';
+import { Badge, Grid, Typography, Box, Avatar,useTheme } from '@material-ui/core';
 import {
   CartImg,
   UserProfile,
@@ -28,6 +28,7 @@ const UserCart = (props: Props) => {
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
   const [profileOpen, setProfileOpen] = useState(null);
+  const theme = useTheme();
 
   const handleCartClick = (event) => {
     setCartOpen(event.currentTarget);
@@ -70,7 +71,10 @@ const UserCart = (props: Props) => {
         gap: 5,
         alignItems: 'center',
         justifyContent: 'flex-end',
-        width: 'fit-content'
+        width: 'fit-content',
+        [theme.breakpoints.down('sm')]:{
+          diplay: "none"
+        }
       }}
     >
       <Grid>
