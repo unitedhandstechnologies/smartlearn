@@ -9,10 +9,13 @@ import { ButtonComp, TextInputComponent } from 'src/components';
 
 import { useNavigate } from 'react-router';
 import { API_SERVICES } from 'src/Services';
-import { HTTP_STATUSES } from 'src/Config/constant';
+import {
+  DETECT_LANGUAGE,
+  HTTP_STATUSES,
+  USER_TYPE_ID
+} from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
 import Divider from '@mui/material/Divider';
-import useStudentInfo from 'src/hooks/useStudentInfo';
 import toast from 'react-hot-toast';
 import { useEdit } from 'src/hooks/useEdit';
 import { capitalizeFirstLetter, isPhoneNumber, isValidEmail } from 'src/Utils';
@@ -20,7 +23,6 @@ const Registration = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
-  // const { updateStudentInfo } = useStudentInfo();
   // const onClickEyeIcon = () => {
   //   setShowPassword(!showPassword);
   // };
@@ -30,25 +32,31 @@ const Registration = () => {
     last_name: '',
     user_name: '',
     phone_number: '',
-    country: '',
     email_id: '',
     password: '',
-    code: '+91'
+    image_url: '',
+    confirmPassword: '',
+    user_type: USER_TYPE_ID.student,
+    social_information_url: '',
+    permissions: [],
+    code: '',
+    language_id: 1 || DETECT_LANGUAGE[i18n.language],
+    gender: '',
+    qualification: ''
   };
   const RequiredFields = [
     'first_name',
     'last_name',
-    'user_name',
-    'country',
     'email_id',
     'password',
     'confirmPassword',
     'phone_number',
-    'image_url'
+    'user_name'
   ];
   const edit = useEdit(STUDENT_INITIAL_DATA);
   const firstNameError = error && !edit.allFilled('first_name');
   const lastNameError = error && !edit.allFilled('last_name');
+  const userNameError = error && !edit.allFilled('user_name');
 
   const confirmPasswordError =
     (error && !edit.getValue('confirmPassword')) ||
@@ -74,48 +82,30 @@ const Registration = () => {
     (error &&
       edit.allFilled('phone_number') &&
       !isPhoneNumber(edit.getValue('phone_number')));
+  const codeError = error && !edit.allFilled('code');
 
-  const onClickRegister = useCallback(async () => {
-    if (!edit.allFilled(...RequiredFields)) {
-      setError(true);
-      return toast.error('Please fill all the required fields');
+  const onClickRegister = async () => {
+    try {
+      if (!edit.allFilled(...RequiredFields)) {
+        setError(true);
+        return toast.error('Please fill all the required fields');
+      }
+
+      let userData = { ...STUDENT_INITIAL_DATA, ...edit.edits };
+      const response: any = await API_SERVICES.adminUserService.create({
+        data: userData,
+        successMessage: 'New Student Created successfully!',
+        failureMessage: 'Error: Student Already Exist'
+      });
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        navigateTo('/home/user-login', { replace: true });
+      }
+    } catch (e) {
+      console.log(e, '---login err-----');
+    } finally {
+      // setLoading(false);
     }
-    // try {
-    //   //  setLoading(true);
-    //    let data = { ...STUDENT_INITIAL_DATA, ...edit.edits };
-    //    response = await API_SERVICES.adminUserService.create({
-    //   data: userData,
-    //   successMessage: 'New Student Created successfully!',
-    //   failureMessage: 'Error: Student Already Exist'
-    // });
-    //   if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-    //     i18n.changeLanguage('en');
-    //     localStorage.setItem('token', JSON.stringify(response?.data?.token));
-
-    //     if (response?.data?.users?.length) {
-    //       localStorage.setItem(
-    //         'userId',
-    //         JSON.stringify(response?.data.users[0].id)
-    //       );
-    //       const getUserRes: any = await API_SERVICES.adminUserService.getById(
-    //         response?.data.users[0].id
-    //       );
-    //       updateStudentInfo(response?.data.users[0].id);
-    //       if (getUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-    //         updateStudentInfo((prevState: any) => {
-    //           return { ...prevState, ...getUserRes?.data?.user };
-    //         });
-    //       }
-    //     }
-    //     toast.success('Profile Login successfully');
-    //     navigateTo('/home/profilehome', { replace: true });
-    //   }
-    // } catch (e) {
-    //   console.log(e, '---login err-----');
-    // } finally {
-    //   // setLoading(false);
-    // }
-  }, []);
+  };
   const navigateTo = useNavigate();
   return (
     <Grid
@@ -140,7 +130,7 @@ const Registration = () => {
               margin: theme.spacing(2, 0)
             }}
           >
-            Signup to Continue
+            Sign up and start learning
           </Typography>
           {/* <Grid container item style={{ justifyContent: 'end' }}>
             <ButtonComp
@@ -200,17 +190,11 @@ const Registration = () => {
           </Typography>
         </Divider>
 
-        <Grid
-          item
-          container
-          spacing={1}
-          direction="column"
-          sx={{ paddingTop: 4 }}
-        >
+        <Grid container direction="column" sx={{ paddingTop: 2 }}>
           <Grid
             container
-            item
-            spacing={0.5}
+            spacing={0}
+
             // sx={{
             //   display: 'flex',
             //   justifyContent: 'center',
@@ -220,7 +204,7 @@ const Registration = () => {
             //   }
             // }}
           >
-            <Grid xs={12} md={6}>
+            <Grid xs={12} md={6} sx={{ marginTop: '10px' }}>
               <TextInputComponent
                 inputLabel={'First Name'}
                 variant="outlined"
@@ -237,7 +221,7 @@ const Registration = () => {
                 helperText={firstNameError && 'Please enter your first name'}
               />
             </Grid>
-            <Grid xs={12} md={6}>
+            <Grid xs={12} md={6} sx={{ marginTop: '10px' }}>
               <TextInputComponent
                 inputLabel={'Last Name'}
                 variant="outlined"
@@ -247,7 +231,7 @@ const Registration = () => {
                 value={edit.getValue('last_name')}
                 onChange={(e) =>
                   edit.update({
-                    first_name: capitalizeFirstLetter(e.target.value)
+                    last_name: capitalizeFirstLetter(e.target.value)
                   })
                 }
                 isError={lastNameError}
@@ -267,6 +251,24 @@ const Registration = () => {
                 helperText={emailError && 'Please enter valid Email'}
               />
             </Grid>
+            {/* <Grid item xs={2} md={1} sx={{ marginTop: '10px' }}>
+              <TextInputComponent
+                inputLabel={'Code'}
+                variant="outlined"
+                borderColor={'#3C78F0'}
+                labelColor={'#78828C'}
+                value={edit.getValue('code')}
+                required
+                onChange={(e) => {
+                  if (isNaN(Number(e.target.value))) {
+                    return;
+                  }
+                  edit.update({ code: e.target.value });
+                }}
+                isError={codeError}
+                // helperText={phoneError && 'Please enter your country code'}
+              />
+            </Grid> */}
             <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
               <TextInputComponent
                 inputLabel={'Phone Number'}
@@ -285,6 +287,19 @@ const Registration = () => {
                 helperText={
                   phoneError && 'Please enter your valid 10 digit mobile number'
                 }
+              />
+            </Grid>
+            <Grid xs={12} md={12} sx={{ marginTop: '10px' }}>
+              <TextInputComponent
+                inputLabel={'User Name'}
+                variant="outlined"
+                borderColor={'#3C78F0'}
+                labelColor={'#78828C'}
+                required
+                value={edit.getValue('user_name')}
+                onChange={(e) => edit.update({ user_name: e.target.value })}
+                isError={userNameError}
+                helperText={userNameError && 'Please enter your user name'}
               />
             </Grid>
             <Grid item xs={12} md={6} style={{ marginTop: '10px' }}>

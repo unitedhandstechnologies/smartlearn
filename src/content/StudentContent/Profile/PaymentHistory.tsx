@@ -1,10 +1,10 @@
-import { Grid, IconButton, makeStyles, Theme } from '@material-ui/core';
+import { IconButton, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
 import { ListItemCell } from 'src/components';
 import MuiTable from 'src/components/MuiTable';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { Typography } from '@mui/material';
+import { Grid, Typography, useTheme } from '@mui/material';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -51,6 +51,7 @@ const rows = [
 
 const PaymentHistory = () => {
   const classes = useStyles();
+  const theme = useTheme();
   const getBackgroundColor = (status) => {
     if (status === 'paid') {
       let background = 'rgba(60, 200, 120, 0.2)';
@@ -124,7 +125,15 @@ const PaymentHistory = () => {
     }
   ];
   return (
-    <>
+    <Grid
+      item
+      container
+      sx={{
+        [theme.breakpoints.down('sm')]: {
+          flexDirection: 'column'
+        }
+      }}
+    >
       <Typography
         sx={{
           fontSize: 32,
@@ -142,7 +151,7 @@ const PaymentHistory = () => {
         autoHeight={true}
         hideFooterPagination={true}
       />
-    </>
+    </Grid>
   );
 };
 

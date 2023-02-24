@@ -31,7 +31,7 @@ const ForgetPassword = () => {
   const onClick = useCallback(async () => {
     if (!edit.allFilled(...RequiredFields)) {
       setError(true);
-      return toast.error('Please fill the required fields');
+      return toast.error('Please fill the registered Email');
     }
   }, []);
   const navigateTo = useNavigate();
@@ -41,6 +41,7 @@ const ForgetPassword = () => {
       style={{
         display: 'flex',
         justifyContent: 'center',
+        padding: 5,
         [theme.breakpoints.down('sm')]: { flexDirection: 'column' }
       }}
     >
@@ -66,6 +67,7 @@ const ForgetPassword = () => {
           <Grid item xs={6} style={{ paddingTop: 20 }}>
             <TextInputComponent
               inputLabel={'Enter registered Email'}
+              placeholder={'Email'}
               variant="outlined"
               required
               borderColor={'#3C78F0'}
@@ -77,18 +79,59 @@ const ForgetPassword = () => {
             />
           </Grid>
 
-          <Grid item xs={4} style={{ marginTop: '24px' }}>
+          <Grid item xs={6} style={{ marginTop: '24px' }}>
             <ButtonComp
-              buttonText="Send"
+              buttonText="Reset Password"
               backgroundColor="#3C78F0"
               buttonTextColor={theme.Colors.white}
               buttonFontSize={16}
               buttonFontWeight={400}
-              btnWidth="50%"
+              btnWidth="100%"
               height="40px"
               buttonFontFamily="Switzer"
               onClickButton={onClick}
             />
+          </Grid>
+          <Grid
+            item
+            xs={6}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              padding: 8,
+
+              [theme.breakpoints.down('sm')]: {
+                flexDirection: 'column',
+                justifyContent: 'center'
+              }
+            }}
+          >
+            <Typography
+              style={{
+                color: '#78828C',
+                fontSize: 16,
+                fontFamily: 'Switzer',
+                fontWeight: 700,
+                textAlign: 'start',
+                cursor: 'pointer'
+              }}
+            >
+              Or
+              <span
+                style={{
+                  fontSize: 16,
+                  fontFamily: 'Switzer',
+                  fontWeight: 400,
+                  textAlign: 'center',
+                  paddingLeft: 3,
+                  color: '#3C78F0',
+                  cursor: 'pointer'
+                }}
+                onClick={() => navigateTo('/home/user-login')}
+              >
+                Log in
+              </span>
+            </Typography>
           </Grid>
         </Grid>
       </Grid>

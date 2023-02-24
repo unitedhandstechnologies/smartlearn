@@ -84,7 +84,7 @@ const UserCart = (props: Props) => {
           {/* <img src={image || UserProfile} width={'32px'} height={'32px'} />{' '} */}
           <Avatar
             alt=""
-            src={image || UserProfile}
+            src={image}
             style={{ width: '32px', height: '32px' }}
           />
         </IconButton>
@@ -98,7 +98,7 @@ const UserCart = (props: Props) => {
             padding: 4
           }}
         >
-          {userName || 'Cameron'}
+          {userName}
         </Typography>
       </Grid>
       <Divider orientation="vertical" style={{ width: 1, height: 30 }} />

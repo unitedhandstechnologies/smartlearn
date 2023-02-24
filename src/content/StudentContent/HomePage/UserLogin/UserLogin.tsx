@@ -22,8 +22,8 @@ const UserLogin = () => {
     setShowPassword(!showPassword);
   };
   const { i18n } = useTranslation();
-  const { state } : any = useLocation();
-   
+  const { state }: any = useLocation();
+
   const onClickLogin = useCallback(async () => {
     try {
       //  setLoading(true);
@@ -54,12 +54,12 @@ const UserLogin = () => {
           }
         }
         toast.success('Profile Login successfully');
-        if(state){
+        if (state) {
           navigateTo(state.route, {
             state: { ...state.details },
             replace: true
-          })
-        }else{
+          });
+        } else {
           navigateTo('/home/profilehome', { replace: true });
         }
       }
@@ -92,7 +92,7 @@ const UserLogin = () => {
               margin: theme.spacing(2, 0)
             }}
           >
-            Login to Continue
+            Log in to your smartLearn account
           </Typography>
           <Grid container item style={{ justifyContent: 'end' }}>
             <ButtonComp
@@ -155,7 +155,7 @@ const UserLogin = () => {
         <Grid container direction="column">
           <Grid item xs style={{ paddingTop: 15 }}>
             <TextInputComponent
-              inputLabel={'Email'}
+              inputLabel={'UserName'}
               variant="outlined"
               borderColor={'#3C78F0'}
               labelColor={'#78828C'}

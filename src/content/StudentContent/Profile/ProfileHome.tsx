@@ -107,7 +107,8 @@ const ProfileHome = () => {
     return <Loader />;
   } else {
     return (
-      <Grid container sx={{ position: 'relative', paddingTop: 4 }}>
+      <Grid container sx={{ position: 'relative', padding: 4 }}>
+        <Thankyou anchorEl={thankOpen} handleClose={handleThanklClose} />
         <Grid
           container
           xs={12}

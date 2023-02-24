@@ -28,7 +28,7 @@ import CartPopover from './HomePage/userNavBarBox/CartPopup';
 import NotificationPopover from './Courses/Notifications/StudentNotification';
 import { CartImg } from 'src/Assets';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { StudentInfoContext } from 'src/contexts/StudentContext';
+import useStudentInfo from 'src/hooks/useStudentInfo';
 
 const pages = [
   { label: 'Courses', path: 'courses' },
@@ -42,7 +42,7 @@ function NavBar() {
   const [open, setOpen] = React.useState(false);
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
-  const { studentDetails } = useContext(StudentInfoContext);
+  const { studentDetails, updateStudentInfo } = useStudentInfo();
 
   const handleCartClick = (event) => {
     setCartOpen(event.currentTarget);

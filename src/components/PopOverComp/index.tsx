@@ -1,4 +1,4 @@
-import { Popover } from '@mui/material';
+import { Divider, Popover } from '@mui/material';
 import { Grid, Typography } from '@mui/material';
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -8,10 +8,19 @@ type Props = {
   anchorEl?: null | HTMLElement;
   handleClose?: () => void;
   renderContent?: () => void;
+  width?: number;
+  isDivider?: boolean;
 };
 
 const PopOver = (props: Props) => {
-  const { popOverTitle, anchorEl, handleClose, renderContent } = props;
+  const {
+    popOverTitle,
+    anchorEl,
+    handleClose,
+    renderContent,
+    width,
+    isDivider
+  } = props;
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
@@ -30,18 +39,13 @@ const PopOver = (props: Props) => {
       PaperProps={{
         style: {
           marginTop: 35,
-          width: '400px',
+          width: width || '400px',
           borderRadius: 0
         }
       }}
     >
       <Grid alignItems={'center'} padding={2.2}>
-        <Grid
-          container
-          justifyContent={'space-between'}
-          padding={1}
-          paddingBottom={2}
-        >
+        <Grid container justifyContent={'space-between'} padding={1}>
           <Typography
             style={{
               fontFamily: 'IBM Plex Serif',
@@ -56,6 +60,8 @@ const PopOver = (props: Props) => {
             <CloseIcon />
           </IconButton>
         </Grid>
+        {isDivider && <Divider sx={{ color: '#F2F4F7', height: '1px' }} />}
+
         {renderContent()}
       </Grid>
     </Popover>

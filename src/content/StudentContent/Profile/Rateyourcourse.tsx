@@ -1,4 +1,4 @@
-import { Divider } from '@mui/material';
+import { Divider, Rating } from '@mui/material';
 import { Grid, Typography } from '@mui/material';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import PopOver from 'src/components/PopOverComp';
@@ -54,6 +54,7 @@ const Rateyourcourse = (props: Props) => {
                   }}
                 >
                   {notification.content}
+                  <Rating sx={{ color: '#3C78F0' }} size="large" />
                   <Divider light={true} style={{ paddingTop: 25 }} />
                 </Typography>
               </Grid>
@@ -65,7 +66,19 @@ const Rateyourcourse = (props: Props) => {
           multiline
           fullWidth
         />
-        <ButtonComp buttonText="Submit review" onClick={onClick} />
+        <Grid paddingTop={5}>
+          <ButtonComp
+            buttonText="Submit review"
+            onClick={onClick}
+            backgroundColor="#3C78F0"
+            buttonTextColor={'white'}
+            buttonFontSize={16}
+            buttonFontWeight={400}
+            btnWidth={'fit-content'}
+            height="40px"
+            buttonFontFamily="Switzer"
+          />
+        </Grid>
       </>
     );
   };

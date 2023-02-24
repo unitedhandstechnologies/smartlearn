@@ -4,6 +4,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import PopOver from 'src/components/PopOverComp';
 import TextField from '@mui/material/TextField';
 import { ButtonComp } from 'src/components';
+import Thanks from '../../../Assets/Images/Thanks.svg';
 
 type notiPrpos = {
   title: string;
@@ -22,15 +23,8 @@ const Thankyou = (props: Props) => {
   const renderComponenet = () => {
     return (
       <>
-        <Grid width={'50%'}>
-          <Grid
-            container
-            sx={{
-              background: '#002350',
-              transform: 'skewX(-40deg)',
-              width: '380px'
-            }}
-          />
+        <Grid container justifyContent="center" paddingTop={3}>
+          <img src={Thanks} />
         </Grid>
         <Typography
           sx={{
@@ -38,11 +32,23 @@ const Thankyou = (props: Props) => {
             fontWeight: 500,
             fontFamily: 'Switzer',
             textAlign: 'center',
-            color: '#3C414B'
+            color: '#3C414B',
+            paddingTop: 5
           }}
         >
-          Thank you for your reviews. You just contributed in improving our
-          experience.
+          Thank you for your reviews.
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: 18,
+            fontWeight: 500,
+            fontFamily: 'Switzer',
+            textAlign: 'center',
+            color: '#3C414B',
+            paddingBottom: 5
+          }}
+        >
+          You just contributed in improving our experience.
         </Typography>
       </>
     );
@@ -55,6 +61,8 @@ const Thankyou = (props: Props) => {
         handleClose={handleClose}
         popOverTitle={'Thank you'}
         renderContent={renderComponenet}
+        width={500}
+        isDivider={true}
       />
     </>
   );

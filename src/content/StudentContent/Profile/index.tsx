@@ -5,8 +5,8 @@ import { Heading, MuiTabComponent } from 'src/components';
 import MyLibrary from './MyLibrary';
 import PaymentHistory from './PaymentHistory';
 import ProfileDetails from './ProfileDetails';
-import { StudentInfoContext } from 'src/contexts/StudentContext';
 import { Grid } from '@mui/material';
+import useStudentInfo from 'src/hooks/useStudentInfo';
 
 const useStyles = makeStyles((theme) => ({
   gridStyle: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const { studentDetails } = useContext(StudentInfoContext);
+  const { studentDetails, updateStudentInfo } = useStudentInfo();
   const tabContent = [
     {
       label: 'Profile',
@@ -70,6 +70,7 @@ const Profile = () => {
     return (
       <>
         <Grid
+          xs={12}
           sx={{
             [theme.breakpoints.down('sm')]: {
               flexDirection: 'column'
@@ -78,12 +79,12 @@ const Profile = () => {
         >
           <Avatar
             alt=""
-            src={studentDetails.image_url || Avatar1}
+            src={studentDetails.image_url}
             style={{ width: 100, height: 100 }}
           />
         </Grid>
         <Heading
-          headingText={studentDetails.first_name}
+          headingText={`${studentDetails.first_name} ${studentDetails.last_name}`}
           headerFontSize={'32px'}
           headerFontWeight={500}
           headerFontFamily={'IBM Plex Serif'}
@@ -97,7 +98,17 @@ const Profile = () => {
   };
 
   return (
-    <Grid style={{ paddingTop: 20 }}>
+    <Grid
+      container
+      item
+      xs={12}
+      sx={{
+        paddingTop: 5,
+        [theme.breakpoints.down('sm')]: {
+          flexDirection: 'column'
+        }
+      }}
+    >
       <MuiTabComponent
         renderHeader={renderHeader}
         tabContent={tabContent}

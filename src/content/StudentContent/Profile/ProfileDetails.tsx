@@ -1,7 +1,6 @@
 import {
   Avatar,
   Button,
-  Grid,
   IconButton,
   makeStyles,
   Typography,
@@ -9,7 +8,6 @@ import {
 } from '@material-ui/core';
 import { EditOutlined } from '@material-ui/icons';
 import React, { useContext, useState } from 'react';
-import { Avatar1 } from 'src/Assets';
 import {
   ButtonComp,
   Heading,
@@ -17,11 +15,14 @@ import {
   TextInputComponent
 } from 'src/components';
 import { useEdit } from 'src/hooks/useEdit';
-import { StudentInfoContext } from 'src/contexts/StudentContext';
+//import { StudentInfoContext } from 'src/contexts/StudentContext';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import toast from 'react-hot-toast';
 import Divider from '@mui/material/Divider';
+import { useNavigate } from 'react-router';
+import useStudentInfo from 'src/hooks/useStudentInfo';
+import { Grid } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   forgotTxt: {
@@ -61,18 +62,34 @@ const useStyles = makeStyles((theme) => ({
 const ProfileDetails = () => {
   const theme = useTheme();
   const classes = useStyles();
-  const { studentDetails } = useContext(StudentInfoContext);
+  const { studentDetails, updateStudentInfo } = useStudentInfo();
   const [profileImage, setProfileImage] = useState('No file choosen');
+  const navigateTo = useNavigate();
+  //const { updateStudentInfo } = useStudentInfo();
   const initialValues = {
     image_url: studentDetails.image_url || '',
     first_name: studentDetails.first_name || '',
     last_name: studentDetails.last_name || '',
     phone_number: studentDetails.phone_number || '',
-    email_id: studentDetails.email_id || ''
+    email_id: studentDetails.email_id || '',
+    password: '',
+    confirmPassword: ''
   };
   const edit = useEdit(initialValues);
   const [isEdit, setIsEdit] = useState<number>(0);
-  console.log(studentDetails, ' profile');
+  const [error, setError] = useState(false);
+  const confirmPasswordError =
+    (error && !edit.getValue('confirmPassword')) ||
+    (error &&
+      edit.getValue('confirmPassword') &&
+      edit.getValue('password') &&
+      edit.getValue('confirmPassword') !== edit.getValue('password'));
+
+  const passwordError =
+    (error && !edit.getValue('password')) ||
+    (error &&
+      edit.getValue('password') &&
+      edit.getValue('password').length < 7);
 
   const onEditClick = (editEvent: any) => {
     edit.reset();
@@ -88,14 +105,34 @@ const ProfileDetails = () => {
       setIsEdit(0);
       return;
     }
-    console.log('Press enter key');
+    try {
+      //  if (!edit.allFilled(...RequiredFields)) {
+      //    setError(true);
+      //    return toast.error('Please fill all the required fields');
+      //  }
+      //setLoading(true);
+      let data = { ...edit.edits };
 
-    // let data = { ...edit.edits };
-    // let response: any = await handleSaveEdits(data);
-    // if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-    //   setIsEdit(0);
-    // }
+      const response: any = await API_SERVICES.adminUserService.update(
+        studentDetails?.id,
+        {
+          data: data,
+          successMessage: 'Student details updated successfully!'
+        }
+      );
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        setIsEdit(0);
+        updateStudentInfo((prevState: any) => {
+          return { ...prevState, ...response?.data?.user };
+        });
+      }
+    } catch (e) {
+      console.log(e, '---login err-----');
+    } finally {
+      // setLoading(false);
+    }
   };
+
   const onUploadFiles = async (event: any) => {
     let formData = new FormData();
     let image = event.target.files[0];
@@ -107,12 +144,17 @@ const ProfileDetails = () => {
       if (img.width <= 250 && img.height <= 250) {
         const uploadImageRes: any =
           await API_SERVICES.imageUploadService.uploadImage(formData);
+
         if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-          toast.success('image Edit Successfully');
+          toast.success(
+            'Image uploaded,click the Save & Edit the Profile Image'
+          );
+
           if (uploadImageRes?.data?.images) {
             edit.update({
               image_url: uploadImageRes?.data?.images[0].Location
             });
+            handleSave();
           }
         }
       } else {
@@ -157,7 +199,13 @@ const ProfileDetails = () => {
   };
 
   return (
-    <Grid>
+    <Grid
+      sx={{
+        [theme.breakpoints.down('sm')]: {
+          flexDirection: 'column'
+        }
+      }}
+    >
       <Heading
         headingText={'Profile details'}
         headerFontSize={'32px'}
@@ -169,15 +217,18 @@ const ProfileDetails = () => {
         xs={2}
         container
         item
-        style={{
+        sx={{
           padding: 10,
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column'
+          }
         }}
       >
         <Avatar
           alt=""
-          src={edit.getValue('image_url') || Avatar1}
+          src={edit.getValue('image_url')}
           style={{
             width: 150,
             height: 150,
@@ -243,18 +294,12 @@ const ProfileDetails = () => {
             onChange={handleChange}
             name="last_name"
             disabled={isEdit !== 2}
-            // iconEnd={
-            //   <IconButton id="2" onClick={onEditClick}>
-            //     <EditOutlined />
-            //   </IconButton>
-            // }
-
             iconEnd={<EditComp btnId={2} />}
           />
         </Grid>
       </Grid>
       <Grid container spacing={2} item style={{ paddingTop: 15 }}>
-        <Grid item xs={1}>
+        {/* <Grid item xs={1}>
           <TextInputComponent
             inputLabel="Code"
             value={'+91'}
@@ -265,21 +310,10 @@ const ProfileDetails = () => {
             }}
             name="phone_number"
             onChange={handleChange}
-            //disabled={isEdit !== 3}
-            // iconEnd={
-            //   <IconButton id="3" onClick={onEditClick}>
-            //     <EditOutlined />
-            //   </IconButton>
-            // }
-            // onKeyPress={(event) => {
-            //   if (event.key === 'Enter') {
-            //     handleSave();
-            //   }
-            // }}
-            //iconEnd={<EditComp btnId={3} />}
+        
           />
-        </Grid>
-        <Grid item xs={5}>
+        </Grid> */}
+        <Grid item xs={6}>
           <TextInputComponent
             inputLabel="Phone Number"
             value={edit.getValue('phone_number')}
@@ -291,16 +325,6 @@ const ProfileDetails = () => {
             name="phone_number"
             onChange={handleChange}
             disabled={isEdit !== 3}
-            // iconEnd={
-            //   <IconButton id="3" onClick={onEditClick}>
-            //     <EditOutlined />
-            //   </IconButton>
-            // }
-            // onKeyPress={(event) => {
-            //   if (event.key === 'Enter') {
-            //     handleSave();
-            //   }
-            // }}
             iconEnd={<EditComp btnId={3} />}
           />
         </Grid>
@@ -317,20 +341,11 @@ const ProfileDetails = () => {
             name="email_id"
             disabled={isEdit !== 4}
             iconEnd={<EditComp btnId={4} />}
-            // iconEnd={
-            //   <IconButton id="4" onClick={onEditClick}>
-            //     <EditOutlined />
-            //   </IconButton>
-            // }
-            // onKeyPress={(event) => {
-            //   if (event.key === 'Enter') {
-            //     handleSave();
-            //   }
-            // }}
           />
         </Grid>
       </Grid>
       <Divider sx={{ color: '#F2F4F7', marginTop: 5, height: '1px' }} />
+
       <Grid container style={{ paddingTop: 15 }}>
         <Heading
           headingText={'Change Password'}
@@ -343,21 +358,61 @@ const ProfileDetails = () => {
       <Grid container spacing={3} item style={{ paddingTop: 15 }}>
         <Grid item xs>
           <TextInputComponent
-            inputLabel="Old Password"
-            placeholder={'Enter old password'}
+            placeholder={'Enter password'}
+            inputLabel={'Password'}
+            variant="outlined"
+            borderColor={'#3C78F0'}
+            labelColor={'#78828C'}
+            value={edit.getValue('password')}
+            onChange={(e) => edit.update({ password: e.target.value })}
+            type={'password'}
+            inputProps={{
+              maxLength: 12
+            }}
+            helperText={
+              passwordError &&
+              'The password must contain minimum 7 and maximum 12 characters!'
+            }
+            isError={passwordError}
           />
-          <Typography className={classes.forgotTxt}>
+          <Typography
+            className={classes.forgotTxt}
+            onClick={() => navigateTo('/home/forgetpassword')}
+          >
             Forgot Password?
           </Typography>
         </Grid>
+        <Divider sx={{ color: '#F2F4F7', marginTop: 5, height: '1px' }} />
         <Grid item xs>
           <TextInputComponent
-            inputLabel="New Password"
-            placeholder={'Enter new password'}
+            inputLabel="Confirm Password"
+            placeholder={'Enter confirm password'}
+            variant="outlined"
+            borderColor={'#3C78F0'}
+            labelColor={'#78828C'}
+            value={edit.getValue('confirmPassword')}
+            type={'password'}
+            helperText={
+              confirmPasswordError &&
+              'Both password and confirm password should be same!'
+            }
+            isError={confirmPasswordError}
+            onChange={(e) => edit.update({ confirmPassword: e.target.value })}
           />
         </Grid>
+
         <Grid item xs={12} className={classes.buttonStyle}>
-          <ButtonComp buttonText="Save" />
+          <ButtonComp
+            buttonText="Save"
+            backgroundColor="#3C78F0"
+            buttonTextColor={theme.Colors.white}
+            buttonFontSize={16}
+            buttonFontWeight={400}
+            btnWidth={'fit-content'}
+            height="40px"
+            buttonFontFamily="Switzer"
+            onClick={handleSave}
+          />
         </Grid>
       </Grid>
     </Grid>
