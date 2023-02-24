@@ -14,37 +14,76 @@ import { useTranslation } from 'react-i18next';
 import QuestionAndAnswer from './QuestionAndAnswer';
 
 type Props = {
-  quizData: any[];
+  //quizData: any[];
 }
 
 const Quiz = (props:Props) => {
-  const {quizData} = props
+
   const theme = useTheme();
   const [ questionToDisplayIndex , setQuestionToDisplayIndex ] = useState(0);
   const [ quizDataDetatils, setQuizDataDetatils ] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
   const { i18n } = useTranslation();
 
-  let tempQuizArray;
-/*   quizData?.length
-    ? quizData.map((item, index) => {
-      let questionAnswer = 0
-      tempQuizArray[index] = questionAnswer;
-      }): []; */
+const fetchData = useCallback(async() => {
+  let id = 6;
+  let courseName = "Name of the Course";
+  try {      
+    const response: any = await Promise.all([
+      API_SERVICES.quizService.getAllQuiz(LANGUAGE_ID.english,id)    
+    ]);
+    if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
+      
+   console.log("response?.data?.quiz?",response[0]?.data?.quiz)
+
+  let tempQuizArray = Array(response[0]?.data?.quiz?.length);
+  response[0]?.data?.quiz.map((item,index)=>{
+    tempQuizArray[index] = {
+      quizName : courseName,
+      question_number : index+1,
+      question : item.question,
+      option_1 : item.option_1,
+      option_2 : item.option_2,
+      option_3 : item.option_3,
+      option_4 : item.option_4,
+      answer : item.answer,
+      userAnswer : 0,
+    }
+  });
+  setQuizDataDetatils(tempQuizArray);
+}
+} catch (err) {
+  toast.error(err?.message);
+} finally{
+  setLoading(false);
+}
+},[] );
+  
+useEffect(() => {
+  console.log("inside use EFFECT")
+  fetchData();
+}, []);  
     
+
+if (loading) {
+  return <Loader />;
+} else {
     return (
       <Grid container>
         
-          {/* <QuestionAndAnswer 
+           <QuestionAndAnswer 
             quizDataDetails = {quizDataDetatils}  
             setQuizDataDetails = {setQuizDataDetatils} 
             setQuestionToDisplayIndex = {setQuestionToDisplayIndex}
             questionToDisplayIndex = {questionToDisplayIndex}
-            /> */}
+            /> 
 
       </Grid>
     );
+}
 };
 
 
 
 export default Quiz;
+ 

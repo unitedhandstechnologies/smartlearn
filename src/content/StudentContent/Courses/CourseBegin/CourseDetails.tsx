@@ -39,7 +39,7 @@ const CourseDetails = ({
   //studentDetails,
   videoToPlayIndex,
   quizData,
-  setTestTopic
+  setTestTopic,
 }) => {
   const theme = useTheme();
 
@@ -61,7 +61,7 @@ const studentDetails = {
         videoToPlayIndex = {videoToPlayIndex}
         quizData = {quizData}
         setTestTopic = {setTestTopic}
-      />
+             />
     )
   };
 

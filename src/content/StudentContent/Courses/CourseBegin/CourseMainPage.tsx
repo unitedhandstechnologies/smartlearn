@@ -63,7 +63,7 @@ const CourseMainPage = (
     
     const classes = useStyles();
     const theme = useTheme();
-    const quizDataToDisplay = quizData;
+
    
 
     
@@ -128,7 +128,7 @@ const CourseMainPage = (
           />
         </Grid>
         </>
-        ): null }{/* <Quiz quizData = {quizDataToDisplay} /> */} 
+        ): quizData.length ? <Quiz  /> : "No Test topic Available" }
       </Grid>
     </Grid>
   );
