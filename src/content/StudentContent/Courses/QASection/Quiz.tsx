@@ -12,6 +12,7 @@ import toast from 'react-hot-toast';
 import { API_SERVICES } from 'src/Services';
 import { useTranslation } from 'react-i18next';
 import QuestionAndAnswer from './QuestionAndAnswer';
+import QuizResult from './QuizResult';
 
 type Props = {
   //quizData: any[];
@@ -21,8 +22,9 @@ const Quiz = (props:Props) => {
 
   const theme = useTheme();
   const [ questionToDisplayIndex , setQuestionToDisplayIndex ] = useState(0);
-  const [ quizDataDetatils, setQuizDataDetatils ] = useState<any>([]);
+  const [ quizDataDetails, setQuizDataDetails ] = useState<any>([]);
   const [loading, setLoading] = useState(true);
+  const [ quizResult , setQuizResult ] = useState(false)
   const { i18n } = useTranslation();
 
 const fetchData = useCallback(async() => {
@@ -34,8 +36,6 @@ const fetchData = useCallback(async() => {
     ]);
     if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
       
-   console.log("response?.data?.quiz?",response[0]?.data?.quiz)
-
   let tempQuizArray = Array(response[0]?.data?.quiz?.length);
   response[0]?.data?.quiz.map((item,index)=>{
     tempQuizArray[index] = {
@@ -48,9 +48,10 @@ const fetchData = useCallback(async() => {
       option_4 : item.option_4,
       answer : item.answer,
       userAnswer : 0,
+      correctCount : 0      
     }
   });
-  setQuizDataDetatils(tempQuizArray);
+  setQuizDataDetails(tempQuizArray);
 }
 } catch (err) {
   toast.error(err?.message);
@@ -60,7 +61,6 @@ const fetchData = useCallback(async() => {
 },[] );
   
 useEffect(() => {
-  console.log("inside use EFFECT")
   fetchData();
 }, []);  
     
@@ -70,14 +70,17 @@ if (loading) {
 } else {
     return (
       <Grid container>
-        
+        { !quizResult ? (
            <QuestionAndAnswer 
-            quizDataDetails = {quizDataDetatils}  
-            setQuizDataDetails = {setQuizDataDetatils} 
+            quizDataDetails = {quizDataDetails}  
+            setQuizDataDetails = {setQuizDataDetails} 
             setQuestionToDisplayIndex = {setQuestionToDisplayIndex}
             questionToDisplayIndex = {questionToDisplayIndex}
+            setQuizResult = {setQuizResult}
             /> 
-
+        ) : (
+            <QuizResult  quizDataDetails={quizDataDetails} />
+        )}
       </Grid>
     );
 }

@@ -54,7 +54,9 @@ const CourseBegin = () => {
     lessonNumber: 0
   });
   const fetchData = useCallback(async () => {
-    let id = state?.course_id;
+    console.log("state", state);
+    //let id = state?.course_id;
+    let id = 6;
     try {
       const response: any = await Promise.all([
         API_SERVICES.courseManagementService.getById(id),

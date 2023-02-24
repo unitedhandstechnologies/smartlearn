@@ -14,27 +14,50 @@ import { API_SERVICES } from 'src/Services';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@material-ui/core';
 
+
 type Props = {
     quizDataDetails: any[];
     setQuizDataDetails: any;
     questionToDisplayIndex : any;
     setQuestionToDisplayIndex : any;
+    setQuizResult : any;
 }
 
 const QuestionAndAnswer = ({
     quizDataDetails,
     setQuizDataDetails,
     questionToDisplayIndex,
-    setQuestionToDisplayIndex
+    setQuestionToDisplayIndex,
+    setQuizResult
 }:Props) => {
   
   const theme = useTheme();
   
   const { i18n } = useTranslation();
+  const [ optionClicked, setOptionClicked] = useState(0)
 
   const handleClickNextQuestion = () => {
-
+    setOptionClicked(0);
+        if(questionToDisplayIndex < quizDataDetails.length-1){
+            if(quizDataDetails[questionToDisplayIndex].userAnswer)
+                setQuestionToDisplayIndex(questionToDisplayIndex+1);
+            else
+                toast.error("Please Choose an option");
+        } else {
+            setQuizResult(true);
+        };
   };
+
+  const handleClickOption = (selectedOption) => {
+    let tempQuizDetails = quizDataDetails;
+    tempQuizDetails[questionToDisplayIndex].userAnswer = selectedOption
+    if(selectedOption === parseInt(tempQuizDetails[questionToDisplayIndex].answer)){
+        tempQuizDetails[questionToDisplayIndex].correctCount = 1;
+        setQuizDataDetails(tempQuizDetails);
+    }
+    setOptionClicked(selectedOption);
+  };
+
 
     return (
       <Grid container
@@ -45,6 +68,7 @@ const QuestionAndAnswer = ({
         <Grid item xs={12}
             sx = {{
                 paddingBottom : '24px',
+               
             }}
         >
             <Typography>
@@ -68,75 +92,72 @@ const QuestionAndAnswer = ({
         
         >
             <Grid xs={12} sm={6}
+                
+                onClick = {()=>handleClickOption(1)}
                 sx = {{
+                    borderRadius: '8px',
                     padding : '8px 16px',
                     //marginRight : '16px',
                     backgroundColor : theme.Colors.whiteLightGrey,
                     display : 'flex',
-                    alignItems : "center" ,     
+                    alignItems : "center" ,  
+                    border : optionClicked===1 ? '1px solid ' : '',
+                    borderColor : optionClicked===1 ? theme.Colors.primary : '',   
                 }}
             >
-                <ButtonComp
-                    backgroundColor='transparent'
-                    buttonTextColor= {theme.Colors.black}
-                    buttonText={
-                        "1."+quizDataDetails[questionToDisplayIndex].option_1                               
-                    }
-                    onClickButton = {handleClickNextQuestion}
-                />                
+                <Typography>
+                    1.{quizDataDetails[questionToDisplayIndex].option_1}
+                </Typography>
             </Grid>
             <Grid xs={12} sm={6}
+            onClick = {()=>handleClickOption(2)}
              sx = {{
+                borderRadius: '8px',
                 padding : '8px 16px',
                 backgroundColor : theme.Colors.whiteLightGrey,
                 display : 'flex',
-                alignItems : "center" ,     
+                alignItems : "center" ,   
+                border : optionClicked===2 ? '1px solid ' : '',
+                borderColor : optionClicked===2 ? theme.Colors.primary : '',   
             }}
             >
-               <ButtonComp
-                    backgroundColor='transparent'
-                    buttonTextColor= {theme.Colors.black}
-                    buttonText={
-                        "2."+quizDataDetails[questionToDisplayIndex].option_2                               
-                    }
-                    onClickButton = {handleClickNextQuestion}
-                />    
+                <Typography>
+                    2.{quizDataDetails[questionToDisplayIndex].option_2}
+                </Typography>
             </Grid>
             <Grid xs={12} sm={6}
+            onClick = {()=>handleClickOption(3)}
              sx = {{
+                borderRadius: '8px',
                 padding : '8px 16px',
                 backgroundColor : theme.Colors.whiteLightGrey,
                 display : 'flex',
                 alignItems : "center" ,  
                 marginTop : '16px',
+                border : optionClicked===3 ? '1px solid ' : '',
+                borderColor : optionClicked===3 ? theme.Colors.primary : '', 
             }}
             >
-                <ButtonComp
-                    backgroundColor='transparent'
-                    buttonTextColor= {theme.Colors.black}
-                    buttonText={
-                        "3."+quizDataDetails[questionToDisplayIndex].option_3                               
-                    }
-                    onClickButton = {handleClickNextQuestion}
-                />    
+                <Typography>
+                    3.{quizDataDetails[questionToDisplayIndex].option_3}
+                </Typography>
             </Grid>
             <Grid xs={12} sm={6}
+            onClick = {()=>handleClickOption(4)}
              sx = {{
+                borderRadius: '8px',
                 padding : '8px 16px',
                 backgroundColor : theme.Colors.whiteLightGrey,
                 display : 'flex',
                 alignItems : "center" ,
-                marginTop : '16px',            
+                marginTop : '16px', 
+                border : optionClicked===4 ? '1px solid ' : '',
+                borderColor : optionClicked===4 ? theme.Colors.primary : '',            
             }}
             >
-               <ButtonComp
-                    backgroundColor='transparent'
-                    buttonTextColor= {theme.Colors.black}
-                    buttonText={
-                        "4."+quizDataDetails[questionToDisplayIndex].option_4                              
-                    }
-                    onClickButton = {handleClickNextQuestion}
-                />    
+                <Typography>
+                    4.{quizDataDetails[questionToDisplayIndex].option_4}
+                </Typography>
             </Grid>
         </Grid>
         <Grid item xs={12}

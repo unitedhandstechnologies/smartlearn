@@ -74,8 +74,8 @@ const studentDetails = {
         sx={{    
           fontWeight : 500,
           fontSize : '24px'}}
-      >{console.log("courseData",courseData)}
-        {courseData.course_language[LANGUAGE_ID.english].course_name}
+      >
+        {courseData.course_language[0].course_name}
       </Typography>
 
       <LessonGrid container >
