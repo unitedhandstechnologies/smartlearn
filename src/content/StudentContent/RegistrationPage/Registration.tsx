@@ -191,20 +191,8 @@ const Registration = () => {
         </Divider>
 
         <Grid container direction="column" sx={{ paddingTop: 2 }}>
-          <Grid
-            container
-            spacing={0}
-
-            // sx={{
-            //   display: 'flex',
-            //   justifyContent: 'center',
-
-            //   [theme.breakpoints.down('sm')]: {
-            //     flexDirection: 'column'
-            //   }
-            // }}
-          >
-            <Grid xs={12} md={6} sx={{ marginTop: '10px' }}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
               <TextInputComponent
                 inputLabel={'First Name'}
                 variant="outlined"
@@ -221,7 +209,7 @@ const Registration = () => {
                 helperText={firstNameError && 'Please enter your first name'}
               />
             </Grid>
-            <Grid xs={12} md={6} sx={{ marginTop: '10px' }}>
+            <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
               <TextInputComponent
                 inputLabel={'Last Name'}
                 variant="outlined"
@@ -289,7 +277,7 @@ const Registration = () => {
                 }
               />
             </Grid>
-            <Grid xs={12} md={12} sx={{ marginTop: '10px' }}>
+            <Grid item xs={12} md={12} sx={{ marginTop: '10px' }}>
               <TextInputComponent
                 inputLabel={'User Name'}
                 variant="outlined"

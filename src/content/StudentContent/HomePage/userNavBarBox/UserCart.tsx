@@ -15,6 +15,7 @@ import NotificationPopover from '../../Courses/Notifications/StudentNotification
 import { ButtonComp } from 'src/components';
 import ProfileMenu from './ProfileMenu';
 import IconTextComp from 'src/components/IconTextComp';
+import HomeIcon from '../../../../Assets/Images/HomeIcon.svg';
 
 type Props = {
   userName?: string;
@@ -57,7 +58,7 @@ const UserCart = (props: Props) => {
           value={item.name}
           valueColor={`${index === 2 ? '#78828C' : '#3C414B'}`}
         />
-        {index === 1 ? <Divider style={{ marginTop: 8 }} /> : null}
+        {index === 2 ? <Divider style={{ marginTop: 8 }} /> : null}
       </Grid>
     );
   };
@@ -130,6 +131,10 @@ const UserCart = (props: Props) => {
 export default UserCart;
 
 const items = [
+  {
+    name: 'Home',
+    icon: HomeIcon
+  },
   {
     name: 'Profile',
     icon: MenuProfileImg

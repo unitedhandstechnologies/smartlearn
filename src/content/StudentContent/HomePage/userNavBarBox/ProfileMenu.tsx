@@ -33,7 +33,10 @@ const ProfileMenu = (props: Props) => {
   const { updateStudentInfo } = useStudentInfo();
   const handleClick = (event) => {
     console.log(event.target.innerText, 'event');
-    if (event.target.innerText === 'Profile') {
+    if (event.target.innerText === 'Home') {
+      navigateTo('/home/profilehome');
+      handleClose();
+    } else if (event.target.innerText === 'Profile') {
       navigateTo('/home/profile');
       handleClose();
     } else if (event.target.innerText === 'Your wishlist') {
