@@ -74,6 +74,7 @@
   },
   "devDependencies": {
     "@types/react-calendar": "^3.9.0",
+    "@types/react-lines-ellipsis": "^0.15.1",
     "@typescript-eslint/eslint-plugin": "5.27.0",
     "@typescript-eslint/parser": "5.27.0",
     "eslint": "8.17.0",
