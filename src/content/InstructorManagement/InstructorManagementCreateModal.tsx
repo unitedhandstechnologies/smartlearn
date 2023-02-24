@@ -32,6 +32,7 @@ import {
 } from 'src/Utils';
 import { useState } from 'react';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import { HighlightOff } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) => {
   return {
@@ -334,49 +335,41 @@ const InstructorManagementCreateModal = (props: Props) => {
               }
             />
           </Grid>
-          <Grid item xs={6}>
-            <TextInputComponent
-              inputLabel={t('profileImage')}
-              value={
-                types[type].handleType === 2
-                  ? edit.getValue('image_url').split('/')[3] || profileImage
-                  : profileImage
-              }
-              disabled
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <ButtonComp
-                      backgroundColor={theme.Colors.primary}
-                      buttonText={'Browse'}
-                      buttonFontSize={theme.MetricsSizes.small_xxx}
-                      buttonTextColor="white"
-                      buttonFontWeight={theme.fontWeight.medium}
-                      disableElevation={true}
-                      onBrowseButtonClick={onUploadFiles}
-                      isBrowseButton
-                      height={'30px'}
-                    />
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <HighlightOffIcon
-                      style={{ cursor: 'pointer' }}
-                      onClick={removeProfile}
-                    />
-                  </InputAdornment>
-                )
-              }}
-              required
-              isError={imageError}
-              helperText={
-                imageError
-                  ? 'Please upload the profile image'
-                  : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB'
-              }
-            />
-          </Grid>
+          <Grid item xs={12}>
+          <TextInputComponent
+            inputLabel={'Course Image'}
+            value={edit.getValue('image_url').split('/')[3] || profileImage}
+            disabled
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <ButtonComp
+                    backgroundColor={theme.Colors.primary}
+                    buttonText={'Browse'}
+                    buttonFontSize={theme.MetricsSizes.small_xxx}
+                    buttonTextColor="white"
+                    buttonFontWeight={theme.fontWeight.medium}
+                    disableElevation={true}
+                    onBrowseButtonClick={onUploadFiles}
+                    isBrowseButton
+                    height={'30px'}
+                  />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position="end">
+                  <HighlightOff
+                    style={{ cursor: 'pointer' }}
+                    onClick={removeProfile}
+                  />
+                </InputAdornment>
+              )
+            }}
+            required
+            isError={imageError}
+            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB" }
+          />
+        </Grid>
           <Grid item xs={6}>
             <Avatar
               className={classes.avatarStyle}

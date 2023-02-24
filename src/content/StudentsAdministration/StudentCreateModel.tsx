@@ -32,6 +32,7 @@ import {
   isWebsiteName
 } from 'src/Utils';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import { HighlightOff } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) => {
   return {
@@ -323,14 +324,10 @@ const StudentCreateModal = (props: Props) => {
             }
           />
         </Grid>
-        <Grid item xs={7}>
+        <Grid item xs={12}>
           <TextInputComponent
-            inputLabel={t('profileImage')}
-            value={
-              types[type].handleType === 2
-                ? edit.getValue('image_url').split('/')[3] || profileImage
-                : profileImage
-            }
+            inputLabel={'Course Image'}
+            value={edit.getValue('image_url').split('/')[3] || profileImage}
             disabled
             InputProps={{
               startAdornment: (
@@ -350,7 +347,7 @@ const StudentCreateModal = (props: Props) => {
               ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <HighlightOffIcon
+                  <HighlightOff
                     style={{ cursor: 'pointer' }}
                     onClick={removeProfile}
                   />
@@ -359,11 +356,7 @@ const StudentCreateModal = (props: Props) => {
             }}
             required
             isError={imageError}
-            helperText={
-              imageError
-                ? 'Please upload the profile image'
-                : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB'
-            }
+            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB" }
           />
         </Grid>
         <Grid item xs={5}>

@@ -46,9 +46,9 @@ const CourseManagementTable = ({
       {
         data: { course_status: courseStatus },
         successMessage:
-          row?.course_status === COURSE_STATUS_NAME[2]
-            ? 'Course Active successfully!'
-            : 'Course Inactive Successfully'
+          row?.course_status === COURSE_STATUS_NAME[1]
+            ? 'Course Inactive successfully!'
+            : 'Course Active Successfully'
       }
     );
     if (response?.status < HTTP_STATUSES.BAD_REQUEST) {

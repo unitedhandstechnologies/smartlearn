@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     '& .MuiDataGrid-columnHeaderTitle': {
       fontWeight: theme.fontWeight.bold,
       fontSize: theme.MetricsSizes.small_xx,
-      color: theme.Colors.greyMedium
+      color: theme.Colors.greyPrimary
     },
     '& .MuiDataGrid-row:last-child .MuiDataGrid-cell ': {
       borderBottom: 0
