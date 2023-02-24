@@ -8,6 +8,7 @@ import LearnAtUrPace from './LearnAtUrPace';
 import CourseBegin from 'src/content/StudentContent/Courses/CourseBegin/CourseBegin';
 import { API_SERVICES } from 'src/Services';
 import {
+  COURSE_STATUS_NAME,
   DETECT_LANGUAGE,
   HTTP_STATUSES,
   LANGUAGE_ID
@@ -30,7 +31,11 @@ const Courses = () => {
       );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.courses?.length) {
-          setCourseDetails(response?.data?.courses);
+          let enabledCourse = response?.data?.courses.filter((item) => {
+            return item.course_status === COURSE_STATUS_NAME[1]
+
+          })
+          setCourseDetails(enabledCourse);
         }
       }
     } catch (err) {

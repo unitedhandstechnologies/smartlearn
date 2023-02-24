@@ -12,6 +12,7 @@ import { useSearchVal } from 'src/hooks/useSearchVal';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { API_SERVICES } from 'src/Services';
 import {
+  COURSE_STATUS_NAME,
   DETECT_LANGUAGE,
   HTTP_STATUSES,
   LANGUAGE_ID,
@@ -55,7 +56,11 @@ const HomePage = () => {
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.courses?.length) {
-          setCourseDetails(response[0]?.data?.courses);
+          let enabledCourse = response[0]?.data?.courses.filter((item) => {
+            return item.course_status === COURSE_STATUS_NAME[1]
+
+          })
+          setCourseDetails(enabledCourse);
         }
       }
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {

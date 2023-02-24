@@ -200,7 +200,7 @@ const MuiCardComp = ({
         ) : null}
         {zoomLink ? (
           <Grid style={{ padding: '10px 0px' }}>
-            <IconTextComp icon={ZoomIcon} value={zoomLink} />
+            <IconTextComp icon={ZoomIcon} value={zoomLink ? 'Zoom' : null} />
           </Grid>
         ) : null}
         {courseType === COURSE_TYPE_NAME[6] ? (

@@ -5,6 +5,7 @@ import { useTheme } from '@material-ui/core';
 import { Loader } from 'src/components';
 import { API_SERVICES } from 'src/Services';
 import {
+  COURSE_STATUS_NAME,
   COURSE_TYPE_NAME,
   DETECT_LANGUAGE,
   HTTP_STATUSES,
@@ -30,7 +31,9 @@ const WorkShop = () => {
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.courses?.length) {
           const workShop = response?.data?.courses.filter(
-            (item) => item.course_type === COURSE_TYPE_NAME[4]
+            (item) =>
+              item.course_type === COURSE_TYPE_NAME[4] &&
+              item.course_status === COURSE_STATUS_NAME[1]
           );
           setWorkshopDetails(workShop);
         }

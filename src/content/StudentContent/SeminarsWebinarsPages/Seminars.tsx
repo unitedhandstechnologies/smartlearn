@@ -5,6 +5,7 @@ import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { Loader } from 'src/components';
 import {
+  COURSE_STATUS_NAME,
   COURSE_TYPE_NAME,
   DETECT_LANGUAGE,
   HTTP_STATUSES,
@@ -29,11 +30,17 @@ const Seminars = () => {
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.courses?.length) {
           let seminarCourse = response?.data?.courses.filter((item) => {
-            return item.course_type === COURSE_TYPE_NAME[1];
+            return (
+              item.course_type === COURSE_TYPE_NAME[1] &&
+              item.course_status === COURSE_STATUS_NAME[1]
+            );
           });
           setSeminarCourseDetails(seminarCourse);
           let webinarCourse = response?.data?.courses.filter((item) => {
-            return item.course_type === COURSE_TYPE_NAME[3];
+            return (
+              item.course_type === COURSE_TYPE_NAME[3] &&
+              item.course_status === COURSE_STATUS_NAME[1]
+            );
           });
           setWebinarCourseDetails(webinarCourse);
         }

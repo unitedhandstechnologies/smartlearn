@@ -4,6 +4,7 @@ import { useTheme } from '@material-ui/core';
 import { Loader } from 'src/components';
 import { API_SERVICES } from 'src/Services';
 import {
+  COURSE_STATUS_NAME,
   COURSE_TYPE_NAME,
   DETECT_LANGUAGE,
   HTTP_STATUSES,
@@ -33,8 +34,11 @@ const Masterclasses = () => {
 
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.courses?.length) {
-          console.log(response[0]?.data, 'response');
-          setCourseDetails(response[0]?.data?.courses);
+          let enabledCourse = response[0]?.data?.courses.filter((item) => {
+            return item.course_status === COURSE_STATUS_NAME[1]
+
+          })
+          setCourseDetails(enabledCourse);
         }
       }
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
