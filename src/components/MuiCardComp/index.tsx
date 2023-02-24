@@ -240,7 +240,11 @@ const MuiCardComp = ({
             <Grid item>
               <ChipComp
                 label={subCategory}
-                style={{ borderColor: '#3CC878' }}
+                style={{
+                  borderColor: '#3CC878',
+                  fontSize: theme.MetricsSizes.small_xxx,
+                  fontWeight: theme.fontWeight.regular
+                }}
               />
             </Grid>
           ) : null}
