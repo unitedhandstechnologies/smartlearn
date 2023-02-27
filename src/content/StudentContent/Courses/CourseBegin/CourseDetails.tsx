@@ -38,6 +38,7 @@ const CourseDetails = ({
   //studentDetails,
   quizData,
   setTestTopic,
+  videoDetails
 }) => {
   const theme = useTheme();
 
@@ -56,6 +57,7 @@ const studentDetails = {
         setVideoToPlayIndex = {setVideoToPlayIndex}
         quizData = {quizData}
         setTestTopic = {setTestTopic}
+        videoDetails={videoDetails}
              />
     )
   };

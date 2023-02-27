@@ -104,6 +104,7 @@ const CourseMainPage = (
           setVideoToPlayIndex={setVideoToPlayIndex}
           quizData={quizData}
           setTestTopic = {setTestTopic}
+          videoDetails={videoDetails}
           />
       </Grid>
       <Grid item xs={12} sm={9} >

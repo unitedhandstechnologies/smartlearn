@@ -49,7 +49,8 @@ const CourseTitleDetails = ({
   setVideoToPlay,
   //handleAutoPlay,
   setVideoToPlayIndex,
-  setTestTopic
+  setTestTopic,
+  videoDetails
 })=> {
 
   console.log("lessonData dfg",lessonData)
@@ -185,7 +186,7 @@ const CourseTitleDetails = ({
                           <Grid item display={'flex'} alignItems={'center'} justifyContent={'center'}>
                           <CircularProgressWithLabel 
                             title={getSectionLessonValue(sectionNumber, index)}
-                             value={89} />
+                             value={(videoDetails[sectionNumber-1][index].videoPlayedTime)*100} />
                              </Grid>
                              <Grid item>
                           <Grid container direction={'column'}>

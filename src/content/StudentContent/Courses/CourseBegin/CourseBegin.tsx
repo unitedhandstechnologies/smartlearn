@@ -103,7 +103,8 @@ const CourseBegin = () => {
                         ).length
                       )
                   );
-
+                  let tempTime = [0.25,0.50,0.75,0.95,0.00];
+                  let tempElapsedTime = [0.04, 0.06,0.07,0.50,0.00];
                 if (sectionData1?.length) {
                   sectionData1.map((item, index) => {
                     const sectionNumber = index + 1;
@@ -118,12 +119,15 @@ const CourseBegin = () => {
                         tempVideoDetails[sectionNumber - 1][index] ={
                           videoUrl : item.video_url,
                           videoName : item.lesson_name,
+                          videoPlayedTime : tempTime[sectionNumber - 1],  
+                          videoElapsedTime : tempElapsedTime  [sectionNumber - 1]               
                         }
                           
                       });
                     }                                       
                   });
                 }
+                console.log("tempVideoDetails",tempVideoDetails)
                 setVideoDetails(tempVideoDetails);
                 setVideoToPlay(tempVideoDetails[0][0].videoUrl);
                 setVideoToPlayIndex({ sectionNumber: 0, lessonNumber: 0 });
