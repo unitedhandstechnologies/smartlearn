@@ -30,33 +30,14 @@ const review = [
 
 const Reviews = ({ ratingData }) => {
   const theme = useTheme();
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const length = review?.length ?? 0;
-  const [view, setView] = useState(2);
-  const show = 3;
+  const [view, setView] = useState([0, 2]);
 
   const handleNextClick = () => {
-    if (currentIndex < length) {
-      if (currentIndex < length - show) {
-        setCurrentIndex((prevState) =>
-          prevState === show ? 0 : prevState + 0.5
-        );
-      }
-    }
+    setView([view[0] + 2, view[1] + 2]);
   };
 
-  // const handleView = () => {
-  //   if (view === 6) {
-  //     setView(courses.length);
-  //   } else {
-  //     setView(6);
-  //   }
-  // };
-
   const handlePrevClick = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex((prevState) => prevState - 0.5);
-    }
+    setView([view[0] - 2, view[1] - 2]);
   };
 
   return (
@@ -83,7 +64,11 @@ const Reviews = ({ ratingData }) => {
           </Grid>
         </Grid>
         <Grid>
-          <IconButton sx={{ color: '#3C78F0' }} onClick={handlePrevClick}>
+          <IconButton
+            sx={{ color: '#3C78F0' }}
+            onClick={handlePrevClick}
+            disabled={view[0] <= 0}
+          >
             <Grid
               item
               sx={{
@@ -96,7 +81,11 @@ const Reviews = ({ ratingData }) => {
               <ChevronLeftIcon />
             </Grid>
           </IconButton>
-          <IconButton sx={{ color: '#3C78F0' }} onClick={handleNextClick}>
+          <IconButton
+            sx={{ color: '#3C78F0' }}
+            onClick={handleNextClick}
+            disabled={view[1] >= review.length}
+          >
             <Grid
               item
               sx={{
@@ -112,7 +101,7 @@ const Reviews = ({ ratingData }) => {
         </Grid>
       </Grid>
       <Grid container spacing={3}>
-        {ratingData.slice(0, 2).map((item, index) => {
+        {ratingData.slice(view[0], view[1]).map((item, index) => {
           return (
             <Grid item xs={12} sm={6} key={index}>
               <ReviewBox
