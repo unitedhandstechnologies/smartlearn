@@ -43,6 +43,7 @@ function NavBar() {
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
   const { studentDetails, updateStudentInfo } = useStudentInfo();
+  const [buttonValue, setButtonValue] = useState();
 
   const handleCartClick = (event) => {
     setCartOpen(event.currentTarget);
@@ -62,8 +63,21 @@ function NavBar() {
     setOpen(true);
   };
 
-  const handleDrawerClose = () => {
+  const handleDrawerClose = (e) => {
+    console.log('e', e.target.textContent);
+    if (e.target.textContent) {
+      setButtonValue(e.target.textContent)
+    }
+
     setOpen(false);
+  };
+
+  const getTextColor = (name) => {
+    if(buttonValue === name) {
+      return '#78828C'
+    }else {
+      return '#3C414B'
+    }
   };
 
   const theme = useTheme();
@@ -130,13 +144,13 @@ function NavBar() {
               <Button
                 key={index}
                 onClick={handleDrawerClose}
-                sx={{
-                  color: ' #3C414B',
+                style={{
+                  color: getTextColor(item.label),
                   display: 'block',
                   textTransform: 'none',
                   fontFamily: 'Switzer',
                   fontWeight: 500,
-                  fontSize: 16
+                  fontSize: 16,
                 }}
                 component={Link}
                 to={item.path}
