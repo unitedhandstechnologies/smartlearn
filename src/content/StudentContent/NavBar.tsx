@@ -43,7 +43,7 @@ function NavBar() {
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
   const { studentDetails, updateStudentInfo } = useStudentInfo();
-  const [buttonValue, setButtonValue] = useState();
+  const [buttonValue, setButtonValue] = useState(0);
 
   const handleCartClick = (event) => {
     setCartOpen(event.currentTarget);
@@ -63,22 +63,18 @@ function NavBar() {
     setOpen(true);
   };
 
-  const handleDrawerClose = (e) => {
-    console.log('e', e.target.textContent);
-    if (e.target.textContent) {
-      setButtonValue(e.target.textContent)
-    }
-
+  const handleDrawerClose = (index) => {
+    setButtonValue(index);
     setOpen(false);
   };
 
-  const getTextColor = (name) => {
-    if(buttonValue === name) {
-      return '#78828C'
-    }else {
-      return '#3C414B'
-    }
-  };
+  // const getTextColor = (name) => {
+  //   if (buttonValue === name) {
+  //     return '#78828C';
+  //   } else {
+  //     return '#3C414B';
+  //   }
+  // };
 
   const theme = useTheme();
   return (
@@ -143,18 +139,21 @@ function NavBar() {
             {pages.map((item, index) => (
               <Button
                 key={index}
-                onClick={handleDrawerClose}
+                onClick={() => handleDrawerClose(index)}
                 style={{
-                  color: getTextColor(item.label),
+                  color: index === buttonValue ? '#78828C' : '#3C414B',
                   display: 'block',
                   textTransform: 'none',
                   fontFamily: 'Switzer',
                   fontWeight: 500,
-                  fontSize: 16,
+                  fontSize: 16
                 }}
                 component={Link}
                 to={item.path}
               >
+                {index === buttonValue ? (
+                  <span style={{ color: '#3C78F0' }}>/</span>
+                ) : null}{' '}
                 {item.label}
               </Button>
             ))}
