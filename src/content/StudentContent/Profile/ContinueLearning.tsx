@@ -1,5 +1,7 @@
-import { Grid, useTheme } from '@material-ui/core';
-import React from 'react'
+import { makeStyles, useTheme } from '@material-ui/core';
+import { Grid } from '@mui/material';
+import React from 'react';
+import { BasicStockIcon } from 'src/Assets';
 import { Heading, MuiCardComp } from 'src/components';
 
 const courses = [
@@ -145,57 +147,81 @@ const courses = [
   }
 ];
 
+const useStyles = makeStyles((theme) => ({
+  eachItem: {
+    '&.MuiGrid-item': {
+      padding: theme.spacing(0)
+    }
+  }
+}));
 
 const ContinueLearning = () => {
-    const theme = useTheme();
+  const theme = useTheme();
+  const classes = useStyles();
+
+  const onClickCardImage = (rowData) => {}
+
   return (
     <Grid>
-        <Heading
-          headingText={'Continue learning'}
-          headerFontSize={'24px'}
-          headerFontWeight={theme.fontWeight.medium}
-          headingColor={theme.Colors.blackBerry}
-        />
-        <Grid
-          container
-          justifyContent={'space-between'}
-          style={{
-            paddingBottom: '30px',
-            [theme.breakpoints.down('xs')]: {
-              justifyContent: 'center'
-            }
-          }}
-        >
-          {courses.map((item, index) => {
-          return (
-            <MuiCardComp
-              key={index}
-              imgUrl={item.image_url}
-              //imgUrl={BasicStockIcon}
-              rightText={item.course_type}
-              leftText={item.cost_type}
-              heading={item.category_name}
-              title={item.course_name}
-              subText={item.course_description}
-              courseLevel={item.course_level_name}
-              courseLanguage={
-                item.language_id === 1
-                  ? 'English'
-                  : item.language_id === 2
-                  ? 'Hindi'
-                  : 'Gjarati'
-              }
-              date={`${item.starting_date} - ${item.ending_date}`}
-              zoomLink={item.meeting_link}
-              locationName={item.meeting_location}
-              subCategory={item.sub_category_name}
-              courseType={item.course_type}
-            />
-          );
-        })}
-        </Grid>
+      <Heading
+        headingText={'Continue learning'}
+        headerFontSize={'24px'}
+        headerFontWeight={theme.fontWeight.medium}
+        headingColor={theme.Colors.blackBerry}
+      />
+      <Grid
+        container
+        //justifyContent={'center'}
+        spacing={4}
+        sx={{
+          paddingBottom: '30px',
+          [theme.breakpoints.down('xs')]: {
+            justifyContent: 'center'
+          }
+        }}
+      >
+        {courses.length
+          ? courses.slice(0, 6).map((item, index) => {
+              return (
+                <Grid
+                  key={index}
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  className={classes.eachItem}
+                >
+                  <MuiCardComp
+                    key={index}
+                    imgUrl={item.image_url ? item.image_url : BasicStockIcon}
+                    rightText={item.course_type}
+                    leftText={item.cost_type}
+                    heading={item.category_name}
+                    title={item.course_name}
+                    subText={item.course_description}
+                    courseLevel={item.course_level_name}
+                    courseLanguage={
+                      item.language_id === 1
+                        ? 'English'
+                        : item.language_id === 2
+                        ? 'Hindi'
+                        : 'Gjarati'
+                    }
+                    date={`${item.starting_date} - ${item.ending_date}`}
+                    zoomLink={item.meeting_link}
+                    locationName={item.meeting_location}
+                    subCategory={item.sub_category_name}
+                    courseType={item.course_type}
+                    prize={item.amount}
+                    onClickCardImage={() => onClickCardImage(item)}
+                  />
+                </Grid>
+              );
+            })
+          : null}
       </Grid>
-  )
-}
+    </Grid>
+  );
+};
 
-export default ContinueLearning
+export default ContinueLearning;

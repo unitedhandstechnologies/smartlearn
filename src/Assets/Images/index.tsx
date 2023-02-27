@@ -112,6 +112,7 @@ import CalenderImg from './CalenderImg.svg';
 import OfflineImg from './OfflineImg.svg';
 import PdfImg from './PdfImg.svg';
 import VideoImg from './VideoImg.svg';
+import DownloadSvg from './downloadSvg.svg';
 
 export {
   EnrollmentManagementIcon,
@@ -227,5 +228,6 @@ export {
   CalenderImg,
   OfflineImg,
   PdfImg,
-  VideoImg
+  VideoImg,
+  DownloadSvg
 };

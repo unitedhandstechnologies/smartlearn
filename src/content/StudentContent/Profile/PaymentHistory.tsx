@@ -111,7 +111,9 @@ const PaymentHistory = () => {
       flex: 1.5,
       sortable: false,
       disableColumnMenu: true,
-      renderCell: ({ row }) => <ListItemCell isSymbol title={`${row?.amount}`} />
+      renderCell: ({ row }) => (
+        <ListItemCell isSymbol title={`${row?.amount}`} />
+      )
     },
     {
       field: 'invoice',
@@ -125,15 +127,7 @@ const PaymentHistory = () => {
     }
   ];
   return (
-    <Grid
-      item
-      container
-      sx={{
-        [theme.breakpoints.down('sm')]: {
-          flexDirection: 'column'
-        }
-      }}
-    >
+    <Grid container>
       <Typography
         sx={{
           fontSize: 32,

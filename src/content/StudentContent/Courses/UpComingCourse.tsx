@@ -22,9 +22,8 @@ import CourseBanner from './CourseBanner';
 
 const useStyle = makeStyles((theme) => ({
   eachItem: {
-    '&.MuiGrid-grid-xs-4': {
-      maxWidth: '33.3%',
-      flexBasis: '33.3%'
+    '&.MuiGrid-item': {
+      padding: theme.spacing(0)
     }
   }
 }));
@@ -280,6 +279,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
           //justifyContent={'center'}
           spacing={4}
           sx={{
+            // gap: 2,
             paddingBottom: '30px',
             [theme.breakpoints.down('xs')]: {
               justifyContent: 'center'

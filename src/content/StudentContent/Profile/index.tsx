@@ -1,6 +1,6 @@
 import { Avatar, makeStyles, useTheme } from '@material-ui/core';
 import React, { useContext, useState } from 'react';
-import { Avatar1, BlueLine } from 'src/Assets';
+import { BlueLine } from 'src/Assets';
 import { Heading, MuiTabComponent } from 'src/components';
 import MyLibrary from './MyLibrary';
 import PaymentHistory from './PaymentHistory';
@@ -72,7 +72,7 @@ const Profile = () => {
         <Grid
           xs={12}
           sx={{
-            [theme.breakpoints.down('sm')]: {
+            [theme.breakpoints.down('xs')]: {
               flexDirection: 'column'
             }
           }}

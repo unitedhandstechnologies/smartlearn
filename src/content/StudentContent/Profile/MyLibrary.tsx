@@ -1,4 +1,4 @@
-import { useTheme } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core';
 import React, { useState } from 'react';
 import { Grid } from '@mui/material';
 import { Heading, MuiCardComp, MultiSelectChip } from 'src/components';
@@ -150,16 +150,29 @@ const courses = [
   }
 ];
 
+const useStyles = makeStyles((theme) => ({
+  eachItem: {
+    '&.MuiGrid-item': {
+      padding: theme.spacing(0)
+    }
+  }
+}));
+
 const FILTER_CHIPS = ['Active', 'Completed', 'Whishlist'];
 const MyLibrary = () => {
   const theme = useTheme();
+  const classes = useStyles();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
   };
 
+  const onClickCardImage = (rowData) => {
+
+  }
+
   return (
-    <Grid container direction="column" rowSpacing={3}>
+    <Grid container direction="column" rowSpacing={4}>
       <Grid item style={{ padding: '50px 0px 30px 0px' }}>
         <Grid item
           style={{
@@ -191,44 +204,58 @@ const MyLibrary = () => {
       </Grid>
       <Grid
         container
-        style={{
+        //justifyContent={'center'}
+        spacing={4}
+        sx={{
           paddingBottom: '30px',
-          gap: 7
+          [theme.breakpoints.down('xs')]: {
+            justifyContent: 'center'
+          }
         }}
       >
-        {courses.length ? courses.map((item, index) => {
-          return (
-            <MuiCardComp
-              key={index}
-              imgUrl={item.image_url ? item.image_url : BasicStockIcon}
-              rightText={item.course_type}
-              leftText={item.cost_type}
-              heading={item.category_name}
-              title={item.course_name}
-              subText={item.course_description}
-              courseLevel={item.course_level_name}
-              courseLanguage={
-                item.language_id === 1
-                  ? 'English'
-                  : item.language_id === 2
-                  ? 'Hindi'
-                  : 'Gjarati'
-              }
-              date={`${item.starting_date} - ${item.ending_date}`}
-              zoomLink={item.meeting_link}
-              locationName={item.meeting_location}
-              subCategory={item.sub_category_name}
-              courseType={item.course_type}
-              //progressValue={Number(item.course_type.slice(0,2))}
-              progressValue={36}
-              cardStyle={{ maxWidth: 330 }}
-            />
-          );
-        }): null}
+        {courses.length
+          ? courses.slice(0, 6).map((item, index) => {
+              return (
+                <Grid
+                  key={index}
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  className={classes.eachItem}
+                >
+                  <MuiCardComp
+                    key={index}
+                    imgUrl={item.image_url ? item.image_url : BasicStockIcon}
+                    rightText={item.course_type}
+                    leftText={item.cost_type}
+                    heading={item.category_name}
+                    title={item.course_name}
+                    subText={item.course_description}
+                    courseLevel={item.course_level_name}
+                    courseLanguage={
+                      item.language_id === 1
+                        ? 'English'
+                        : item.language_id === 2
+                        ? 'Hindi'
+                        : 'Gjarati'
+                    }
+                    date={`${item.starting_date} - ${item.ending_date}`}
+                    zoomLink={item.meeting_link}
+                    locationName={item.meeting_location}
+                    subCategory={item.sub_category_name}
+                    courseType={item.course_type}
+                    prize={item.amount}
+                    onClickCardImage={() => onClickCardImage(item)}
+                  />
+                </Grid>
+              );
+            })
+          : null}
       </Grid>
       <ContinueLearning />
-      <CompletedCourse />
-      <WishListCourse />
+      {/* <CompletedCourse />
+      <WishListCourse /> */}
     </Grid>
   );
 };

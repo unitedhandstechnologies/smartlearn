@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import {
   ClockIcon,
   VideoTutor,
-  DownloadIcon,
+  DownloadSvg,
   LifeTime,
   CertificateIcon
 } from '../../../../Assets/Images';
@@ -82,7 +82,7 @@ const data = [
   },
   {
     name: '4 downloadable resources',
-    img: DownloadIcon
+    img: DownloadSvg
   },
   {
     name: 'Lifetime access to the course',

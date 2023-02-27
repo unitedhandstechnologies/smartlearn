@@ -14,11 +14,10 @@ import { ButtonComp, Heading } from 'src/components';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useNavigate } from 'react-router';
 import { makeStyles } from '@material-ui/core';
-const useStyle = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
   eachItem: {
-    '&.MuiGrid-grid-xs-3': {
-      maxWidth: '30%',
-      flexBasis: '30%'
+    '&.MuiGrid-item': {
+      padding: theme.spacing(0)
     }
   }
 }));
@@ -40,7 +39,7 @@ const Mentors = ({
   sliceValue
 }: Props) => {
   const theme = useTheme();
-  const classes = useStyle();
+  const classes = useStyles();
   const [mentors, setMentors] = React.useState([]);
   const navigateTo = useNavigate();
 
@@ -112,15 +111,17 @@ const Mentors = ({
           ) : null}
         </Grid>
       </Grid>
-      <Grid>
+      <Grid sx={{paddingBottom: '20px'}}>
         <img src={LineBarIcon} alt="" />
       </Grid>
       <Grid
         container
         spacing={4}
         sx={{
-          marginTop: '20',
-          alignItems: 'center'
+          paddingTop: '20px',
+          [theme.breakpoints.down('xs')]: {
+            justifyContent: 'center'
+          }
         }}
       >
         {mentors.length
@@ -136,9 +137,7 @@ const Mentors = ({
                 >
                   <ImageListItem
                     sx={{
-                      height: 348,
                       width: '100%',
-                      marginTop: 5,
                       cursor: 'pointer'
                     }}
                     key={index}

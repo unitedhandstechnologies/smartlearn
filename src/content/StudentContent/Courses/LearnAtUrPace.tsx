@@ -164,9 +164,8 @@ const courses = [
 
 const useStyle = makeStyles((theme) => ({
   eachItem: {
-    '&.MuiGrid-grid-xs-4': {
-      maxWidth: '33.3%',
-      flexBasis: '33.3%'
+    '&.MuiGrid-item': {
+      padding: theme.spacing(0)
     }
   }
 }));
