@@ -127,6 +127,7 @@ const AddNewLessonModal = ({
           }
         ]
       };
+ 
       if (!edit.allFilled(...RequiredFields)) {
         setIsError(true);
         return toast.error('Please fill all the required fields');

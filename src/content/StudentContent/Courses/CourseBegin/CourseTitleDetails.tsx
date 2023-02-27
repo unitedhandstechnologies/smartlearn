@@ -23,6 +23,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import CircularProgressWithLabel from './CircularProgressWithLable';
 import { TestTopic, TrophyLine, videoLine } from 'src/Assets/Images';
 import { greenTick } from 'src/Assets/Images';
+import { string } from 'prop-types';
 
 const useStyles = makeStyles((theme)=>({
 
@@ -169,6 +170,8 @@ const CourseTitleDetails = ({
               <Grid container direction="column" spacing={2}>
                 {getLessonData.length
                   ? getLessonData.map((item, index) => {
+                    let duration =String(item.duration);
+                    let minSec = duration.split(".");
                       return (
                         <Grid
                           item
@@ -209,7 +212,11 @@ const CourseTitleDetails = ({
                             fontWeight: 400,
                             fontSize : '12px'
                             
-                          }}> 45mins 30secs{/* {`${item.lesson_name}`} */}
+                          }}>
+                            
+                            { 
+                            
+                            `${ minSec[0]}m  ${ minSec[1]}s`}
                           
                           </Typography>
                           </Grid>
