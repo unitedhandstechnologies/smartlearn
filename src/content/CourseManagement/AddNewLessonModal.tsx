@@ -53,7 +53,8 @@ const AddNewLessonModal = ({
     let lessonName = data?.length && data[0].lesson_name;
     let pdfUrl = data?.length && data[0].pdf_url;
     let videoUrl = data?.length && data[0].video_url;
-    return { lessonName, pdfUrl, videoUrl };
+    let duration = data?.length && data[0].duration;
+    return { lessonName, pdfUrl, videoUrl, duration };
   };
 
   const initialValues = {
@@ -65,14 +66,15 @@ const AddNewLessonModal = ({
     gujVideoUrl: getLanguageData(LANGUAGE_ID.gujarati).videoUrl || '',
     engPdfUrl: getLanguageData(LANGUAGE_ID.english).pdfUrl || '',
     hinPdfUrl: getLanguageData(LANGUAGE_ID.hindi).pdfUrl || '',
-    gujPdfUrl: getLanguageData(LANGUAGE_ID.gujarati).pdfUrl || ''
+    gujPdfUrl: getLanguageData(LANGUAGE_ID.gujarati).pdfUrl || '',
+    engDuration: getLanguageData(LANGUAGE_ID.english).duration || 0.0,
+    hinDuration: getLanguageData(LANGUAGE_ID.hindi).duration || 0.0,
+    gujDuration: getLanguageData(LANGUAGE_ID.gujarati).duration || 0.0
   };
 
   const edit = useEdit(initialValues);
 
-  const RequiredFields = [
-    
-     ];
+  const RequiredFields = [];
 
   const tabs = [
     {
@@ -107,21 +109,21 @@ const AddNewLessonModal = ({
             language_id: 1,
             video_url: edit.getValue('engVideoUrl'),
             pdf_url: edit.getValue('engPdfUrl'),
-            duration: 67.87
+            duration: edit.getValue('engDuration')
           },
           {
             lesson_name: edit.getValue('hinLessonName'),
             language_id: 2,
             video_url: edit.getValue('hinVideoUrl'),
             pdf_url: edit.getValue('hinPdfUrl'),
-            duration: 56.8
+            duration: edit.getValue('hinDuration')
           },
           {
             lesson_name: edit.getValue('gujLessonName'),
             language_id: 3,
             video_url: edit.getValue('gujVideoUrl'),
             pdf_url: edit.getValue('gujPdfUrl'),
-            duration: 56.7
+            duration: edit.getValue('gujDuration')
           }
         ]
       };

@@ -60,6 +60,19 @@ const TextLesson = ({ edit, isError, tabValue }: Props) => {
         if (uploadVideoRes?.status < HTTP_STATUSES.BAD_REQUEST) {
           if (uploadVideoRes?.data?.video?.length) {
             edit.update({ [field]: uploadVideoRes?.data?.video[0].Location });
+            if (tabValue === 1) {
+              edit.update({
+                engDuration: uploadVideoRes?.data?.video[0].duration
+              });
+            } else if (tabValue === 2) {
+              edit.update({
+                hinDuration: uploadVideoRes?.data?.video[0].duration
+              });
+            } else {
+              edit.update({
+                gujDuration: uploadVideoRes?.data?.video[0].duration
+              });
+            }
           }
         }
       } else {
@@ -97,8 +110,10 @@ const TextLesson = ({ edit, isError, tabValue }: Props) => {
               edit.update({ gujLessonName: value });
             }
           }}
-          isError={(tabValue === 1)&&lessonError}
-          helperText={(tabValue === 1)&&lessonError && 'Please enter the Lesson Name'}
+          isError={tabValue === 1 && lessonError}
+          helperText={
+            tabValue === 1 && lessonError && 'Please enter the Lesson Name'
+          }
         />
       </Grid>
       <Grid item xs={6}>
@@ -107,8 +122,12 @@ const TextLesson = ({ edit, isError, tabValue }: Props) => {
           inputLabel={'Video'}
           labelColor={theme.Colors.primary}
           value={getVideoVal?.split('/')[3] ?? ''}
-          isError={(tabValue === 1)&&videoUrlError}
-          helperText={((tabValue === 1)&&videoUrlError )? 'Please select the video file':''}
+          isError={tabValue === 1 && videoUrlError}
+          helperText={
+            tabValue === 1 && videoUrlError
+              ? 'Please select the video file'
+              : ''
+          }
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
