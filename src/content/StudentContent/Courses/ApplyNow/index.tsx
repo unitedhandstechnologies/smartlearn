@@ -1,4 +1,4 @@
-import { Grid, styled, Typography, useTheme, Box } from '@mui/material';
+import { Grid, styled, Typography, Box } from '@mui/material';
 import React, { useContext } from 'react';
 import {
   ClockIcon,
@@ -11,6 +11,8 @@ import { ButtonComp, Heading } from 'src/components';
 import FavIcon from '../../../../Assets/Images/FavIcon.svg';
 import { useNavigate } from 'react-router';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
+import { useTheme } from '@material-ui/core';
+import IconTextComp from 'src/components/IconTextComp';
 
 const classes = {
   containerStyle: {
@@ -23,13 +25,14 @@ const classes = {
   price: {
     fontSize: '28px',
     fontWeight: 700,
-    fontFamily: 'Switzer'
+    fontFamily: 'Switzer',
+    color: '#3C414B'
   },
   mrp: {
     fontSize: '16px',
     fontWeight: 400,
     fontFamily: 'Switzer',
-    color: 'red',
+    color: '#78828C',
     textDecoration: 'line-through',
     paddingLeft: 1
   },
@@ -110,10 +113,10 @@ type Props = {
 };
 
 const ApplyNow = ({ course }: Props) => {
+  const theme = useTheme();
   console.log(course?.course_id, 'course');
   const { studentDetails } = useContext(StudentInfoContext);
   const navigateTo = useNavigate();
-  const theme = useTheme();
   return (
     <Grid
       xs={12}
@@ -133,7 +136,7 @@ const ApplyNow = ({ course }: Props) => {
           alignItems="center"
           sx={{
             [theme.breakpoints.down('lg')]: {
-              justifyContent: 'center'
+              //justifyContent: 'center'
             }
           }}
         >
@@ -158,12 +161,18 @@ const ApplyNow = ({ course }: Props) => {
           sx={{
             ...classes.gridStyle,
             [theme.breakpoints.down('lg')]: {
-              justifyContent: 'center'
+              //justifyContent: 'center'
             }
           }}
         >
           <img src={ClockIcon} style={{ paddingRight: 15 }} alt="" />
-          <TypographyText sx={{ color: '#FF783C' }}>
+          <TypographyText
+            sx={{
+              color: '#FF783C',
+              fontSize: theme.MetricsSizes.small_xx,
+              fontWeight: theme.fontWeight.mediumBold
+            }}
+          >
             11 hours left at this price
           </TypographyText>
         </Grid>
@@ -204,7 +213,7 @@ const ApplyNow = ({ course }: Props) => {
             ...classes.gridStyle,
             paddingTop: 1,
             [theme.breakpoints.down('lg')]: {
-              justifyContent: 'center'
+              //justifyContent: 'center'
             }
           }}
         >
@@ -216,25 +225,15 @@ const ApplyNow = ({ course }: Props) => {
               : 'This Workshop includes:'}
           </TypographyText>
         </Grid>
-        {data.map((item, index) => {
-          return (
-            <Grid
-              container
-              sx={{
-                ...classes.gridStyle,
-                [theme.breakpoints.down('lg')]: {
-                  justifyContent: 'center'
-                }
-              }}
-              key={index}
-            >
-              <img src={item.img} style={{ paddingRight: 10 }} alt="" />
-              <Typography sx={{ ...classes.textStyle }}>
-                {item.name}
-              </Typography>{' '}
-            </Grid>
-          );
-        })}
+        <Grid container spacing={1}>
+          {data.map((item, index) => {
+            return (
+              <Grid item xs={12} key={index}>
+                <IconTextComp icon={item.img} value={item.name} />
+              </Grid>
+            );
+          })}
+        </Grid>
       </Grid>
     </Grid>
   );

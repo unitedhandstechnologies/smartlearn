@@ -1,16 +1,30 @@
-import { Box, Grid, Typography, useTheme } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
+import { Box, makeStyles, Typography, useTheme } from '@material-ui/core';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { Grid, IconButton } from '@mui/material';
+import { ArrowNext } from 'src/Assets';
+import { ButtonComp } from 'src/components';
 
+const useStyles = makeStyles((theme) => ({
+  iconStyle: {
+    '&:hover': {
+      background: 'transparent'
+    }
+  },
+  button: {
+    minWidth: 0,
+    padding: theme.spacing(0, 1, 0, 0)
+  }
+}));
 type Props = {
   heading?: string;
   icon?: any;
   subText?: string;
-  handleClickIcon?: (val: any) => void;
+  handleClickIcon?: (val?: any) => void;
 };
 
 const LearnWayBox = ({ heading, icon, subText, handleClickIcon }: Props) => {
   const theme = useTheme();
+  const classes = useStyles();
   return (
     <Box
       sx={{
@@ -48,7 +62,13 @@ const LearnWayBox = ({ heading, icon, subText, handleClickIcon }: Props) => {
             {subText}
           </Typography>
           <IconButton
-            style={{ color: '#3C78F0', padding: '12px 0px 0px 0px' }}
+            sx={{
+              color: '#3C78F0',
+              padding: '12px 0px 0px 0px',
+              ':hover': {
+                background: 'transparent'
+              }
+            }}
             onClick={handleClickIcon}
           >
             <ArrowForwardIcon />

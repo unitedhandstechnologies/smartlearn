@@ -122,7 +122,7 @@ const headingProps = {
   headerFontFamily: 'IBM Plex Serif'
 };
 const typographyStylProps = {
-  fontFamily: 'Switzer',
+  fontFamily: 'Switzer Variable',
   fontSize: 18,
   fontWeight: 400,
   color: '#78828C'
@@ -186,7 +186,7 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
               <Grid item xs>
                 <Typography
                   style={{
-                    fontFamily: 'IBM Plex Serif',
+                    fontFamily: 'Switzer Variable',
                     color: '#3C414B',
                     fontSize: 18,
                     fontWeight: 600

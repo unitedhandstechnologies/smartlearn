@@ -25,6 +25,7 @@ const FAQs = ({ faqDetails }: FaqProps) => {
           headerFontSize={'40px'}
           headerFontWeight={500}
           headingColor={'#3C414B'}
+          headerFontFamily={'IBM Plex Serif'}
           style={{
             [theme.breakpoints.down('xs')]: {
               fontSize: 15

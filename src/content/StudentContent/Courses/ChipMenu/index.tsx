@@ -8,7 +8,7 @@ type Props = {
   menuItem: any[];
   headerName?: string;
   handleClose: () => void;
-  handleChange?: () => void;
+  handleChange?: (val?: any) => void;
   handleApply?: () => void;
   onClick?: (event: any) => void;
 };
