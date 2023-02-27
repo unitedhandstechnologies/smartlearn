@@ -23,6 +23,8 @@ import Divider from '@mui/material/Divider';
 import { useNavigate } from 'react-router';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import { Grid } from '@mui/material';
+import CountryCode from 'src/components/CountryCode';
+import { t } from 'i18next';
 
 const useStyles = makeStyles((theme) => ({
   forgotTxt: {
@@ -73,11 +75,13 @@ const ProfileDetails = () => {
     phone_number: studentDetails.phone_number || '',
     email_id: studentDetails.email_id || '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    code: '91'
   };
   const edit = useEdit(initialValues);
   const [isEdit, setIsEdit] = useState<number>(0);
   const [error, setError] = useState(false);
+  const [values, setValues] = useState('');
   const confirmPasswordError =
     (error && !edit.getValue('confirmPassword')) ||
     (error &&
@@ -167,6 +171,10 @@ const ProfileDetails = () => {
   const handleClickCancelBtn = () => {
     edit.reset();
     setIsEdit(0);
+  };
+  const handleChangeCode = (event) => {
+    setValues(event.target.value);
+    edit.update({ code: event.target.value });
   };
 
   const EditComp = ({ btnId }: { btnId?: number }) => {
@@ -266,153 +274,177 @@ const ProfileDetails = () => {
           btnWidth={'fit-content'}
         />
       </Grid>
-      <Grid container spacing={2} item style={{ paddingTop: 15 }}>
-        <Grid item xs>
-          <TextInputComponent
-            inputLabel="First Name"
-            value={edit.getValue('first_name')}
-            inputRef={(ele) => {
-              if (ele) {
-                ele.focus();
-              }
-            }}
-            onChange={handleChange}
-            name="first_name"
-            disabled={isEdit !== 1}
-            iconEnd={<EditComp btnId={1} />}
-          />
+      <Grid container direction="column" sx={{ paddingTop: 2 }}>
+        <Grid container spacing={1} item style={{ paddingTop: 15 }}>
+          <Grid item xs={12} md={6}>
+            <TextInputComponent
+              inputLabel="First Name"
+              labelColor={'#78828C'}
+              borderColor={'#3C78F0'}
+              value={edit.getValue('first_name')}
+              inputRef={(ele) => {
+                if (ele) {
+                  ele.focus();
+                }
+              }}
+              onChange={handleChange}
+              name="first_name"
+              disabled={isEdit !== 1}
+              iconEnd={<EditComp btnId={1} />}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextInputComponent
+              inputLabel="Last Name"
+              labelColor={'#78828C'}
+              borderColor={'#3C78F0'}
+              value={edit.getValue('last_name')}
+              inputRef={(ele) => {
+                if (ele) {
+                  ele.focus();
+                }
+              }}
+              onChange={handleChange}
+              name="last_name"
+              disabled={isEdit !== 2}
+              iconEnd={<EditComp btnId={2} />}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs>
-          <TextInputComponent
-            inputLabel="Last Name"
-            value={edit.getValue('last_name')}
-            inputRef={(ele) => {
-              if (ele) {
-                ele.focus();
-              }
-            }}
-            onChange={handleChange}
-            name="last_name"
-            disabled={isEdit !== 2}
-            iconEnd={<EditComp btnId={2} />}
-          />
-        </Grid>
-      </Grid>
-      <Grid container spacing={2} item style={{ paddingTop: 15 }}>
-        {/* <Grid item xs={1}>
-          <TextInputComponent
-            inputLabel="Code"
-            value={'+91'}
-            inputRef={(ele) => {
-              if (ele) {
-                ele.focus();
-              }
-            }}
-            name="phone_number"
-            onChange={handleChange}
-        
-          />
-        </Grid> */}
-        <Grid item xs={6}>
-          <TextInputComponent
-            inputLabel="Phone Number"
-            value={edit.getValue('phone_number')}
-            inputRef={(ele) => {
-              if (ele) {
-                ele.focus();
-              }
-            }}
-            name="phone_number"
-            onChange={handleChange}
-            disabled={isEdit !== 3}
-            iconEnd={<EditComp btnId={3} />}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextInputComponent
-            inputLabel="Email Id"
-            value={edit.getValue('email_id')}
-            inputRef={(ele) => {
-              if (ele) {
-                ele.focus();
-              }
-            }}
-            onChange={handleChange}
-            name="email_id"
-            disabled={isEdit !== 4}
-            iconEnd={<EditComp btnId={4} />}
-          />
-        </Grid>
-      </Grid>
-      <Divider sx={{ color: '#F2F4F7', marginTop: 5, height: '1px' }} />
-
-      <Grid container style={{ paddingTop: 15 }}>
-        <Heading
-          headingText={'Change Password'}
-          headerFontSize={'24px'}
-          headerFontWeight={500}
-          headerFontFamily={'IBM Plex Serif'}
-          headingColor={'#3C414B'}
-        />
-      </Grid>
-      <Grid container spacing={3} item style={{ paddingTop: 15 }}>
-        <Grid item xs>
-          <TextInputComponent
-            placeholder={'Enter password'}
-            inputLabel={'Password'}
-            variant="outlined"
-            borderColor={'#3C78F0'}
-            labelColor={'#78828C'}
-            value={edit.getValue('password')}
-            onChange={(e) => edit.update({ password: e.target.value })}
-            type={'password'}
-            inputProps={{
-              maxLength: 12
-            }}
-            helperText={
-              passwordError &&
-              'The password must contain minimum 7 and maximum 12 characters!'
-            }
-            isError={passwordError}
-          />
-          <Typography
-            className={classes.forgotTxt}
-            onClick={() => navigateTo('/home/forgetpassword')}
-          >
-            Forgot Password?
-          </Typography>
+        <Grid
+          item
+          xs={12}
+          md={6}
+          container
+          spacing={1}
+          style={{ paddingTop: 15 }}
+        >
+          <Grid item xs={3} md={1}>
+            {/* <TextInputComponent
+              inputLabel="Code"
+              labelColor={'#78828C'}
+              value={'+91'}
+              inputRef={(ele) => {
+                if (ele) {
+                  ele.focus();
+                }
+              }}
+              name="phone_number"
+              onChange={handleChange}
+            /> */}
+            <CountryCode
+              inputLabel={t('code')}
+              labelColor={'#78828C'}
+              required
+              handleChange={handleChangeCode}
+              value={edit.getValue('code')}
+            />
+          </Grid>
+          <Grid item xs={9} md={5}>
+            <TextInputComponent
+              inputLabel="Phone Number"
+              labelColor={'#78828C'}
+              borderColor={'#3C78F0'}
+              value={edit.getValue('phone_number')}
+              inputRef={(ele) => {
+                if (ele) {
+                  ele.focus();
+                }
+              }}
+              name="phone_number"
+              onChange={handleChange}
+              disabled={isEdit !== 3}
+              iconEnd={<EditComp btnId={3} />}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextInputComponent
+              inputLabel="Email Id"
+              labelColor={'#78828C'}
+              borderColor={'#3C78F0'}
+              value={edit.getValue('email_id')}
+              inputRef={(ele) => {
+                if (ele) {
+                  ele.focus();
+                }
+              }}
+              onChange={handleChange}
+              name="email_id"
+              disabled={isEdit !== 4}
+              iconEnd={<EditComp btnId={4} />}
+            />
+          </Grid>
         </Grid>
         <Divider sx={{ color: '#F2F4F7', marginTop: 5, height: '1px' }} />
-        <Grid item xs>
-          <TextInputComponent
-            inputLabel="Confirm Password"
-            placeholder={'Enter confirm password'}
-            variant="outlined"
-            borderColor={'#3C78F0'}
-            labelColor={'#78828C'}
-            value={edit.getValue('confirmPassword')}
-            type={'password'}
-            helperText={
-              confirmPasswordError &&
-              'Both password and confirm password should be same!'
-            }
-            isError={confirmPasswordError}
-            onChange={(e) => edit.update({ confirmPassword: e.target.value })}
+
+        <Grid container style={{ paddingTop: 15 }}>
+          <Heading
+            headingText={'Change Password'}
+            headerFontSize={'24px'}
+            headerFontWeight={500}
+            headerFontFamily={'IBM Plex Serif'}
+            headingColor={'#3C414B'}
           />
         </Grid>
+        <Grid container spacing={1} item style={{ paddingTop: 15 }}>
+          <Grid item xs={12} md={6}>
+            <TextInputComponent
+              placeholder={'Enter new password'}
+              inputLabel={'Password'}
+              borderColor={'#3C78F0'}
+              variant="outlined"
+              labelColor={'#78828C'}
+              value={edit.getValue('password')}
+              onChange={(e) => edit.update({ password: e.target.value })}
+              type={'password'}
+              inputProps={{
+                maxLength: 12
+              }}
+              helperText={
+                passwordError &&
+                'The password must contain minimum 7 and maximum 12 characters!'
+              }
+              isError={passwordError}
+            />
+            <Typography
+              className={classes.forgotTxt}
+              onClick={() => navigateTo('/home/forgetpassword')}
+            >
+              Forgot Password?
+            </Typography>
+          </Grid>
+          <Divider sx={{ color: '#F2F4F7', marginTop: 5, height: '1px' }} />
+          <Grid item xs={12} md={6}>
+            <TextInputComponent
+              inputLabel="Confirm Password"
+              placeholder={'Enter confirm password'}
+              borderColor={'#3C78F0'}
+              variant="outlined"
+              labelColor={'#78828C'}
+              value={edit.getValue('confirmPassword')}
+              type={'password'}
+              helperText={
+                confirmPasswordError &&
+                'Both password and confirm password should be same!'
+              }
+              isError={confirmPasswordError}
+              onChange={(e) => edit.update({ confirmPassword: e.target.value })}
+            />
+          </Grid>
 
-        <Grid item xs={12} className={classes.buttonStyle}>
-          <ButtonComp
-            buttonText="Save"
-            backgroundColor="#3C78F0"
-            buttonTextColor={theme.Colors.white}
-            buttonFontSize={16}
-            buttonFontWeight={400}
-            btnWidth={'fit-content'}
-            height="40px"
-            buttonFontFamily="Switzer"
-            onClick={handleSave}
-          />
+          <Grid item xs={12} className={classes.buttonStyle}>
+            <ButtonComp
+              buttonText="Save"
+              backgroundColor="#3C78F0"
+              buttonTextColor={theme.Colors.white}
+              buttonFontSize={16}
+              buttonFontWeight={400}
+              btnWidth={'fit-content'}
+              height="40px"
+              buttonFontFamily="Switzer"
+              onClick={handleSave}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

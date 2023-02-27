@@ -103,7 +103,7 @@ const Profile = () => {
       item
       xs={12}
       sx={{
-        paddingTop: 5,
+        padding: 4,
         [theme.breakpoints.down('sm')]: {
           flexDirection: 'column'
         }

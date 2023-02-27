@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Grid,
-  Typography,
-  Divider,
-  Rating,
-  useTheme
-} from '@mui/material';
+import { Grid, Typography, Divider, Rating, useTheme } from '@mui/material';
 import { ButtonComp, TextInputComponent } from 'src/components';
 import ReUseableDialogBox from './RatingDialog';
 import { RectangleBox } from 'src/Assets';
@@ -233,7 +227,7 @@ const RateYourExperience = () => {
           open={open[0]}
           dialogTitle={<ActionDialogTitle />}
           dialogContent={<ActionDialogContent />}
-          dialogWidth={'827px'}
+          dialogWidth={'800px'}
           divider={true}
           handleClose={handleClose}
         />

@@ -1,4 +1,4 @@
-import { Typography, useTheme, Grid } from '@material-ui/core';
+import { Typography, useTheme } from '@material-ui/core';
 import { memo, useCallback, useState } from 'react';
 import { LineBarIcon, Google } from 'src/Assets';
 import { ButtonComp, TextInputComponent } from 'src/components';
@@ -11,6 +11,7 @@ import useStudentInfo from 'src/hooks/useStudentInfo';
 import toast from 'react-hot-toast';
 import { useEdit } from 'src/hooks/useEdit';
 import { isValidEmail } from 'src/Utils';
+import { Grid } from '@mui/material';
 const ForgetPassword = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
@@ -38,14 +39,16 @@ const ForgetPassword = () => {
   return (
     <Grid
       container
-      style={{
+      sx={{
         display: 'flex',
         justifyContent: 'center',
-        padding: 5,
-        [theme.breakpoints.down('sm')]: { flexDirection: 'column' }
+        [theme.breakpoints.down('sm')]: {
+          flexDirection: 'column',
+          padding: 5
+        }
       }}
     >
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <Grid>
           <Typography
             style={{
@@ -63,8 +66,8 @@ const ForgetPassword = () => {
           </Grid>
         </Grid>
 
-        <Grid container direction="column">
-          <Grid item xs={6} style={{ paddingTop: 20 }}>
+        <Grid item xs={12} md={6} container direction="column">
+          <Grid item xs={6} md={6} style={{ paddingTop: 20 }}>
             <TextInputComponent
               inputLabel={'Enter registered Email'}
               placeholder={'Email'}
@@ -79,7 +82,7 @@ const ForgetPassword = () => {
             />
           </Grid>
 
-          <Grid item xs={6} style={{ marginTop: '24px' }}>
+          <Grid item xs={6} md={6} style={{ marginTop: '24px' }}>
             <ButtonComp
               buttonText="Reset Password"
               backgroundColor="#3C78F0"

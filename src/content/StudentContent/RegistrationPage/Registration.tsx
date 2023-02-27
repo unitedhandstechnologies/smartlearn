@@ -1,5 +1,12 @@
 import { Typography, useTheme } from '@material-ui/core';
-import { Grid } from '@mui/material';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  Radio,
+  RadioGroup
+} from '@mui/material';
 import { memo, useCallback, useState } from 'react';
 import { LineBarIcon, Google } from 'src/Assets';
 import { ButtonComp, TextInputComponent } from 'src/components';
@@ -19,10 +26,14 @@ import Divider from '@mui/material/Divider';
 import toast from 'react-hot-toast';
 import { useEdit } from 'src/hooks/useEdit';
 import { capitalizeFirstLetter, isPhoneNumber, isValidEmail } from 'src/Utils';
+import { t } from 'i18next';
+import CountryCode from 'src/components/CountryCode';
 const Registration = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
+  const [values, setValues] = useState('');
+  const navigateTo = useNavigate();
   // const onClickEyeIcon = () => {
   //   setShowPassword(!showPassword);
   // };
@@ -39,7 +50,7 @@ const Registration = () => {
     user_type: USER_TYPE_ID.student,
     social_information_url: '',
     permissions: [],
-    code: '',
+    code: '+91' || '',
     language_id: 1 || DETECT_LANGUAGE[i18n.language],
     gender: '',
     qualification: ''
@@ -106,7 +117,11 @@ const Registration = () => {
       // setLoading(false);
     }
   };
-  const navigateTo = useNavigate();
+
+  const handleChange = (event) => {
+    setValues(event.target.value);
+    edit.update({ code: event.target.value });
+  };
   return (
     <Grid
       container
@@ -157,10 +172,10 @@ const Registration = () => {
           >
             Continue with Google or enter your details
           </Typography>
-          <Grid sx={{ paddingTop: 6 }}>
+          <Grid sx={{ paddingTop: 2 }}>
             <img src={LineBarIcon} height={40} />
           </Grid>
-          <Grid sx={{ paddingTop: 6 }}>
+          <Grid sx={{ paddingTop: 4 }}>
             <ButtonComp
               startIcon={<img src={Google} />}
               buttonText={'Continue with Google'}
@@ -226,6 +241,41 @@ const Registration = () => {
                 helperText={lastNameError && 'Please enter your last name'}
               />
             </Grid>
+            <Grid item xs={12}>
+              <FormControl>
+                <FormLabel>
+                  <Typography
+                    style={{
+                      color: '#78828C',
+                      fontWeight: theme.fontWeight.medium
+                    }}
+                  >
+                    {t('gender')}
+                  </Typography>
+                </FormLabel>
+                <RadioGroup
+                  row
+                  name="gender"
+                  value={`${edit.getValue('gender')}`}
+                  onChange={(e) => {
+                    edit.update({
+                      gender: (e.target as HTMLInputElement).value
+                    });
+                  }}
+                >
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label={t('male')}
+                  />
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label={t('female')}
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
             <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
               <TextInputComponent
                 inputLabel={'Email'}
@@ -239,43 +289,54 @@ const Registration = () => {
                 helperText={emailError && 'Please enter valid Email'}
               />
             </Grid>
-            {/* <Grid item xs={2} md={1} sx={{ marginTop: '10px' }}>
-              <TextInputComponent
-                inputLabel={'Code'}
-                variant="outlined"
-                borderColor={'#3C78F0'}
-                labelColor={'#78828C'}
-                value={edit.getValue('code')}
-                required
-                onChange={(e) => {
-                  if (isNaN(Number(e.target.value))) {
-                    return;
+            <Grid item xs={12} md={6} container spacing={0}>
+              <Grid item xs={3} md={3} sx={{ marginTop: '10px' }}>
+                {/* <TextInputComponent
+                  inputLabel={'Code'}
+                  variant="outlined"
+                  borderColor={'#3C78F0'}
+                  labelColor={'#78828C'}
+                  value={edit.getValue('code')}
+                  required
+                  onChange={(e) => {
+                    if (isNaN(Number(e.target.value))) {
+                      return;
+                    }
+                    edit.update({ code: e.target.value });
+                  }}
+                  isError={codeError}
+                  // helperText={phoneError && 'Please enter your country code'}
+                /> */}
+                <CountryCode
+                  inputLabel={t('code')}
+                  labelColor={'#78828C'}
+                  required
+                  handleChange={handleChange}
+                  value={edit.getValue('code')}
+                  isError={phoneError}
+                />
+              </Grid>
+              <Grid item xs={9} md={9} sx={{ marginTop: '10px' }}>
+                <TextInputComponent
+                  inputLabel={'Phone Number'}
+                  variant="outlined"
+                  borderColor={'#3C78F0'}
+                  labelColor={'#78828C'}
+                  value={edit.getValue('phone_number')}
+                  required
+                  onChange={(e) => {
+                    if (isNaN(Number(e.target.value))) {
+                      return;
+                    }
+                    edit.update({ phone_number: e.target.value });
+                  }}
+                  isError={phoneError}
+                  helperText={
+                    phoneError &&
+                    'Please enter your valid 10 digit mobile number'
                   }
-                  edit.update({ code: e.target.value });
-                }}
-                isError={codeError}
-                // helperText={phoneError && 'Please enter your country code'}
-              />
-            </Grid> */}
-            <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
-              <TextInputComponent
-                inputLabel={'Phone Number'}
-                variant="outlined"
-                borderColor={'#3C78F0'}
-                labelColor={'#78828C'}
-                value={edit.getValue('phone_number')}
-                required
-                onChange={(e) => {
-                  if (isNaN(Number(e.target.value))) {
-                    return;
-                  }
-                  edit.update({ phone_number: e.target.value });
-                }}
-                isError={phoneError}
-                helperText={
-                  phoneError && 'Please enter your valid 10 digit mobile number'
-                }
-              />
+                />
+              </Grid>
             </Grid>
             <Grid item xs={12} md={12} sx={{ marginTop: '10px' }}>
               <TextInputComponent

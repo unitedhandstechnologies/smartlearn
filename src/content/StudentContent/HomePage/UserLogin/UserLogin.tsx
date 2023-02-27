@@ -74,15 +74,16 @@ const UserLogin = () => {
   return (
     <Grid
       container
-      style={{
+      sx={{
         display: 'flex',
         justifyContent: 'center',
         [theme.breakpoints.down('sm')]: {
-          flexDirection: 'column'
+          flexDirection: 'column',
+          padding: 5
         }
       }}
     >
-      <Grid item xs={6}>
+      <Grid item xs={12} md={6}>
         <Grid>
           <Typography
             sx={{
@@ -92,7 +93,7 @@ const UserLogin = () => {
               color: '#3C414B',
               margin: theme.spacing(2, 0),
               [theme.breakpoints.down('sm')]: {
-                fontSize: 32
+                fontSize: 25
               }
             }}
           >
@@ -189,6 +190,7 @@ const UserLogin = () => {
               inputLabel={'Password'}
               variant="outlined"
               labelColor={'#78828C'}
+              borderColor={'#3C78F0'}
               size="medium"
               type={showPassword ? 'text' : 'password'}
               onChange={(e) =>

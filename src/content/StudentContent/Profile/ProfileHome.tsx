@@ -26,6 +26,7 @@ import StartYourLearningBanner from '../HomePage/StartYourLearningBanner';
 import FAQs from '../HomePage/FAQs';
 import Rateyourcourse from './Rateyourcourse';
 import Thankyou from './Thankyou';
+import RateYourExperience from '../HomePage/RateYourExperience/ExperienceRate';
 
 const ProfileHome = () => {
   const theme = useTheme();
@@ -35,8 +36,7 @@ const ProfileHome = () => {
   const [faqDetails, setFaqDetails] = useState([]);
   const [ratingData, setRatingData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [bellOpen, setBellOpen] = useState(null);
-  const [thankOpen, setThankOpen] = useState(null);
+
   // const { searchValue } = useSearchVal();
   // const debValue = useDebounce(searchValue, 2000)
   const fetchData = useCallback(async () => {
@@ -87,19 +87,7 @@ const ProfileHome = () => {
       setLoading(false);
     }
   }, []);
-  const handleBellClick = (event) => {
-    setBellOpen(event.currentTarget);
-  };
-  const handleBellClose = () => {
-    setBellOpen(null);
-  };
-  const handleThanklClose = () => {
-    setThankOpen(false);
-  };
-  const onClick = () => {
-    setThankOpen(true);
-    setBellOpen(null);
-  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -108,8 +96,7 @@ const ProfileHome = () => {
   } else {
     return (
       <Grid container sx={{ position: 'relative', padding: 4 }}>
-        <Thankyou anchorEl={thankOpen} handleClose={handleThanklClose} />
-        <Grid
+        {/* <Grid
           container
           xs={12}
           sx={{
@@ -177,7 +164,8 @@ const ProfileHome = () => {
               onClick={handleBellClick}
             />
           </Grid>
-        </Grid>
+        </Grid> */}
+        <RateYourExperience />
         <Grid container direction="column" paddingTop={4}>
           <CourseBanner
             course={'Sometitle goes here'}
@@ -186,7 +174,6 @@ const ProfileHome = () => {
             }
           />
         </Grid>
-
         <Grid
           container
           direction="column"
@@ -243,13 +230,6 @@ const ProfileHome = () => {
           style={{ padding: theme.spacing(7, 7) }}
         >
           <FAQs faqDetails={faqDetails} />
-          <Rateyourcourse
-            notifications={notifications}
-            anchorEl={bellOpen}
-            handleClose={handleBellClose}
-            onClick={onClick}
-          />
-          <Thankyou anchorEl={thankOpen} handleClose={handleThanklClose} />
           {/* <WishListCourse /> */}
         </Grid>
       </Grid>
