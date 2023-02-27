@@ -28,7 +28,6 @@ const MentorCreatedCourses = () => {
   const classes = useStyles();
   const { state }: any = useLocation();
   const navigateTo = useNavigate();
-  console.log(state, 'stae');
   const mentorCategory = [];
 
   state?.courses
@@ -54,14 +53,14 @@ const MentorCreatedCourses = () => {
 
   const onClickCardImage = (item) => {
     navigateTo('/home/mentor-courseProfile/masterClass-courseDetails', {
-      state: { ...item },
+      state: { ...item,mentor_profile:state.image_url },
       replace: true
     });
   };
 
   return (
     <>
-      <Grid paddingLeft={5}>
+      <Grid paddingLeft={5} mt={2}>
         <ButtonComp
           buttonText={'All Mentors'}
           startIcon={<ArrowBackIcon />}
@@ -80,8 +79,8 @@ const MentorCreatedCourses = () => {
         />
       </Grid>
       <Grid container spacing={3} padding={5} paddingTop={3}>
-        <Grid item xs={12} sm={5} md={3.3}>
-          <MentorProfile />
+        <Grid item xs={12} sm={5} md={3.3} mt={2}>
+          <MentorProfile mentorDetails={state} category={mentorCategory} />
         </Grid>
         <Grid item xs={12} sm={7} md={8.7}>
           {upcomingWorkShops.length ? (

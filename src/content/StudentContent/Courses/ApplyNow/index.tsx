@@ -7,7 +7,7 @@ import {
   LifeTime,
   CertificateIcon
 } from '../../../../Assets/Images';
-import { ButtonComp, Heading } from 'src/components';
+import { ButtonComp } from 'src/components';
 import FavIcon from '../../../../Assets/Images/FavIcon.svg';
 import { useNavigate } from 'react-router';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
@@ -78,45 +78,36 @@ const TypographyText = styled(Typography)(({ theme }) => ({
   fontFamily: 'Switzer',
   color: '#3C414B'
 }));
-const data = [
-  {
-    name: '23 hours of video tutorials',
-    img: VideoTutor
-  },
-  {
-    name: '4 downloadable resources',
-    img: DownloadSvg
-  },
-  {
-    name: 'Lifetime access to the course',
-    img: LifeTime
-  },
-  {
-    name: 'Certificate of completion',
-    img: CertificateIcon
-  }
-];
-const dataPrice = [
-  {
-    price: '₹3,500'
-  },
-  {
-    mrp: '₹3,500'
-  },
-  {
-    offer: '40% off'
-  }
-];
 
 type Props = {
   course?: any;
+  duration?: number | string;
+  timeType?: string;
 };
 
-const ApplyNow = ({ course }: Props) => {
-  const theme = useTheme();
-  console.log(course?.course_id, 'course');
+const ApplyNow = ({ course, timeType, duration }: Props) => {
+  const data = [
+    {
+      name: duration !== undefined ? `${duration} ${timeType} of video tutorials` : '',
+      img: VideoTutor
+    },
+    {
+      name: '',
+      img: DownloadSvg
+    },
+    {
+      name: 'Lifetime access to the course',
+      img: LifeTime
+    },
+    {
+      name: 'Certificate of completion',
+      img: CertificateIcon
+    }
+  ];
+
   const { studentDetails } = useContext(StudentInfoContext);
   const navigateTo = useNavigate();
+  const theme = useTheme();
   return (
     <Grid
       xs={12}
@@ -225,15 +216,27 @@ const ApplyNow = ({ course }: Props) => {
               : 'This Workshop includes:'}
           </TypographyText>
         </Grid>
-        <Grid container spacing={1}>
-          {data.map((item, index) => {
-            return (
-              <Grid item xs={12} key={index}>
-                <IconTextComp icon={item.img} value={item.name} />
+        {data.map((item, index) => {
+          return (
+            item.name !== '' && (
+              <Grid
+                container
+                sx={{
+                  ...classes.gridStyle,
+                  [theme.breakpoints.down('lg')]: {
+                    justifyContent: 'center'
+                  }
+                }}
+                key={index}
+              >
+                <img src={item.img} style={{ paddingRight: 10 }} alt="" />
+                <Typography sx={{ ...classes.textStyle }}>
+                  {item.name}
+                </Typography>{' '}
               </Grid>
-            );
-          })}
-        </Grid>
+            )
+          );
+        })}
       </Grid>
     </Grid>
   );

@@ -12,6 +12,7 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { makeStyles, useTheme } from '@material-ui/core';
 import { toast } from 'react-hot-toast';
 import {
+  COURSE_TYPE_NAME,
   DETECT_LANGUAGE,
   HTTP_STATUSES,
   LANGUAGE_ID
@@ -269,7 +270,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
             );
           })}
         </Grid>
-        <Grid paddingTop={4}>
+        {courseDescription.course_type === COURSE_TYPE_NAME[6] && <Grid paddingTop={4}>
           <Heading headingText={'Topics in this course'} {...headingProps} />
           {courseDescription?.course_type === 'Recorded Course' && (
             <Grid item xs={12} md={11.7}>
@@ -282,7 +283,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
               />
             </Grid>
           )}
-        </Grid>
+        </Grid>}
       </Grid>
     </Grid>
   );

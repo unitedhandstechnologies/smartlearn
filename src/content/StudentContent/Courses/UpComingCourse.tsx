@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core';
 import { Grid, InputBase, InputAdornment, IconButton } from '@mui/material';
 import {
@@ -112,6 +112,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
   const [searchValue, setSearchValue] = useState('');
+  const [chipIconText, setChipIconText] = useState([0, 0, 1]);
 
   const getSearchValue = (searchValue) => {
     console.log(searchValue);
@@ -134,6 +135,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+    setChipFilterItem([...chipIconText]);
   };
 
   const handleView = () => {
@@ -177,6 +179,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
       setCourses([...filteredCourse]);
     }
     setAnchorEl(null);
+    setChipIconText([...chipFilterItem])
   };
 
   const onClickCardImage = (rowData) => {
@@ -233,7 +236,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
                   key={index}
                   chipText={item.name}
                   checkboxText={
-                    headerChipItem[index].labelItems[chipFilterItem[index]]
+                    headerChipItem[index].labelItems[chipIconText[index]]
                       .label
                   }
                   onClick={(event) => handleOpen(event, item)}
@@ -279,7 +282,6 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
           //justifyContent={'center'}
           spacing={4}
           sx={{
-            // gap: 2,
             paddingBottom: '30px',
             [theme.breakpoints.down('xs')]: {
               justifyContent: 'center'

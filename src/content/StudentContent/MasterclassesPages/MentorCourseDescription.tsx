@@ -4,34 +4,8 @@ import { ButtonComp } from 'src/components';
 import ApplyNow from '../Courses/ApplyNow';
 import CourseBanner from '../Courses/CourseBanner';
 import CourseDescription from '../Courses/CourseDescription/CourseDescription';
-import CourseRating from '../Courses/CourseRating/Index';
 import { useLocation, useNavigate } from 'react-router';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { chatIcon, Intermediate, Online, Star, WadeWarren } from 'src/Assets';
-
-const review = [
-  {
-    name: '4.5',
-    subText: 'Ratings',
-    img: Star
-  },
-  {
-    name: 'English',
-    subText: 'Course language',
-    img: chatIcon
-  },
-  {
-    name: 'Intermediate',
-    subText: 'Difficulty level',
-    img: Intermediate
-  },
-  {
-    name: 'Online',
-    subText: 'Study mode',
-    img: Online
-  }
-];
-
 const useStyles = makeStyles((theme) => ({
   button: {
     minWidth: 0,
@@ -49,9 +23,7 @@ const MentorCourseDescription = () => {
   const classes = useStyles();
   const navigateTo = useNavigate();
   const { state }: any = useLocation();
-  let data = { ...state?.formData };
-  let courseId = { ...state?.course_id };
-
+  
   return (
     <Grid sx={{ padding: 4 }}>
       <ButtonComp
@@ -79,9 +51,10 @@ const MentorCourseDescription = () => {
         }}
       >
         <CourseBanner
-          courseTitle={'Basics of Stock Market investments'}
-          mentorName={'Wade Warren'}
-          mentorProfile={WadeWarren}
+          courseDetails={state}
+          courseTitle={state.course_name}
+          mentorName={state.mentor_name}
+          mentorProfile={state.mentor_profile}
           bannerOuterContainerStyle={{
             minHeight: 360
           }}
@@ -105,20 +78,18 @@ const MentorCourseDescription = () => {
           }
         }}
       >
-        <ApplyNow />
+        <ApplyNow
+          course={state}
+        />
       </Grid>
       <Grid
-        container
-        paddingTop={22}
-        sx={{
-          [theme.breakpoints.down('md')]: {
-            paddingTop: 1
-          }
-        }}
+        item
+        xs={12}
+        md={9}
+        paddingTop={5}
+        sx={{ [theme.breakpoints.down('md')]: { paddingTop:1 } }}
       >
-        <Grid item xs={12} md={9}>
-          <CourseDescription />
-        </Grid>
+        <CourseDescription courseDescription={state} />
       </Grid>
     </Grid>
   );
