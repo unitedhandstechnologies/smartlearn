@@ -46,12 +46,9 @@ const CourseTitleDetails = ({
   lessonData,
   sectionData,
   quizData,
-  studentDetails,
   setVideoToPlay,
-  setVideoList,
   //handleAutoPlay,
   setVideoToPlayIndex,
-  videoToPlayIndex,
   setTestTopic
 })=> {
 

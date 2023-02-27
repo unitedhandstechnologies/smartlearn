@@ -31,13 +31,11 @@ const LessonGrid = styled(Grid)(({theme}) => ({
 const CourseDetails = ({
   courseData,
   setVideoToPlay,
-  setVideoList,
   lessonData,
   sectionData,
   //handleAutoPlay,
   setVideoToPlayIndex,
   //studentDetails,
-  videoToPlayIndex,
   quizData,
   setTestTopic,
 }) => {
@@ -53,12 +51,9 @@ const studentDetails = {
       <CourseTitleDetails 
         sectionData = {sectionData} 
         lessonData = {lessonData} 
-        studentDetails = {studentDetails}
         setVideoToPlay = {setVideoToPlay}
-        setVideoList = {setVideoList}
         //handleAutoPlay = {handleAutoPlay}videoToPlayIndex
         setVideoToPlayIndex = {setVideoToPlayIndex}
-        videoToPlayIndex = {videoToPlayIndex}
         quizData = {quizData}
         setTestTopic = {setTestTopic}
              />

@@ -40,13 +40,12 @@ const CourseBegin = () => {
   const theme = useTheme();
   const [loading, setLoading] = useState(true);
   const [courseData, setCourseData] = useState([]);
-  const [videoList, setVideoList] = useState(null);
-  const [videoName, setVideoName] = useState(null);
   const [videoToPlay, setVideoToPlay] = useState();
   const [lessonData, setLessonData] = useState<any[]>([]);
   const [sectionData, setSectionData] = useState<any[]>([]);
   const [quizData, setQuizData] = useState<any[]>([]);
   const [testTopic, setTestTopic] = useState(false);
+  const [ videoDetails , setVideoDetails] = useState<any[]>([]);
   const [autoPlay, setAutoPlay] = useState(true);
   const { state }: any = useLocation();
   const [videoToPlayIndex, setVideoToPlayIndex] = useState({
@@ -89,22 +88,8 @@ const CourseBegin = () => {
 
                 let sectionData1 = responseSection.data.Section;
                 let lessonData1 = responseLesson.data.Lessons;
-                let tempVideoList = Array(sectionData1?.length)
-                  .fill(0)
-                  .map(
-                    (sectionData1, index) =>
-                      new Array(
-                        (lessonData1.length
-                          ? lessonData1.filter(
-                              (lessonItm) =>
-                                lessonItm.section_id === sectionData1.section_id
-                            )
-                          : []
-                        ).length
-                      )
-                  );
-
-                let tempVideoName = Array(sectionData1?.length)
+                
+                  let tempVideoDetails = Array(sectionData1?.length)
                   .fill(0)
                   .map(
                     (sectionData1, index) =>
@@ -130,17 +115,17 @@ const CourseBegin = () => {
                       : [];
                     if (getLessonData.length) {
                       getLessonData.map((item, index) => {
-                        tempVideoList[sectionNumber - 1][index] =
-                          item.video_url;
-                        tempVideoName[sectionNumber - 1][index] =
-                          item.lesson_name;
+                        tempVideoDetails[sectionNumber - 1][index] ={
+                          videoUrl : item.video_url,
+                          videoName : item.lesson_name,
+                        }
+                          
                       });
-                    }
+                    }                                       
                   });
                 }
-                setVideoList(tempVideoList);
-                setVideoToPlay(tempVideoList[0][0]);
-                setVideoName(tempVideoName);
+                setVideoDetails(tempVideoDetails);
+                setVideoToPlay(tempVideoDetails[0][0].videoUrl);
                 setVideoToPlayIndex({ sectionNumber: 0, lessonNumber: 0 });
               }
             } catch (err) {
@@ -170,18 +155,16 @@ const CourseBegin = () => {
     return (
       <CourseMainPage
         courseData={courseData}
-        videoList={videoList}
         videoToPlay={videoToPlay}
         lessonData={lessonData}
         sectionData={sectionData}
         videoToPlayIndex={videoToPlayIndex}
         setVideoToPlayIndex={setVideoToPlayIndex}
         setVideoToPlay={setVideoToPlay}
-        setVideoList={setVideoList}
-        videoName={videoName}
         quizData={quizData}
         setTestTopic={setTestTopic}
         testTopic={testTopic}
+        videoDetails={videoDetails}
       />
     );
   }
