@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import {
   Box,
   Grid,
@@ -55,12 +55,17 @@ const CourseMainPage = (
         quizData,
         testTopic,
         setTestTopic,
-        videoDetails
+        videoDetails,
+        isReady,
+        setIsReady
     }
 ) => {
     
     const classes = useStyles();
     const theme = useTheme();
+    const videoPlayerRef = useRef();
+    const [playerRef, setPlayerRef] = useState<any>();
+
 
    
 
@@ -87,9 +92,38 @@ const CourseMainPage = (
         }
       }
     };
+
+    const handleVideoProgress = (event) => {
+      console.log("event", event);
+      //videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].playingTime = event.played;
+      //setPlayingTime(event.played);
+    };
+
+    const handleOnReady =useCallback((player) => {
+
+      
+        const timeToStart = videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].videoElapsedTime;
+        console.log("playerRef",playerRef);
+        player.seekTo(timeToStart, 'minutes');
+        setPlayerRef(player);
+        setIsReady(true);
+    
+
+     /*  //console.log("event", player);
+      console.log("playerRef",playerRef) ;
+      let tempPR = playerRef;
+      tempPR.seekTo(videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].videoElapsedTime);
+      setPlayerRef(tempPR);
+      console.log("Aftyer Changed Ref",playerRef)
+      //videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].playingTime = event.played;
+      //setPlayingTime(event.played); */
+    },[isReady]);
+  
   
 
-   useEffect(() => {          
+   useEffect(() => {  
+    
+    //setPlayerRef(seekTo())       
     }, [videoToPlay]); 
 
   return (
@@ -108,7 +142,8 @@ const CourseMainPage = (
           />
       </Grid>
       <Grid item xs={12} sm={9} >
-        { !testTopic ? (
+        { 
+        !testTopic ? (
           <>
       <Typography style={{
         padding:'0px 32px',
@@ -116,12 +151,15 @@ const CourseMainPage = (
       }}>{videoToPlayIndex.sectionNumber+1} . {videoToPlayIndex.lessonNumber+1} {videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].videoName}</Typography>
         <Grid className={classes.playerContainer}>
           <ReactPlayer
+            ref={(player)=>setPlayerRef(player)}
             url={videoToPlay}
             playing={true}
             controls={true}
             width={'100%'}
             height={'100%'}
-            onEnded={handlePlayNext}
+            onEnded={handlePlayNext} 
+            //onReady={handleOnReady}           
+            //onProgress={handleVideoProgress}
           />
         </Grid>
         </>

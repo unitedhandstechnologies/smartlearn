@@ -42,7 +42,33 @@ const CourseDetails = ({
 }) => {
   const theme = useTheme();
 
+const getRemainingTime = ( )=>{
+  let totalTime=0;
+   console.log(videoDetails.map((row,rowIndex)=>{
+    row.map((item,index)=>{
+      console.log('item',item.videoRemainingTime)
+      console.log("totalTime",totalTime)
+      totalTime = totalTime+ item.videoRemainingTime;
+    })
+  }));
  
+  console.log("finalTotal",totalTime)
+  let hours,mins,secs;
+  if(totalTime>60  ){
+  hours=(String(totalTime/60).split(".")[0]);
+  mins=(String(totalTime-(hours*60)).split(".")[0]);
+  secs=(String(totalTime-(hours*60)).split(".")[1]);
+
+  }
+  else{
+  hours=0;
+  mins=(String(totalTime).split(".")[0]);
+  secs=(String(totalTime).split(".")[1]);
+  }
+  console.log("time",hours,mins,secs);
+  return `${hours}hours ${mins}mins ${secs.slice(0,2)}secs`
+};
+
 const studentDetails = {
   remainingDuration : "11hrs 45mins 30 sec",
 };
@@ -107,7 +133,7 @@ const studentDetails = {
                 paddingLeft : '4px',
               }}
               component={'span'}
-            >{`${studentDetails.remainingDuration} remaining`}</Typography>
+            >{getRemainingTime()}</Typography>
         </RemainingTimeGrid>
       </LessonGrid>
       <TopicsListGrid>
