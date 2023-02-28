@@ -21,6 +21,7 @@ const Masterclasses = () => {
   const [courseDetails, setCourseDetails] = useState([]);
   const [mentorDetails, setMentorDetails] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [chipIconText, setChipIconText] = useState([0, 0, 1]);
   const { i18n } = useTranslation();
   const fetchData = useCallback(async () => {
     try {
@@ -84,6 +85,8 @@ const Masterclasses = () => {
           courseDetails={courseDetails.filter(
             (course) => course.course_type === COURSE_TYPE_NAME[2]
           )}
+          chipIconText={chipIconText}
+          setChipIconText={setChipIconText}
         />
         <Mentors
           mentorDetails={mentorDetails}

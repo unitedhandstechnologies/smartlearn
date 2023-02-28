@@ -20,7 +20,10 @@ const Seminars = () => {
   const [seminarCourseDetails, setSeminarCourseDetails] = useState([]);
   const [webinarCourseDetails, setWebinarCourseDetails] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [chipRecorderText, setChipRecorderText] = useState([0, 1]);
+  const [chipIconText, setChipIconText] = useState([0, 0, 1]);
   const { i18n } = useTranslation();
+  
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
@@ -55,14 +58,22 @@ const Seminars = () => {
   useEffect(() => {
     fetchData();
   }, [DETECT_LANGUAGE[i18n.language]]);
-  
+
   if (loading) {
     return <Loader />;
   } else {
     return (
       <Grid padding={6}>
-        <UpComingSeminars courseDetails={seminarCourseDetails} />
-        <UpComingWebinars courseDetails={webinarCourseDetails} />
+        <UpComingSeminars
+          courseDetails={seminarCourseDetails}
+          chipIconText={chipRecorderText}
+          setChipIconText={setChipRecorderText}
+        />
+        <UpComingWebinars
+          courseDetails={webinarCourseDetails}
+          setChipIconText={setChipIconText}
+          chipIconText={chipIconText}
+        />
       </Grid>
     );
   }

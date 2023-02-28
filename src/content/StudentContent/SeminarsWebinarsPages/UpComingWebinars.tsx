@@ -112,9 +112,15 @@ const headerChipItem = [
 
 type CourseProps = {
   courseDetails?: any[];
+  setChipIconText?: React.Dispatch<React.SetStateAction<number[]>>;
+  chipIconText?: number[];
 };
 
-const UpComingWebinars = ({ courseDetails }: CourseProps) => {
+const UpComingWebinars = ({
+  courseDetails,
+  setChipIconText,
+  chipIconText
+}: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
   const { i18n } = useTranslation();
@@ -124,7 +130,6 @@ const UpComingWebinars = ({ courseDetails }: CourseProps) => {
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
   const [searchValue, setSearchValue] = useState('');
-  const [chipIconText, setChipIconText] = useState([0, 0, 1]);
 
   const getSearchValue = (searchValue) => {
     setSearchValue(searchValue);
@@ -179,6 +184,7 @@ const UpComingWebinars = ({ courseDetails }: CourseProps) => {
           ? filteredCourse
           : courseDetails
       ).filter((item) => item.language_id == chipFilterItem[2]);
+      changeLanguage(chipFilterItem[2]);
     }
     if (
       chipFilterItem[0] === 0 &&
@@ -188,12 +194,11 @@ const UpComingWebinars = ({ courseDetails }: CourseProps) => {
       setCourses([...courseDetails]);
     } else {
       setCourses([...filteredCourse]);
-      changeLanguage(chipFilterItem[2])
     }
     setAnchorEl(null);
     setChipIconText([...chipFilterItem]);
   };
-  
+
   const changeLanguage = (chipValue) => {
     if (chipValue === 1) {
       return i18n.changeLanguage('en');

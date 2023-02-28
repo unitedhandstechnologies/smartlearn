@@ -92,9 +92,15 @@ const headerChipItem = [
 
 type CourseProps = {
   courseDetails?: any[];
+  setChipIconText?: React.Dispatch<React.SetStateAction<number[]>>;
+  chipIconText?: number[];
 };
 
-const UpComingSeminars = ({ courseDetails }: CourseProps) => {
+const UpComingSeminars = ({
+  courseDetails,
+  chipIconText,
+  setChipIconText
+}: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
   const { i18n } = useTranslation();
@@ -104,7 +110,6 @@ const UpComingSeminars = ({ courseDetails }: CourseProps) => {
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
   const [searchValue, setSearchValue] = useState('');
-  const [chipIconText, setChipIconText] = useState([0, 1]);
 
   const getSearchValue = (searchValue) => {
     setSearchValue(searchValue);
@@ -144,21 +149,18 @@ const UpComingSeminars = ({ courseDetails }: CourseProps) => {
         (item) => item.course_level_id == chipFilterItem[0]
       );
     }
-    if (chipFilterItem[1] != 0) { 
+    if (chipFilterItem[1] != 0) {
       filteredCourse = (
         chipFilterItem[0] != 0 || chipFilterItem[1] != 0
           ? filteredCourse
           : courseDetails
       ).filter((item) => item.language_id == chipFilterItem[1]);
+      changeLanguage(chipFilterItem[1]);
     }
-    if (
-      chipFilterItem[0] === 0 &&
-      chipFilterItem[1] === 0 
-    ) {
+    if (chipFilterItem[0] === 0 && chipFilterItem[1] === 0) {
       setCourses([...courseDetails]);
     } else {
       setCourses([...filteredCourse]);
-      changeLanguage(chipFilterItem[1])
     }
     setAnchorEl(null);
     setChipIconText([...chipFilterItem]);
@@ -223,7 +225,7 @@ const UpComingSeminars = ({ courseDetails }: CourseProps) => {
               xs
               style={{ paddingBottom: '20px', gap: '10px' }}
             >
-            {headerChipItem.map((item, index) => (
+              {headerChipItem.map((item, index) => (
                 <ChipIconcomp
                   key={index}
                   chipText={item.name}

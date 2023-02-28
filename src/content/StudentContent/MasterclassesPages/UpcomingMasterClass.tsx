@@ -30,7 +30,8 @@ const useStyle = makeStyles((theme) => ({
     '&.MuiGrid-item': {
       padding: theme.spacing(0)
     }
-  }}));
+  }
+}));
 
 const headerChipItem = [
   {
@@ -106,9 +107,15 @@ const headerChipItem = [
 
 type CourseProps = {
   courseDetails?: any[];
+  setChipIconText?: React.Dispatch<React.SetStateAction<number[]>>;
+  chipIconText?: number[];
 };
 
-const UpComingCourse = ({ courseDetails }: CourseProps) => {
+const UpComingCourse = ({
+  courseDetails,
+  chipIconText,
+  setChipIconText
+}: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
   const { i18n } = useTranslation();
@@ -118,7 +125,6 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
   const [searchValue, setSearchValue] = useState('');
-  const [chipIconText, setChipIconText] = useState([0, 0, 1]);
 
   const getSearchValue = (searchValue) => {
     setSearchValue(searchValue);
@@ -173,6 +179,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
           ? filteredCourse
           : courseDetails
       ).filter((item) => item.language_id == chipFilterItem[2]);
+      changeLanguage(chipFilterItem[2]);
     }
     if (
       chipFilterItem[0] === 0 &&
@@ -182,7 +189,6 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
       setCourses([...courseDetails]);
     } else {
       setCourses([...filteredCourse]);
-      changeLanguage(chipFilterItem[2])
     }
     setAnchorEl(null);
     setChipIconText([...chipFilterItem]);
@@ -247,16 +253,17 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
                 style={{ paddingBottom: '20px', gap: '10px' }}
               >
                 {headerChipItem.map((item, index) => (
-                <ChipIconcomp
-                  key={index}
-                  chipText={item.name}
-                  checkboxText={
-                    headerChipItem[index].labelItems[chipIconText[index]].label
-                  }
-                  onClick={(event) => handleOpen(event, item)}
-                  img={item.img}
-                />
-              ))}
+                  <ChipIconcomp
+                    key={index}
+                    chipText={item.name}
+                    checkboxText={
+                      headerChipItem[index].labelItems[chipIconText[index]]
+                        .label
+                    }
+                    onClick={(event) => handleOpen(event, item)}
+                    img={item.img}
+                  />
+                ))}
               </Grid>
             </Grid>
             <Grid paddingBottom={4}>

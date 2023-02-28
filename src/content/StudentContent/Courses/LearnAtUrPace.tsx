@@ -229,8 +229,10 @@ const headerChipItem = [
 
 type CourseProps = {
   courseDetails?: any[];
+  chipIconText?: number[];
+  setChipIconText?: React.Dispatch<React.SetStateAction<number[]>>;
 };
-const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
+const LearnAtUrPace = ({ courseDetails, chipIconText, setChipIconText }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
   const { i18n } = useTranslation();
@@ -240,7 +242,6 @@ const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
   const [searchValue, setSearchValue] = useState('');
-  const [chipIconText, setChipIconText] = useState([0, 1]);
 
   const getSearchValue = (searchValue) => {
     setSearchValue(searchValue);
@@ -286,6 +287,7 @@ const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
           ? filteredCourse
           : courseDetails
       ).filter((item) => item.language_id == chipFilterItem[1]);
+      changeLanguage(chipFilterItem[1])
     }
     if (
       chipFilterItem[0] === 0 &&
@@ -294,7 +296,6 @@ const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
       setCourses([...courseDetails]);
     } else {
       setCourses([...filteredCourse]);
-      changeLanguage(chipFilterItem[1])
     }
     setAnchorEl(null);
     setChipIconText([...chipFilterItem]);

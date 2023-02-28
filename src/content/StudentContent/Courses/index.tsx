@@ -17,12 +17,98 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-hot-toast';
 import PreRecordedCourses from './PreRecordedCourses';
 import Quiz from './QASection/Quiz';
+import {
+  BarChartFillIcon,
+  BeginnerIcon,
+  IntermediateIcon,
+  Language,
+  LocationIcon,
+  Offline,
+  ZoomIcon
+} from 'src/Assets';
+
+const headerChipItem = [
+  {
+    name: 'Difficulty',
+    id: 0,
+    labelItems: [
+      {
+        id: 0,
+        label: 'All'
+      },
+      {
+        id: 1,
+        label: 'Beginner',
+        icon: BeginnerIcon
+      },
+      {
+        id: 2,
+        label: 'Intermediate',
+        icon: IntermediateIcon
+      },
+      {
+        id: 3,
+        label: 'Advanced',
+        icon: BarChartFillIcon
+      }
+    ]
+  },
+  {
+    name: 'Mode',
+    img: Offline,
+    id: 1,
+    labelItems: [
+      {
+        id: 0,
+        label: 'All'
+      },
+      {
+        id: 1,
+        label: 'Online',
+        icon: ZoomIcon
+      },
+      {
+        id: 2,
+        label: 'Offline',
+        icon: LocationIcon
+      }
+    ]
+  },
+  {
+    name: 'Language',
+    img: Language,
+    id: 2,
+    labelItems: [
+      {
+        id: 0,
+        label: 'All'
+      },
+      {
+        id: 1,
+        label: 'English'
+      },
+      {
+        id: 2,
+        label: 'Hindi'
+      },
+      {
+        id: 3,
+        label: 'Gujarati'
+      }
+    ]
+  }
+];
 
 const Courses = () => {
   const theme = useTheme();
   const [courseDetails, setCourseDetails] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { i18n } = useTranslation();
+  const [chipFilterItem, setChipFilterItem] = useState([0, 0, 1]);
+  const [menuItem, setMenuItem] = useState<any>({});
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [chipIconText, setChipIconText] = useState([0, 0, 1]);
+  const [chipRecorderText, setChipRecorderText] = useState([0, 1]);
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
@@ -58,8 +144,16 @@ const Courses = () => {
         // style={{ padding: theme.spacing(7, 7) }}
         padding={6}
       >
-        <UpComingCourse courseDetails={courseDetails} />
-        <LearnAtUrPace courseDetails={courseDetails} />
+        <UpComingCourse
+          courseDetails={courseDetails}
+          chipIconText={chipIconText}
+          setChipIconText={setChipIconText}
+        />
+        <LearnAtUrPace
+          courseDetails={courseDetails}
+          chipIconText={chipRecorderText}
+          setChipIconText={setChipRecorderText}
+        />
         {/* <Quiz courseDetails={courseDetails} /> */}
         {/* <CourseBegin /> */}
       </Grid>
