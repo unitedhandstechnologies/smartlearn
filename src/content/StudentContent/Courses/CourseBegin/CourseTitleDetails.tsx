@@ -11,7 +11,8 @@ import {
   ExpandMore as ExpandMoreIcon,
   CheckCircle as CheckCircleIcon,
   ExpandLess,
-  ExpandMore
+  ExpandMore,
+  FamilyRestroomTwoTone
 } from '@mui/icons-material';
 
 import { CourseSubTitleDetailsProps, CourseTitleDetailsProps } from 'src/content/StudentContent/types';
@@ -278,7 +279,7 @@ const CourseTitleDetails = ({
             accordionDetailClassName = {classes.accordionDetailStyles}
             iconColor = {"primary"}
             isSectionCompleted = {true}
-            
+            expanded = {false}
             renderExpandIcons = {(isActive)=>{
               if (isActive) {
                 return null ;
