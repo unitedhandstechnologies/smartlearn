@@ -43,7 +43,7 @@ const quizPreview = ({
             }}
         >
             <Typography>
-                Quiz : {"Quiz Name Goes Herehdxfhxch"}
+                Quiz : {quizDataDetails[0].quizName}
             </Typography>
         </Grid>
 
@@ -66,8 +66,10 @@ const quizPreview = ({
             }}
         
         >
-            <Grid xs={12} sm={6}
+            <Grid xs={12} sm={6}>
+                <Grid
                 sx = {{
+                    marginRight: '20px',
                     borderRadius: '8px',
                     padding : '8px 16px',
                     //marginRight : '16px',
@@ -81,6 +83,7 @@ const quizPreview = ({
                 <Typography>
                     1.{quizDataDetails[index].option_1}
                 </Typography>
+                </Grid>
             </Grid>
             <Grid xs={12} sm={6}
              sx = {{
@@ -97,14 +100,16 @@ const quizPreview = ({
                     2.{quizDataDetails[index].option_2}
                 </Typography>
             </Grid>
-            <Grid xs={12} sm={6}
+            <Grid xs={12} sm={6}>
+                <Grid
              sx = {{
+                marginRight: '20px',
                 borderRadius: '8px',
                 padding : '8px 16px',
                 backgroundColor : theme.Colors.whiteLightGrey,
                 display : 'flex',
                 alignItems : "center" ,  
-                marginTop : '16px',
+                marginTop : '20px',
                 border : parseInt(item.answer)=== 3? '1px solid ' : '' || parseInt(item.userAnswer)=== 3? '1px solid ' : '',
                 borderColor : parseInt(item.answer)=== 3 ? theme.Colors.darkGreen : '' || parseInt(item.userAnswer)=== 3? theme.Colors.redPrimary : '',      
             }}
@@ -113,6 +118,8 @@ const quizPreview = ({
                     3.{quizDataDetails[index].option_3}
                 </Typography>
             </Grid>
+            </Grid>
+
             <Grid xs={12} sm={6}
              sx = {{
                 borderRadius: '8px',
@@ -120,7 +127,7 @@ const quizPreview = ({
                 backgroundColor : theme.Colors.whiteLightGrey,
                 display : 'flex',
                 alignItems : "center" ,
-                marginTop : '16px', 
+                marginTop : '20px', 
                 border : parseInt(item.answer)=== 4? '1px solid ' : '' || parseInt(item.userAnswer)=== 4? '1px solid ' : '',
                 borderColor : parseInt(item.answer)=== 4 ? theme.Colors.darkGreen : '' || parseInt(item.userAnswer)=== 4? theme.Colors.redPrimary : '',      
             }}

@@ -163,7 +163,7 @@ const CourseMainPage = (
           />
         </Grid>
         </>
-        ): quizData.length ? <Quiz  /> : "No Test topic Available" }
+        ): quizData.length ? <Quiz courseData={courseData} /> : "No Test topic Available" }
       </Grid>
     </Grid>
   );

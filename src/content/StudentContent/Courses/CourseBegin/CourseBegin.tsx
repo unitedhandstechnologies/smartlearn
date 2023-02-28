@@ -56,7 +56,7 @@ const CourseBegin = () => {
   const fetchData = useCallback(async () => {
     console.log("state", state);
     //let id = state?.course_id;
-    let id = 6;
+    let id = 7;
     try {
       const response: any = await Promise.all([
         API_SERVICES.courseManagementService.getById(id),

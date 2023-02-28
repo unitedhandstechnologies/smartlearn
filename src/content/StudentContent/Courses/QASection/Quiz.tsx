@@ -15,10 +15,10 @@ import QuestionAndAnswer from './QuestionAndAnswer';
 import QuizResult from './QuizResult';
 
 type Props = {
-  //quizData: any[];
+  courseData: any;
 }
 
-const Quiz = (props:Props) => {
+const Quiz = ({courseData}:Props) => {
 
   const theme = useTheme();
   const [ questionToDisplayIndex , setQuestionToDisplayIndex ] = useState(0);
@@ -28,8 +28,8 @@ const Quiz = (props:Props) => {
   const { i18n } = useTranslation();
 
 const fetchData = useCallback(async() => {
-  let id = 6;
-  let courseName = "Name of the Course";
+  let id = courseData.course_language[0].course_id;
+  let courseName = courseData.course_language[0].course_name;
   try {      
     const response: any = await Promise.all([
       API_SERVICES.quizService.getAllQuiz(LANGUAGE_ID.english,id)    

@@ -91,10 +91,12 @@ const QuestionAndAnswer = ({
             }}
         
         >
-            <Grid xs={12} sm={6}
+            <Grid xs={12} sm={6}>
+                <Grid 
                 
                 onClick = {()=>handleClickOption(1)}
                 sx = {{
+                    marginRight: '20px',
                     borderRadius: '8px',
                     padding : '8px 16px',
                     //marginRight : '16px',
@@ -105,9 +107,12 @@ const QuestionAndAnswer = ({
                     borderColor : optionClicked===1 ? theme.Colors.primary : '',   
                 }}
             >
+                
                 <Typography>
                     1.{quizDataDetails[questionToDisplayIndex].option_1}
                 </Typography>
+           
+            </Grid>
             </Grid>
             <Grid xs={12} sm={6}
             onClick = {()=>handleClickOption(2)}
@@ -125,15 +130,17 @@ const QuestionAndAnswer = ({
                     2.{quizDataDetails[questionToDisplayIndex].option_2}
                 </Typography>
             </Grid>
-            <Grid xs={12} sm={6}
+            <Grid xs={12} sm={6}>
+                <Grid
             onClick = {()=>handleClickOption(3)}
              sx = {{
+                marginRight: '20px',
                 borderRadius: '8px',
                 padding : '8px 16px',
                 backgroundColor : theme.Colors.whiteLightGrey,
                 display : 'flex',
                 alignItems : "center" ,  
-                marginTop : '16px',
+                marginTop : '20px',
                 border : optionClicked===3 ? '1px solid ' : '',
                 borderColor : optionClicked===3 ? theme.Colors.primary : '', 
             }}
@@ -141,6 +148,7 @@ const QuestionAndAnswer = ({
                 <Typography>
                     3.{quizDataDetails[questionToDisplayIndex].option_3}
                 </Typography>
+            </Grid>
             </Grid>
             <Grid xs={12} sm={6}
             onClick = {()=>handleClickOption(4)}
@@ -150,7 +158,7 @@ const QuestionAndAnswer = ({
                 backgroundColor : theme.Colors.whiteLightGrey,
                 display : 'flex',
                 alignItems : "center" ,
-                marginTop : '16px', 
+                marginTop : '20px', 
                 border : optionClicked===4 ? '1px solid ' : '',
                 borderColor : optionClicked===4 ? theme.Colors.primary : '',            
             }}
