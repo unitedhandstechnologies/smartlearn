@@ -155,11 +155,11 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ContinueLearning = () => {
+const ContinueLearning = ({ enrollCourse }) => {
   const theme = useTheme();
   const classes = useStyles();
 
-  const onClickCardImage = (rowData) => {}
+  const onClickCardImage = (rowData) => {};
 
   return (
     <Grid>
@@ -180,8 +180,8 @@ const ContinueLearning = () => {
           }
         }}
       >
-        {courses.length
-          ? courses.slice(0, 6).map((item, index) => {
+        {enrollCourse.length
+          ? enrollCourse.slice(0, 6).map((item, index) => {
               return (
                 <Grid
                   key={index}
@@ -195,7 +195,7 @@ const ContinueLearning = () => {
                     key={index}
                     imgUrl={item.image_url ? item.image_url : BasicStockIcon}
                     rightText={item.course_type}
-                    leftText={item.cost_type}
+                    //leftText={item.cost_type}
                     heading={item.category_name}
                     title={item.course_name}
                     subText={item.course_description}
@@ -210,10 +210,11 @@ const ContinueLearning = () => {
                     date={`${item.starting_date} - ${item.ending_date}`}
                     zoomLink={item.meeting_link}
                     locationName={item.meeting_location}
-                    subCategory={item.sub_category_name}
+                    //subCategory={item.sub_category_name}
                     courseType={item.course_type}
                     prize={item.amount}
                     onClickCardImage={() => onClickCardImage(item)}
+                    startLearning={false}
                   />
                 </Grid>
               );

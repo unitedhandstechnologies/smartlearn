@@ -1,5 +1,5 @@
 import { Avatar, makeStyles, useTheme } from '@material-ui/core';
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { BlueLine } from 'src/Assets';
 import { Heading, MuiTabComponent } from 'src/components';
 import MyLibrary from './MyLibrary';
@@ -7,6 +7,9 @@ import PaymentHistory from './PaymentHistory';
 import ProfileDetails from './ProfileDetails';
 import { Grid } from '@mui/material';
 import useStudentInfo from 'src/hooks/useStudentInfo';
+import toast from 'react-hot-toast';
+import { HTTP_STATUSES } from 'src/Config/constant';
+import { API_SERVICES } from 'src/Services';
 
 const useStyles = makeStyles((theme) => ({
   gridStyle: {
@@ -28,6 +31,9 @@ const Profile = () => {
   const classes = useStyles();
   const theme = useTheme();
   const { studentDetails, updateStudentInfo } = useStudentInfo();
+  const [enrollCourse, setEnrollCourse] = useState<any>([]);
+
+  console.log(enrollCourse, 'test enrollCourse');
   const tabContent = [
     {
       label: 'Profile',
@@ -37,7 +43,7 @@ const Profile = () => {
     {
       label: 'My library',
       id: 2,
-      component: () => <MyLibrary />
+      component: () => <MyLibrary enrollCourse={enrollCourse} />
     },
     {
       label: 'My certificates',
@@ -64,9 +70,29 @@ const Profile = () => {
     );
   };
 
-  const renderHeader = () => {
-    console.log('hi');
+  const fetchData = async () => {
+    try {
+      const response: any =
+        await API_SERVICES.enrollmentManagementService.getById(
+          studentDetails?.id,
+          {
+            failureMessage: 'No course enrolled with the Student'
+          }
+        );
 
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        setEnrollCourse(response?.data?.enrolledCourse);
+      }
+    } catch (err) {
+      toast.error(err?.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const renderHeader = () => {
     return (
       <>
         <Grid

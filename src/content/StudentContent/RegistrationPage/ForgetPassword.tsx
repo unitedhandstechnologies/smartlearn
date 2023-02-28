@@ -42,6 +42,7 @@ const ForgetPassword = () => {
       sx={{
         display: 'flex',
         justifyContent: 'center',
+        paddingLeft: 30,
         [theme.breakpoints.down('sm')]: {
           flexDirection: 'column',
           padding: 5

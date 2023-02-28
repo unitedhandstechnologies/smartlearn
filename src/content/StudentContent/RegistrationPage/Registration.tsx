@@ -14,7 +14,7 @@ import { ButtonComp, TextInputComponent } from 'src/components';
 // import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 // import IconButton from '@mui/material/IconButton';
 
-import { useNavigate } from 'react-router';
+import { useNavigate, useLocation } from 'react-router';
 import { API_SERVICES } from 'src/Services';
 import {
   DETECT_LANGUAGE,
@@ -34,6 +34,9 @@ const Registration = () => {
   const [error, setError] = useState(false);
   const [values, setValues] = useState('');
   const navigateTo = useNavigate();
+
+  const [userType, setUserType] = useState(USER_TYPE_ID.student);
+
   // const onClickEyeIcon = () => {
   //   setShowPassword(!showPassword);
   // };
@@ -47,7 +50,7 @@ const Registration = () => {
     password: '',
     image_url: '',
     confirmPassword: '',
-    user_type: USER_TYPE_ID.student,
+    user_type: userType,
     social_information_url: '',
     permissions: [],
     code: '+91' || '',
@@ -103,13 +106,24 @@ const Registration = () => {
       }
 
       let userData = { ...STUDENT_INITIAL_DATA, ...edit.edits };
-      const response: any = await API_SERVICES.adminUserService.create({
-        data: userData,
-        successMessage: 'New Student Created successfully!',
-        failureMessage: 'Error: Student Already Exist'
-      });
-      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        navigateTo('/home/user-login', { replace: true });
+      if (userType === USER_TYPE_ID.student) {
+        const response: any = await API_SERVICES.adminUserService.create({
+          data: userData,
+          successMessage: 'New Student Created successfully!',
+          failureMessage: 'Error: Student Already Exist'
+        });
+        if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+          navigateTo('/home/user-login', { replace: true });
+        }
+      } else if (userType === USER_TYPE_ID.mentors) {
+        const response: any = await API_SERVICES.adminUserService.create({
+          data: userData,
+          successMessage: 'New Instructor Created successfully!',
+          failureMessage: 'Error: Instructor Already Exist'
+        });
+        if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+          navigateTo('/admin/login', { replace: true });
+        }
       }
     } catch (e) {
       console.log(e, '---login err-----');
@@ -145,9 +159,11 @@ const Registration = () => {
               margin: theme.spacing(2, 0)
             }}
           >
-            Sign up and start learning
+            {userType === USER_TYPE_ID.student
+              ? 'Sign up and start learning'
+              : 'Instructor Signup '}
           </Typography>
-          {/* <Grid container item style={{ justifyContent: 'end' }}>
+          <Grid container item style={{ justifyContent: 'end' }}>
             <ButtonComp
               buttonText="Instructor SignUp"
               backgroundColor="#3C78F0"
@@ -157,11 +173,9 @@ const Registration = () => {
               btnWidth={'fit-content'}
               height="40px"
               buttonFontFamily="Switzer"
-              onClickButton={() =>
-                navigateTo('/admin/login', { replace: true })
-              }
+              onClickButton={() => setUserType(USER_TYPE_ID.mentors)}
             />
-          </Grid> */}
+          </Grid>
           <Typography
             style={{
               fontSize: 18,

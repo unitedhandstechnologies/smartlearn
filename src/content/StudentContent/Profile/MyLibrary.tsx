@@ -159,7 +159,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FILTER_CHIPS = ['Active', 'Completed', 'Whishlist'];
-const MyLibrary = () => {
+const MyLibrary = ({ enrollCourse }) => {
   const theme = useTheme();
   const classes = useStyles();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
@@ -167,14 +167,13 @@ const MyLibrary = () => {
     setChipValue(selectedChipItem);
   };
 
-  const onClickCardImage = (rowData) => {
-
-  }
+  const onClickCardImage = (rowData) => {};
 
   return (
     <Grid container direction="column" rowSpacing={4}>
       <Grid item style={{ padding: '50px 0px 30px 0px' }}>
-        <Grid item
+        <Grid
+          item
           style={{
             padding: '0px 0px 20px 0px',
             [theme.breakpoints.down('xs')]: {
@@ -213,8 +212,8 @@ const MyLibrary = () => {
           }
         }}
       >
-        {courses.length
-          ? courses.slice(0, 6).map((item, index) => {
+        {enrollCourse.length
+          ? enrollCourse.slice(0, 6).map((item, index) => {
               return (
                 <Grid
                   key={index}
@@ -228,7 +227,7 @@ const MyLibrary = () => {
                     key={index}
                     imgUrl={item.image_url ? item.image_url : BasicStockIcon}
                     rightText={item.course_type}
-                    leftText={item.cost_type}
+                    //leftText={item.cost_type}
                     heading={item.category_name}
                     title={item.course_name}
                     subText={item.course_description}
@@ -243,17 +242,18 @@ const MyLibrary = () => {
                     date={`${item.starting_date} - ${item.ending_date}`}
                     zoomLink={item.meeting_link}
                     locationName={item.meeting_location}
-                    subCategory={item.sub_category_name}
+                    //subCategory={item.sub_category_name}
                     courseType={item.course_type}
                     prize={item.amount}
                     onClickCardImage={() => onClickCardImage(item)}
+                    startLearning={false}
                   />
                 </Grid>
               );
             })
           : null}
       </Grid>
-      <ContinueLearning />
+      <ContinueLearning enrollCourse={enrollCourse} />
       {/* <CompletedCourse />
       <WishListCourse /> */}
     </Grid>

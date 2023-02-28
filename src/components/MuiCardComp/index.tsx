@@ -86,6 +86,7 @@ type Props = {
   onClickCardImage?: (val: any) => void;
   prize?: any;
   courseLevelId?: any;
+  startLearning?: boolean;
 };
 const MuiCardComp = ({
   imgUrl,
@@ -108,7 +109,8 @@ const MuiCardComp = ({
   progressValue,
   prize,
   courseLevelId,
-  onClickCardImage
+  onClickCardImage,
+  startLearning = true
 }: Props) => {
   const theme = useTheme();
   return (
@@ -192,11 +194,7 @@ const MuiCardComp = ({
               padding: '8px 0px 16px 0px'
             }}
           >
-            <LinesEllipsis
-              text={subText}
-              maxLine={2}
-              ellipsis="....."
-            />
+            <LinesEllipsis text={subText} maxLine={2} ellipsis="....." />
           </Typography>
         ) : null}
         {date ? (
@@ -268,64 +266,67 @@ const MuiCardComp = ({
           ) : null}
         </Grid>
       </CardActions>
-      <Grid
-        container
-        style={{
-          padding: '20px 0px',
-          display: 'flex',
-          alignContent: 'center',
-          gap: 10
-        }}
-      >
-        <Grid item style={{ marginRight: 10 }}>
-          {leftText === 'PAID' ? (
-            <ListItemCell
-              isSymbol
-              title={prize}
-              subTitle={'including GST'}
-              titleStyle={{
-                fontSize: theme.MetricsSizes.regular_x,
-                fontWeight: theme.fontWeight.bold
-              }}
-            />
-          ) : (
-            <h1 style={{ color: '#3cc878', textAlign: 'center' }}>Free</h1>
-          )}
-        </Grid>
-        <Grid item xs>
-          <ButtonComp
-            height={40}
-            buttonText="Start learning"
-            btnWidth={'100%'}
-            backgroundColor={theme.Colors.secondary}
-            buttonFontWeight={theme.fontWeight.regular}
-            buttonFontSize={16}
-            btnBorderRadius={'4px'}
-          />
-        </Grid>
+      {startLearning ? (
         <Grid
-          item
+          container
           style={{
-            borderRadius: '6px',
-            background: '#F2F4F7',
-            marginLeft: 10
+            padding: '20px 0px',
+            display: 'flex',
+            alignContent: 'center',
+            gap: 10
           }}
         >
-          <IconButton
+          <Grid item style={{ marginRight: 10 }}>
+            {leftText === 'PAID' ? (
+              <ListItemCell
+                isSymbol
+                title={prize}
+                subTitle={'including GST'}
+                titleStyle={{
+                  fontSize: theme.MetricsSizes.regular_x,
+                  fontWeight: theme.fontWeight.bold
+                }}
+              />
+            ) : (
+              <h1 style={{ color: '#3cc878', textAlign: 'center' }}>Free</h1>
+            )}
+          </Grid>
+          <Grid item xs>
+            <ButtonComp
+              height={40}
+              buttonText="Start learning"
+              btnWidth={'100%'}
+              backgroundColor={theme.Colors.secondary}
+              buttonFontWeight={theme.fontWeight.regular}
+              buttonFontSize={16}
+              btnBorderRadius={'4px'}
+            />
+          </Grid>
+          <Grid
+            item
             style={{
-              // color: '#3C78F0',
-              color: theme.Colors.darkGrayishBlue,
-              background: 'transparent',
-              [theme.breakpoints.down('md')]: {
-                display: 'none'
-              }
+              borderRadius: '6px',
+              background: '#F2F4F7',
+              marginLeft: 10
             }}
-            disableRipple
           >
-            <FavoriteBorderIcon />
-          </IconButton>
+            <IconButton
+              style={{
+                // color: '#3C78F0',
+                color: theme.Colors.darkGrayishBlue,
+                background: 'transparent',
+                [theme.breakpoints.down('md')]: {
+                  display: 'none'
+                }
+              }}
+              disableRipple
+            >
+              <FavoriteBorderIcon />
+            </IconButton>
+          </Grid>
+          )
         </Grid>
-      </Grid>
+      ) : null}
       {renderCardActions ? renderCardActions() : null}
     </Card>
   );
