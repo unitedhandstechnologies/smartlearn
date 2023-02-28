@@ -188,7 +188,7 @@ function NavBar() {
                   buttonTextColor={theme.Colors.white}
                   btnBorderRadius={4}
                   buttonText={'Start learning for free'}
-                  onClickButton={() => {}}
+                  onClickButton={() => navigateTo('/home/courses')}
                 />
               </Box>
             </Box>
@@ -275,7 +275,7 @@ function NavBar() {
                 backgroundColor={'#3C78F0'}
                 buttonTextColor={theme.Colors.white}
                 buttonText={'Start learning for free'}
-                onClickButton={() => {}}
+                onClickButton={() => navigateTo('/home/courses')}
               />
             </ListItemButton>
             <ListItemButton>

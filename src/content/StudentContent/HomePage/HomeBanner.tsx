@@ -1,11 +1,13 @@
 import { Typography, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router';
 import { ArrowNext, HomePageRight, whiteLine } from 'src/Assets';
 import { ButtonComp } from 'src/components';
 
 const HomeBanner = () => {
   const theme = useTheme();
+  const navigateTo = useNavigate();
   return (
     <Grid
       sx={{
@@ -73,7 +75,7 @@ const HomeBanner = () => {
             btnBorderRadius={'4px'}
             buttonText={'Start learning for free'}
             iconImage={<img src={ArrowNext} style={{ marginLeft: '8px' }} />}
-            onClickButton={() => {}}
+            onClickButton={() => navigateTo('/home/courses')}
           />
         </Grid>
       </Grid>

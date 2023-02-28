@@ -32,9 +32,9 @@ const useStyles = makeStyles((theme) => {
       marginTop: 10,
       backgroundColor: 'white'
     },
-    accordionDetailsClassName:{
-      backgroundColor: "#FFFFFF",
-      border: "none"
+    accordionDetailsClassName: {
+      backgroundColor: '#FFFFFF',
+      border: 'none'
     },
     quizHeading: {
       fontWeight: theme.fontWeight.bold,
@@ -162,7 +162,11 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                           style={{ gap: 10 }}
                           alignItems="center"
                         >
-                          <img src={item.video_url ? VideoImg : PdfImg} width={"18px"} height={"18px"}/>
+                          <img
+                            src={item.video_url ? VideoImg : PdfImg}
+                            width={'18px'}
+                            height={'18px'}
+                          />
                           <Typography
                             variant="h5"
                             style={{
@@ -179,16 +183,16 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                             justifyContent="flex-end"
                             style={{ display: 'flex' }}
                           >
-                          <Typography
-                            variant="h5"
-                            style={{
-                              fontWeight: 400,
-                              fontSize: theme.MetricsSizes.regular,
-                              color: '#78828C'
-                            }}
-                          >
-                            {"36.55 min"}
-                          </Typography>
+                            <Typography
+                              variant="h5"
+                              style={{
+                                fontWeight: 400,
+                                fontSize: theme.MetricsSizes.regular,
+                                color: '#78828C'
+                              }}
+                            >
+                              {item.duration} min
+                            </Typography>
                           </Grid>
                         </Grid>
                       );
@@ -204,7 +208,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
   return (
     <Grid
       container
-      paddingRight={"13px"}
+      paddingRight={'13px'}
       // justifyContent={'space-between'}
       sx={{
         [theme.breakpoints.down('xs')]: {
@@ -256,7 +260,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
           <Heading headingText={'Learning Objectives'} {...headingProps} />
           {objectives.map((item, index) => {
             return (
-              <Grid key={index} container gap={1} alignItems={"center"}>
+              <Grid key={index} container gap={1} alignItems={'center'}>
                 <Grid item>
                   <FiberManualRecordIcon
                     fontSize="small"
@@ -270,20 +274,22 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
             );
           })}
         </Grid>
-        {courseDescription.course_type === COURSE_TYPE_NAME[6] && <Grid paddingTop={4}>
-          <Heading headingText={'Topics in this course'} {...headingProps} />
-          {courseDescription?.course_type === 'Recorded Course' && (
-            <Grid item xs={12} md={11.7}>
-              <MuiAccordionComp
-                accordionOuterContainerClassName={classes.accordionClassName}
-                config={getAccordionContents}
-                accordionDetailClassName={classes.accordionDetailsClassName}
-                bgColor={"#FFFFFF"}
-                iconColor={"#3C78F0"}
-              />
-            </Grid>
-          )}
-        </Grid>}
+        {courseDescription.course_type === COURSE_TYPE_NAME[6] && (
+          <Grid paddingTop={4}>
+            <Heading headingText={'Topics in this course'} {...headingProps} />
+            {courseDescription?.course_type === 'Recorded Course' && (
+              <Grid item xs={12} md={11.7}>
+                <MuiAccordionComp
+                  accordionOuterContainerClassName={classes.accordionClassName}
+                  config={getAccordionContents}
+                  accordionDetailClassName={classes.accordionDetailsClassName}
+                  bgColor={'#FFFFFF'}
+                  iconColor={'#3C78F0'}
+                />
+              </Grid>
+            )}
+          </Grid>
+        )}
       </Grid>
     </Grid>
   );

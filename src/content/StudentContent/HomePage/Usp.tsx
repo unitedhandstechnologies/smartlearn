@@ -4,6 +4,7 @@ import { Heading, ButtonComp } from '../../../components';
 import { LineBarIcon } from '../../../Assets/Images';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useNavigate } from 'react-router';
 const useStyles = makeStyles((theme) => ({
   button: {
     minWidth: 0,
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 const USPs = () => {
   const theme = useTheme();
   const classes = useStyles();
-
+  const navigateTo = useNavigate();
   return (
     <Grid>
       {/* <Heading
@@ -109,6 +110,7 @@ const USPs = () => {
                 btnWidth={'fit-content'}
                 height={'40px'}
                 classes={{ root: classes.button }}
+                onClickButton={() => navigateTo('/home/courses')}
               />
             </Grid>
           </Grid>
