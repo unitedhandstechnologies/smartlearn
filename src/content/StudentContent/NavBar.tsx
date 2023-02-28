@@ -93,7 +93,8 @@ function NavBar() {
               src={logo}
               style={{
                 height: 60,
-                width: 200
+                width: 200,
+                mixBlendMode: 'multiply'
               }}
             />
           </Box>
@@ -129,7 +130,8 @@ function NavBar() {
               src={logo}
               style={{
                 height: 60,
-                width: 200
+                width: 200,
+                mixBlendMode: 'multiply'
               }}
             />
           </Typography>
@@ -228,7 +230,8 @@ function NavBar() {
               src={logo}
               style={{
                 height: 60,
-                width: 200
+                width: 200,
+                mixBlendMode: 'multiply'
               }}
             />
           </Box>

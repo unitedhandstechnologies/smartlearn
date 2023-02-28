@@ -30,7 +30,8 @@ const useStyles: any = makeStyles((theme) => ({
   img: {
     marginTop: 20,
     height: 20,
-    width: 200
+    width: 200,
+    mixBlendMode: 'multiply'
   },
   textContainerStyle: {
     marginTop: theme.MetricsSizes.regular_xxx

@@ -14,7 +14,8 @@ function Logo({ onClick }) {
         style={{
           display: 'flex',
           height: '100%',
-          width: 'inherit'
+          width: 'inherit',
+          mixBlendMode: 'multiply'
         }}
         src={logo}
         onClick={onClick}
