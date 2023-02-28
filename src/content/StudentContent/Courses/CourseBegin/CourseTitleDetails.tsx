@@ -51,7 +51,8 @@ const CourseTitleDetails = ({
   //handleAutoPlay,
   setVideoToPlayIndex,
   setTestTopic,
-  videoDetails
+  videoDetails,
+  setIsReady
 })=> {
 
   console.log("lessonData dfg",lessonData)
@@ -184,7 +185,8 @@ const CourseTitleDetails = ({
                           onClick={()=>{
                             setTestTopic(false);
                             setVideoToPlay(item.video_url);
-                            setVideoToPlayIndex({sectionNumber:sectionNumber-1,lessonNumber : index})}}
+                            setVideoToPlayIndex({sectionNumber:sectionNumber-1,lessonNumber : index});
+                            setIsReady(false);}}
                         >
                           <Grid item display={'flex'} alignItems={'center'} justifyContent={'center'}>
                           <CircularProgressWithLabel 

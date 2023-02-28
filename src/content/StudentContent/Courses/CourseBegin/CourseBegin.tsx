@@ -46,7 +46,7 @@ const CourseBegin = () => {
   const [quizData, setQuizData] = useState<any[]>([]);
   const [testTopic, setTestTopic] = useState(false);
   const [ videoDetails , setVideoDetails] = useState<any[]>([]);
-  const [isReady, setIsReady] = React.useState(false);
+
   const [autoPlay, setAutoPlay] = useState(true);
   const { state }: any = useLocation();
   const [videoToPlayIndex, setVideoToPlayIndex] = useState({
@@ -105,8 +105,8 @@ const CourseBegin = () => {
                       )
                   );
        
-                  let tempTime = [0.25,0.50,0.75,0.95,0.00];
-                  let tempElapsedTime = [0.04, 0.06,0.07,0.50,0.00];
+                  let tempTime = [0.6,0.50,0.75,0.95,0.00];
+                  let tempElapsedTime = [0.07, 0.16,0.20,0.50,0.00];
                   let tempRemainingTime = [15.12,4.33,66.65,7,20.56] ;
                 if (sectionData1?.length) {
                   sectionData1.map((item, index) => {
@@ -123,7 +123,7 @@ const CourseBegin = () => {
                           videoUrl : item.video_url,
                           videoName : item.lesson_name,
                           videoDuration : item.duration,
-                          videoPlayedTime : tempTime[sectionNumber - 1],  
+                          videoPlayedFraction : tempTime[sectionNumber - 1],  
                           videoElapsedTime : tempElapsedTime  [sectionNumber - 1],               
                           videoPlayingTime : 0.0,
                           videoRemainingTime : tempRemainingTime[sectionNumber - 1]                        
@@ -175,8 +175,6 @@ const CourseBegin = () => {
         setTestTopic={setTestTopic}
         testTopic={testTopic}
         videoDetails={videoDetails}
-        setIsReady={setIsReady}
-        isReady={isReady}
       />
     );
   }

@@ -56,8 +56,6 @@ const CourseMainPage = (
         testTopic,
         setTestTopic,
         videoDetails,
-        isReady,
-        setIsReady
     }
 ) => {
     
@@ -65,6 +63,7 @@ const CourseMainPage = (
     const theme = useTheme();
     const videoPlayerRef = useRef();
     const [playerRef, setPlayerRef] = useState<any>();
+    const [isReady, setIsReady] = React.useState(false);
 
 
    
@@ -94,37 +93,22 @@ const CourseMainPage = (
     };
 
     const handleVideoProgress = (event) => {
-      console.log("event", event);
       //videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].playingTime = event.played;
       //setPlayingTime(event.played);
     };
 
     const handleOnReady =useCallback((player) => {
-
-      
-        const timeToStart = videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].videoElapsedTime;
-        console.log("playerRef",playerRef);
-        player.seekTo(timeToStart, 'minutes');
-        setPlayerRef(player);
-        setIsReady(true);
-    
-
-     /*  //console.log("event", player);
-      console.log("playerRef",playerRef) ;
-      let tempPR = playerRef;
-      tempPR.seekTo(videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].videoElapsedTime);
-      setPlayerRef(tempPR);
-      console.log("Aftyer Changed Ref",playerRef)
-      //videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].playingTime = event.played;
-      //setPlayingTime(event.played); */
+      if (!isReady){    
+      player.seekTo(videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].videoPlayedFraction,"fraction");
+      setIsReady(true);
+      }
     },[isReady]);
   
   
 
    useEffect(() => {  
-    
-    //setPlayerRef(seekTo())       
-    }, [videoToPlay]); 
+   
+    }, []); 
 
   return (
     <Grid container className={classes.mainContainer}>
@@ -139,6 +123,7 @@ const CourseMainPage = (
           quizData={quizData}
           setTestTopic = {setTestTopic}
           videoDetails={videoDetails}
+          setIsReady={setIsReady}
           />
       </Grid>
       <Grid item xs={12} sm={9} >
@@ -158,7 +143,7 @@ const CourseMainPage = (
             width={'100%'}
             height={'100%'}
             onEnded={handlePlayNext} 
-            //onReady={handleOnReady}           
+            onReady={handleOnReady}           
             //onProgress={handleVideoProgress}
           />
         </Grid>
