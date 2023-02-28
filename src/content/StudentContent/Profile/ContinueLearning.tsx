@@ -207,7 +207,7 @@ const ContinueLearning = ({ enrollCourse }) => {
                         ? 'Hindi'
                         : 'Gjarati'
                     }
-                    date={`${item.starting_date} - ${item.ending_date}`}
+                    nextclass={item.starting_date}
                     zoomLink={item.meeting_link}
                     locationName={item.meeting_location}
                     //subCategory={item.sub_category_name}

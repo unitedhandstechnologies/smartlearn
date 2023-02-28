@@ -3,6 +3,12 @@ import { Grid, Typography, Divider, Rating, useTheme } from '@mui/material';
 import { ButtonComp, TextInputComponent } from 'src/components';
 import ReUseableDialogBox from './RatingDialog';
 import { RectangleBox } from 'src/Assets';
+import useStudentInfo from 'src/hooks/useStudentInfo';
+import { API_SERVICES } from 'src/Services';
+import { HTTP_STATUSES } from 'src/Config/constant';
+import { useEdit } from 'src/hooks/useEdit';
+import toast from 'react-hot-toast';
+import { capitalizeFirstLetter } from 'src/Utils';
 
 const reviewQuestions = [
   '1. How was your experience with the course?',
@@ -17,22 +23,61 @@ const typoGraphyStyle = {
   paddingTop: 20
 };
 
-const RateYourExperience = () => {
+const RateYourExperience = ({ courseDetails }) => {
   const theme = useTheme();
   const [open, setOpen] = useState([]);
+  const { studentDetails, updateStudentInfo } = useStudentInfo();
+  const [courseRating, setCourseRating] = useState<number | null>();
+  const [mentorRating, setMentorRating] = useState<number | null>();
 
+  const [error, setError] = useState(false);
+  const data = {
+    course_rating: courseRating,
+    mentor_rating: mentorRating,
+    command: ''
+  };
+  const RequiredFields = ['command'];
+  const edit = useEdit(data);
   const handleClickOpen = () => {
     setOpen([true]);
   };
 
   const handleClose = () => {
     setOpen([false]);
+    setCourseRating(0);
+    setMentorRating(0);
+    edit.update({
+      command: ''
+    });
   };
 
-  const handleRatingActionBtnClick = () => {
-    setOpen([true, true]);
+  const handleRatingActionBtnClick = async () => {
+    try {
+      if (!edit.allFilled(...RequiredFields)) {
+        setError(true);
+        return toast.error('Please fill all the fields');
+      }
+      let userData = { ...data, ...edit.edits };
+      const response: any = await API_SERVICES.homeUserService.create(
+        studentDetails?.id,
+        courseDetails[0]?.course_id,
+        {
+          data: userData,
+          successMessage: 'Ratings submitted successfully!',
+          failureMessage: 'Error:Already Exist Value'
+        }
+      );
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        setOpen([true, true]);
+        setCourseRating(0);
+        setMentorRating(0);
+      }
+    } catch (e) {
+      console.log(e, '---login err-----');
+    } finally {
+      // setLoading(false);
+    }
   };
-
   const ActionDialogTitle = () => {
     return (
       <Typography
@@ -125,17 +170,48 @@ const RateYourExperience = () => {
   const RatingDialogContent = () => {
     return (
       <>
-        {reviewQuestions.map((question) => {
+        {/* {reviewQuestions.map((question) => {
           return (
             <>
               <Typography style={typoGraphyStyle}>{question}</Typography>
               <Grid style={{ padding: 10 }}>
-                <Rating sx={{ color: '#3C78F0' }} size="large" />
+                <Rating
+                  sx={{ color: '#3C78F0' }}
+                  size="large"
+                  value={value}
+                  onChange={(newValue) => handleChange}
+                />
               </Grid>
               <Divider sx={{ borderStyle: 'dashed', borderSpacing: 1 }} />
             </>
           );
-        })}
+        })} */}
+        <Typography style={typoGraphyStyle}>
+          1. How was your experience with the course?
+        </Typography>
+        <Grid style={{ padding: 10 }}>
+          <Rating
+            sx={{ color: '#3C78F0' }}
+            size="large"
+            value={courseRating}
+            onChange={(event, newValue) => {
+              setCourseRating(newValue);
+            }}
+          />
+        </Grid>
+        <Typography style={typoGraphyStyle}>
+          2. How was your experience with your instructor?
+        </Typography>
+        <Grid style={{ padding: 10 }}>
+          <Rating
+            sx={{ color: '#3C78F0' }}
+            size="large"
+            value={mentorRating}
+            onChange={(event, newValue) => {
+              setMentorRating(newValue);
+            }}
+          />
+        </Grid>
         <Typography style={typoGraphyStyle}>
           3. How can we improve to provide you a better experience?
         </Typography>
@@ -145,6 +221,15 @@ const RateYourExperience = () => {
             borderColor={'#B4BEC8'}
             inputWidth={'100%'}
             inputHeight={'80px'}
+            value={edit.getValue('command')}
+            onChange={(e) =>
+              edit.update({
+                command: capitalizeFirstLetter(e.target.value)
+              })
+            }
+            //onChange={(e) => setCommand(e.target.value)}
+
+            autoFocus
           />
         </Grid>
       </>

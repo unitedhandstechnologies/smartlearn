@@ -35,6 +35,7 @@ export type UHIconTextProps = GridProps & {
   renderComponent?: () => JSX.Element;
   textContentStyle?: React.CSSProperties;
   isCrown?: boolean;
+  nextvalue?: string;
 };
 
 const IconTextComp = (props: UHIconTextProps) => {
@@ -46,6 +47,7 @@ const IconTextComp = (props: UHIconTextProps) => {
     textContentStyle,
     isBlur = false,
     isCrown = false,
+    nextvalue,
     ...rest
   } = props;
   const classes = useStyles();
@@ -69,10 +71,21 @@ const IconTextComp = (props: UHIconTextProps) => {
             variant={isBlur ? 'subtitle2' : 'h5'}
             className={isBlur ? classes.blurText : classes.clearText}
             style={{
-              color: valueColor || "primary"
+              color: valueColor || 'primary'
             }}
           >
             {value}
+          </Typography>
+        ) : null}
+        {nextvalue ? (
+          <Typography
+            variant={isBlur ? 'subtitle2' : 'h5'}
+            className={isBlur ? classes.blurText : classes.clearText}
+            style={{
+              color: valueColor || 'primary'
+            }}
+          >
+            Next class: {nextvalue}
           </Typography>
         ) : null}
       </Grid>

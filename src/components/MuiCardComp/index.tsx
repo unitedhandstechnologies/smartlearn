@@ -87,6 +87,7 @@ type Props = {
   prize?: any;
   courseLevelId?: any;
   startLearning?: boolean;
+  nextclass?: string;
 };
 const MuiCardComp = ({
   imgUrl,
@@ -110,7 +111,8 @@ const MuiCardComp = ({
   prize,
   courseLevelId,
   onClickCardImage,
-  startLearning = true
+  startLearning = true,
+  nextclass
 }: Props) => {
   const theme = useTheme();
   return (
@@ -200,6 +202,11 @@ const MuiCardComp = ({
         {date ? (
           <Grid style={{ padding: '10px 0px' }}>
             <IconTextComp icon={DateSvg} value={date} />
+          </Grid>
+        ) : null}
+        {nextclass ? (
+          <Grid style={{ padding: '10px 0px' }}>
+            <IconTextComp icon={DateSvg} nextvalue={nextclass} />
           </Grid>
         ) : null}
         {zoomLink ? (

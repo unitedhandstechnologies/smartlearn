@@ -24,9 +24,8 @@ import Mentors from '../HomePage/Mentors';
 import Reviews from '../HomePage/Reviews';
 import StartYourLearningBanner from '../HomePage/StartYourLearningBanner';
 import FAQs from '../HomePage/FAQs';
-import Rateyourcourse from './Rateyourcourse';
-import Thankyou from './Thankyou';
 import RateYourExperience from '../HomePage/RateYourExperience/ExperienceRate';
+import useStudentInfo from 'src/hooks/useStudentInfo';
 
 const ProfileHome = () => {
   const theme = useTheme();
@@ -36,6 +35,8 @@ const ProfileHome = () => {
   const [faqDetails, setFaqDetails] = useState([]);
   const [ratingData, setRatingData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const { studentDetails, updateStudentInfo } = useStudentInfo();
+  const [enrollCourse, setEnrollCourse] = useState<any>([]);
 
   // const { searchValue } = useSearchVal();
   // const debValue = useDebounce(searchValue, 2000)
@@ -56,7 +57,10 @@ const ProfileHome = () => {
         ),
         API_SERVICES.homeUserService.getAll(),
         API_SERVICES.pageManagementService.getAllFaq(LANGUAGE_ID.english),
-        API_SERVICES.homeUserService.getAllRatings()
+        API_SERVICES.homeUserService.getAllRatings(),
+        API_SERVICES.enrollmentManagementService.getById(studentDetails?.id, {
+          failureMessage: 'No course enrolled with the Student'
+        })
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.courses?.length) {
@@ -81,6 +85,11 @@ const ProfileHome = () => {
           setRatingData(response[3]?.data?.ratings);
         }
       }
+      if (response[4]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (response[4]?.data?.enrolledCourse?.length) {
+          setEnrollCourse(response[4]?.data?.enrolledCourse);
+        }
+      }
     } catch (err) {
       toast.error(err?.message);
     } finally {
@@ -96,76 +105,8 @@ const ProfileHome = () => {
   } else {
     return (
       <Grid container sx={{ position: 'relative', padding: 4 }}>
-        {/* <Grid
-          container
-          xs={12}
-          sx={{
-            padding: theme.spacing(0, 2),
-            background: 'white',
-            border: '1px solid #3C78F0',
-            borderRadius: '5px',
-            position: 'relative',
-            overflow: 'hidden',
-            [theme.breakpoints.down('sm')]: {
-              padding: theme.spacing(2, 2)
-            }
-          }}
-        >
-          <Grid
-            item
-            container
-            xs={12}
-            sm
-            direction="column"
-            justifyContent="center"
-            alignItems="flex-start"
-            sx={{ zIndex: 1 }}
-          >
-            <Typography
-              sx={{
-                color: '#3C414B',
-                fontSize: 24,
-                fontWeight: 500,
-                fontFamily: 'IBM Plex Serif',
-                padding: 2
-              }}
-            >
-              Rate the experience of the course you just completed
-            </Typography>
+        <RateYourExperience courseDetails={enrollCourse} />
 
-            <Typography
-              sx={{
-                color: '#3C78F0',
-                fontSize: 18,
-                fontWeight: 400,
-                fontFamily: 'Switzer',
-                padding: 2
-              }}
-            >
-              Basics of stock market investing
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            sm
-            container
-            alignItems="center"
-            justifyContent="flex-end"
-            sx={{
-              [theme.breakpoints.down('xs')]: {
-                justifyContent: 'center'
-              }
-            }}
-          >
-            <ButtonComp
-              buttonText="Rate your experience"
-              style={{ zIndex: 1 }}
-              onClick={handleBellClick}
-            />
-          </Grid>
-        </Grid> */}
-        <RateYourExperience />
         <Grid container direction="column" paddingTop={4}>
           <CourseBanner
             course={'Sometitle goes here'}
@@ -181,16 +122,16 @@ const ProfileHome = () => {
             padding: theme.spacing(7, 7)
           }}
         >
-          <CatchFrom courseDetails={courseDetails} />
+          <CatchFrom courseDetails={enrollCourse} />
         </Grid>
         <Grid
           container
           direction="column"
           sx={{
-            padding: theme.spacing(7, 7)
+            padding: theme.spacing(5, 5)
           }}
         >
-          <YourUpComingSession courseDetails={courseDetails} />
+          <YourUpComingSession courseDetails={enrollCourse} />
         </Grid>
         <Grid
           container

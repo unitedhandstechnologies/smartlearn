@@ -169,37 +169,37 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
   const navigateTo = useNavigate();
 
-  const handleChangeChipValue = (selectedChipItem: string[]) => {
-    setChipValue(selectedChipItem);
-  };
+  // const handleChangeChipValue = (selectedChipItem: string[]) => {
+  //   setChipValue(selectedChipItem);
+  // };
 
-  const getCourses: any[] = useMemo(() => {
-    const courses = [...courseDetails];
-    if (chipValue[0] === FILTER_CHIPS[0]) {
-      return courses;
-    } else if (chipValue[0] === FILTER_CHIPS[1]) {
-      const workShop = courseDetails.filter(
-        (item) => item.course_type === COURSE_TYPE_NAME[4]
-      );
-      return workShop;
-    } else if (chipValue[0] === FILTER_CHIPS[2]) {
-      const webinarSeminar = courseDetails.filter(
-        (item) =>
-          item.course_type === COURSE_TYPE_NAME[1] ||
-          item.course_type === COURSE_TYPE_NAME[3]
-      );
-      return webinarSeminar;
-    }
-  }, [chipValue, courseDetails]);
+  // const getCourses: any[] = useMemo(() => {
+  //   const courses = [...courseDetails];
+  //   if (chipValue[0] === FILTER_CHIPS[0]) {
+  //     return courses;
+  //   } else if (chipValue[0] === FILTER_CHIPS[1]) {
+  //     const workShop = courseDetails.filter(
+  //       (item) => item.course_type === COURSE_TYPE_NAME[4]
+  //     );
+  //     return workShop;
+  //   } else if (chipValue[0] === FILTER_CHIPS[2]) {
+  //     const webinarSeminar = courseDetails.filter(
+  //       (item) =>
+  //         item.course_type === COURSE_TYPE_NAME[1] ||
+  //         item.course_type === COURSE_TYPE_NAME[3]
+  //     );
+  //     return webinarSeminar;
+  //   }
+  // }, [chipValue, courseDetails]);
 
-  const onClickCardImage = (rowData) => {
-    if (rowData.course_type === COURSE_TYPE_NAME[6]) {
-      navigateTo('/home/pre-recordedCourse', {
-        state: { formData: { ...rowData } },
-        replace: true
-      });
-    }
-  };
+  // const onClickCardImage = (rowData) => {
+  //   if (rowData.course_type === COURSE_TYPE_NAME[6]) {
+  //     navigateTo('/home/pre-recordedCourse', {
+  //       state: { formData: { ...rowData } },
+  //       replace: true
+  //     });
+  //   }
+  // };
 
   return (
     <Grid container direction="column" rowSpacing={3}>
@@ -243,8 +243,8 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
           }
         }}
       >
-        {getCourses.length
-          ? getCourses.slice(0, 6).map((item, index) => {
+        {courseDetails.length
+          ? courseDetails.slice(0, 6).map((item, index) => {
               return (
                 <Grid
                   key={index}
@@ -270,13 +270,14 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
                         ? 'Hindi'
                         : 'Gjarati'
                     }
-                    date={`${item.starting_date} - ${item.ending_date}`}
+                    nextclass={item.starting_date}
                     zoomLink={item.meeting_link}
                     locationName={item.meeting_location}
-                    subCategory={item.sub_category_name}
+                    //subCategory={item.sub_category_name}
                     courseType={item.course_type}
                     prize={item.amount}
-                    onClickCardImage={() => onClickCardImage(item)}
+                    //onClickCardImage={() => onClickCardImage(item)}
+                    startLearning={false}
                   />
                 </Grid>
               );
