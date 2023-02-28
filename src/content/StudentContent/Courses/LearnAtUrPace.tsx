@@ -7,10 +7,15 @@ import {
   IconButton
 } from '@mui/material';
 import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowNext,
+  BarChartFillIcon,
   BarIcon,
   BasicStockIcon,
+  BeginnerIcon,
+  IntermediateIcon,
+  Language,
   LineBarIcon,
   SearchIconImg
 } from 'src/Assets';
@@ -18,6 +23,7 @@ import { ButtonComp, Heading, MuiCardComp } from 'src/components';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
 import ChipIconcomp from './ChipIconcomp';
+import ChipMenu from './ChipMenu';
 
 const courses = [
   {
@@ -172,14 +178,52 @@ const useStyle = makeStyles((theme) => ({
 
 const headerChipItem = [
   {
-    name: 'Difficulty level ',
-    checkboxText: 'All',
-    id: 1
+    name: 'Difficulty',
+    id: 0,
+    labelItems: [
+      {
+        id: 0,
+        label: 'All'
+      },
+      {
+        id: 1,
+        label: 'Beginner',
+        icon: BeginnerIcon
+      },
+      {
+        id: 2,
+        label: 'Intermediate',
+        icon: IntermediateIcon
+      },
+      {
+        id: 3,
+        label: 'Advanced',
+        icon: BarChartFillIcon
+      }
+    ]
   },
   {
     name: 'Language',
-    checkboxText: 'English',
-    id: 2
+    img: Language,
+    id: 1,
+    labelItems: [
+      {
+        id: 0,
+        label: 'All'
+      },
+      {
+        id: 1,
+        label: 'English'
+      },
+      {
+        id: 2,
+        label: 'Hindi'
+      },
+      {
+        id: 3,
+        label: 'Gujarati'
+      }
+    ]
   }
 ];
 
@@ -189,15 +233,81 @@ type CourseProps = {
 const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
+  const { i18n } = useTranslation();
+  const [chipFilterItem, setChipFilterItem] = useState([0, 1]);
+  const [menuItem, setMenuItem] = useState<any>({});
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [courses, setCourses] = useState([]);
+  const [view, setView] = useState(6);
   const [searchValue, setSearchValue] = useState('');
+  const [chipIconText, setChipIconText] = useState([0, 1]);
 
   const getSearchValue = (searchValue) => {
-    console.log(searchValue);
     setSearchValue(searchValue);
   };
 
-  const openMenuItem = (id) => {
-    console.log(id, 'test');
+  const handleOpen = (event, item) => {
+    setMenuItem({
+      menuItem: item.labelItems,
+      headerName: item.name,
+      chipId: item.id
+    });
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleChange = (index) => {
+    chipFilterItem[menuItem.chipId] = index;
+    setChipFilterItem([...chipFilterItem]);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setChipFilterItem([...chipIconText]);
+  };
+
+  const handleView = () => {
+    if (view === 6) {
+      setView(courses.length);
+    } else {
+      setView(6);
+    }
+  };
+
+  const handleApply = () => {
+    let filteredCourse = [];
+    if (chipFilterItem[0] != 0) {
+      filteredCourse = courseDetails.filter(
+        (item) => item.course_level_id == chipFilterItem[0]
+      );
+    }
+    if (chipFilterItem[1] != 0) { 
+      filteredCourse = (
+        chipFilterItem[0] != 0 || chipFilterItem[1] != 0
+          ? filteredCourse
+          : courseDetails
+      ).filter((item) => item.language_id == chipFilterItem[1]);
+    }
+    if (
+      chipFilterItem[0] === 0 &&
+      chipFilterItem[1] === 0 
+    ) {
+      setCourses([...courseDetails]);
+    } else {
+      setCourses([...filteredCourse]);
+      changeLanguage(chipFilterItem[1])
+    }
+    setAnchorEl(null);
+    setChipIconText([...chipFilterItem]);
+  };
+
+  const changeLanguage = (chipValue) => {
+    if (chipValue === 1) {
+      return i18n.changeLanguage('en');
+    } else if (chipValue === 2) {
+      return i18n.changeLanguage('hi');
+    } else if (chipValue === 3) {
+      return i18n.changeLanguage('gu');
+    }
   };
 
   const onClickCardImage = (rowData) => {
@@ -214,17 +324,6 @@ const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
   return (
     <Grid container justifyContent={'center'} direction="column" rowSpacing={3}>
       <Grid style={{ margin: theme.spacing(4, 0) }}>
-        {/* <Heading
-          headingText={'Learn at your pace with recorded courses'}
-          headerFontSize={'40px'}
-          headerFontWeight={500}
-          headingColor={'#3C414B'}
-          style={{
-            [theme.breakpoints.down('xs')]: {
-              fontSize: 15
-            }
-          }}
-        /> */}
         <Typography
           sx={{
             fontSize: '40px',
@@ -272,8 +371,11 @@ const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
               <ChipIconcomp
                 key={index}
                 chipText={item.name}
-                checkboxText={item.checkboxText}
-                onClick={() => openMenuItem(item.id)}
+                checkboxText={
+                  headerChipItem[index].labelItems[chipIconText[index]].label
+                }
+                onClick={(event) => handleOpen(event, item)}
+                img={item.img}
               />
             ))}
           </Grid>
@@ -374,6 +476,14 @@ const LearnAtUrPace = ({ courseDetails }: CourseProps) => {
           onClickButton={() => {}}
         />
       </Grid>
+      <ChipMenu
+        anchorEl={anchorEl}
+        {...menuItem}
+        currentId={chipFilterItem[menuItem.chipId]}
+        handleChange={handleChange}
+        handleClose={handleClose}
+        handleApply={handleApply}
+      />
     </Grid>
   );
 };

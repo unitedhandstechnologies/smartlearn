@@ -29,6 +29,7 @@ import Language from '../../../Assets/Images/Language.svg';
 import ChipIconcomp from '../Courses/ChipIconcomp';
 import ChipMenu from '../Courses/ChipMenu';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
+import { useTranslation } from 'react-i18next';
 
 const useStyle = makeStyles((theme) => ({
   eachItem: {
@@ -116,15 +117,16 @@ type CourseProps = {
 const UpComingWebinars = ({ courseDetails }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
+  const { i18n } = useTranslation();
   const [chipFilterItem, setChipFilterItem] = useState([0, 0, 1]);
   const [menuItem, setMenuItem] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState(null);
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
   const [searchValue, setSearchValue] = useState('');
+  const [chipIconText, setChipIconText] = useState([0, 0, 1]);
 
   const getSearchValue = (searchValue) => {
-    console.log(searchValue);
     setSearchValue(searchValue);
   };
 
@@ -144,6 +146,7 @@ const UpComingWebinars = ({ courseDetails }: CourseProps) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+    setChipFilterItem([...chipIconText]);
   };
 
   const handleView = () => {
@@ -185,8 +188,20 @@ const UpComingWebinars = ({ courseDetails }: CourseProps) => {
       setCourses([...courseDetails]);
     } else {
       setCourses([...filteredCourse]);
+      changeLanguage(chipFilterItem[2])
     }
     setAnchorEl(null);
+    setChipIconText([...chipFilterItem]);
+  };
+  
+  const changeLanguage = (chipValue) => {
+    if (chipValue === 1) {
+      return i18n.changeLanguage('en');
+    } else if (chipValue === 2) {
+      return i18n.changeLanguage('hi');
+    } else if (chipValue === 3) {
+      return i18n.changeLanguage('gu');
+    }
   };
 
   const onClickCardImage = (rowData) => {
@@ -243,8 +258,7 @@ const UpComingWebinars = ({ courseDetails }: CourseProps) => {
                   key={index}
                   chipText={item.name}
                   checkboxText={
-                    headerChipItem[index].labelItems[chipFilterItem[index]]
-                      .label
+                    headerChipItem[index].labelItems[chipIconText[index]].label
                   }
                   onClick={(event) => handleOpen(event, item)}
                   img={item.img}

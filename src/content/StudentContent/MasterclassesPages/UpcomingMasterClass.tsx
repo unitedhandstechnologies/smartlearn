@@ -23,6 +23,7 @@ import Language from '../../../Assets/Images/Language.svg';
 import ChipIconcomp from '../Courses/ChipIconcomp';
 import ChipMenu from '../Courses/ChipMenu';
 import CourseBanner from '../Courses/CourseBanner';
+import { useTranslation } from 'react-i18next';
 
 const useStyle = makeStyles((theme) => ({
   eachItem: {
@@ -110,12 +111,18 @@ type CourseProps = {
 const UpComingCourse = ({ courseDetails }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
+  const { i18n } = useTranslation();
   const [chipFilterItem, setChipFilterItem] = useState([0, 0, 1]);
   const [menuItem, setMenuItem] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState(null);
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
+  const [chipIconText, setChipIconText] = useState([0, 0, 1]);
+
+  const getSearchValue = (searchValue) => {
+    setSearchValue(searchValue);
+  };
 
   const handleOpen = (event, item) => {
     setMenuItem({
@@ -133,6 +140,7 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+    setChipFilterItem([...chipIconText]);
   };
 
   const handleView = () => {
@@ -174,14 +182,21 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
       setCourses([...courseDetails]);
     } else {
       setCourses([...filteredCourse]);
+      changeLanguage(chipFilterItem[2])
     }
     setAnchorEl(null);
+    setChipIconText([...chipFilterItem]);
   };
 
-  const getSearchValue = (searchValue) => {
-    setSearchValue(searchValue);
+  const changeLanguage = (chipValue) => {
+    if (chipValue === 1) {
+      return i18n.changeLanguage('en');
+    } else if (chipValue === 2) {
+      return i18n.changeLanguage('hi');
+    } else if (chipValue === 3) {
+      return i18n.changeLanguage('gu');
+    }
   };
-
   const onClickCardImage = (rowData) => {
     console.log('rowData', rowData);
   };
@@ -232,17 +247,16 @@ const UpComingCourse = ({ courseDetails }: CourseProps) => {
                 style={{ paddingBottom: '20px', gap: '10px' }}
               >
                 {headerChipItem.map((item, index) => (
-                  <ChipIconcomp
-                    key={index}
-                    chipText={item.name}
-                    checkboxText={
-                      headerChipItem[index].labelItems[chipFilterItem[index]]
-                        .label
-                    }
-                    onClick={(event) => handleOpen(event, item)}
-                    img={item.img}
-                  />
-                ))}
+                <ChipIconcomp
+                  key={index}
+                  chipText={item.name}
+                  checkboxText={
+                    headerChipItem[index].labelItems[chipIconText[index]].label
+                  }
+                  onClick={(event) => handleOpen(event, item)}
+                  img={item.img}
+                />
+              ))}
               </Grid>
             </Grid>
             <Grid paddingBottom={4}>

@@ -11,25 +11,41 @@ import {
 import Typography from '@mui/material/Typography';
 import { ButtonComp, TextInputComponent } from '../../components';
 import Divider from '@mui/material/Divider';
-import { useTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router';
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    padding: theme.spacing(0, 0, 1, 0)
+  },
+  placeHolderStyle: {
+    color: theme.Colors.darkGrayishBlue,
+    fontSize: theme.MetricsSizes.small_xxx,
+    fontWeight: theme.fontWeight.regular,
+    '&::placeholder': {
+      color: theme.Colors.darkGrayishBlue,
+      fontSize: theme.MetricsSizes.small_xxx,
+      fontWeight: theme.fontWeight.regular
+    }
+  }
+}));
 const pages = ['Courses', 'Workshops', 'Seminars', 'Masterclasses'];
 
 const Text = styled(Typography)(({ theme }) => ({
-  padding: theme.spacing(0.5),
+  padding: theme.spacing(1, 3, 0.5, 0),
   textAlign: 'start',
   color: '#B4BEC8',
-  margin: theme.spacing(0, 1.5),
+  margin: theme.spacing(0, 1.5, 0, 0),
   fontFamily: 'Switzer',
   fontStyle: 'normal',
   fontWeight: 400,
   fontSize: 16,
-  cursor: 'pointer'
+  cursor: 'pointer',
+  lineHeight: '150%'
 }));
 
 const Contact = styled(Typography)(({ theme }) => ({
-  padding: theme.spacing(1),
+  //padding: theme.spacing(1),
   textAlign: 'start',
   color: '#FFFFFF',
   marginTop: theme.spacing(1),
@@ -40,7 +56,7 @@ const Contact = styled(Typography)(({ theme }) => ({
 }));
 
 const SocialMedia = styled(Typography)(({ theme }) => ({
-  margin: theme.spacing(2)
+  margin: theme.spacing(3, 0)
 }));
 const DividerFoot = styled(Divider)(({ theme }) => ({
   background: '#3C78F0',
@@ -48,6 +64,7 @@ const DividerFoot = styled(Divider)(({ theme }) => ({
 }));
 export default function Footer() {
   const theme = useTheme();
+  const styles = useStyles();
   const navigateTo = useNavigate();
 
   const handleClick = (event) => {
@@ -68,7 +85,7 @@ export default function Footer() {
         container
         spacing={2}
         sx={{
-          padding: 3,
+          padding: theme.spacing(1),
           [theme.breakpoints.down('sm')]: { flexDirection: 'column' }
         }}
       >
@@ -89,11 +106,12 @@ export default function Footer() {
               buttonFontSize={16}
               buttonFontWeight={400}
               buttonFontFamily="Switzer"
+              height={30}
               style={{
                 alignItems: 'start',
-                justifyContent: 'start',
-                height: 30
+                justifyContent: 'start'
               }}
+              classes={{ root: styles.button }}
               onClick={handleClick}
             />
           ))}
@@ -149,6 +167,7 @@ export default function Footer() {
             variant="outlined"
             placeholder={'Your email address'}
             inputWidth={''}
+            InputProps={{ classes: { input: styles.placeHolderStyle } }}
           />
 
           <ButtonComp

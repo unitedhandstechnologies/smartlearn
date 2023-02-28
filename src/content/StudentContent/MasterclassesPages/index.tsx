@@ -35,9 +35,8 @@ const Masterclasses = () => {
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.courses?.length) {
           let enabledCourse = response[0]?.data?.courses.filter((item) => {
-            return item.course_status === COURSE_STATUS_NAME[1]
-
-          })
+            return item.course_status === COURSE_STATUS_NAME[1];
+          });
           setCourseDetails(enabledCourse);
         }
       }
@@ -59,7 +58,7 @@ const Masterclasses = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [DETECT_LANGUAGE[i18n.language]]);
   const title = (
     <Typography
       sx={{

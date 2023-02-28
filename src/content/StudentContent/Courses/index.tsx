@@ -27,14 +27,13 @@ const Courses = () => {
     try {
       setLoading(true);
       const response: any = await API_SERVICES.courseManagementService.getAll(
-        DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+        DETECT_LANGUAGE[i18n.language]
       );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.courses?.length) {
           let enabledCourse = response?.data?.courses.filter((item) => {
-            return item.course_status === COURSE_STATUS_NAME[1]
-
-          })
+            return item.course_status === COURSE_STATUS_NAME[1];
+          });
           setCourseDetails(enabledCourse);
         }
       }
@@ -47,7 +46,7 @@ const Courses = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [DETECT_LANGUAGE[i18n.language]]);
 
   if (loading) {
     return <Loader />;

@@ -113,6 +113,8 @@ import OfflineImg from './OfflineImg.svg';
 import PdfImg from './PdfImg.svg';
 import VideoImg from './VideoImg.svg';
 import DownloadSvg from './downloadSvg.svg';
+import Language from './Language.svg'
+import Offline from './Offline.svg'
 
 export {
   EnrollmentManagementIcon,
@@ -229,5 +231,7 @@ export {
   OfflineImg,
   PdfImg,
   VideoImg,
-  DownloadSvg
+  DownloadSvg,
+  Language,
+  Offline
 };

@@ -30,6 +30,7 @@ import SeminarWebinarBanner from './SeminarWebinarBanner';
 import ChipIconcomp from '../Courses/ChipIconcomp';
 import ChipMenu from '../Courses/ChipMenu';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
+import { useTranslation } from 'react-i18next';
 
 const useStyle = makeStyles((theme) => ({
   eachItem: {
@@ -64,27 +65,6 @@ const headerChipItem = [
       }
     ]
   },
-  // {
-  //   name: 'Mode',
-  //   img: Offline,
-  //   id: 1,
-  //   labelItems: [
-  //     {
-  //       id: 0,
-  //       label: 'All'
-  //     },
-  //     {
-  //       id: 1,
-  //       label: 'Online',
-  //       icon: ZoomIcon
-  //     },
-  //     {
-  //       id: 2,
-  //       label: 'Offline',
-  //       icon: LocationIcon
-  //     }
-  //   ]
-  // },
   {
     name: 'Language',
     img: Language,
@@ -117,15 +97,16 @@ type CourseProps = {
 const UpComingSeminars = ({ courseDetails }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
-  const [chipFilterItem, setChipFilterItem] = useState([0, 0, 1]);
+  const { i18n } = useTranslation();
+  const [chipFilterItem, setChipFilterItem] = useState([0, 1]);
   const [menuItem, setMenuItem] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState(null);
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
   const [searchValue, setSearchValue] = useState('');
+  const [chipIconText, setChipIconText] = useState([0, 1]);
 
   const getSearchValue = (searchValue) => {
-    console.log(searchValue);
     setSearchValue(searchValue);
   };
 
@@ -145,6 +126,7 @@ const UpComingSeminars = ({ courseDetails }: CourseProps) => {
 
   const handleClose = () => {
     setAnchorEl(null);
+    setChipFilterItem([...chipIconText]);
   };
 
   const handleView = () => {
@@ -162,44 +144,39 @@ const UpComingSeminars = ({ courseDetails }: CourseProps) => {
         (item) => item.course_level_id == chipFilterItem[0]
       );
     }
-    if (chipFilterItem[1] != 0) {
-      filteredCourse = (
-        chipFilterItem[0] != 0 ? filteredCourse : courseDetails
-      ).filter(
-        (item) =>
-          item.course_mode ==
-          headerChipItem[1].labelItems[chipFilterItem[1]].label
-      );
-    }
-    if (chipFilterItem[2] != 0) {
+    if (chipFilterItem[1] != 0) { 
       filteredCourse = (
         chipFilterItem[0] != 0 || chipFilterItem[1] != 0
           ? filteredCourse
           : courseDetails
-      ).filter((item) => item.language_id == chipFilterItem[2]);
+      ).filter((item) => item.language_id == chipFilterItem[1]);
     }
     if (
       chipFilterItem[0] === 0 &&
-      chipFilterItem[1] === 0 &&
-      chipFilterItem[2] === 0
+      chipFilterItem[1] === 0 
     ) {
       setCourses([...courseDetails]);
     } else {
       setCourses([...filteredCourse]);
+      changeLanguage(chipFilterItem[1])
     }
     setAnchorEl(null);
+    setChipIconText([...chipFilterItem]);
+  };
+
+  const changeLanguage = (chipValue) => {
+    if (chipValue === 1) {
+      return i18n.changeLanguage('en');
+    } else if (chipValue === 2) {
+      return i18n.changeLanguage('hi');
+    } else if (chipValue === 3) {
+      return i18n.changeLanguage('gu');
+    }
   };
 
   const onClickCardImage = (rowData) => {
     console.log('rowData', rowData);
   };
-
-  // const getFilterCourse = useMemo(()=>{
-  //   let seminarCourse = courseDetails.filter((item) => {
-  //       return item.course_type === COURSE_TYPE_NAME[3]
-  //   })
-  //   return seminarCourse
-  // },[courseDetails])
 
   useEffect(() => {
     if (courseDetails?.length) {
@@ -246,13 +223,12 @@ const UpComingSeminars = ({ courseDetails }: CourseProps) => {
               xs
               style={{ paddingBottom: '20px', gap: '10px' }}
             >
-              {headerChipItem.map((item, index) => (
+            {headerChipItem.map((item, index) => (
                 <ChipIconcomp
                   key={index}
                   chipText={item.name}
                   checkboxText={
-                    headerChipItem[index].labelItems[chipFilterItem[index]]
-                      .label
+                    headerChipItem[index].labelItems[chipIconText[index]].label
                   }
                   onClick={(event) => handleOpen(event, item)}
                   img={item.img}
