@@ -1,45 +1,16 @@
-import { memo } from 'react';
-import { Grid, Typography, Box } from '@mui/material';
+import { memo, useCallback, useState, useEffect } from 'react';
+import { Grid } from '@mui/material';
 import { ButtonComp } from 'src/components';
 import { useTheme, makeStyles } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
-import { useNavigate } from 'react-router';
+import ApplyNow from '../Courses/ApplyNow/index';
+import { useLocation, useNavigate } from 'react-router';
 import CourseBanner from '../Courses/CourseBanner';
-import CourseDescription from '../../StudentContent/Courses/CourseDescription/CourseDescription';
+import CourseDescription from '../Courses/CourseDescription/CourseDescription';
+import { API_SERVICES } from 'src/Services';
+import { HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
+import toast from 'react-hot-toast';
 
-import {
-  Calendar,
-  chatIcon,
-  Intermediate,
-  Online,
-  WadeWarren
-} from 'src/Assets';
-import CourseRating from '../Courses/CourseRating/Index';
-import StartLearnWorkshop from './StartLearnWorkshop';
-
-const review = [
-  {
-    name: '13 Nov, 2022',
-    subText: 'Happening on',
-    img: Calendar
-  },
-  {
-    name: 'English',
-    subText: 'Course language',
-    img: chatIcon
-  },
-  {
-    name: 'Intermediate',
-    subText: 'Difficulty level',
-    img: Intermediate
-  },
-  {
-    name: 'Online',
-    subText: 'Study mode',
-    img: Online
-  }
-];
 const useStyles = makeStyles((theme) => ({
   button: {
     minWidth: 0,
@@ -52,15 +23,47 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const WorkShopDetails = () => {
+const PreRecordedCourses = () => {
   const theme = useTheme();
   const classes = useStyles();
   const navigateTo = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [mentorDetails, setMentorDetails] = useState<any>([]);
+  const { state }: any = useLocation();
+  let data = { ...state?.formData };
+  // console.log(daa)
+  let totalDuration = 0;
+
+  const fetchData = useCallback(async () => {
+    try {
+      setLoading(true);
+      setMentorDetails([]);
+      const response: any = await API_SERVICES.adminUserService.getById(data.mentor_id)
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (response?.data?.user) {
+          setMentorDetails(response?.data?.user);
+        }
+      }
+    } catch (err) {
+      toast.error(err?.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <>
-      {/* <ButtonComp
-        buttonText={'All courses'}
-        startIcon={<ArrowBackIcon />}
+    <Grid sx={{ padding: 5, background: '#FFFFFF' }}>
+      <ButtonComp
+        buttonText={'All Workshops'}
+        startIcon={
+          <span style={{ color: theme.Colors.secondary, paddingTop: 7 }}>
+            <ArrowBackIcon />
+          </span>
+        }
         backgroundColor={'transparent'}
         buttonTextColor={'#78828C'}
         buttonFontFamily={'Switzer'}
@@ -69,56 +72,67 @@ const WorkShopDetails = () => {
         height={'40px'}
         classes={{ root: classes.button }}
         onClickButton={() =>
-          navigateTo('/home', {
+          navigateTo('/home/workshops', {
             replace: true
           })
         }
-      /> */}
+      />
       <Grid
         sx={{
           display: 'flex',
           flex: 1,
           position: 'relative',
-          padding: 4
+          paddingTop: 3
         }}
       >
         <CourseBanner
-          courseTitle={'Basics of Stock Market investments'}
-          mentorName={'Wade Warren'}
-          mentorProfile={WadeWarren}
+          courseDetails={data}
+          courseTitle={data.course_name}
+          mentorName={data.mentor_name}
+          mentorProfile={mentorDetails.image_url}
+          bannerOuterContainerStyle={{
+            minHeight: 360
+          }}
         />
       </Grid>
       <Grid
+        container
+        justifyContent={'flex-end'}
         position={'absolute'}
-        sx={{ bottom: 100, marginLeft: 8, background: 'white' }}
-      >
-        <CourseRating course={review} />
-      </Grid>
-      <Grid
-        item
-        position={'absolute'}
+        width={'94%'}
         xs={12}
         sx={{
-          bottom: 10,
-          marginLeft: 120,
-          background: 'white',
-          [theme.breakpoints.down('sm')]: {
-            flexDirection: 'row',
+          zIndex: 1,
+          paddingBottom: '3%',
+          bottom: 0,
+          [theme.breakpoints.down('md')]: {
+            paddingTop: 5,
+            justifyContent: 'center',
             position: 'relative',
-            marginTop: 2,
-            marginLeft: 3,
-            width: '325px'
+            width: '100%'
+          },
+          [theme.breakpoints.up(1400)]: {
+            paddingBottom: '12%',
+            alignItems: 'flex-start'
           }
         }}
       >
-        <StartLearnWorkshop />
+        <ApplyNow
+          course={data}/>
       </Grid>
-      <Grid container padding={4}>
-        <Grid item xs={12} md={9} paddingTop={10}>
-          <CourseDescription />
+      <Grid
+        container
+        sx={{
+          [theme.breakpoints.down('md')]: {
+            paddingTop: 1
+          }
+        }}
+      >
+        <Grid item xs={12} md={9} paddingTop={5}>
+          <CourseDescription courseDescription={data} />
         </Grid>
       </Grid>
-    </>
+    </Grid>
   );
 };
-export default WorkShopDetails;
+export default PreRecordedCourses;

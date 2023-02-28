@@ -212,7 +212,10 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
 
   const onClickCardImage = (rowData) => {
     if (rowData.course_type === COURSE_TYPE_NAME[4]) {
-      navigateTo('/home/workshopDetails', { replace: true });
+      navigateTo('/home/workshopDetails', {
+        state: { formData: { ...rowData } },
+        replace: true
+      });
     }
   };
 
@@ -232,12 +235,12 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
           }}
         />
         <Grid
-          container 
-          justifyContent={"space-between"}
+          container
+          justifyContent={'space-between'}
           sx={{
             [theme.breakpoints.down('xs')]: {
               flexDirection: 'column',
-              gap:2
+              gap: 2
             }
           }}
         >
@@ -277,17 +280,18 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
                   padding: theme.spacing(0.3, 0.5)
                 },
                 [theme.breakpoints.down('xs')]: {
-                  width: "100%",
+                  width: '100%',
                   border: '1px solid #3C78F0',
                   borderRadius: 50,
                   fontSize: 16,
                   fontWeight: 400,
-                  padding: theme.spacing(0.3, 0.5)                }      
+                  padding: theme.spacing(0.3, 0.5)
+                }
               }}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton>
-                    <img src={SearchIconImg} width={"35px"} height={"35px"} />
+                    <img src={SearchIconImg} width={'35px'} height={'35px'} />
                   </IconButton>
                 </InputAdornment>
               }

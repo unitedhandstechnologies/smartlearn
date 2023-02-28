@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Grid, InputAdornment, useTheme } from '@material-ui/core';
 import {
   Card,
@@ -31,6 +31,8 @@ import { ChipComp } from '../MultiSelectChip/ChipComp';
 import ProgressBar from '../ProgressBar';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import LinesEllipsis from 'react-lines-ellipsis';
+import { StudentInfoContext } from 'src/contexts/StudentContext';
+import { useNavigate } from 'react-router';
 
 const TopBox = ({ leftText, rightText }) => {
   return (
@@ -88,8 +90,10 @@ type Props = {
   courseLevelId?: any;
   startLearning?: boolean;
   nextclass?: string;
+  course_id?: number;
 };
 const MuiCardComp = ({
+  course_id,
   imgUrl,
   heading,
   title,
@@ -115,6 +119,9 @@ const MuiCardComp = ({
   nextclass
 }: Props) => {
   const theme = useTheme();
+  const navigateTo = useNavigate();
+  const { studentDetails } = useContext(StudentInfoContext);
+
   return (
     <Card
       sx={{
@@ -307,6 +314,22 @@ const MuiCardComp = ({
               buttonFontWeight={theme.fontWeight.regular}
               buttonFontSize={16}
               btnBorderRadius={'4px'}
+              onClickButton={() => {
+                if (studentDetails.id !== 0) {
+                  navigateTo('/home/pre-recordedCourse-details', {
+                    state: { course_id:course_id },
+                    replace: true
+                  });
+                } else {
+                  navigateTo('/home/user-login', {
+                    state: {
+                      details: { course_id:course_id },
+                      route: '/home/pre-recordedCourse-details'
+                    },
+                    replace: true
+                  });
+                }
+              }}  
             />
           </Grid>
           <Grid

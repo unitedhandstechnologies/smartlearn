@@ -5,7 +5,8 @@ import {
   VideoTutor,
   DownloadSvg,
   LifeTime,
-  CertificateIcon
+  CertificateIcon,
+  LocationIcon
 } from '../../../../Assets/Images';
 import { ButtonComp } from 'src/components';
 import FavIcon from '../../../../Assets/Images/FavIcon.svg';
@@ -16,7 +17,7 @@ import IconTextComp from 'src/components/IconTextComp';
 
 const classes = {
   containerStyle: {
-    width: '23%',
+    width: '100%',
     height: '100%',
     boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.09)',
     borderRadius: '4px',
@@ -86,9 +87,34 @@ type Props = {
 };
 
 const ApplyNow = ({ course, timeType, duration }: Props) => {
+
+  const handleClick = () => {
+    if(course.course_type !== 'Workshop'){
+      if (studentDetails.id !== 0) {
+      navigateTo('/home/pre-recorded-course-details', {
+          state: { ...course },
+          replace: true
+        });
+      } else {
+        navigateTo('/home/user-login', {
+          state: {
+            details: { ...course },
+            route: '/home/pre-recorded-course-details'
+          },
+          replace: true
+        });
+      }
+      }else{
+        return null;
+      }
+  };
+
   const data = [
     {
-      name: duration !== undefined ? `${duration} ${timeType} of video tutorials` : '',
+      name:
+        duration !== undefined
+          ? `${duration} ${timeType} of video tutorials`
+          : '',
       img: VideoTutor
     },
     {
@@ -151,47 +177,43 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           xs={12}
           sx={{
             ...classes.gridStyle,
+            paddingTop: '2px',
             [theme.breakpoints.down('lg')]: {
               //justifyContent: 'center'
             }
           }}
         >
-          <img src={ClockIcon} style={{ paddingRight: 15 }} alt="" />
+          <img
+            src={course.course_type === 'Workshop' ? LocationIcon : ClockIcon}
+            style={{ paddingRight: 15 }}
+            alt=""
+          />
           <TypographyText
             sx={{
-              color: '#FF783C',
+              color: course.course_type === 'Workshop' ? '#78828C' : '#FF783C',
               fontSize: theme.MetricsSizes.small_xx,
               fontWeight: theme.fontWeight.mediumBold
             }}
           >
-            11 hours left at this price
+            {course.course_type === 'Workshop'
+              ? course.course_mode.toLowerCase() === 'online'
+                ? course.meeting_link
+                : course.meeting_location
+              : '11 hours left at this price'}
           </TypographyText>
         </Grid>
         <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
           <ButtonComp
-            buttonText={'Apply Now'}
+            buttonText={
+              course.course_type === 'Workshop' ? 'Start learning' : 'Apply Now'
+            }
             buttonTextColor={'#FFFFFF'}
             buttonFontFamily={'Switzer'}
             buttonFontSize={16}
             btnWidth={'100%'}
             btnBorderRadius={4}
             height={'40px'}
-            onClickButton={() => {
-              if (studentDetails.id !== 0) {
-                navigateTo('/home/pre-recordedCourse-details', {
-                  state: { ...course },
-                  replace: true
-                });
-              } else {
-                navigateTo('/home/user-login', {
-                  state: {
-                    details: { ...course },
-                    route: '/home/pre-recordedCourse-details'
-                  },
-                  replace: true
-                });
-              }
-            }}
+            onClickButton={handleClick}
           />
         </Grid>
         <Grid sx={{ ...classes.favIcon, ml: 1 }}>

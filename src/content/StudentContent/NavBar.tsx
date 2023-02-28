@@ -43,7 +43,7 @@ function NavBar() {
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
   const { studentDetails, updateStudentInfo } = useStudentInfo();
-  const [buttonValue, setButtonValue] = useState(0);
+  const [buttonValue, setButtonValue] = useState(-1);
 
   const handleCartClick = (event) => {
     setCartOpen(event.currentTarget);

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { Grid, Typography, Divider, Rating } from '@mui/material';
 import {
   BarIcon,
@@ -132,10 +132,19 @@ type CourseRatingProps = {
   courseRating?: any;
   averageRating?: number;
 };
-const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
-  console.log('courseRating', courseRating);
 
+const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
   const theme = useTheme();
+  const [view, setView] = useState(3);
+
+  const handleView = () => {
+    if (view === 3) {
+      setView(courseRating.length);
+    } else {
+      setView(3);
+    }
+  };
+
   return (
     <Grid container>
       <Grid
@@ -145,7 +154,6 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
           }
         }}
       >
-        {/* <ApplyNow /> */}
       </Grid>
       <Grid item xs={12}>
         <Grid container justifyContent={'space-between'} alignItems={'center'}>
@@ -161,7 +169,7 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
             </Grid>
           </Grid>
         </Grid>
-        {courseRating.map((item, index) => {
+        {courseRating.slice(0, view).map((item, index) => {
           return (
             <Grid
               item
@@ -210,23 +218,26 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
           );
         })}
       </Grid>
-      <Grid item xs={12}>
-        <ButtonComp
-          variant="outlined"
-          buttonText={'View All'}
-          buttonFontSize={18}
-          buttonFontFamily={'Switzer'}
-          backgroundColor={theme.Colors.white}
-          buttonFontWeight={500}
-          buttonTextColor={'#3C78F0'}
-          btnWidth={'100%'}
-          btnBorderRadius={'4px'}
-          endIcon={<ExpandMoreIcon style={{ color: '#3C78F0' }} />}
-          style={{
-            borderColor: '#3C78F0'
-          }}
-        />
-      </Grid>
+      {courseRating.length > 3 && (
+        <Grid item xs={12}>
+          <ButtonComp
+            variant="outlined"
+            buttonText={'View All'}
+            buttonFontSize={18}
+            buttonFontFamily={'Switzer'}
+            backgroundColor={theme.Colors.white}
+            buttonFontWeight={500}
+            buttonTextColor={'#3C78F0'}
+            btnWidth={'100%'}
+            btnBorderRadius={'4px'}
+            endIcon={<ExpandMoreIcon style={{ color: '#3C78F0' }} />}
+            style={{
+              borderColor: '#3C78F0'
+            }}
+            onClick={handleView}
+          />
+        </Grid>
+      )}
     </Grid>
   );
 };

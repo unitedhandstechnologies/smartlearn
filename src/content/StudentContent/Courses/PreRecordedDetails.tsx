@@ -144,44 +144,46 @@ const PreRecordedDetails = () => {
   }, []);
 
   return (
+    <Grid
+      container
+      sx={{
+        padding: 5,
+        [theme.breakpoints.down('sm')]: {
+          flexDirection: 'column'
+        }
+      }}
+    >
+      <Grid item xs={12}>
+        <PreRecordedCourses
+          data={data}
+          mentorDetails={mentorDetails}
+          totalDuration={totalDuration}
+        />
+      </Grid>
       <Grid
         container
         sx={{
-          padding: 5 ,
-          [theme.breakpoints.down('sm')]: {
-            flexDirection: 'column'
+          [theme.breakpoints.down('md')]: {
+            paddingTop: 1
           }
         }}
       >
-        <Grid item xs={12}>
-          <PreRecordedCourses
-            data={data}
-            mentorDetails={mentorDetails}
-            totalDuration={totalDuration}
-          />
+        <Grid item xs={12} md={9} paddingTop={5}>
+          <CourseDescription courseDescription={data} />
         </Grid>
-        <Grid
-          container
-          sx={{
-            [theme.breakpoints.down('md')]: {
-              paddingTop: 1
-            }
-          }}
-        >
-          <Grid item xs={12} md={9} paddingTop={5}>
-            <CourseDescription courseDescription={data} />
-          </Grid>
+        {courseRating.length && (
           <Grid container item xs={12} md={3} paddingTop={'9%'}>
             <CourseRight
               courseRating={courseRating}
               averageRating={averageRating}
             />
           </Grid>
-        </Grid>
-        {/* <Grid>
+        )}
+      </Grid>
+      {/* <Grid>
           <UpComingSession />
         </Grid> */}
-      </Grid>
+    </Grid>
   );
 };
 export default memo(PreRecordedDetails);
