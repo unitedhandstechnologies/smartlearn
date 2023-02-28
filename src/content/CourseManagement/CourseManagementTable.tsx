@@ -149,9 +149,9 @@ const CourseManagementTable = ({
     }
   ];
 
-  const renderRowActions = () => {
+  const renderRowActions = (row: { course_status: string }) => {
     return [
-      {
+      row.course_status !== 'enabled' && {
         text: 'Approve',
         onClick: (rowData: any) =>
           onClickAcceptCourse(rowData, COURSE_STATUS_NAME[1]),
