@@ -59,21 +59,22 @@ const TextLesson = ({ edit, isError, tabValue }: Props) => {
           await API_SERVICES.videoUploadService.uploadVideo(formData);
         if (uploadVideoRes?.status < HTTP_STATUSES.BAD_REQUEST) {
           if (uploadVideoRes?.data?.video?.length) {
-            
             if (tabValue === 1) {
-              
-              edit.update({ engVideoUrl : uploadVideoRes?.data?.video[0].Location,
-                engDuration: uploadVideoRes?.data?.video[0].duration });
+              edit.update({
+                engVideoUrl: uploadVideoRes?.data?.video[0].Location,
+                engDuration: uploadVideoRes?.data?.video[0].duration
+              });
             } else if (tabValue === 2) {
-              
-              edit.update({ hinVideoUrl : uploadVideoRes?.data?.video[0].Location,
-                hinDuration: uploadVideoRes?.data?.video[0].duration });
+              edit.update({
+                hinVideoUrl: uploadVideoRes?.data?.video[0].Location,
+                hinDuration: uploadVideoRes?.data?.video[0].duration
+              });
             } else {
-              
-              edit.update({ gujVideoUrl : uploadVideoRes?.data?.video[0].Location,
-                gujDuration: uploadVideoRes?.data?.video[0].duration });
+              edit.update({
+                gujVideoUrl: uploadVideoRes?.data?.video[0].Location,
+                gujDuration: uploadVideoRes?.data?.video[0].duration
+              });
             }
-           
           }
         }
       } else {
@@ -82,17 +83,17 @@ const TextLesson = ({ edit, isError, tabValue }: Props) => {
         if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
           if (uploadImageRes?.data?.images?.length) {
             if (tabValue === 1) {
-              
-              edit.update({ engVideoUrl : uploadImageRes?.data?.video[0].Location,
-                engDuration: uploadImageRes?.data?.video[0].duration });
+              edit.update({
+                engPdfUrl: uploadImageRes?.data?.images[0].Location
+              });
             } else if (tabValue === 2) {
-              
-              edit.update({ hinVideoUrl : uploadImageRes?.data?.video[0].Location,
-                hinDuration: uploadImageRes?.data?.video[0].duration });
+              edit.update({
+                hinPdfUrl: uploadImageRes?.data?.images[0].Location
+              });
             } else {
-              
-              edit.update({ gujVideoUrl : uploadImageRes?.data?.video[0].Location,
-                gujDuration: uploadImageRes?.data?.video[0].duration });
+              edit.update({
+                gujPdfUrl: uploadImageRes?.data?.images[0].Location
+              });
             }
           }
         }
