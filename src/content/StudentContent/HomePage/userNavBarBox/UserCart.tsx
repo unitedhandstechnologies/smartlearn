@@ -1,11 +1,19 @@
-import { Badge, Grid, Typography, Box, Avatar,useTheme } from '@material-ui/core';
+import {
+  Badge,
+  Grid,
+  Typography,
+  Box,
+  Avatar,
+  useTheme
+} from '@material-ui/core';
 import {
   CartImg,
   UserProfile,
   BellImg,
   MenuProfileImg,
   WishListImg,
-  LogOutImg
+  LogOutImg,
+  ArrowNext
 } from 'src/Assets';
 import IconButton from '@mui/material/IconButton';
 import { Divider } from '@mui/material';
@@ -16,15 +24,18 @@ import { ButtonComp } from 'src/components';
 import ProfileMenu from './ProfileMenu';
 import IconTextComp from 'src/components/IconTextComp';
 import HomeIcon from '../../../../Assets/Images/HomeIcon.svg';
+import contactUs from '../../../../Assets/Images/contactUs.svg';
+import { USER_TYPES } from 'src/Config/constant';
 
 type Props = {
   userName?: string;
   badgeContent?: number;
   image?: string;
+  userType?: number;
 };
 
 const UserCart = (props: Props) => {
-  const { userName, badgeContent, image } = props;
+  const { userName, badgeContent, image, userType } = props;
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
   const [profileOpen, setProfileOpen] = useState(null);
@@ -59,7 +70,13 @@ const UserCart = (props: Props) => {
           value={item.name}
           valueColor={`${index === 2 ? '#78828C' : '#3C414B'}`}
         />
-        {index === 2 ? <Divider style={{ marginTop: 8 }} /> : null}
+        {userType === USER_TYPES.mentor ? (
+          index === 1 ? (
+            <Divider variant="middle" sx={{ marginTop: 2 }} />
+          ) : null
+        ) : index === 2 ? (
+          <Divider sx={{ marginTop: 2 }} />
+        ) : null}
       </Grid>
     );
   };
@@ -72,17 +89,19 @@ const UserCart = (props: Props) => {
         alignItems: 'center',
         justifyContent: 'flex-end',
         width: 'fit-content',
-        [theme.breakpoints.down('sm')]:{
-          diplay: "none"
+        [theme.breakpoints.down('sm')]: {
+          diplay: 'none'
         }
       }}
     >
       <Grid>
-        <IconButton aria-label="cart" onClick={handleCartClick}>
-          <Badge badgeContent={badgeContent || 4} color="secondary">
-            <img src={CartImg} width={25} height={25} />
-          </Badge>
-        </IconButton>
+        {userType === USER_TYPES.mentor ? null : (
+          <IconButton aria-label="cart" onClick={handleCartClick}>
+            <Badge badgeContent={badgeContent || 4} color="secondary">
+              <img src={CartImg} width={25} height={25} />
+            </Badge>
+          </IconButton>
+        )}
       </Grid>
       <Grid style={{ paddingLeft: 8 }}>
         <IconButton aria-label="profile" onClick={handleProfileClick}>
@@ -123,10 +142,11 @@ const UserCart = (props: Props) => {
         handleClose={handleBellClose}
       />
       <ProfileMenu
-        menuItems={items}
+        menuItems={userType === USER_TYPES.mentor ? itemsMentor : items}
         anchorEl={profileOpen}
         handleClose={handleProfileClose}
         renderMenuItems={renderMenuContent}
+        userType={userType}
       />
     </Grid>
   );
@@ -146,6 +166,20 @@ const items = [
   {
     name: 'Your wishlist',
     icon: WishListImg
+  },
+  {
+    name: 'Logout',
+    icon: LogOutImg
+  }
+];
+const itemsMentor = [
+  {
+    name: 'Go to SmartLearn',
+    icon: ArrowNext
+  },
+  {
+    name: 'Contact us',
+    icon: contactUs
   },
   {
     name: 'Logout',

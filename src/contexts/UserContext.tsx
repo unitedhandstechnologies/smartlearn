@@ -13,6 +13,7 @@ export type UserDetails = {
   created_at: string;
   updated_at: string;
   permissions: number[];
+  image_url: string;
 };
 
 export type UserInfo = {
@@ -27,6 +28,7 @@ export const INITIAL_STATE: UserInfo = {
     last_name: '',
     phone_number: '',
     social_information_url: '',
+    image_url: '',
     user_type: 0,
     status_id: 0,
     user_name: '',

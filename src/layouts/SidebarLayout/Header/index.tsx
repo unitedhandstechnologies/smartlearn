@@ -24,6 +24,7 @@ import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import LanguageSelection from './LanguageSelection';
 import { AvatarImg } from 'src/Assets';
+import UserCart from 'src/content/StudentContent/HomePage/userNavBarBox/UserCart';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -121,7 +122,7 @@ const Header = (props: Props) => {
   const { userDetails } = useContext(UserInfoContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const [notificationData, setNotificationData] = useState([]);
-  console.log(userDetails, 'lang id');
+  console.log(userDetails, 'userDetails');
   const handlePopoverOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -197,81 +198,93 @@ const Header = (props: Props) => {
             ) : null}
           </Grid>
           <Grid item className={styles.leftGrid}>
-            <IconButton className={styles.image} onClick={handlePopoverOpen}>
-              <Badge
-                variant="dot"
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right'
-                }}
-                className={notificationData?.length && styles.badgeStyle}
-              >
-                <img src={BellIcon} />
-              </Badge>
-            </IconButton>
-            <Popover
-              open={Boolean(anchorEl)}
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left'
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right'
-              }}
-              onClose={handlePopoverClose}
-              classes={{ paper: styles.popover }}
-            >
-              <Grid container spacing={1} className={styles.leftGrid}>
-                <Grid item xs={12} className={styles.notificationHeader}>
-                  <Heading
-                    headingText={t('notifications')}
-                    headingColor={theme.Colors.accentGrey}
-                  />
-                  <ButtonComp
-                    buttonText={'Clear All'}
-                    buttonFontSize={theme.MetricsSizes.small_xx}
-                    buttonFontWeight={theme.fontWeight.regular}
-                    backgroundColor={'transparent'}
-                    buttonTextColor={theme.Colors.black}
-                    startIcon={<Close fontSize="small" color="primary" />}
-                    btnWidth={120}
-                    // onClick={onClickClearNotification}
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  {notificationData.length ? (
-                    notificationData.map((item, index) => {
-                      return (
-                        <Box className={styles.contentStyle} key={index}>
-                          <FiberManualRecord
-                            fontSize="small"
-                            style={{ color: theme.Colors.blueLight }}
-                          />
-                          <Typography className={styles.titleStyle}>
-                            {item}
-                          </Typography>
-                        </Box>
-                      );
-                    })
-                  ) : (
-                    <Typography className={styles.titleStyle}>
-                      No New Notifications!
-                    </Typography>
-                  )}
-                </Grid>
-              </Grid>
-            </Popover>
-            <LanguageSelection />
-            <Avatar
-              className={styles.avatarStyle}
-              alt="Prabu"
-              src={AvatarImg}
-            />
-            <Typography className={styles.select}>
-              {userDetails.user_name}
-            </Typography>
+            {userDetails.user_type === 1 || userDetails.user_type === 2 ? (
+              <>
+                <IconButton
+                  className={styles.image}
+                  onClick={handlePopoverOpen}
+                >
+                  <Badge
+                    variant="dot"
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right'
+                    }}
+                    className={notificationData?.length && styles.badgeStyle}
+                  >
+                    <img src={BellIcon} />
+                  </Badge>
+                </IconButton>
+                <Popover
+                  open={Boolean(anchorEl)}
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left'
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right'
+                  }}
+                  onClose={handlePopoverClose}
+                  classes={{ paper: styles.popover }}
+                >
+                  <Grid container spacing={1} className={styles.leftGrid}>
+                    <Grid item xs={12} className={styles.notificationHeader}>
+                      <Heading
+                        headingText={t('notifications')}
+                        headingColor={theme.Colors.accentGrey}
+                      />
+                      <ButtonComp
+                        buttonText={'Clear All'}
+                        buttonFontSize={theme.MetricsSizes.small_xx}
+                        buttonFontWeight={theme.fontWeight.regular}
+                        backgroundColor={'transparent'}
+                        buttonTextColor={theme.Colors.black}
+                        startIcon={<Close fontSize="small" color="primary" />}
+                        btnWidth={120}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      {notificationData.length ? (
+                        notificationData.map((item, index) => {
+                          return (
+                            <Box className={styles.contentStyle} key={index}>
+                              <FiberManualRecord
+                                fontSize="small"
+                                style={{ color: theme.Colors.blueLight }}
+                              />
+                              <Typography className={styles.titleStyle}>
+                                {item}
+                              </Typography>
+                            </Box>
+                          );
+                        })
+                      ) : (
+                        <Typography className={styles.titleStyle}>
+                          No New Notifications!
+                        </Typography>
+                      )}
+                    </Grid>
+                  </Grid>
+                </Popover>
+                <LanguageSelection />
+                <Avatar
+                  className={styles.avatarStyle}
+                  alt="Prabu"
+                  src={AvatarImg}
+                />
+                <Typography className={styles.select}>
+                  {userDetails.user_name}
+                </Typography>
+              </>
+            ) : (
+              <UserCart
+                userName={userDetails.user_name}
+                image={userDetails.image_url}
+                userType={userDetails.user_type}
+              />
+            )}
           </Grid>
         </Grid>
       </Grid>

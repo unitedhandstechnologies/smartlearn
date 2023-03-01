@@ -6,6 +6,7 @@ import CompletedCourse from './CompletedCourse';
 import ContinueLearning from './ContinueLearning';
 import WishListCourse from './WishListCourse';
 import { BasicStockIcon } from 'src/Assets';
+import { COURSE_TYPE_NAME } from 'src/Config/constant';
 
 const courses = [
   {
@@ -166,7 +167,15 @@ const MyLibrary = ({ enrollCourse }) => {
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
   };
-
+  const enrolledCourse = enrollCourse.filter((item) => {
+    return (
+      item.course_type === COURSE_TYPE_NAME[1] ||
+      item.course_type === COURSE_TYPE_NAME[2] ||
+      item.course_type === COURSE_TYPE_NAME[3] ||
+      item.course_type === COURSE_TYPE_NAME[4] ||
+      item.course_type === COURSE_TYPE_NAME[5]
+    );
+  });
   const onClickCardImage = (rowData) => {};
 
   return (
@@ -212,8 +221,8 @@ const MyLibrary = ({ enrollCourse }) => {
           }
         }}
       >
-        {enrollCourse.length
-          ? enrollCourse.slice(0, 6).map((item, index) => {
+        {enrolledCourse.length
+          ? enrolledCourse.slice(0, 6).map((item, index) => {
               return (
                 <Grid
                   key={index}

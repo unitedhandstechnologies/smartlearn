@@ -28,15 +28,17 @@ import { useEdit } from 'src/hooks/useEdit';
 import { capitalizeFirstLetter, isPhoneNumber, isValidEmail } from 'src/Utils';
 import { t } from 'i18next';
 import CountryCode from 'src/components/CountryCode';
+
 const Registration = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
   const [values, setValues] = useState('');
+
   const navigateTo = useNavigate();
-
+  const [permission, setPermission] = useState([]);
   const [userType, setUserType] = useState(USER_TYPE_ID.student);
-
+  console.log(permission, 'permission test');
   // const onClickEyeIcon = () => {
   //   setShowPassword(!showPassword);
   // };
@@ -52,8 +54,8 @@ const Registration = () => {
     confirmPassword: '',
     user_type: userType,
     social_information_url: '',
-    permissions: [],
-    code: '+91' || '',
+    permissions: permission,
+    code: '91' || '',
     language_id: 1 || DETECT_LANGUAGE[i18n.language],
     gender: '',
     qualification: ''
@@ -122,7 +124,7 @@ const Registration = () => {
           failureMessage: 'Error: Instructor Already Exist'
         });
         if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-          navigateTo('/admin/login', { replace: true });
+          navigateTo('/home/mentorAfterReg', { replace: true });
         }
       }
     } catch (e) {
@@ -135,6 +137,10 @@ const Registration = () => {
   const handleChange = (event) => {
     setValues(event.target.value);
     edit.update({ code: event.target.value });
+  };
+  const handleClick = () => {
+    setUserType(USER_TYPE_ID.mentors);
+    setPermission([1, 4, 8]);
   };
   return (
     <Grid
@@ -173,7 +179,7 @@ const Registration = () => {
               btnWidth={'fit-content'}
               height="40px"
               buttonFontFamily="Switzer"
-              onClickButton={() => setUserType(USER_TYPE_ID.mentors)}
+              onClickButton={handleClick}
             />
           </Grid>
           <Typography

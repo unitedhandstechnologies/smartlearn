@@ -172,6 +172,9 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
   };
+  const recordeCourse = courseDetails.filter((item) => {
+    return item.course_type === COURSE_TYPE_NAME[6];
+  });
 
   // const getCourses: any[] = useMemo(() => {
   //   const courses = [...courseDetails];
@@ -243,8 +246,8 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
           }
         }}
       >
-        {courseDetails.length
-          ? courseDetails.slice(0, 6).map((item, index) => {
+        {recordeCourse.length
+          ? recordeCourse.slice(0, 6).map((item, index) => {
               return (
                 <Grid
                   key={index}
@@ -274,7 +277,7 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
                     zoomLink={item.meeting_link}
                     locationName={item.meeting_location}
                     //subCategory={item.sub_category_name}
-                    courseType={item.course_type}
+                    //courseType={item.course_type}
                     prize={item.amount}
                     //onClickCardImage={() => onClickCardImage(item)}
                     startLearning={false}

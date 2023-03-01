@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import RightContainer from './RightContainer';
 import { useNavigate, useLocation } from 'react-router';
 import { API_SERVICES } from 'src/Services';
-import { HTTP_STATUSES } from 'src/Config/constant';
+import { HTTP_STATUSES, USER_TYPE_ID } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
 import Divider from '@mui/material/Divider';
 import useStudentInfo from 'src/hooks/useStudentInfo';
@@ -31,7 +31,7 @@ const UserLogin = () => {
       let data = {
         user_name: loginForm.user_name,
         password: loginForm.password,
-        user_type: 4
+        user_type: USER_TYPE_ID.student
       };
       const response: any = await API_SERVICES.authService.userLogin({
         data

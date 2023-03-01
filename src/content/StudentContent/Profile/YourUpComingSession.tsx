@@ -274,7 +274,7 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
                     zoomLink={item.meeting_link}
                     locationName={item.meeting_location}
                     //subCategory={item.sub_category_name}
-                    courseType={item.course_type}
+                    //courseType={item.course_type}
                     prize={item.amount}
                     //onClickCardImage={() => onClickCardImage(item)}
                     startLearning={false}

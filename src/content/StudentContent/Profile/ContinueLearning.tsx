@@ -3,6 +3,7 @@ import { Grid } from '@mui/material';
 import React from 'react';
 import { BasicStockIcon } from 'src/Assets';
 import { Heading, MuiCardComp } from 'src/components';
+import { COURSE_TYPE_NAME } from 'src/Config/constant';
 
 const courses = [
   {
@@ -158,7 +159,9 @@ const useStyles = makeStyles((theme) => ({
 const ContinueLearning = ({ enrollCourse }) => {
   const theme = useTheme();
   const classes = useStyles();
-
+  const recordeCourse = enrollCourse.filter((item) => {
+    return item.course_type === COURSE_TYPE_NAME[6];
+  });
   const onClickCardImage = (rowData) => {};
 
   return (
@@ -180,8 +183,8 @@ const ContinueLearning = ({ enrollCourse }) => {
           }
         }}
       >
-        {enrollCourse.length
-          ? enrollCourse.slice(0, 6).map((item, index) => {
+        {recordeCourse.length
+          ? recordeCourse.slice(0, 6).map((item, index) => {
               return (
                 <Grid
                   key={index}

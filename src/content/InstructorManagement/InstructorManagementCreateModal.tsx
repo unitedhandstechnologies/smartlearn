@@ -88,7 +88,7 @@ const InstructorManagementCreateModal = (props: Props) => {
     confirmPassword: rowData?.password || '',
     user_type: rowData?.user_type || USER_TYPE_ID.mentors,
     social_information_url: rowData?.social_information_url || '',
-    permissions: [],
+    permissions: rowData.permissions,
     code: rowData?.code || '+91',
     language_id: rowData?.language_id || DETECT_LANGUAGE[i18n.language],
     image_url: rowData?.image_url || '',
@@ -173,10 +173,10 @@ const InstructorManagementCreateModal = (props: Props) => {
         setError(true);
         return toast.error('Please fill all the required fields');
       }
-      if(!isPhoneNumber(edit.getValue('phone_number'))){
+      if (!isPhoneNumber(edit.getValue('phone_number'))) {
         setError(true);
         return toast.error('Please enter your valid 10 digit mobile number');
-      }else{
+      } else {
         setError(false);
       }
       if (
@@ -213,7 +213,12 @@ const InstructorManagementCreateModal = (props: Props) => {
     let img = new Image();
     img.src = window.URL.createObjectURL(event.target.files[0]);
     img.onload = async () => {
-      if (img.width <= 270 && img.width >= 200 && img.height <= 350 && img.height >=250) {
+      if (
+        img.width <= 270 &&
+        img.width >= 200 &&
+        img.height <= 350 &&
+        img.height >= 250
+      ) {
         const uploadImageRes: any =
           await API_SERVICES.imageUploadService.uploadImage(formData);
         if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -336,40 +341,44 @@ const InstructorManagementCreateModal = (props: Props) => {
             />
           </Grid>
           <Grid item xs={12}>
-          <TextInputComponent
-            inputLabel={'Instructor Image'}
-            value={edit.getValue('image_url').split('/')[3] || profileImage}
-            disabled
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <ButtonComp
-                    backgroundColor={theme.Colors.primary}
-                    buttonText={'Browse'}
-                    buttonFontSize={theme.MetricsSizes.small_xxx}
-                    buttonTextColor="white"
-                    buttonFontWeight={theme.fontWeight.medium}
-                    disableElevation={true}
-                    onBrowseButtonClick={onUploadFiles}
-                    isBrowseButton
-                    height={'30px'}
-                  />
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <HighlightOff
-                    style={{ cursor: 'pointer' }}
-                    onClick={removeProfile}
-                  />
-                </InputAdornment>
-              )
-            }}
-            required
-            isError={imageError}
-            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 270 X 350 resolution" }
-          />
-        </Grid>
+            <TextInputComponent
+              inputLabel={'Instructor Image'}
+              value={edit.getValue('image_url').split('/')[3] || profileImage}
+              disabled
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <ButtonComp
+                      backgroundColor={theme.Colors.primary}
+                      buttonText={'Browse'}
+                      buttonFontSize={theme.MetricsSizes.small_xxx}
+                      buttonTextColor="white"
+                      buttonFontWeight={theme.fontWeight.medium}
+                      disableElevation={true}
+                      onBrowseButtonClick={onUploadFiles}
+                      isBrowseButton
+                      height={'30px'}
+                    />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <HighlightOff
+                      style={{ cursor: 'pointer' }}
+                      onClick={removeProfile}
+                    />
+                  </InputAdornment>
+                )
+              }}
+              required
+              isError={imageError}
+              helperText={
+                imageError
+                  ? 'Please upload the profile image'
+                  : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 270 X 350 resolution'
+              }
+            />
+          </Grid>
           <Grid item xs={6}>
             <Avatar
               className={classes.avatarStyle}

@@ -1,6 +1,7 @@
 import { MenuItem, Menu, Grid } from '@material-ui/core';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
+import { USER_TYPES } from 'src/Config/constant';
 import { INITIAL_STATE } from 'src/contexts/StudentContext';
 
 import useStudentInfo from 'src/hooks/useStudentInfo';
@@ -18,6 +19,7 @@ type Props = {
   headerName?: string;
   handleClose: () => void;
   onClick?: (event: any) => void;
+  userType?: number;
 };
 
 const ProfileMenu = (props: Props) => {
@@ -27,26 +29,43 @@ const ProfileMenu = (props: Props) => {
     menuItems = [],
     renderMenuItems,
     belowMenuItemContent,
-    handleClose
+    handleClose,
+    userType
   } = props;
   const navigateTo = useNavigate();
   const { updateStudentInfo } = useStudentInfo();
   const handleClick = (event) => {
     console.log(event.target.innerText, 'event');
-    if (event.target.innerText === 'Home') {
-      navigateTo('/home/profilehome');
-      handleClose();
-    } else if (event.target.innerText === 'Profile') {
-      navigateTo('/home/profile');
-      handleClose();
-    } else if (event.target.innerText === 'Your wishlist') {
-      handleClose();
-    } else if (event.target.innerText === 'Logout') {
-      updateStudentInfo(INITIAL_STATE.studentDetails);
-      localStorage.clear();
-      navigateTo('/home');
-      handleClose();
-      toast.success('Profile Logout successfully');
+    if (userType === USER_TYPES.mentor) {
+      if (event.target.innerText === 'Go to SmartLearn') {
+        navigateTo('/home');
+        handleClose();
+      } else if (event.target.innerText === 'Contact us') {
+        navigateTo('/home');
+        handleClose();
+      } else if (event.target.innerText === 'Logout') {
+        updateStudentInfo(INITIAL_STATE.studentDetails);
+        localStorage.clear();
+        navigateTo('/home');
+        handleClose();
+        toast.success('Profile Logout successfully');
+      }
+    } else {
+      if (event.target.innerText === 'Home') {
+        navigateTo('/home/profilehome');
+        handleClose();
+      } else if (event.target.innerText === 'Profile') {
+        navigateTo('/home/profile');
+        handleClose();
+      } else if (event.target.innerText === 'Your wishlist') {
+        handleClose();
+      } else if (event.target.innerText === 'Logout') {
+        updateStudentInfo(INITIAL_STATE.studentDetails);
+        localStorage.clear();
+        navigateTo('/home');
+        handleClose();
+        toast.success('Profile Logout successfully');
+      }
     }
   };
   const getMenuItems = () => {
