@@ -16,7 +16,7 @@ import MentorCourseDescription from 'src/content/StudentContent/MasterclassesPag
 import ProfileHome from 'src/content/StudentContent/Profile/ProfileHome';
 import ForgetPassword from 'src/content/StudentContent/RegistrationPage/ForgetPassword';
 import PreRecordedDetails from 'src/content/StudentContent/Courses/PreRecordedDetails';
-import CheckOut from 'src/content/StudentContent/CheckOut';
+import CheckOut from 'src/content/StudentContent/CheckOut/CheckOut';
 
 export const HomeRoutes: RouteObject[] = [
   {

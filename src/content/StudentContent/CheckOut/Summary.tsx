@@ -1,4 +1,4 @@
-import { IconButton, Typography, useTheme } from '@material-ui/core';
+import { Icon, IconButton, Typography, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import React, { useState } from 'react';
 import { ButtonComp, Heading } from 'src/components';
@@ -6,7 +6,7 @@ import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { Add } from '@material-ui/icons';
 
-const CheckOut = () => {
+const Summary = () => {
   const theme = useTheme();
   const [seatCount, setSeatCount] = useState<number>(0);
   let coursePrice = 4500;
@@ -93,34 +93,37 @@ const CheckOut = () => {
             No. of Available Seats
           </Typography>
         </Grid>
-        <Grid container item xs justifyContent={'flex-end'}>
+        <Grid container spacing={0.5} item xs justifyContent={'flex-end'}>
           <Grid item>
-            <IconButton onClick={onClickDecrement} disabled={seatCount <= 0}>
-              <RemoveIcon />
+            <IconButton
+              onClick={onClickDecrement}
+              disabled={seatCount <= 0}
+              style={{ background: theme.Colors.whiteLightGrey }}
+            >
+              <RemoveIcon fontSize="small" />
             </IconButton>
           </Grid>
-          <Grid
-            item
-            sx={{
-              border: '1px solid #3C78F0',
-              padding: '8px 12px 8px 12px',
-              borderRadius: '8px'
-            }}
-          >
+          <Grid item>
             <Typography
               style={{
                 fontSize: '18px',
                 fontWeight: 500,
                 fontFamily: 'Switzer',
-                color: '#3C414B'
+                color: '#3C414B',
+                border: '1px solid #3C78F0',
+                padding: theme.spacing(1),
+                borderRadius: '8px'
               }}
             >
               {seatCount}
             </Typography>
           </Grid>
           <Grid item>
-            <IconButton onClick={onClickIncrement}>
-              <Add />
+            <IconButton
+              onClick={onClickIncrement}
+              style={{ background: theme.Colors.whiteLightGrey }}
+            >
+              <Add fontSize="small" />
             </IconButton>
           </Grid>
         </Grid>
@@ -159,7 +162,7 @@ const CheckOut = () => {
               color: '#3C414B'
             }}
           >
-            {seatCount} * ₹ {coursePrice}
+            {seatCount} x ₹ {coursePrice}
           </Typography>
         </Grid>
       </Grid>
@@ -219,4 +222,4 @@ const CheckOut = () => {
   );
 };
 
-export default CheckOut;
+export default Summary;
