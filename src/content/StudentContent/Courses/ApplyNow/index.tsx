@@ -87,26 +87,25 @@ type Props = {
 };
 
 const ApplyNow = ({ course, timeType, duration }: Props) => {
-
   const handleClick = () => {
-    if(course.course_type !== 'Workshop'){
+    if (course.course_type !== 'Workshop') {
       if (studentDetails.id !== 0) {
-      navigateTo('/home/pre-recorded-course-details', {
-          state: { ...course },
-          replace: true
-        });
+        // navigateTo('/home/pre-recorded-course-details', {
+        //   state: { ...course },
+        //   replace: true
+        // });
       } else {
-        navigateTo('/home/user-login', {
-          state: {
-            details: { ...course },
-            route: '/home/pre-recorded-course-details'
-          },
-          replace: true
-        });
+        // navigateTo('/home/user-login', {
+        //   state: {
+        //     details: { ...course },
+        //     route: '/home/pre-recorded-course-details'
+        //   },
+        //   replace: true
+        // });
       }
-      }else{
-        return null;
-      }
+    } else {
+      return null;
+    }
   };
 
   const data = [
