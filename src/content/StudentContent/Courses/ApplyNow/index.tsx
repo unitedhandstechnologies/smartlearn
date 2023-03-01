@@ -18,7 +18,6 @@ import IconTextComp from 'src/components/IconTextComp';
 const classes = {
   containerStyle: {
     width: '100%',
-    height: '100%',
     boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.09)',
     borderRadius: '4px',
     padding: 4
@@ -138,8 +137,8 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
       xs={12}
       sm={12}
       md={12}
-      xl={3}
-      lg={3}
+      xl={12}
+      lg={12}
       justifyContent={'center'}
       sx={{
         background: '#FFFFFF',
@@ -152,7 +151,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           alignItems="center"
           sx={{
             [theme.breakpoints.down('lg')]: {
-              //justifyContent: 'center'
+              justifyContent: 'flex-start'
             }
           }}
         >

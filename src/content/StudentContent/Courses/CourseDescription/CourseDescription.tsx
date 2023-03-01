@@ -56,6 +56,7 @@ const headingProps = {
   headingColor: '#3C414B',
   headerFontWeight: 500,
   headerFontSize: 32,
+  marginBottom: 20,
   headerFontFamily: 'IBM Plex Serif'
 };
 

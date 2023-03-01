@@ -122,7 +122,6 @@ const headingProps = {
   headerFontFamily: 'IBM Plex Serif'
 };
 const typographyStylProps = {
-  fontFamily: 'Switzer Variable',
   fontSize: 18,
   fontWeight: 400,
   color: '#78828C'
@@ -153,8 +152,7 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
             flexDirection: 'column'
           }
         }}
-      >
-      </Grid>
+      ></Grid>
       <Grid item xs={12}>
         <Grid container justifyContent={'space-between'} alignItems={'center'}>
           <Grid>
@@ -194,7 +192,6 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
               <Grid item xs>
                 <Typography
                   style={{
-                    fontFamily: 'Switzer Variable',
                     color: '#3C414B',
                     fontSize: 18,
                     fontWeight: 600
