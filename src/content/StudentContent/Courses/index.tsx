@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
-
-import { useTheme } from '@material-ui/core';
+import { Grid, Box } from '@mui/material';
+import { useTheme, Container } from '@material-ui/core';
 import { Loader } from 'src/components';
 import UpComingCourse from './UpComingCourse';
 import LearnAtUrPace from './LearnAtUrPace';
@@ -138,25 +137,30 @@ const Courses = () => {
     return <Loader />;
   } else {
     return (
-      <Grid
-        // container
-        // direction={'column'}
-        // style={{ padding: theme.spacing(7, 7) }}
-        padding={6}
-      >
-        <UpComingCourse
-          courseDetails={courseDetails}
-          chipIconText={chipIconText}
-          setChipIconText={setChipIconText}
-        />
-        <LearnAtUrPace
-          courseDetails={courseDetails}
-          chipIconText={chipRecorderText}
-          setChipIconText={setChipRecorderText}
-        />
-        {/* <Quiz courseDetails={courseDetails} /> */}
-        {/* <CourseBegin /> */}
-      </Grid>
+      <Box sx={{ py: 5 }}>
+        <Container>
+          <Grid
+          // container
+          // direction={'column'}
+          // style={{ padding: theme.spacing(7, 7) }}
+          // padding={6}
+          >
+            <UpComingCourse
+              courseDetails={courseDetails}
+              chipIconText={chipIconText}
+              setChipIconText={setChipIconText}
+            />
+            <LearnAtUrPace
+              courseDetails={courseDetails}
+              chipIconText={chipRecorderText}
+              setChipIconText={setChipRecorderText}
+            />
+            {/* <Quiz courseDetails={courseDetails} /> */}
+            {/* <CourseBegin /> */}
+          </Grid>
+          <CourseBegin />
+        </Container>
+      </Box>
     );
   }
 };

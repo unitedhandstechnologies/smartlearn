@@ -45,7 +45,7 @@ const CourseBegin = () => {
   const [sectionData, setSectionData] = useState<any[]>([]);
   const [quizData, setQuizData] = useState<any[]>([]);
   const [testTopic, setTestTopic] = useState(false);
-  const [ videoDetails , setVideoDetails] = useState<any[]>([]);
+  const [videoDetails, setVideoDetails] = useState<any[]>([]);
   const [videoPlaying, setVideoPlaying] = useState<Number>(0.0);
 
   const [autoPlay, setAutoPlay] = useState(true);
@@ -54,15 +54,14 @@ const CourseBegin = () => {
     sectionNumber: 0,
     lessonNumber: 0
   });
-  
+
   const fetchData = useCallback(async () => {
     //let id = state?.course_id;
     //console.log("id",id)
-    let id = 1;
+    let id = 19;
     let userId = 3;
     try {
-
-      const responseVideoDetails : any = 
+      const responseVideoDetails: any =
         await API_SERVICES.PreRecordedCourseVideoService.getVideoDetails(
           id,
           userId
@@ -95,11 +94,12 @@ const CourseBegin = () => {
                 );
               if (responseLesson?.status < HTTP_STATUSES.BAD_REQUEST) {
                 setLessonData(responseLesson.data.Lessons);
-                let videoPercentage = responseVideoDetails.data.Video_percentage;
+                let videoPercentage =
+                  responseVideoDetails.data.Video_percentage;
                 let sectionData1 = responseSection.data.Section;
                 let lessonData1 = responseLesson.data.Lessons;
-                
-                  let tempVideoDetails = Array(sectionData1?.length)
+
+                let tempVideoDetails = Array(sectionData1?.length)
                   .fill(0)
                   .map(
                     (sectionData1, index) =>
@@ -113,12 +113,12 @@ const CourseBegin = () => {
                         ).length
                       )
                   );
-       
-                  let tempElapsedTime = [0.07, 0.16,0.20,0.50,0.00];
-                  let tempRemainingTime = [15.12,4.33,66.65,7,20.56] ;
+
+                let tempElapsedTime = [0.07, 0.16, 0.2, 0.5, 0.0];
+                let tempRemainingTime = [15.12, 4.33, 66.65, 7, 20.56];
                 if (sectionData1?.length) {
                   sectionData1.map((item, index) => {
-                    const sectionNumber = index + 1 ;
+                    const sectionNumber = index + 1;
                     let getLessonData: any = lessonData1.length
                       ? lessonData1.filter(
                           (lessonItm) =>
@@ -128,27 +128,33 @@ const CourseBegin = () => {
                     if (getLessonData.length) {
                       getLessonData.map((item, index) => {
                         let tempPercentagePlayed = videoPercentage.filter(
-                          (itemVideo) => itemVideo.course_id === id && itemVideo.user_id === userId && itemVideo.lesson_id === item.lesson_id
-                          );
+                          (itemVideo) =>
+                            itemVideo.course_id === id &&
+                            itemVideo.user_id === userId &&
+                            itemVideo.lesson_id === item.lesson_id
+                        );
 
-                        tempVideoDetails[sectionNumber - 1][index] ={
-                          
-                          videoUrl : item.video_url,
-                          videoName : item.lesson_name,
-                          videoId : item.lesson_id,
-                          videoDuration : item.duration,
-                          videoPlayedFraction : tempPercentagePlayed[0].played,
-                          videoElapsedTime : tempElapsedTime  [sectionNumber - 1],               
-                          videoPlayingTime : 0.0,
-                          videoRemainingTime : tempRemainingTime[sectionNumber - 1]                        
-                        }                          
+                        tempVideoDetails[sectionNumber - 1][index] = {
+                          videoUrl: item.video_url,
+                          videoName: item.lesson_name,
+                          videoId: item.lesson_id,
+                          videoDuration: item.duration,
+                          videoPlayedFraction: tempPercentagePlayed[0].played,
+                          videoElapsedTime: tempElapsedTime[sectionNumber - 1],
+                          videoPlayingTime: 0.0,
+                          videoRemainingTime:
+                            tempRemainingTime[sectionNumber - 1]
+                        };
                       });
-                    }                                       
+                    }
                   });
                 }
                 setVideoDetails(tempVideoDetails);
                 setVideoToPlay(tempVideoDetails[0][0].videoUrl);
-                videoToPlayIndex.current={ sectionNumber: 0, lessonNumber: 0 };
+                videoToPlayIndex.current = {
+                  sectionNumber: 0,
+                  lessonNumber: 0
+                };
               }
             } catch (err) {
               toast.error(err?.message);
@@ -167,36 +173,31 @@ const CourseBegin = () => {
     }
   }, []);
 
-  const updataVideoData =  ()=>{
-    try{
+  const updataVideoData = () => {
+    try {
       let id = 30;
       let userId = 15;
-      videoDetails.map((row,indexRow)=>{
-        row.map(async(item,index)=>{
+      videoDetails.map((row, indexRow) => {
+        row.map(async (item, index) => {
           let updateData = {
-            played : item.videoPlayedFraction
-          }
-          const responseUpdateVideoDetails : any = 
-          await API_SERVICES.PreRecordedCourseVideoService.updateVideoDetails(
-            id,
-            userId,
-            item.lesson_id,
-            {
-              data :  updateData,          
-            }
-        )
-
+            played: item.videoPlayedFraction
+          };
+          const responseUpdateVideoDetails: any =
+            await API_SERVICES.PreRecordedCourseVideoService.updateVideoDetails(
+              id,
+              userId,
+              item.lesson_id,
+              {
+                data: updateData
+              }
+            );
         });
-
-        });        
-
-    }catch(e){
-    }
+      });
+    } catch (e) {}
   };
 
-
   useEffect(() => {
-    fetchData();   
+    fetchData();
   }, []);
 
   if (loading) {

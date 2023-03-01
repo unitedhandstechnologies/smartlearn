@@ -41,123 +41,144 @@ const MainGrid = styled(Grid)(({ theme }) => ({
   }
 }));
 
+const CourseMainPage = ({
+  courseData,
+  videoToPlay,
+  lessonData,
+  sectionData,
+  videoToPlayIndex,
+  setVideoToPlay,
+  //setVideoToPlayIndex,
+  quizData,
+  testTopic,
+  setTestTopic,
+  videoDetails,
+  setVideoDetails,
+  videoPlaying,
+  setVideoPlaying,
+  fetchData
+}) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const videoPlayerRef = useRef();
+  const [playerRef, setPlayerRef] = useState<any>();
+  const [isReady, setIsReady] = React.useState(false);
+  const timePaused = useRef(0);
 
-
-const CourseMainPage = (
-    {
-        courseData,
-        videoToPlay,
-        lessonData,
-        sectionData,
-        videoToPlayIndex,
-        setVideoToPlay,
-        //setVideoToPlayIndex,
-        quizData,
-        testTopic,
-        setTestTopic,
-        videoDetails,
-        setVideoDetails,
-        videoPlaying,
-        setVideoPlaying,
-        fetchData
-    }
-) => {
-    
-    const classes = useStyles();
-    const theme = useTheme();
-    const videoPlayerRef = useRef();
-    const [playerRef, setPlayerRef] = useState<any>();
-    const [isReady, setIsReady] = React.useState(false);
-    const timePaused = useRef(0);
-
-
-   
-
-    
-    const handlePlayNext = useCallback(async() => {  
-
-        let updateData = {
-          played : 1
-        }
-        let userId=3;
-        let id=1;
-        const responseUpdateVideoDetails : any = 
-        await API_SERVICES.PreRecordedCourseVideoService.updateVideoDetails(
-          id,
-          userId,
-          videoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoId,
-          {
-            data :  updateData,          
-          }
-      );
-      let tempVideoDetails = videoDetails;
-      tempVideoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoPlayedFraction = 1;
-      
-      setVideoDetails(tempVideoDetails);
-
-      let nextLessonIndex : number = videoToPlayIndex.current.lessonNumber;  
-      let nextSectionIndex : number =  videoToPlayIndex.current.sectionNumber; 
-      if (nextLessonIndex < videoDetails[nextSectionIndex].length-1)  {
-        nextLessonIndex++;   
-        videoToPlayIndex.current={sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex }
-        setVideoToPlay(videoDetails[nextSectionIndex][nextLessonIndex].videoUrl); 
-        return;
-      }else {
-        if (nextSectionIndex < videoDetails.length-1){
-          nextSectionIndex++;
-          nextLessonIndex=0;
-          videoToPlayIndex.current={sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex }
-          setVideoToPlay(videoDetails[nextSectionIndex][nextLessonIndex].videoUrl);           return;
-        } else{
-            nextSectionIndex=0;
-            nextLessonIndex=0;
-          videoToPlayIndex.current={sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex }
-          setVideoToPlay(videoDetails[nextSectionIndex][nextLessonIndex].videoUrl);        
-        }
-      }
-    },[]);
-
-    const handleVideoProgress = (event) => {
-      setVideoPlaying( event.played);
-      timePaused.current = event.played;
+  const handlePlayNext = useCallback(async () => {
+    let updateData = {
+      played: 19
     };
-
-    const handleOnReady =useCallback((player) => {     
-      if (!isReady){    
-      player.seekTo(videoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoPlayedFraction,"fraction");
-      setIsReady(true);
-      }
-    },[isReady]);
-
-    const handleOnPause = useCallback(async() => {
-         if(timePaused.current > videoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoPlayedFraction ){
-        let updateData = {
-          played : timePaused.current
+    let userId = 3;
+    let id = 19;
+    const responseUpdateVideoDetails: any =
+      await API_SERVICES.PreRecordedCourseVideoService.updateVideoDetails(
+        id,
+        userId,
+        videoDetails[videoToPlayIndex.current.sectionNumber][
+          videoToPlayIndex.current.lessonNumber
+        ].videoId,
+        {
+          data: updateData
         }
-        let userId=3;
-        let id=1;
-        const responseUpdateVideoDetails : any = 
+      );
+    let tempVideoDetails = videoDetails;
+    tempVideoDetails[videoToPlayIndex.current.sectionNumber][
+      videoToPlayIndex.current.lessonNumber
+    ].videoPlayedFraction = 1;
+
+    setVideoDetails(tempVideoDetails);
+
+    let nextLessonIndex: number = videoToPlayIndex.current.lessonNumber;
+    let nextSectionIndex: number = videoToPlayIndex.current.sectionNumber;
+    if (nextLessonIndex < videoDetails[nextSectionIndex].length - 1) {
+      nextLessonIndex++;
+      videoToPlayIndex.current = {
+        sectionNumber: nextSectionIndex,
+        lessonNumber: nextLessonIndex
+      };
+      setVideoToPlay(videoDetails[nextSectionIndex][nextLessonIndex].videoUrl);
+      return;
+    } else {
+      if (nextSectionIndex < videoDetails.length - 1) {
+        nextSectionIndex++;
+        nextLessonIndex = 0;
+        videoToPlayIndex.current = {
+          sectionNumber: nextSectionIndex,
+          lessonNumber: nextLessonIndex
+        };
+        setVideoToPlay(
+          videoDetails[nextSectionIndex][nextLessonIndex].videoUrl
+        );
+        return;
+      } else {
+        nextSectionIndex = 0;
+        nextLessonIndex = 0;
+        videoToPlayIndex.current = {
+          sectionNumber: nextSectionIndex,
+          lessonNumber: nextLessonIndex
+        };
+        setVideoToPlay(
+          videoDetails[nextSectionIndex][nextLessonIndex].videoUrl
+        );
+      }
+    }
+  }, []);
+
+  const handleVideoProgress = (event) => {
+    setVideoPlaying(event.played);
+    timePaused.current = event.played;
+  };
+
+  const handleOnReady = useCallback(
+    (player) => {
+      if (!isReady) {
+        player.seekTo(
+          videoDetails[videoToPlayIndex.current.sectionNumber][
+            videoToPlayIndex.current.lessonNumber
+          ].videoPlayedFraction,
+          'fraction'
+        );
+        setIsReady(true);
+      }
+    },
+    [isReady]
+  );
+
+  const handleOnPause = useCallback(async () => {
+    if (
+      timePaused.current >
+      videoDetails[videoToPlayIndex.current.sectionNumber][
+        videoToPlayIndex.current.lessonNumber
+      ].videoPlayedFraction
+    ) {
+      let updateData = {
+        played: timePaused.current
+      };
+      let userId = 3;
+      let id = 19;
+      const responseUpdateVideoDetails: any =
         await API_SERVICES.PreRecordedCourseVideoService.updateVideoDetails(
           id,
           userId,
-          videoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoId,
+          videoDetails[videoToPlayIndex.current.sectionNumber][
+            videoToPlayIndex.current.lessonNumber
+          ].videoId,
           {
-            data :  updateData,          
+            data: updateData
           }
-      );
-      }
-      
-      let tempVideoDetails = videoDetails;
-      tempVideoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoPlayedFraction = timePaused.current;
-      
-      setVideoDetails(tempVideoDetails);
-    },[]);
-  
-  
+        );
+    }
 
-   useEffect(() => {  
-   
-    }, []); 
+    let tempVideoDetails = videoDetails;
+    tempVideoDetails[videoToPlayIndex.current.sectionNumber][
+      videoToPlayIndex.current.lessonNumber
+    ].videoPlayedFraction = timePaused.current;
+
+    setVideoDetails(tempVideoDetails);
+  }, []);
+
+  useEffect(() => {}, []);
 
   return (
     <Grid container className={classes.mainContainer}>
@@ -170,35 +191,48 @@ const CourseMainPage = (
           //handleAutoPlay = {setAutoPlay}
           videoToPlayIndex={videoToPlayIndex}
           quizData={quizData}
-          setTestTopic = {setTestTopic}
+          setTestTopic={setTestTopic}
           videoDetails={videoDetails}
           setIsReady={setIsReady}
-          />
+        />
       </Grid>
-      <Grid item xs={12} sm={9} >
-        { 
-        !testTopic ? (
+      <Grid item xs={12} sm={9}>
+        {!testTopic ? (
           <>
-      <Typography style={{
-        padding:'0px 32px',
-        fontSize: theme.MetricsSizes.medium
-      }}>{videoToPlayIndex.current.sectionNumber+1} . {videoToPlayIndex.current.lessonNumber+1} {videoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoName}</Typography>
-        <Grid className={classes.playerContainer}>
-          <ReactPlayer
-            ref={(player)=>setPlayerRef(player)}
-            url={videoToPlay}
-            playing={true}
-            controls={true}
-            width={'100%'}
-            height={'100%'}
-            onEnded={handlePlayNext} 
-            onReady={handleOnReady}  
-            onPause={handleOnPause}         
-            onProgress={handleVideoProgress}
-          />
-        </Grid>
-        </>
-        ): quizData.length ? <Quiz courseData={courseData} /> : "No Test topic Available" }
+            <Typography
+              style={{
+                padding: '0px 32px',
+                fontSize: theme.MetricsSizes.medium
+              }}
+            >
+              {videoToPlayIndex.current.sectionNumber + 1} .{' '}
+              {videoToPlayIndex.current.lessonNumber + 1}{' '}
+              {
+                videoDetails[videoToPlayIndex.current.sectionNumber][
+                  videoToPlayIndex.current.lessonNumber
+                ].videoName
+              }
+            </Typography>
+            <Grid className={classes.playerContainer}>
+              <ReactPlayer
+                ref={(player) => setPlayerRef(player)}
+                url={videoToPlay}
+                playing={true}
+                controls={true}
+                width={'100%'}
+                height={'100%'}
+                onEnded={handlePlayNext}
+                onReady={handleOnReady}
+                onPause={handleOnPause}
+                onProgress={handleVideoProgress}
+              />
+            </Grid>
+          </>
+        ) : quizData.length ? (
+          <Quiz courseData={courseData} />
+        ) : (
+          'No Test topic Available'
+        )}
       </Grid>
     </Grid>
   );

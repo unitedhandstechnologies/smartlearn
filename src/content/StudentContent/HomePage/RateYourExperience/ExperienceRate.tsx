@@ -259,7 +259,8 @@ const RateYourExperience = ({ courseDetails }) => {
           border: '1.6px solid #3C78F0',
           padding: 11,
           borderRadius: 2,
-          marginTop: 15
+          marginTop: 15,
+          background: '#e8f0ff'
         }}
       >
         <Grid>

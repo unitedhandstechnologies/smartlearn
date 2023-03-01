@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography, Container } from '@mui/material';
 import { ButtonComp, Loader } from 'src/components';
 import { useTheme } from '@material-ui/core';
 import { useSearchVal } from 'src/hooks/useSearchVal';
@@ -104,59 +104,63 @@ const ProfileHome = () => {
     return <Loader />;
   } else {
     return (
-      <Grid container sx={{ position: 'relative', padding: 4 }}>
-        <RateYourExperience courseDetails={enrollCourse} />
+      <Grid container sx={{ position: 'relative', background: '#ffffff' }}>
+        <Container>
+          <RateYourExperience courseDetails={enrollCourse} />
 
-        <Grid container direction="column" paddingTop={4}>
-          <CourseBanner
-            course={'Sometitle goes here'}
-            courseSubTitle={
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit ullamco laboris nisi ut aliquip ex ea c'
-            }
-          />
-        </Grid>
-        <Grid
-          container
-          direction="column"
-          sx={{
-            padding: theme.spacing(7, 7)
-          }}
-        >
-          <CatchFrom courseDetails={enrollCourse} />
-        </Grid>
-        <Grid
-          container
-          direction="column"
-          sx={{
-            padding: theme.spacing(5, 5)
-          }}
-        >
-          <YourUpComingSession courseDetails={enrollCourse} />
-        </Grid>
-        <Grid
-          container
-          direction="column"
-          sx={{
-            padding: theme.spacing(7, 7),
-            backgroundImage: `url(${BackgroundLine})`,
-            [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
-          }}
-        >
-          <MoreUpcomingsession courseDetails={courseDetails} />
-        </Grid>
-        <Grid
+          <Grid container direction="column" paddingTop={4}>
+            <CourseBanner
+              course={'Sometitle goes here'}
+              courseSubTitle={
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit ullamco laboris nisi ut aliquip ex ea c'
+              }
+            />
+          </Grid>
+          <Grid
+            container
+            direction="column"
+            sx={{
+              padding: theme.spacing(7, 7)
+            }}
+          >
+            <CatchFrom courseDetails={enrollCourse} />
+          </Grid>
+          <Grid
+            container
+            direction="column"
+            sx={{
+              padding: theme.spacing(5, 5)
+            }}
+          >
+            <YourUpComingSession courseDetails={enrollCourse} />
+          </Grid>
+          <Grid
+            container
+            direction="column"
+            sx={{
+              padding: theme.spacing(7, 7),
+              backgroundImage: `url(${BackgroundLine})`,
+              [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
+            }}
+          >
+            <MoreUpcomingsession courseDetails={courseDetails} />
+          </Grid>
+          {/* <Grid
           container
           direction="column"
           style={{ padding: theme.spacing(7, 7) }}
-        >
-          <LearnTheWayBox />
+        > */}
+        </Container>
+        <LearnTheWayBox />
+        <Container>
           <Mentors
             mentorDetails={mentorDetails}
             headingText={'Learn from industry leading mentors'}
             viewButtonPosition={'top'}
             sliceValue={4}
           />
-        </Grid>
+        </Container>
+        {/* </Grid> */}
         <Grid
           container
           direction="column"

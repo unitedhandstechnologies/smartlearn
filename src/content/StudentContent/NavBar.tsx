@@ -79,7 +79,13 @@ function NavBar() {
   const theme = useTheme();
   return (
     <>
-      <AppBar position="sticky" sx={{ background: 'white', boxShadow: 'none' }}>
+      <AppBar
+        position="sticky"
+        sx={{
+          background: 'white',
+          boxShadow: '0px 0px 10px 0px rgb(0 0 0 / 22%)'
+        }}
+      >
         <Toolbar>
           <Box
             sx={{

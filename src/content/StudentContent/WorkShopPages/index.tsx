@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
-
-import { useTheme } from '@material-ui/core';
+import { Grid, Box } from '@mui/material';
+import { useTheme, Container } from '@material-ui/core';
 import { Loader } from 'src/components';
 import { API_SERVICES } from 'src/Services';
 import {
@@ -53,16 +52,20 @@ const WorkShop = () => {
     return <Loader />;
   } else {
     return (
-      <Grid padding={6}>
-        <CourseBanner
-          course={'Lorem ipsum dolor sit amet, consectetur'}
-          courseSubTitle={
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit ullamco laboris nisi ut aliquip ex ea c'
-          }
-        />
+      <Box sx={{ py: 5 }}>
+        <Container>
+          <Grid>
+            <CourseBanner
+              course={'Lorem ipsum dolor sit amet, consectetur'}
+              courseSubTitle={
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit ullamco laboris nisi ut aliquip ex ea c'
+              }
+            />
 
-        <UpComingWorkshop workshopDetails={workshopDetails} />
-      </Grid>
+            <UpComingWorkshop workshopDetails={workshopDetails} />
+          </Grid>
+        </Container>
+      </Box>
     );
   }
 };

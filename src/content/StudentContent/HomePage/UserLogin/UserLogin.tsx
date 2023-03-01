@@ -77,13 +77,14 @@ const UserLogin = () => {
       sx={{
         display: 'flex',
         justifyContent: 'center',
+        background: '#ffffff',
+        padding: '50px 0 80px',
         [theme.breakpoints.down('sm')]: {
-          flexDirection: 'column',
-          padding: 5
+          flexDirection: 'column'
         }
       }}
     >
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12} md={5}>
         <Grid>
           <Typography
             sx={{
@@ -91,6 +92,7 @@ const UserLogin = () => {
               fontWeight: 500,
               fontFamily: 'IBM Plex Serif',
               color: '#3C414B',
+              textAlign: 'center',
               margin: theme.spacing(2, 0),
               [theme.breakpoints.down('sm')]: {
                 fontSize: 25
@@ -103,10 +105,8 @@ const UserLogin = () => {
             container
             item
             sx={{
-              justifyContent: 'end',
-              [theme.breakpoints.down('sm')]: {
-                justifyContent: 'center'
-              }
+              justifyContent: 'center',
+              marginBottom: '15px'
             }}
           >
             <ButtonComp
@@ -128,7 +128,8 @@ const UserLogin = () => {
               fontSize: 18,
               fontWeight: 400,
               fontFamily: 'Switzer',
-              color: '#78828C'
+              color: '#78828C',
+              textAlign: 'center'
             }}
           >
             Continue with Google or enter your details

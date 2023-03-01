@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { Grid, Typography } from '@mui/material';
-import { useTheme } from '@material-ui/core';
+import { Grid, Typography, Box } from '@mui/material';
+import { useTheme, Container } from '@material-ui/core';
 import { Loader } from 'src/components';
 import { API_SERVICES } from 'src/Services';
 import {
@@ -80,26 +80,31 @@ const Masterclasses = () => {
     return <Loader />;
   } else {
     return (
-      <Grid padding={6}>
-        <UpcomingMasterClass
-          courseDetails={courseDetails.filter(
-            (course) => course.course_type === COURSE_TYPE_NAME[2]
-          )}
-          chipIconText={chipIconText}
-          setChipIconText={setChipIconText}
-        />
-        <Mentors
-          mentorDetails={mentorDetails}
-          courseDetails={courseDetails.filter(
-            (course) =>
-              course.course_type === COURSE_TYPE_NAME[2] ||
-              course.course_type === COURSE_TYPE_NAME[4]
-          )}
-          headingText={title}
-          viewButtonPosition={'bottom'}
-          sliceValue={12}
-        />
-      </Grid>
+      <Box sx={{ py: 5 }}>
+        <Container>
+          +{' '}
+          <Grid>
+            <UpcomingMasterClass
+              courseDetails={courseDetails.filter(
+                (course) => course.course_type === COURSE_TYPE_NAME[2]
+              )}
+              chipIconText={chipIconText}
+              setChipIconText={setChipIconText}
+            />
+            <Mentors
+              mentorDetails={mentorDetails}
+              courseDetails={courseDetails.filter(
+                (course) =>
+                  course.course_type === COURSE_TYPE_NAME[2] ||
+                  course.course_type === COURSE_TYPE_NAME[4]
+              )}
+              headingText={title}
+              viewButtonPosition={'bottom'}
+              sliceValue={12}
+            />
+          </Grid>
+        </Container>
+      </Box>
     );
   }
 };

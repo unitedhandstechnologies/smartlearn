@@ -13,7 +13,7 @@ const StartYourLearningBanner = () => {
       sx={{
         padding: theme.spacing(0, 6),
         background: '#3C78F0',
-        minHeight: '320px',
+        minHeight: '250px',
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
@@ -42,11 +42,11 @@ const StartYourLearningBanner = () => {
             <Typography
               style={{
                 color: 'white',
-                fontSize: '48px',
+                fontSize: '38px',
                 fontWeight: 700,
                 fontFamily: 'IBM Plex Serif',
                 lineHeight: '120%',
-                marginTop: 46
+                marginTop: 40
               }}
             >
               Start your journey of smarter{' '}

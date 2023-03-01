@@ -1,5 +1,5 @@
-import { useTheme } from '@material-ui/core';
-import { Grid } from '@mui/material';
+import { useTheme, Container } from '@material-ui/core';
+import { Grid, Box } from '@mui/material';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +23,7 @@ const Seminars = () => {
   const [chipRecorderText, setChipRecorderText] = useState([0, 1]);
   const [chipIconText, setChipIconText] = useState([0, 0, 1]);
   const { i18n } = useTranslation();
-  
+
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
@@ -63,18 +63,22 @@ const Seminars = () => {
     return <Loader />;
   } else {
     return (
-      <Grid padding={6}>
-        <UpComingSeminars
-          courseDetails={seminarCourseDetails}
-          chipIconText={chipRecorderText}
-          setChipIconText={setChipRecorderText}
-        />
-        <UpComingWebinars
-          courseDetails={webinarCourseDetails}
-          setChipIconText={setChipIconText}
-          chipIconText={chipIconText}
-        />
-      </Grid>
+      <Box sx={{ py: 5 }}>
+        <Container>
+          <Grid>
+            <UpComingSeminars
+              courseDetails={seminarCourseDetails}
+              chipIconText={chipRecorderText}
+              setChipIconText={setChipRecorderText}
+            />
+            <UpComingWebinars
+              courseDetails={webinarCourseDetails}
+              setChipIconText={setChipIconText}
+              chipIconText={chipIconText}
+            />
+          </Grid>
+        </Container>
+      </Box>
     );
   }
 };
