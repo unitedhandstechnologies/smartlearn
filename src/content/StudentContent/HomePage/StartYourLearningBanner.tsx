@@ -14,6 +14,7 @@ const StartYourLearningBanner = () => {
         padding: theme.spacing(0, 6),
         background: '#3C78F0',
         minHeight: '320px',
+        width: '100%',
         position: 'relative',
         overflow: 'hidden',
         [theme.breakpoints.down('sm')]: {

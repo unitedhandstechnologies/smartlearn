@@ -94,14 +94,14 @@ const HomePage = () => {
     return <Loader />;
   } else {
     return (
-      <Grid container sx={{ position: 'relative', background: '#ffffff' }}>
+      <Grid container sx={{ position: 'relative' }}>
         <Grid container direction="column">
           <HomeBanner />
         </Grid>
         <Grid
           container
           direction="column"
-          style={{ padding: theme.spacing(7, 0) }}
+          style={{ padding: theme.spacing(7, 7) }}
         >
           <USPs />
         </Grid>
@@ -109,7 +109,7 @@ const HomePage = () => {
           container
           direction="column"
           sx={{
-            padding: theme.spacing(7, 0),
+            padding: theme.spacing(7, 7),
             backgroundImage: `url(${BackgroundLine})`,
             [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
           }}
@@ -120,7 +120,7 @@ const HomePage = () => {
           container
           direction="column"
           style={{
-            padding: theme.spacing(7, 0),
+            padding: theme.spacing(7, 7),
             background: theme.Colors.white
           }}
         >
