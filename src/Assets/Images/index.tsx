@@ -115,6 +115,7 @@ import VideoImg from './VideoImg.svg';
 import DownloadSvg from './downloadSvg.svg';
 import Language from './Language.svg'
 import Offline from './Offline.svg'
+import PayTMIcom from './paytm.svg'
 
 export {
   EnrollmentManagementIcon,
@@ -233,5 +234,6 @@ export {
   VideoImg,
   DownloadSvg,
   Language,
-  Offline
+  Offline,
+  PayTMIcom
 };

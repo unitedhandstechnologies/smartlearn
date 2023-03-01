@@ -1,24 +1,24 @@
-import { Icon, IconButton, Typography, useTheme } from '@material-ui/core';
+import { makeStyles, Typography, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import React, { useState } from 'react';
 import { ButtonComp, Heading } from 'src/components';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
-import RemoveIcon from '@material-ui/icons/Remove';
-import { Add } from '@material-ui/icons';
 
-const Summary = () => {
+const useStyles = makeStyles((theme) => ({
+  button: {
+    minWidth: 0,
+    padding: theme.spacing(0)
+  }
+}));
+type SummaryProps = {
+  purchaseData?: any[];
+  coursePrice?: number;
+  tax?: number;
+  total?: number;
+};
+
+const Summary = ({ purchaseData, coursePrice, tax, total }: SummaryProps) => {
   const theme = useTheme();
-  const [seatCount, setSeatCount] = useState<number>(0);
-  let coursePrice = 4500;
-  let tax = (4500 / 100) * 10;
-  let total = seatCount * coursePrice + tax;
-  const onClickDecrement = () => {
-    setSeatCount((prev) => prev - 1);
-  };
-
-  const onClickIncrement = () => {
-    setSeatCount((prev) => prev + 1);
-  };
   return (
     <Grid
       container
@@ -52,81 +52,7 @@ const Summary = () => {
         </Typography>
       </Grid>
       <Grid item>
-        <ChipComp label={'Course'} />
-      </Grid>
-      <Grid container item>
-        <Grid item xs>
-          <Typography
-            style={{
-              fontSize: '18px',
-              fontWeight: 500,
-              fontFamily: 'Switzer',
-              color: '#3C414B'
-            }}
-          >
-            Title
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography
-            style={{
-              fontSize: '18px',
-              fontWeight: 500,
-              fontFamily: 'Switzer',
-              color: '#3C414B'
-            }}
-          >
-            ₹ {coursePrice}
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid container item xs>
-        <Grid item xs>
-          <Typography
-            style={{
-              fontSize: '18px',
-              fontWeight: 500,
-              fontFamily: 'Switzer',
-              color: '#3C414B'
-            }}
-          >
-            No. of Available Seats
-          </Typography>
-        </Grid>
-        <Grid container spacing={0.5} item xs justifyContent={'flex-end'}>
-          <Grid item>
-            <IconButton
-              onClick={onClickDecrement}
-              disabled={seatCount <= 0}
-              style={{ background: theme.Colors.whiteLightGrey }}
-            >
-              <RemoveIcon fontSize="small" />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <Typography
-              style={{
-                fontSize: '18px',
-                fontWeight: 500,
-                fontFamily: 'Switzer',
-                color: '#3C414B',
-                border: '1px solid #3C78F0',
-                padding: theme.spacing(1),
-                borderRadius: '8px'
-              }}
-            >
-              {seatCount}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <IconButton
-              onClick={onClickIncrement}
-              style={{ background: theme.Colors.whiteLightGrey }}
-            >
-              <Add fontSize="small" />
-            </IconButton>
-          </Grid>
-        </Grid>
+        <CourseDetails purchaseData={purchaseData} />
       </Grid>
       <Grid item>
         <Typography
@@ -162,7 +88,7 @@ const Summary = () => {
               color: '#3C414B'
             }}
           >
-            {seatCount} x ₹ {coursePrice}
+            {purchaseData.length} x ₹ {coursePrice}
           </Typography>
         </Grid>
       </Grid>
@@ -223,3 +149,108 @@ const Summary = () => {
 };
 
 export default Summary;
+
+export const CourseDetails = ({ purchaseData }) => {
+  const theme = useTheme();
+  const classes = useStyles();
+  const onClickRemoveCourse = (rowData) => {
+    console.log('rowData', rowData);
+  };
+
+  return (
+    <Grid container spacing={2} direction={'column'}>
+      {purchaseData?.length
+        ? purchaseData.map((item, index) => {
+            return (
+              <Grid item key={index}>
+                <Grid container item>
+                  <Grid item xs>
+                    <ChipComp
+                      label={item.chipValue}
+                      style={{
+                        borderColor: '#3CC878',
+                        color: '#78828C',
+                        fontSize: theme.MetricsSizes.small_x,
+                        fontWeight: theme.fontWeight.regular
+                      }}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <ButtonComp
+                      buttonText="remove"
+                      backgroundColor={'transparent'}
+                      buttonTextColor={'#78828C'}
+                      height={theme.MetricsSizes.regular_xx}
+                      buttonFontSize={theme.MetricsSizes.small_x}
+                      buttonFontWeight={theme.fontWeight.regular}
+                      classes={{ root: classes.button }}
+                      onClickButton={() => onClickRemoveCourse(item)}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container item>
+                  <Grid item xs>
+                    <Typography
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: 500,
+                        fontFamily: 'Switzer',
+                        color: '#3C414B'
+                      }}
+                    >
+                      {item.title}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <Typography
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: 500,
+                        fontFamily: 'Switzer',
+                        color: '#3C414B'
+                      }}
+                    >
+                      ₹ {item.price}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid container item xs>
+                  <Grid item xs>
+                    <Typography
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: 500,
+                        fontFamily: 'Switzer',
+                        color: '#3C414B'
+                      }}
+                    >
+                      {item.seat}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    sx={{
+                      border: '1px solid #3C78F0',
+                      padding: theme.spacing(0, 1, 0, 1),
+                      borderRadius: '8px'
+                    }}
+                  >
+                    <Typography
+                      style={{
+                        fontSize: '18px',
+                        fontWeight: 500,
+                        fontFamily: 'Switzer',
+                        color: '#3C414B'
+                      }}
+                    >
+                      {item.seatCount}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Grid>
+            );
+          })
+        : null}
+    </Grid>
+  );
+};
