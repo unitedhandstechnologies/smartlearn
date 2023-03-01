@@ -337,7 +337,7 @@ const InstructorManagementCreateModal = (props: Props) => {
           </Grid>
           <Grid item xs={12}>
           <TextInputComponent
-            inputLabel={'Course Image'}
+            inputLabel={'Instructor Image'}
             value={edit.getValue('image_url').split('/')[3] || profileImage}
             disabled
             InputProps={{
@@ -367,7 +367,7 @@ const InstructorManagementCreateModal = (props: Props) => {
             }}
             required
             isError={imageError}
-            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB" }
+            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 270 X 350 resolution" }
           />
         </Grid>
           <Grid item xs={6}>

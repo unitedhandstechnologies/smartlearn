@@ -302,7 +302,7 @@ const CreatePrimaryDetails = ({
             }}
             required
             isError={imageError}
-            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB" }
+            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 350 X 250 resolution" }
           />
         </Grid>
       </Grid>

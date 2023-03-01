@@ -294,7 +294,7 @@ const AddNewCourseModal = ({
     const dateTo = new Date(edit.getValue('ending_date')); 
    
     try {
-      if (dateFrom>dateTo) {
+      if (dateFrom>=dateTo) {
         setError(true);
         setDateError(true);
         return toast.error('Starting Date should be a Date previous to Ending Date');

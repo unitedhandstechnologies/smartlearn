@@ -414,7 +414,7 @@ const AdminManagementModal = (props: Props) => {
               }}
               required
               isError={imageError}
-              helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB"}            
+              helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 270 X 350 resolution"}            
             />
           </Grid>
           <Grid item xs={5}>

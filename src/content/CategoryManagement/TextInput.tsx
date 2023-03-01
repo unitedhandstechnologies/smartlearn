@@ -8,6 +8,7 @@ import { API_SERVICES } from 'src/Services';
 import { capitalizeFirstLetter } from 'src/Utils';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { useTranslation } from 'react-i18next';
+import { HighlightOff } from '@material-ui/icons';
 
 type Props = {
   edit?: any;
@@ -84,19 +85,9 @@ const TextInput = ({
     <Grid container direction="row" spacing={2} style={{ marginTop: '25px' }}>
       {!categories ? (
         <Grid item xs={6}>
-          <TextInputComponent
-            inputLabel={'Category Image'}
-            value={
-              types[type].handleType === 2
-                ? edit.getValue('image_url').split('/')[3] || profileImage
-                : profileImage
-            }
-            isError={imageError}
-            helperText={
-              imageError
-                ? 'Please upload the profile image'
-                : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB'
-            }
+           <TextInputComponent
+            inputLabel={'Course Image'}
+            value={edit.getValue('image_url').split('/')[3] || profileImage}
             disabled
             InputProps={{
               startAdornment: (
@@ -116,7 +107,7 @@ const TextInput = ({
               ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <HighlightOffIcon
+                  <HighlightOff
                     style={{ cursor: 'pointer' }}
                     onClick={removeProfile}
                   />
@@ -124,6 +115,8 @@ const TextInput = ({
               )
             }}
             required
+            isError={imageError}
+            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 350 X 250 resolution" }
           />
         </Grid>
       ) : null}

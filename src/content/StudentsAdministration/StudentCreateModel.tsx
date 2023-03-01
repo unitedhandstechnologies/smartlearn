@@ -206,7 +206,7 @@ const StudentCreateModal = (props: Props) => {
         }
       } else {
         alert(`Sorry, this image doesn't look like the size we wanted. It's
-        ${img.width} x ${img.height} but we require size image between 270 x 350 to 200 x 250 .`);
+        ${img.width} x ${img.height} but we require size image between 200 x 250 to 270 x 350.`);
       }
     };
   };
@@ -326,7 +326,7 @@ const StudentCreateModal = (props: Props) => {
         </Grid>
         <Grid item xs={12}>
           <TextInputComponent
-            inputLabel={'Course Image'}
+            inputLabel={'Student Image'}
             value={edit.getValue('image_url').split('/')[3] || profileImage}
             disabled
             InputProps={{
@@ -356,7 +356,7 @@ const StudentCreateModal = (props: Props) => {
             }}
             required
             isError={imageError}
-            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB" }
+            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 270 X 350 resolution" }
           />
         </Grid>
         <Grid item xs={5}>
