@@ -14,6 +14,7 @@ import { ButtonComp, Heading } from 'src/components';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useNavigate } from 'react-router';
 import { makeStyles } from '@material-ui/core';
+import { useEffect, useState } from 'react';
 const useStyles = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -40,8 +41,9 @@ const Mentors = ({
 }: Props) => {
   const theme = useTheme();
   const classes = useStyles();
-  const [mentors, setMentors] = React.useState([]);
+  const [mentors, setMentors] = useState([]);
   const navigateTo = useNavigate();
+  const [view, setView] = useState(sliceValue);
 
   const handleMentorClick = (item) => {
     navigateTo('/home/mentor-courseProfile', {
@@ -50,7 +52,23 @@ const Mentors = ({
     });
   };
 
-  React.useEffect(() => {
+  const handleViewBottom = () => {
+    if (view === 12) {
+      setView(mentorDetails.length);
+    } else {
+      setView(12);
+    }
+  };
+
+  const handleViewTop = () => {
+    if (view === 4) {
+      setView(mentorDetails.length);
+    } else {
+      setView(4);
+    }
+  };
+
+  useEffect(() => {
     if (mentorDetails?.length) {
       setMentors(mentorDetails);
     } else {
@@ -92,13 +110,13 @@ const Mentors = ({
             }
           }}
         >
-          {viewButtonPosition === 'top' ? (
+          {viewButtonPosition === 'top' && mentors.length > 4 ? (
             <ButtonComp
               variant="outlined"
               backgroundColor={'transparent'}
               buttonTextColor={'#3C78F0'}
-              endIcon={<ArrowForwardIcon />}
-              buttonText={'View All'}
+              endIcon={view === 4 ? <ArrowForwardIcon /> : null}
+              buttonText={view === 4 ? 'View All' : 'Back'}
               btnWidth="fit-content"
               btnBorderRadius={'4px'}
               height={'50px'}
@@ -107,11 +125,12 @@ const Mentors = ({
                 borderWidth: '1.5px',
                 borderStyle: 'solid'
               }}
+              onClickButton={handleViewTop}
             />
           ) : null}
         </Grid>
       </Grid>
-      <Grid sx={{paddingBottom: '20px'}}>
+      <Grid sx={{ paddingBottom: '20px' }}>
         <img src={LineBarIcon} alt="" />
       </Grid>
       <Grid
@@ -159,8 +178,8 @@ const Mentors = ({
             })
           : null}
       </Grid>
-      {viewButtonPosition === 'bottom' ? (
-        <Grid item paddingTop={4}>
+      {viewButtonPosition === 'bottom' && mentors.length > 12 ? (
+        <Grid paddingTop={4} width={'100%'}>
           <ButtonComp
             style={{ border: '1.5px solid #3C78F0' }}
             variant="outlined"
@@ -169,10 +188,14 @@ const Mentors = ({
             backgroundColor={'#FFFFFF'}
             buttonTextColor={'#3C78F0'}
             btnBorderRadius={'4px'}
-            buttonText={'View All'}
+            buttonText={view === 12 ? 'View All' : 'Back'}
             btnWidth="100%"
-            iconImage={<img src={ArrowNext} style={{ marginLeft: '8px' }} />}
-            onClickButton={() => {}}
+            iconImage={
+              view === 12 ? (
+                <img src={ArrowNext} style={{ marginLeft: '8px' }} />
+              ) : null
+            }
+            onClickButton={handleViewBottom}
           />
         </Grid>
       ) : null}
