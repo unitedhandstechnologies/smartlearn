@@ -330,7 +330,7 @@ const MuiCardComp = ({
               }}
               onClickButton={() => {
                 if (studentDetails.id !== 0) {
-                  navigateTo('/home/pre-recorded-course-details', {
+                  navigateTo('/home/course-details', {
                     state: { formData: item },
                     replace: true
                   });
@@ -338,7 +338,7 @@ const MuiCardComp = ({
                   navigateTo('/home/user-login', {
                     state: {
                       details: { formData: item },
-                      route: '/home/pre-recorded-course-details'
+                      route: '/home/course-details'
                     },
                     replace: true
                   });

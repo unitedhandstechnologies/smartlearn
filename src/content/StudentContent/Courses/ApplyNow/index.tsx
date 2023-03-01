@@ -90,7 +90,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
   const handleClick = () => {
     if (course.course_type !== 'Workshop') {
       if (studentDetails.id !== 0) {
-        // navigateTo('/home/pre-recorded-course-details', {
+        // navigateTo('/home/course-details', {
         //   state: { ...course },
         //   replace: true
         // });
@@ -98,7 +98,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
         // navigateTo('/home/user-login', {
         //   state: {
         //     details: { ...course },
-        //     route: '/home/pre-recorded-course-details'
+        //     route: '/home/course-details'
         //   },
         //   replace: true
         // });
