@@ -1,4 +1,10 @@
-import { Grid, makeStyles, Typography, useTheme } from '@material-ui/core';
+import {
+  Grid,
+  makeStyles,
+  Typography,
+  useTheme,
+  Container
+} from '@material-ui/core';
 import React, { useState } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -36,45 +42,49 @@ const Faq = ({ question, answer, borderTop }) => {
   const [active, setActive] = useState<boolean>(false);
 
   return (
-    <Grid
-      container
-      spacing={2}
-      style={{
-        padding: '15px 0px',
-        borderBottom: '1px solid',
-        borderColor: theme.Colors.whiteLightGrey,
-        borderTop: borderTop
-      }}
-    >
-      <Grid container item onClick={() => setActive(!active)}>
-        <Grid item xs>
-          <Typography
-            className={!active ? classes.questionStyle : classes.activeQuestion}
-          >
-            {question}
-          </Typography>
+    <Container>
+      <Grid
+        container
+        spacing={2}
+        style={{
+          padding: '15px 0px',
+          borderBottom: '1px solid',
+          borderColor: theme.Colors.whiteLightGrey,
+          borderTop: borderTop
+        }}
+      >
+        <Grid container item onClick={() => setActive(!active)}>
+          <Grid item xs>
+            <Typography
+              className={
+                !active ? classes.questionStyle : classes.activeQuestion
+              }
+            >
+              {question}
+            </Typography>
+          </Grid>
+          <Grid item className={classes.iconStyle}>
+            {active ? (
+              <RemoveIcon fontSize="small" />
+            ) : (
+              <AddIcon fontSize="small" />
+            )}
+          </Grid>
         </Grid>
-        <Grid item className={classes.iconStyle}>
-          {active ? (
-            <RemoveIcon fontSize="small" />
-          ) : (
-            <AddIcon fontSize="small" />
-          )}
-        </Grid>
+        {active ? (
+          <Grid item>
+            {/* <Typography className={classes.answerStyle}>{answer}</Typography> */}
+            <RichTextInput
+              value={answer}
+              readOnly={true}
+              displayToolBar={'none'}
+              heightValue={'auto'}
+              borderSize={'0px'}
+            />
+          </Grid>
+        ) : null}
       </Grid>
-      {active ? (
-        <Grid item>
-          {/* <Typography className={classes.answerStyle}>{answer}</Typography> */}
-          <RichTextInput
-            value={answer}
-            readOnly={true}
-            displayToolBar={'none'}
-            heightValue={'auto'}
-            borderSize={'0px'}
-          />
-        </Grid>
-      ) : null}
-    </Grid>
+    </Container>
   );
 };
 

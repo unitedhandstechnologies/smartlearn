@@ -57,9 +57,8 @@ const HomePage = () => {
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.courses?.length) {
           let enabledCourse = response[0]?.data?.courses.filter((item) => {
-            return item.course_status === COURSE_STATUS_NAME[1]
-
-          })
+            return item.course_status === COURSE_STATUS_NAME[1];
+          });
           setCourseDetails(enabledCourse);
         }
       }
@@ -95,14 +94,14 @@ const HomePage = () => {
     return <Loader />;
   } else {
     return (
-      <Grid container sx={{ position: 'relative' }}>
+      <Grid container sx={{ position: 'relative', background: '#ffffff' }}>
         <Grid container direction="column">
           <HomeBanner />
         </Grid>
         <Grid
           container
           direction="column"
-          style={{ padding: theme.spacing(7, 7) }}
+          style={{ padding: theme.spacing(7, 0) }}
         >
           <USPs />
         </Grid>
@@ -110,7 +109,7 @@ const HomePage = () => {
           container
           direction="column"
           sx={{
-            padding: theme.spacing(7, 7),
+            padding: theme.spacing(7, 0),
             backgroundImage: `url(${BackgroundLine})`,
             [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
           }}
@@ -121,7 +120,7 @@ const HomePage = () => {
           container
           direction="column"
           style={{
-            padding: theme.spacing(7, 7),
+            padding: theme.spacing(7, 0),
             background: theme.Colors.white
           }}
         >

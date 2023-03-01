@@ -4,7 +4,8 @@ import {
   useTheme,
   Theme,
   IconButton,
-  Avatar
+  Avatar,
+  Container
 } from '@material-ui/core';
 import { Box, Grid, Rating, Typography } from '@mui/material';
 import Carousel from 'src/components/Carousel';
@@ -23,41 +24,43 @@ const ReviewComp = ({ review, show, currentIndex }) => {
   const classes = useStyles();
 
   return (
-    <Grid className={classes.carouselStyle}>
-      <Carousel show={show} currentIndex={currentIndex}>
-        {review?.length
-          ? review?.map((item, index) => {
-              return (
-                <Grid
-                  item
-                  xs={6}
-                  key={index}
-                  style={{
-                    padding: '0px 20px 0px 20px',
-                    width: '600px',
-                    [theme.breakpoints.down('xs')]: {
-                      width: '100%'
-                    }
-                  }}
-                >
-                  <ReviewBox
-                    imgUrl={item.img}
-                    name={item.name}
-                    subText={item.subText}
-                    rating={true}
-                    review={item.review}
-                    sx={undefined}
-                    courseIcon={undefined}
-                    subTextStyle={undefined}
-                    nameStyle={undefined}
-                    spacingRating={3}
-                  />
-                </Grid>
-              );
-            })
-          : null}
-      </Carousel>
-    </Grid>
+    <Container>
+      <Grid className={classes.carouselStyle}>
+        <Carousel show={show} currentIndex={currentIndex}>
+          {review?.length
+            ? review?.map((item, index) => {
+                return (
+                  <Grid
+                    item
+                    xs={6}
+                    key={index}
+                    style={{
+                      padding: '0px 20px 0px 20px',
+                      width: '600px',
+                      [theme.breakpoints.down('xs')]: {
+                        width: '100%'
+                      }
+                    }}
+                  >
+                    <ReviewBox
+                      imgUrl={item.img}
+                      name={item.name}
+                      subText={item.subText}
+                      rating={true}
+                      review={item.review}
+                      sx={undefined}
+                      courseIcon={undefined}
+                      subTextStyle={undefined}
+                      nameStyle={undefined}
+                      spacingRating={3}
+                    />
+                  </Grid>
+                );
+              })
+            : null}
+        </Carousel>
+      </Grid>
+    </Container>
   );
 };
 
@@ -94,12 +97,12 @@ export const ReviewBox = ({
   const [maxLine, setMaxLine] = useState(5);
 
   const handleEllipseClick = () => {
-    if(maxLine !== 5){
+    if (maxLine !== 5) {
       setMaxLine(5);
-    }else{
+    } else {
       setMaxLine(10);
     }
-  }
+  };
 
   return (
     <Box
@@ -110,7 +113,7 @@ export const ReviewBox = ({
         flexDirection: 'column',
         boxShadow: '0px 4px 24px rgba(0, 35, 80, 0.1)',
         backgroundColor: theme.Colors.white,
-        height: "100%",
+        height: '100%',
         ...sx
       }}
     >
@@ -171,19 +174,21 @@ export const ReviewBox = ({
             }}
           >
             {subText}
-          {review && (<Typography
-              sx={{
-                padding: '5px 5px 0px 0px',
-                cursor:"pointer"
-              }}
-            >
-              <LinesEllipsis
-                text={review}
-                maxLine={maxLine}
-                ellipsis="......"
-                onClick={handleEllipseClick}
-              />
-            </Typography>)}
+            {review && (
+              <Typography
+                sx={{
+                  padding: '5px 5px 0px 0px',
+                  cursor: 'pointer'
+                }}
+              >
+                <LinesEllipsis
+                  text={review}
+                  maxLine={maxLine}
+                  ellipsis="......"
+                  onClick={handleEllipseClick}
+                />
+              </Typography>
+            )}
           </Typography>
         </Grid>
       </Grid>

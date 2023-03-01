@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, IconButton } from '@mui/material';
+import { Grid, IconButton, Container } from '@mui/material';
 import { Avatar1, LineBarIcon } from 'src/Assets';
 import ReviewComp, { ReviewBox } from './ReviewComp';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -41,86 +41,88 @@ const Reviews = ({ ratingData }) => {
   };
 
   return (
-    <Grid>
-      <Grid
-        container
-        justifyContent={'space-between'}
-        sx={{ padding: '0 0 30px 0px' }}
-      >
-        <Grid>
-          <Heading
-            headingText={'What our learners say'}
-            headerFontSize={'40px'}
-            headerFontWeight={500}
-            headingColor={'#3C414B'}
-            headerFontFamily={'IBM Plex Serif'}
-            style={{
-              [theme.breakpoints.down('xs')]: {
-                fontSize: 15
-              }
-            }}
-          />
+    <Container>
+      <Grid>
+        <Grid
+          container
+          justifyContent={'space-between'}
+          sx={{ padding: '0 0 30px 0px' }}
+        >
           <Grid>
-            <img src={LineBarIcon} alt="" />
+            <Heading
+              headingText={'What our learners say'}
+              headerFontSize={'40px'}
+              headerFontWeight={500}
+              headingColor={'#3C414B'}
+              headerFontFamily={'IBM Plex Serif'}
+              style={{
+                [theme.breakpoints.down('xs')]: {
+                  fontSize: 15
+                }
+              }}
+            />
+            <Grid>
+              <img src={LineBarIcon} alt="" />
+            </Grid>
+          </Grid>
+          <Grid>
+            <IconButton
+              sx={{ color: '#3C78F0' }}
+              onClick={handlePrevClick}
+              disabled={view[0] <= 0}
+            >
+              <Grid
+                item
+                sx={{
+                  border: '1px solid #3C78F0',
+                  paddingTop: 1,
+                  width: 37,
+                  borderRadius: 1
+                }}
+              >
+                <ChevronLeftIcon />
+              </Grid>
+            </IconButton>
+            <IconButton
+              sx={{ color: '#3C78F0' }}
+              onClick={handleNextClick}
+              disabled={view[1] >= review.length}
+            >
+              <Grid
+                item
+                sx={{
+                  border: '1px solid #3C78F0',
+                  paddingTop: 1,
+                  width: 37,
+                  borderRadius: 1
+                }}
+              >
+                <ChevronRightIcon />
+              </Grid>
+            </IconButton>
           </Grid>
         </Grid>
-        <Grid>
-          <IconButton
-            sx={{ color: '#3C78F0' }}
-            onClick={handlePrevClick}
-            disabled={view[0] <= 0}
-          >
-            <Grid
-              item
-              sx={{
-                border: '1px solid #3C78F0',
-                paddingTop: 1,
-                width: 37,
-                borderRadius: 1
-              }}
-            >
-              <ChevronLeftIcon />
-            </Grid>
-          </IconButton>
-          <IconButton
-            sx={{ color: '#3C78F0' }}
-            onClick={handleNextClick}
-            disabled={view[1] >= review.length}
-          >
-            <Grid
-              item
-              sx={{
-                border: '1px solid #3C78F0',
-                paddingTop: 1,
-                width: 37,
-                borderRadius: 1
-              }}
-            >
-              <ChevronRightIcon />
-            </Grid>
-          </IconButton>
+        <Grid container spacing={3}>
+          {ratingData.slice(view[0], view[1]).map((item, index) => {
+            return (
+              <Grid item xs={12} sm={6} key={index}>
+                <ReviewBox
+                  name={item.mentor_name}
+                  subText={item.course_name}
+                  review={item.command}
+                  imgUrl={item.user_image}
+                  rating={true}
+                  ratingValue={item.mentor_rating}
+                />
+              </Grid>
+            );
+          })}
         </Grid>
-      </Grid>
-      <Grid container spacing={3}>
-        {ratingData.slice(view[0], view[1]).map((item, index) => {
-          return (
-            <Grid item xs={12} sm={6} key={index}>
-              <ReviewBox
-                name={item.mentor_name}
-                subText={item.course_name}
-                review={item.command}
-                imgUrl={item.user_image}
-                rating={true}
-                ratingValue={item.mentor_rating}
-              />
-            </Grid>
-          );
-        })}
-      </Grid>
-      {/* <Grid container spacing={3}>
+        {/* <Grid container spacing={3}>
         <ReviewComp review={review} show={show} currentIndex={currentIndex} />
       </Grid> */}
-    </Grid>
+      </Grid>
+    </Container>
   );
 };
 
