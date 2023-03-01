@@ -230,10 +230,10 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
         <Grid paddingTop={4}>
           <Heading headingText={'Skills covered'} {...headingProps} />
           <Grid item container spacing={1}>
-            {courseDescription?.category_name ? (
+            {courseDescription?.requirements ? (
               <Grid item>
                 <ChipComp
-                  label={courseDescription?.category_name}
+                  label={courseDescription?.requirements}
                   style={{
                     borderColor: '#3CC878',
                     fontSize: theme.MetricsSizes.small_xxx,
@@ -242,7 +242,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                 />
               </Grid>
             ) : null}
-            {courseDescription?.sub_category_name ? (
+            {/* {courseDescription?.sub_category_name ? (
               <Grid item xs>
                 <ChipComp
                   label={courseDescription?.sub_category_name}
@@ -253,7 +253,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                   }}
                 />
               </Grid>
-            ) : null}
+            ) : null} */}
           </Grid>
         </Grid>
         <Grid paddingTop={4}>

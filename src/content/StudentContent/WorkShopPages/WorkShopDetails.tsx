@@ -1,5 +1,5 @@
 import { memo, useCallback, useState, useEffect } from 'react';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { ButtonComp } from 'src/components';
 import { useTheme, makeStyles } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PreRecordedCourses = () => {
+const WorkShopDetails = () => {
   const theme = useTheme();
   const classes = useStyles();
   const navigateTo = useNavigate();
@@ -38,7 +38,9 @@ const PreRecordedCourses = () => {
     try {
       setLoading(true);
       setMentorDetails([]);
-      const response: any = await API_SERVICES.adminUserService.getById(data.mentor_id)
+      const response: any = await API_SERVICES.adminUserService.getById(
+        data.mentor_id
+      );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.user) {
           setMentorDetails(response?.data?.user);
@@ -57,7 +59,7 @@ const PreRecordedCourses = () => {
 
   return (
     <Grid sx={{ padding: 5, background: '#FFFFFF' }}>
-      <ButtonComp
+      {/* <ButtonComp
         buttonText={'All Workshops'}
         startIcon={
           <span style={{ color: theme.Colors.secondary, paddingTop: 7 }}>
@@ -76,7 +78,29 @@ const PreRecordedCourses = () => {
             replace: true
           })
         }
-      />
+      /> */}
+      <Grid
+        onClick={() =>
+          navigateTo('/home/workshops', {
+            replace: true
+          })
+        }
+        sx={{cursor: 'pointer'}}
+      >
+        <Typography
+          sx={{
+            color: '#3C414B',
+            fontSize: '18px',
+            fontWeight: theme.fontWeight.regular,
+            fontFamily: 'Switzer'
+          }}
+        >
+          Workshops{'>'}{' '}
+          <span style={{ fontWeight: theme.fontWeight.mediumBold }}>
+            {data.course_name}
+          </span>
+        </Typography>
+      </Grid>
       <Grid
         sx={{
           display: 'flex',
@@ -117,8 +141,7 @@ const PreRecordedCourses = () => {
           }
         }}
       >
-        <ApplyNow
-          course={data}/>
+        <ApplyNow course={data} />
       </Grid>
       <Grid
         container
@@ -135,4 +158,4 @@ const PreRecordedCourses = () => {
     </Grid>
   );
 };
-export default PreRecordedCourses;
+export default WorkShopDetails;

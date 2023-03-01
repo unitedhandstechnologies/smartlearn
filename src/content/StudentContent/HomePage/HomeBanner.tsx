@@ -75,7 +75,7 @@ const HomeBanner = () => {
             btnBorderRadius={'4px'}
             buttonText={'Start learning for free'}
             iconImage={<img src={ArrowNext} style={{ marginLeft: '8px' }} />}
-            onClickButton={() => navigateTo('/home/courses')}
+            onClickButton={() => navigateTo('/home/user-login')}
           />
         </Grid>
       </Grid>

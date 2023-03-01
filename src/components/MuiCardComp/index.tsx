@@ -87,7 +87,6 @@ type Props = {
   progressValue?: number;
   onClickCardImage?: (val: any) => void;
   prize?: any;
-  courseLevelId?: any;
   startLearning?: boolean;
   nextclass?: string;
   course_id?: number;
@@ -113,7 +112,6 @@ const MuiCardComp = ({
   courseType,
   progressValue,
   prize,
-  courseLevelId,
   onClickCardImage,
   startLearning = true,
   nextclass
@@ -235,14 +233,13 @@ const MuiCardComp = ({
           <Grid style={{ padding: '10px 0px' }}>
             <IconTextComp
               icon={
-                courseLevelId === 3
+                courseLevel === 'Advanced'
                   ? BarChartFillIcon
-                  : courseLevelId === 2
+                  : courseLevel === 'Intermediate'
                   ? IntermediateIcon
                   : BeginnerIcon
               }
               value={courseLevel}
-              id={courseLevelId}
             />
           </Grid>
         ) : null}
