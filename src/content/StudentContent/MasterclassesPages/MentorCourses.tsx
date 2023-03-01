@@ -173,6 +173,8 @@ const MentorCreatedCourses = () => {
                         subCategory={item.sub_category_name}
                         courseType={item.course_type}
                         onClickCardImage={() => onClickCardImage(item)}
+                        prize={item.amount}
+                        discount={item.discount}
                       />
                     </Grid>
                   );
@@ -236,6 +238,8 @@ const MentorCreatedCourses = () => {
                         subCategory={item.sub_category_name}
                         courseType={item.course_type}
                         onClickCardImage={() => onClickCardImage(item)}
+                        prize={item.amount}
+                        discount={item.discount}
                       />
                     </Grid>
                   );

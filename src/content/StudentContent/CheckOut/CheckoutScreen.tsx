@@ -1,12 +1,37 @@
-import { useTheme } from '@material-ui/core';
-import { Grid } from '@mui/material';
-import React from 'react';
-import { LineBarIcon } from 'src/Assets';
-import { Heading, TextInputComponent } from 'src/components';
+import { Radio, useTheme } from '@material-ui/core';
+import { FormControlLabel, Grid, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { LineBarIcon, PayTMIcom } from 'src/Assets';
+import { ButtonComp, Heading, TextInputComponent } from 'src/components';
+import MultipleSelectComp from 'src/components/MultipleSelectComp';
 import { useEdit } from 'src/hooks/useEdit';
+import { capitalizeFirstLetter } from 'src/Utils';
 
-const CheckoutScreen = () => {
+const city = [
+  {
+    id: 1,
+    name: 'Bangalore'
+  },
+  {
+    id: 2,
+    name: 'Chennai'
+  },
+  {
+    id: 3,
+    name: 'Madurai'
+  },
+  {
+    id: 4,
+    name: 'Tirunelveli'
+  },
+  {
+    id: 5,
+    name: 'Rajapalayam'
+  }
+];
+const CheckoutScreen = ({total}) => {
   const theme = useTheme();
+  const [isChecked, setIsChecked] = useState(false);
   const initialValues = {
     first_name: '',
     last_name: '',
@@ -16,9 +41,14 @@ const CheckoutScreen = () => {
     zipcode: ''
   };
   const edit = useEdit(initialValues);
-  const handleChange = () => {};
+
+  const handleChange = (e) => {
+    console.log('e', e);
+
+    setIsChecked(!isChecked);
+  };
   return (
-    <Grid container direction={'column'}>
+    <Grid container spacing={2} direction={'column'}>
       <Grid item>
         <Heading
           headingText={'Checkout'}
@@ -48,43 +78,34 @@ const CheckoutScreen = () => {
           <TextInputComponent
             inputLabel="First Name"
             labelColor={'#78828C'}
-            borderColor={'#3C78F0'}
             value={edit.getValue('first_name')}
-            inputRef={(ele) => {
-              if (ele) {
-                ele.focus();
-              }
+            onChange={(e) => {
+              edit.update({
+                first_name: capitalizeFirstLetter(e.target.value)
+              });
             }}
-            onChange={handleChange}
           />
         </Grid>
         <Grid item xs>
           <TextInputComponent
             inputLabel="Last Name"
             labelColor={'#78828C'}
-            borderColor={'#3C78F0'}
             value={edit.getValue('last_name')}
-            inputRef={(ele) => {
-              if (ele) {
-                ele.focus();
-              }
+            onChange={(e) => {
+              edit.update({ last_name: capitalizeFirstLetter(e.target.value) });
             }}
-            onChange={handleChange}
           />
         </Grid>
       </Grid>
       <Grid item>
         <TextInputComponent
           inputLabel="Address"
+          placeholder="Your full address"
           labelColor={'#78828C'}
-          borderColor={'#3C78F0'}
-          value={edit.getValue('full_adress')}
-          inputRef={(ele) => {
-            if (ele) {
-              ele.focus();
-            }
+          value={edit.getValue('full_address')}
+          onChange={(e) => {
+            edit.update({ full_address: e.target.value });
           }}
-          onChange={handleChange}
         />
       </Grid>
       <Grid container spacing={2} item>
@@ -92,44 +113,106 @@ const CheckoutScreen = () => {
           <TextInputComponent
             inputLabel="City"
             labelColor={'#78828C'}
-            borderColor={'#3C78F0'}
             value={edit.getValue('city')}
-            inputRef={(ele) => {
-              if (ele) {
-                ele.focus();
-              }
+            onChange={(e) => {
+              edit.update({ city: capitalizeFirstLetter(e.target.value) });
             }}
-            onChange={handleChange}
           />
+          {/* <MultipleSelectComp
+            titleText={'City'}
+            isPlaceholderNone
+            labelColor={'#78828C'}
+            selectItems={
+              city.length &&
+              city?.map((item: any) => ({
+                label: item.name,
+                value: item.id
+              }))
+            }
+            displayEmpty
+            renderValue={(value: any) => {
+              return value ? value : 'Select';
+            }}
+            value={edit.getValue('city')}
+            onChange={(e) => {
+              if (!e.target.value) {
+                edit.update({
+                  city: '',
+                  id: 0
+                });
+                return;
+              }
+              let cityName = city.filter((item) => {
+                return item.id === Number(e.target.value);
+              })[0].name;
+              edit.update({
+                city: cityName,
+                id: Number(e.target.value)
+              });
+            }}
+          /> */}
         </Grid>
         <Grid item>
           <TextInputComponent
             inputLabel="State"
             labelColor={'#78828C'}
-            borderColor={'#3C78F0'}
             value={edit.getValue('state')}
-            inputRef={(ele) => {
-              if (ele) {
-                ele.focus();
-              }
+            onChange={(e) => {
+              edit.update({ state: capitalizeFirstLetter(e.target.value) });
             }}
-            onChange={handleChange}
           />
         </Grid>
         <Grid item>
           <TextInputComponent
             inputLabel="Zipcode"
             labelColor={'#78828C'}
-            borderColor={'#3C78F0'}
             value={edit.getValue('zipcode')}
-            inputRef={(ele) => {
-              if (ele) {
-                ele.focus();
-              }
+            onChange={(e) => {
+              edit.update({ zipcode: e.target.value });
             }}
-            onChange={handleChange}
           />
         </Grid>
+      </Grid>
+      <Grid item>
+        <Heading headingText={'Payment Method'} />
+      </Grid>
+      <Grid item>
+        <Grid
+          sx={{
+            border: '1px solid #B4BEC8',
+            borderRadius: '4px',
+            padding: theme.spacing(1, 2)
+          }}
+        >
+          <FormControlLabel
+            labelPlacement="end"
+            control={<Radio checked={isChecked} onChange={handleChange} />}
+            label={
+              <Grid
+                sx={{
+                  display: 'flex',
+                  gap: 1,
+                  paddingLeft: theme.spacing(0.5)
+                }}
+              >
+                <img src={PayTMIcom} />
+                <Typography>Paytm</Typography>
+              </Grid>
+            }
+          />
+        </Grid>
+      </Grid>
+      <Grid item>
+        {isChecked ? (
+          <ButtonComp
+            buttonText={`Pay ₹${total} and complete checkout`}
+            btnWidth={'100%'}
+            btnBorderRadius={4}
+            buttonFontSize={16}
+            buttonFontWeight={theme.fontWeight.regular}
+
+          />
+        ) : null}
       </Grid>
     </Grid>
   );

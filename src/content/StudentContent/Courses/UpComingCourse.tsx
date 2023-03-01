@@ -334,14 +334,15 @@ const UpComingCourse = ({ courseDetails, chipIconText, setChipIconText }: Course
                       subCategory={item.sub_category_name}
                       courseType={item.course_type}
                       onClickCardImage={() => onClickCardImage(item)}
-                      prize={`${item.amount}, ${item.discount}%`}
+                      prize={item.amount}
+                      discount={item.discount}
                     />
                   </Grid>
                 );
               })
             : null}
         </Grid>
-        <Grid item>
+        {courses.length > 6 && <Grid item>
           <ButtonComp
             style={{ border: '1.5px solid #3C78F0' }}
             variant="outlined"
@@ -359,7 +360,7 @@ const UpComingCourse = ({ courseDetails, chipIconText, setChipIconText }: Course
             }
             onClick={handleView}
           />
-        </Grid>
+        </Grid>}
       </Grid>
       <ChipMenu
         anchorEl={anchorEl}

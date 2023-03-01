@@ -67,6 +67,7 @@ type Props = SelectProps & {
   borderColor?: string;
   helperText?: string;
   required?: boolean;
+  labelColor?: string;
 };
 
 function MultipleSelectComp(props: Props) {
@@ -83,6 +84,7 @@ function MultipleSelectComp(props: Props) {
     isError = false,
     borderColor,
     helperText,
+    labelColor,
     required,
     ...rest
   } = props;
@@ -105,7 +107,7 @@ function MultipleSelectComp(props: Props) {
       {titleText && (
         <Typography
           style={{
-            color: (isError && theme.Colors.redPrimary) || theme.Colors.primary,
+            color: (isError && theme.Colors.redPrimary) || labelColor || theme.Colors.primary,
             fontWeight: theme.fontWeight.medium
           }}
         >

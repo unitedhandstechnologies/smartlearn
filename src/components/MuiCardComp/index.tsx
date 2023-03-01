@@ -90,6 +90,7 @@ type Props = {
   startLearning?: boolean;
   nextclass?: string;
   course_id?: number;
+  discount?: number;
 };
 const MuiCardComp = ({
   course_id,
@@ -112,6 +113,7 @@ const MuiCardComp = ({
   courseType,
   progressValue,
   prize,
+  discount,
   onClickCardImage,
   startLearning = true,
   nextclass
@@ -147,32 +149,30 @@ const MuiCardComp = ({
               position="top"
               sx={{ backgroundColor: 'transparent' }}
             />
-            <ImageListItemBar
-              title={
-                <Heading
-                  headingText={title}
-                  headerFontSize={'32px'}
-                  headerFontWeight={700}
-                  headingColor={theme.Colors.white}
-                  headerFontFamily={'Switzer'}
-                  style={{
-                    [theme.breakpoints.down('xs')]: {
-                      headerFontSize: 20
-                    }
-                  }}
-                />
-              }
-              position="bottom"
-              sx={{
+            <Grid
+              style={{
                 backgroundColor: 'transparent',
                 position: 'absolute',
-                bottom: 80,
+                overflow: 'visible',
+                bottom: title.length > 23 ? 50 : 80,
+                paddingLeft: 20,
+                paddingRight: 5,
                 [theme.breakpoints.down('xs')]: {
                   bottom: 50
                 },
                 ...titleStyle
               }}
-            />
+            >
+              <Typography
+                style={{
+                  fontSize: '32px',
+                  fontFamily: 'Switzer',
+                  fontWeight: 700
+                }}
+              >
+                {title}
+              </Typography>
+            </Grid>
           </ImageListItem>
         ) : null}
       </CardActionArea>
@@ -290,11 +290,22 @@ const MuiCardComp = ({
           <Grid item style={{ marginRight: 10 }}>
             {leftText === 'PAID' ? (
               <ListItemCell
-                isSymbol
-                title={prize}
+                title={
+                  <Grid>₹{(prize - (discount / 100) * prize).toFixed()}</Grid>
+                  // <Grid container style={{gap:5 }}>
+                  //   <Grid
+                  //     style={{
+                  //       textDecoration: 'line-through'
+                  //     }}
+                  //   >
+                  //     ₹{prize}
+                  //   </Grid>{' '}
+                  //   <Grid>{discount}% off</Grid>
+                  // </Grid>
+                }
                 subTitle={'including GST'}
                 titleStyle={{
-                  fontSize: theme.MetricsSizes.regular_x,
+                  fontSize: theme.MetricsSizes.regular,
                   fontWeight: theme.fontWeight.bold
                 }}
               />
@@ -311,22 +322,26 @@ const MuiCardComp = ({
               buttonFontWeight={theme.fontWeight.regular}
               buttonFontSize={16}
               btnBorderRadius={'4px'}
+              style={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }}
               onClickButton={() => {
                 if (studentDetails.id !== 0) {
                   navigateTo('/home/pre-recordedCourse-details', {
-                    state: { course_id:course_id },
+                    state: { course_id: course_id },
                     replace: true
                   });
                 } else {
                   navigateTo('/home/user-login', {
                     state: {
-                      details: { course_id:course_id },
+                      details: { course_id: course_id },
                       route: '/home/pre-recordedCourse-details'
                     },
                     replace: true
                   });
                 }
-              }}  
+              }}
             />
           </Grid>
           <Grid

@@ -51,7 +51,7 @@ const AdminManagementTable = ({
   const { userDetails } = useContext(UserInfoContext);
   const { t } = useTranslation();
   const [rowItems, setRowItems] = useState(rowsData);
- 
+
   const initialValues = {
     status_name: '',
     status_id: 0
@@ -204,37 +204,37 @@ const AdminManagementTable = ({
       disableColumnSeparator: true,
       renderHeader: () => (
         <MultipleSelectComp
-        isPlaceholderNone
-        selectItems={
-          statusFilter.length &&
-          statusFilter?.map((item: any) => ({
-            label: item.name,
-            value: item.id
-          }))
-        }
-        displayEmpty
-        renderValue={(value: any) => {
-          return value ? value : 'Status';
-        }}
-        value={edit.getValue('status_name')}
-        onChange={(e) => {
-          if (!e.target.value) {
-            edit.update({
-              status_name: '',
-              status_id: 0
-            });
-            return;
+          isPlaceholderNone
+          selectItems={
+            statusFilter.length &&
+            statusFilter?.map((item: any) => ({
+              label: item.name,
+              value: item.id
+            }))
           }
-          let statusName = statusFilter.filter((item) => {
-            return item.id === Number(e.target.value);
-          })[0].name;
-          edit.update({
-            status_name: statusName,
-            status_id: Number(e.target.value)
-          });
-        }}
-        borderColor={theme.Colors.white}
-      />
+          displayEmpty
+          renderValue={(value: any) => {
+            return value ? value : 'Status';
+          }}
+          value={edit.getValue('status_name')}
+          onChange={(e) => {
+            if (!e.target.value) {
+              edit.update({
+                status_name: '',
+                status_id: 0
+              });
+              return;
+            }
+            let statusName = statusFilter.filter((item) => {
+              return item.id === Number(e.target.value);
+            })[0].name;
+            edit.update({
+              status_name: statusName,
+              status_id: Number(e.target.value)
+            });
+          }}
+          borderColor={theme.Colors.white}
+        />
       ),
 
       renderCell: ({ row }) => (
@@ -299,7 +299,6 @@ const AdminManagementTable = ({
       }
     ];
   };
-
 
   return (
     <>
