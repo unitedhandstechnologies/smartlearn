@@ -21,7 +21,7 @@ type Props = {
 const CartPopover = (props: Props) => {
   const { carts, anchorEl, handleClose } = props;
 
-  const renderComponenet = () => {
+  const renderComponent = () => {
     let total = 0;
     let tax = 0;
 
@@ -167,13 +167,12 @@ const CartPopover = (props: Props) => {
         <Grid paddingLeft={1.5} paddingTop={1.5}>
           <Typography
             style={{
-              fontFamily: 'Switzer Variable',
               fontSize: 16,
               fontWeight: 400,
               color: '#78828C'
             }}
           >
-            pricings:
+            pricing:
           </Typography>
         </Grid>
         <Divider light={true} style={{ paddingTop: 15 }} />
@@ -232,7 +231,7 @@ const CartPopover = (props: Props) => {
       anchorEl={anchorEl}
       handleClose={handleClose}
       popOverTitle={'Your Cart'}
-      renderContent={renderComponenet}
+      renderContent={renderComponent}
     />
   );
 };

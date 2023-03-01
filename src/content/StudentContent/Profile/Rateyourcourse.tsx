@@ -36,7 +36,6 @@ const Rateyourcourse = (props: Props) => {
               <Grid item xs>
                 <Typography
                   style={{
-                    fontFamily: 'Switzer Variable',
                     fontSize: 18,
                     fontWeight: 500,
                     color: '#3C414B'
@@ -46,7 +45,6 @@ const Rateyourcourse = (props: Props) => {
                 </Typography>
                 <Typography
                   style={{
-                    fontFamily: 'Switzer Variable',
                     fontSize: 16,
                     fontWeight: 400,
                     color: '#78828C',

@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
+import { Grid, Container } from '@mui/material';
 import {
   BarIcon,
   BasicStockIcon,
@@ -160,26 +160,28 @@ const PreRecordedDetails = () => {
           totalDuration={totalDuration}
         />
       </Grid>
-      <Grid
-        container
-        sx={{
-          [theme.breakpoints.down('md')]: {
-            paddingTop: 1
-          }
-        }}
-      >
-        <Grid item xs={12} md={9} paddingTop={5}>
-          <CourseDescription courseDescription={data} />
-        </Grid>
-        {courseRating.length && (
-          <Grid container item xs={12} md={3} paddingTop={'9%'}>
-            <CourseRight
-              courseRating={courseRating}
-              averageRating={averageRating}
-            />
+      <Container>
+        <Grid
+          container
+          sx={{
+            [theme.breakpoints.down('md')]: {
+              paddingTop: 1
+            }
+          }}
+        >
+          <Grid item xs={12} md={9} paddingTop={5}>
+            <CourseDescription courseDescription={data} />
           </Grid>
-        )}
-      </Grid>
+          {courseRating.length && (
+            <Grid container item xs={12} md={3} paddingTop={'9%'}>
+              <CourseRight
+                courseRating={courseRating}
+                averageRating={averageRating}
+              />
+            </Grid>
+          )}
+        </Grid>
+      </Container>
       {/* <Grid>
           <UpComingSession />
         </Grid> */}

@@ -1,7 +1,7 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 import { Loader } from 'src/components';
-import { useTheme } from '@material-ui/core';
+import { useTheme, Container } from '@material-ui/core';
 import LearnTheWayBox from './LearnTheWay/LearnTheWayBox';
 import Mentors from './Mentors';
 import UpComingSession from './UpComingSession';
@@ -125,12 +125,14 @@ const HomePage = () => {
           }}
         >
           <LearnTheWayBox />
-          <Mentors
-            mentorDetails={mentorDetails}
-            headingText={'Learn from industry leading mentors'}
-            viewButtonPosition={'top'}
-            sliceValue={4}
-          />
+          <Container style={{ maxWidth: '1200px' }}>
+            <Mentors
+              mentorDetails={mentorDetails}
+              headingText={'Learn from industry leading mentors'}
+              viewButtonPosition={'top'}
+              sliceValue={4}
+            />
+          </Container>
         </Grid>
         <Grid
           container

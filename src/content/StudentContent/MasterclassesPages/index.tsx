@@ -82,7 +82,6 @@ const Masterclasses = () => {
     return (
       <Box sx={{ py: 5 }}>
         <Container>
-          +{' '}
           <Grid>
             <UpcomingMasterClass
               courseDetails={courseDetails.filter(
