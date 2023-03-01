@@ -51,11 +51,15 @@ const CourseMainPage = (
         sectionData,
         videoToPlayIndex,
         setVideoToPlay,
-        setVideoToPlayIndex,
+        //setVideoToPlayIndex,
         quizData,
         testTopic,
         setTestTopic,
         videoDetails,
+        setVideoDetails,
+        videoPlaying,
+        setVideoPlaying,
+        fetchData
     }
 ) => {
     
@@ -64,45 +68,90 @@ const CourseMainPage = (
     const videoPlayerRef = useRef();
     const [playerRef, setPlayerRef] = useState<any>();
     const [isReady, setIsReady] = React.useState(false);
+    const timePaused = useRef(0);
 
 
    
 
     
-    const handlePlayNext = () => {    
-      let nextLessonIndex : number = videoToPlayIndex.lessonNumber;  
-      let nextSectionIndex : number =  videoToPlayIndex.sectionNumber; 
+    const handlePlayNext = useCallback(async() => {  
+
+        let updateData = {
+          played : 1
+        }
+        let userId=3;
+        let id=1;
+        const responseUpdateVideoDetails : any = 
+        await API_SERVICES.PreRecordedCourseVideoService.updateVideoDetails(
+          id,
+          userId,
+          videoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoId,
+          {
+            data :  updateData,          
+          }
+      );
+      let tempVideoDetails = videoDetails;
+      tempVideoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoPlayedFraction = 1;
+      
+      setVideoDetails(tempVideoDetails);
+
+      let nextLessonIndex : number = videoToPlayIndex.current.lessonNumber;  
+      let nextSectionIndex : number =  videoToPlayIndex.current.sectionNumber; 
       if (nextLessonIndex < videoDetails[nextSectionIndex].length-1)  {
         nextLessonIndex++;   
-        setVideoToPlayIndex({sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex })
+        videoToPlayIndex.current={sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex }
         setVideoToPlay(videoDetails[nextSectionIndex][nextLessonIndex].videoUrl); 
         return;
       }else {
         if (nextSectionIndex < videoDetails.length-1){
           nextSectionIndex++;
           nextLessonIndex=0;
-          setVideoToPlayIndex({sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex })
+          videoToPlayIndex.current={sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex }
           setVideoToPlay(videoDetails[nextSectionIndex][nextLessonIndex].videoUrl);           return;
         } else{
             nextSectionIndex=0;
             nextLessonIndex=0;
-          setVideoToPlayIndex({sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex })
+          videoToPlayIndex.current={sectionNumber : nextSectionIndex , lessonNumber : nextLessonIndex }
           setVideoToPlay(videoDetails[nextSectionIndex][nextLessonIndex].videoUrl);        
         }
       }
-    };
+    },[]);
 
     const handleVideoProgress = (event) => {
-      //videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].playingTime = event.played;
-      //setPlayingTime(event.played);
+      setVideoPlaying( event.played);
+      timePaused.current = event.played;
     };
 
-    const handleOnReady =useCallback((player) => {
+    const handleOnReady =useCallback((player) => {     
       if (!isReady){    
-      player.seekTo(videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].videoPlayedFraction,"fraction");
+      player.seekTo(videoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoPlayedFraction,"fraction");
       setIsReady(true);
       }
     },[isReady]);
+
+    const handleOnPause = useCallback(async() => {
+         if(timePaused.current > videoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoPlayedFraction ){
+        let updateData = {
+          played : timePaused.current
+        }
+        let userId=3;
+        let id=1;
+        const responseUpdateVideoDetails : any = 
+        await API_SERVICES.PreRecordedCourseVideoService.updateVideoDetails(
+          id,
+          userId,
+          videoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoId,
+          {
+            data :  updateData,          
+          }
+      );
+      }
+      
+      let tempVideoDetails = videoDetails;
+      tempVideoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoPlayedFraction = timePaused.current;
+      
+      setVideoDetails(tempVideoDetails);
+    },[]);
   
   
 
@@ -119,7 +168,7 @@ const CourseMainPage = (
           sectionData={sectionData}
           lessonData={lessonData}
           //handleAutoPlay = {setAutoPlay}
-          setVideoToPlayIndex={setVideoToPlayIndex}
+          videoToPlayIndex={videoToPlayIndex}
           quizData={quizData}
           setTestTopic = {setTestTopic}
           videoDetails={videoDetails}
@@ -133,7 +182,7 @@ const CourseMainPage = (
       <Typography style={{
         padding:'0px 32px',
         fontSize: theme.MetricsSizes.medium
-      }}>{videoToPlayIndex.sectionNumber+1} . {videoToPlayIndex.lessonNumber+1} {videoDetails[videoToPlayIndex.sectionNumber][videoToPlayIndex.lessonNumber].videoName}</Typography>
+      }}>{videoToPlayIndex.current.sectionNumber+1} . {videoToPlayIndex.current.lessonNumber+1} {videoDetails[videoToPlayIndex.current.sectionNumber][videoToPlayIndex.current.lessonNumber].videoName}</Typography>
         <Grid className={classes.playerContainer}>
           <ReactPlayer
             ref={(player)=>setPlayerRef(player)}
@@ -143,8 +192,9 @@ const CourseMainPage = (
             width={'100%'}
             height={'100%'}
             onEnded={handlePlayNext} 
-            onReady={handleOnReady}           
-            //onProgress={handleVideoProgress}
+            onReady={handleOnReady}  
+            onPause={handleOnPause}         
+            onProgress={handleVideoProgress}
           />
         </Grid>
         </>

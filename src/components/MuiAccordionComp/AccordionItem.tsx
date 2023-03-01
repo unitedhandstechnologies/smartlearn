@@ -60,7 +60,7 @@ export interface AccordionCompProps extends AccordionProps {
   activeItemIds?: any[];
   activeColor?: string;
   iconPosition?: string;
-  renderExpandIcons?: (isActive: boolean) => React.ReactNode;
+  renderExpandIcons?: (isActive: boolean,completedCount?: number) => React.ReactNode;
   accordionClassName?: any;
   accordionSummaryClassName?: any;
   accordionDetailClassName?: any;
@@ -72,6 +72,8 @@ export interface AccordionCompProps extends AccordionProps {
   iconColor?: any;
   bgColor?: any;
   isSectionCompleted?: boolean;
+  completedSection : number[];
+  itemIndex: number;
 }
 
 export const AccordionItem = (props) => {
@@ -95,6 +97,8 @@ export const AccordionItem = (props) => {
     renderAccordionTitle,
     accordianTitleClassName,
     isSectionCompleted,
+    completedSection,
+    itemIndex,
     ...Rest
   }: AccordionCompProps = props;
 
@@ -110,9 +114,14 @@ export const AccordionItem = (props) => {
     onClose(activeAccId);
   };
 
-  const renderDefaultExpandIcons = () => {
+  const renderDefaultExpandIcons = (itemIndex) => {
     if (renderExpandIcons) {
-      return renderExpandIcons(isActive);
+      if(completedSection){
+        return renderExpandIcons(isActive,completedSection[itemIndex]);
+      }
+      else{
+        return renderExpandIcons(isActive);
+      }
     } else if (isActive) {
       return <ExpandLess style={{color:iconColor || "#78828C"}}/>;
     } else {
@@ -142,7 +151,7 @@ export const AccordionItem = (props) => {
             <Grid className={`${classes.titleStyle}`}>{accordionTitle}</Grid>
           )}
           {renderAccordionTitle && renderAccordionTitle()}
-          {renderDefaultExpandIcons()}
+          {renderDefaultExpandIcons(itemIndex)}
         </Grid>
       </AccordionSummary>
       <AccordionDetails

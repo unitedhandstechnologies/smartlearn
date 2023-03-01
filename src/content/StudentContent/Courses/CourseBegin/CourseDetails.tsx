@@ -34,8 +34,9 @@ const CourseDetails = ({
   lessonData,
   sectionData,
   //handleAutoPlay,
-  setVideoToPlayIndex,
+  //setVideoToPlayIndex,
   //studentDetails,
+  videoToPlayIndex,
   quizData,
   setTestTopic,
   videoDetails,
@@ -45,15 +46,13 @@ const CourseDetails = ({
 
 const getRemainingTime = ( )=>{
   let totalTime=0;
-   console.log(videoDetails.map((row,rowIndex)=>{
+   (videoDetails.map((row,rowIndex)=>{
     row.map((item,index)=>{
-      console.log('item',item.videoRemainingTime)
-      console.log("totalTime",totalTime)
+
       totalTime = totalTime+ item.videoRemainingTime;
     })
   }));
  
-  console.log("finalTotal",totalTime)
   let hours,mins,secs;
   if(totalTime>60  ){
   hours=(String(totalTime/60).split(".")[0]);
@@ -66,7 +65,6 @@ const getRemainingTime = ( )=>{
   mins=(String(totalTime).split(".")[0]);
   secs=(String(totalTime).split(".")[1]);
   }
-  console.log("time",hours,mins,secs);
   return `${hours}hours ${mins}mins ${secs.slice(0,2)}secs`
 };
 
@@ -81,7 +79,7 @@ const studentDetails = {
         lessonData = {lessonData} 
         setVideoToPlay = {setVideoToPlay}
         //handleAutoPlay = {handleAutoPlay}videoToPlayIndex
-        setVideoToPlayIndex = {setVideoToPlayIndex}
+        videoToPlayIndex = {videoToPlayIndex}
         quizData = {quizData}
         setTestTopic = {setTestTopic}
         videoDetails={videoDetails}

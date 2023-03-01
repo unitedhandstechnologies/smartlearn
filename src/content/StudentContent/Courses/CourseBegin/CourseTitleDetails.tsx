@@ -50,14 +50,12 @@ const CourseTitleDetails = ({
   quizData,
   setVideoToPlay,
   //handleAutoPlay,
-  setVideoToPlayIndex,
+  videoToPlayIndex,
   setTestTopic,
   videoDetails,
   setIsReady
 })=> {
 
-  console.log("lessonData dfg",lessonData)
-  console.log("sectionData dzfgsdfg",sectionData)
   const classes = useStyles();
   //const icon = completed ? <CheckCircleIcon /> : <ExpandMoreIcon />;
 
@@ -81,6 +79,24 @@ const CourseTitleDetails = ({
 </Typography>
 
   )};
+
+  const  getCompletedSection = useCallback(() => {
+    let completedSection = Array(videoDetails?.length).fill(0);
+    videoDetails.map((row,rowIndex)=>{
+      let fractionCount = 0;
+      row.map((item,index)=>{
+        fractionCount = fractionCount + item.videoPlayedFraction;
+      })
+      let completedSectionValue = fractionCount / row?.length;
+      if (completedSectionValue>0.98){
+        completedSection[rowIndex]=1;
+      }else{
+        completedSection[rowIndex]=0;
+      }
+  });
+    return completedSection;
+ },[videoDetails]);
+
 
   const getAccordionQuizCertificateContents: any = React.useMemo(() => {
    
@@ -186,13 +202,14 @@ const CourseTitleDetails = ({
                           onClick={()=>{
                             setTestTopic(false);
                             setVideoToPlay(item.video_url);
-                            setVideoToPlayIndex({sectionNumber:sectionNumber-1,lessonNumber : index});
-                            setIsReady(false);}}
+                            videoToPlayIndex.current={sectionNumber:sectionNumber-1,lessonNumber : index};
+                            setIsReady(false);
+                          }}
                         >
                           <Grid item display={'flex'} alignItems={'center'} justifyContent={'center'}>
                           <CircularProgressWithLabel 
                             title={getSectionLessonValue(sectionNumber, index)}
-                             value={(videoDetails[sectionNumber-1][index].videoPlayedTime)*100} />
+                             value={(videoDetails[sectionNumber-1][index].videoPlayedFraction)*100} />
                              </Grid>
                              <Grid item>
                           <Grid container direction={'column'}>
@@ -215,12 +232,8 @@ const CourseTitleDetails = ({
                             fontWeight: 400,
                             fontSize : '12px'
                             
-                          }}>
-                            
-                            { 
-                            
-                            `${ minSec[0]}m  ${ minSec[1]}s`}
-                          
+                          }}>                            
+                            {`  ${ minSec[0]}m  ${ minSec[1]}s`}                          
                           </Typography>
                           </Grid>
                            </Grid>
@@ -242,12 +255,12 @@ const CourseTitleDetails = ({
         
       : [];
       
-  }, [sectionData, lessonData]);
+  }, [sectionData, lessonData, videoToPlayIndex]);
 
   
   useEffect(() => {    
 
-  }, []);
+  }, [videoDetails]);
 
   return (
     <>
@@ -260,17 +273,19 @@ const CourseTitleDetails = ({
             iconColor = {"primary"}
             isSectionCompleted = {true}
             //customActiveAccItem = {[videoToPlayIndex.sectionNumber]}
-
-            renderExpandIcons = {(isActive)=>{
+            completedSection ={getCompletedSection()}
+            renderExpandIcons = {(isActive,completedCount)=>{
               if (isActive) {
                 return <ExpandLess color={"primary"} />;
-              } else {
-                return <img src={greenTick} ></img>;
+              } else {                  
+                  if(completedCount)
+                    return <img src={greenTick} ></img>
+                  else
+                    return <ExpandMore color={"primary"} />
               }
             }}
     />
 
-    {console.log(getAccordionQuizCertificateContents)}
     <MuiAccordionComp
             config={getAccordionQuizCertificateContents}
             isBorder = {false}            

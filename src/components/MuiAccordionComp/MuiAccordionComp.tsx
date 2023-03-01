@@ -32,6 +32,7 @@ interface Props extends Partial<AccordionCompProps> {
   customActiveAccItem?: string[] | number[];
   resetAccItems?: boolean;
   accordianTitleClassName?: any;
+  completedSection?:number[];
 }
 
 const MuiAccordionComp = (props: Props) => {
@@ -47,14 +48,13 @@ const MuiAccordionComp = (props: Props) => {
     accordionClassName,
     bgColor,
     iconColor,
+    completedSection,
     ...rest
   } = props;
   const theme = useTheme();
   const classes = useStyles({ isBorder, containerBorderColor });
   const [activeItemIds, setActiveItemIds] = useState([]);
   let activeItem = customActiveAccItem ?? [];
-
-  console.log("confog",config)
   const onOpen = (id: string | number) => {
     if (activeItem.length) {
       return;
@@ -76,7 +76,7 @@ const MuiAccordionComp = (props: Props) => {
     if (activeItem.length || resetAccItems) {
       setActiveItemIds(activeItem);
     }
-  }, [resetAccItems, activeItem]);
+  }, [resetAccItems, activeItem, config]);
 
   return (
     <Grid>
@@ -97,6 +97,8 @@ const MuiAccordionComp = (props: Props) => {
                   accordionClassName={accordionClassName}
                   bgColor={bgColor}
                   iconColor={iconColor}
+                  completedSection={completedSection}
+                  itemIndex={index}
                   {...item}
                   {...rest}
                   

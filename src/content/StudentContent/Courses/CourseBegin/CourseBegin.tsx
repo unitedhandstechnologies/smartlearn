@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { Box, Grid, makeStyles, styled, useTheme } from '@material-ui/core';
 
 import CourseDetails from 'src/content/StudentContent/Courses/CourseBegin/CourseDetails';
@@ -46,18 +46,27 @@ const CourseBegin = () => {
   const [quizData, setQuizData] = useState<any[]>([]);
   const [testTopic, setTestTopic] = useState(false);
   const [ videoDetails , setVideoDetails] = useState<any[]>([]);
+  const [videoPlaying, setVideoPlaying] = useState<Number>(0.0);
 
   const [autoPlay, setAutoPlay] = useState(true);
   const { state }: any = useLocation();
-  const [videoToPlayIndex, setVideoToPlayIndex] = useState({
+  const videoToPlayIndex = useRef({
     sectionNumber: 0,
     lessonNumber: 0
   });
+  
   const fetchData = useCallback(async () => {
-    console.log("state", state);
     //let id = state?.course_id;
-    let id = 7;
+    //console.log("id",id)
+    let id = 1;
+    let userId = 3;
     try {
+
+      const responseVideoDetails : any = 
+        await API_SERVICES.PreRecordedCourseVideoService.getVideoDetails(
+          id,
+          userId
+        );
       const response: any = await Promise.all([
         API_SERVICES.courseManagementService.getById(id),
         API_SERVICES.quizService.getAllQuiz(LANGUAGE_ID.english, id)
@@ -86,7 +95,7 @@ const CourseBegin = () => {
                 );
               if (responseLesson?.status < HTTP_STATUSES.BAD_REQUEST) {
                 setLessonData(responseLesson.data.Lessons);
-
+                let videoPercentage = responseVideoDetails.data.Video_percentage;
                 let sectionData1 = responseSection.data.Section;
                 let lessonData1 = responseLesson.data.Lessons;
                 
@@ -105,7 +114,6 @@ const CourseBegin = () => {
                       )
                   );
        
-                  let tempTime = [0.6,0.50,0.75,0.95,0.00];
                   let tempElapsedTime = [0.07, 0.16,0.20,0.50,0.00];
                   let tempRemainingTime = [15.12,4.33,66.65,7,20.56] ;
                 if (sectionData1?.length) {
@@ -119,24 +127,28 @@ const CourseBegin = () => {
                       : [];
                     if (getLessonData.length) {
                       getLessonData.map((item, index) => {
+                        let tempPercentagePlayed = videoPercentage.filter(
+                          (itemVideo) => itemVideo.course_id === id && itemVideo.user_id === userId && itemVideo.lesson_id === item.lesson_id
+                          );
+
                         tempVideoDetails[sectionNumber - 1][index] ={
+                          
                           videoUrl : item.video_url,
                           videoName : item.lesson_name,
+                          videoId : item.lesson_id,
                           videoDuration : item.duration,
-                          videoPlayedFraction : tempTime[sectionNumber - 1],  
+                          videoPlayedFraction : tempPercentagePlayed[0].played,
                           videoElapsedTime : tempElapsedTime  [sectionNumber - 1],               
                           videoPlayingTime : 0.0,
                           videoRemainingTime : tempRemainingTime[sectionNumber - 1]                        
-                        }
-                          
+                        }                          
                       });
                     }                                       
                   });
                 }
-         
                 setVideoDetails(tempVideoDetails);
                 setVideoToPlay(tempVideoDetails[0][0].videoUrl);
-                setVideoToPlayIndex({ sectionNumber: 0, lessonNumber: 0 });
+                videoToPlayIndex.current={ sectionNumber: 0, lessonNumber: 0 };
               }
             } catch (err) {
               toast.error(err?.message);
@@ -155,8 +167,36 @@ const CourseBegin = () => {
     }
   }, []);
 
+  const updataVideoData =  ()=>{
+    try{
+      let id = 30;
+      let userId = 15;
+      videoDetails.map((row,indexRow)=>{
+        row.map(async(item,index)=>{
+          let updateData = {
+            played : item.videoPlayedFraction
+          }
+          const responseUpdateVideoDetails : any = 
+          await API_SERVICES.PreRecordedCourseVideoService.updateVideoDetails(
+            id,
+            userId,
+            item.lesson_id,
+            {
+              data :  updateData,          
+            }
+        )
+
+        });
+
+        });        
+
+    }catch(e){
+    }
+  };
+
+
   useEffect(() => {
-    fetchData();
+    fetchData();   
   }, []);
 
   if (loading) {
@@ -169,15 +209,19 @@ const CourseBegin = () => {
         lessonData={lessonData}
         sectionData={sectionData}
         videoToPlayIndex={videoToPlayIndex}
-        setVideoToPlayIndex={setVideoToPlayIndex}
+        //setVideoToPlayIndex={setVideoToPlayIndex}
         setVideoToPlay={setVideoToPlay}
         quizData={quizData}
         setTestTopic={setTestTopic}
         testTopic={testTopic}
         videoDetails={videoDetails}
+        setVideoDetails={setVideoDetails}
+        videoPlaying={videoPlaying}
+        setVideoPlaying={setVideoPlaying}
+        fetchData={fetchData}
       />
     );
   }
 };
 
-export default memo(CourseBegin);
+export default CourseBegin;
