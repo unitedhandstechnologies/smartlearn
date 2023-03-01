@@ -152,6 +152,7 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
                     onClickCardImage={() => onClickCardImage(item)}
                     course_id={item.course_id}
                     discount={item.discount}
+                    item={item}
                   />
                 </Grid>
               );

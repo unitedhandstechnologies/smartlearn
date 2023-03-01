@@ -91,6 +91,7 @@ type Props = {
   nextclass?: string;
   course_id?: number;
   discount?: number;
+  item?: any;
 };
 const MuiCardComp = ({
   course_id,
@@ -116,7 +117,8 @@ const MuiCardComp = ({
   discount,
   onClickCardImage,
   startLearning = true,
-  nextclass
+  nextclass,
+  item
 }: Props) => {
   const theme = useTheme();
   const navigateTo = useNavigate();
@@ -328,15 +330,15 @@ const MuiCardComp = ({
               }}
               onClickButton={() => {
                 if (studentDetails.id !== 0) {
-                  navigateTo('/home/pre-recordedCourse-details', {
-                    state: { course_id: course_id },
+                  navigateTo('/home/pre-recorded-course-details', {
+                    state: { formData: item },
                     replace: true
                   });
                 } else {
                   navigateTo('/home/user-login', {
                     state: {
-                      details: { course_id: course_id },
-                      route: '/home/pre-recordedCourse-details'
+                      details: { formData: item },
+                      route: '/home/pre-recorded-course-details'
                     },
                     replace: true
                   });

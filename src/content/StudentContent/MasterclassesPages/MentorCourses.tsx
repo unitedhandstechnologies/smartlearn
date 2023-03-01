@@ -38,7 +38,7 @@ const MentorCreatedCourses = () => {
       }
     });
 
-    console.log(mentorCategory,"categor");
+  console.log(mentorCategory, 'categor');
 
   const upcomingWorkShops = state?.courses?.filter(
     (course) =>
@@ -53,7 +53,7 @@ const MentorCreatedCourses = () => {
 
   const onClickCardImage = (item) => {
     navigateTo('/home/mentor-courseProfile/masterClass-courseDetails', {
-      state: { ...item,mentor_profile:state.image_url },
+      state: { ...item, mentor_profile: state.image_url },
       replace: true
     });
   };
@@ -175,6 +175,7 @@ const MentorCreatedCourses = () => {
                         onClickCardImage={() => onClickCardImage(item)}
                         prize={item.amount}
                         discount={item.discount}
+                        item={item}
                       />
                     </Grid>
                   );
@@ -240,6 +241,7 @@ const MentorCreatedCourses = () => {
                         onClickCardImage={() => onClickCardImage(item)}
                         prize={item.amount}
                         discount={item.discount}
+                        item={item}
                       />
                     </Grid>
                   );

@@ -281,6 +281,7 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
                     prize={item.amount}
                     //onClickCardImage={() => onClickCardImage(item)}
                     startLearning={false}
+                    item={item}
                   />
                 </Grid>
               );

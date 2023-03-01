@@ -218,6 +218,7 @@ const ContinueLearning = ({ enrollCourse }) => {
                     prize={item.amount}
                     onClickCardImage={() => onClickCardImage(item)}
                     startLearning={false}
+                    item={item}
                   />
                 </Grid>
               );

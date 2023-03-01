@@ -107,7 +107,11 @@ type CourseProps = {
   setChipIconText?: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
-const UpComingCourse = ({ courseDetails, chipIconText, setChipIconText }: CourseProps) => {
+const UpComingCourse = ({
+  courseDetails,
+  chipIconText,
+  setChipIconText
+}: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
   const { i18n } = useTranslation();
@@ -171,7 +175,7 @@ const UpComingCourse = ({ courseDetails, chipIconText, setChipIconText }: Course
           ? filteredCourse
           : courseDetails
       ).filter((item) => item.language_id == chipFilterItem[2]);
-     changeLanguage(chipFilterItem[2]);
+      changeLanguage(chipFilterItem[2]);
     }
     if (
       chipFilterItem[0] === 0 &&
@@ -181,7 +185,6 @@ const UpComingCourse = ({ courseDetails, chipIconText, setChipIconText }: Course
       setCourses([...courseDetails]);
     } else {
       setCourses([...filteredCourse]);
-      
     }
     setAnchorEl(null);
     setChipIconText([...chipFilterItem]);
@@ -336,31 +339,34 @@ const UpComingCourse = ({ courseDetails, chipIconText, setChipIconText }: Course
                       onClickCardImage={() => onClickCardImage(item)}
                       prize={item.amount}
                       discount={item.discount}
+                      item={item}
                     />
                   </Grid>
                 );
               })
             : null}
         </Grid>
-        {courses.length > 6 && <Grid item>
-          <ButtonComp
-            style={{ border: '1.5px solid #3C78F0' }}
-            variant="outlined"
-            buttonFontFamily="Switzer"
-            buttonFontSize={theme.MetricsSizes.regular}
-            backgroundColor={theme.Colors.white}
-            buttonTextColor={'#3C78F0'}
-            btnBorderRadius={'4px'}
-            buttonText={view === 6 ? 'View All' : 'Back'}
-            btnWidth="100%"
-            iconImage={
-              view === 6 ? (
-                <img src={ArrowNext} style={{ marginLeft: '8px' }} />
-              ) : null
-            }
-            onClick={handleView}
-          />
-        </Grid>}
+        {courses.length > 6 && (
+          <Grid item>
+            <ButtonComp
+              style={{ border: '1.5px solid #3C78F0' }}
+              variant="outlined"
+              buttonFontFamily="Switzer"
+              buttonFontSize={theme.MetricsSizes.regular}
+              backgroundColor={theme.Colors.white}
+              buttonTextColor={'#3C78F0'}
+              btnBorderRadius={'4px'}
+              buttonText={view === 6 ? 'View All' : 'Back'}
+              btnWidth="100%"
+              iconImage={
+                view === 6 ? (
+                  <img src={ArrowNext} style={{ marginLeft: '8px' }} />
+                ) : null
+              }
+              onClick={handleView}
+            />
+          </Grid>
+        )}
       </Grid>
       <ChipMenu
         anchorEl={anchorEl}

@@ -156,7 +156,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 const WishListCourse = () => {
   const theme = useTheme();
   const classes = useStyles();
@@ -164,7 +163,7 @@ const WishListCourse = () => {
     return (
       <Grid container style={{ padding: '20px 0px' }}>
         <Grid item>
-          <ListItemCell title={'39,000'} subTitle={'including GST'}/>
+          <ListItemCell title={'39,000'} subTitle={'including GST'} />
         </Grid>
         <Grid item xs>
           <ButtonComp
@@ -199,9 +198,7 @@ const WishListCourse = () => {
     );
   };
 
-  const onClickCardImage = (rowData) => {
-
-  }
+  const onClickCardImage = (rowData) => {};
   return (
     <Grid>
       <Heading
@@ -255,6 +252,7 @@ const WishListCourse = () => {
                     courseType={item.course_type}
                     prize={item.amount}
                     onClickCardImage={() => onClickCardImage(item)}
+                    item={item}
                   />
                 </Grid>
               );

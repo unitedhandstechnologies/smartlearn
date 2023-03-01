@@ -256,6 +256,7 @@ const MyLibrary = ({ enrollCourse }) => {
                     prize={item.amount}
                     onClickCardImage={() => onClickCardImage(item)}
                     startLearning={false}
+                    item={item}
                   />
                 </Grid>
               );

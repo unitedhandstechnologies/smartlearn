@@ -89,7 +89,11 @@ type CourseProps = {
   chipIconText?: number[];
   setChipIconText?: React.Dispatch<React.SetStateAction<number[]>>;
 };
-const LearnAtUrPace = ({ courseDetails, chipIconText, setChipIconText }: CourseProps) => {
+const LearnAtUrPace = ({
+  courseDetails,
+  chipIconText,
+  setChipIconText
+}: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
   const { i18n } = useTranslation();
@@ -138,18 +142,15 @@ const LearnAtUrPace = ({ courseDetails, chipIconText, setChipIconText }: CourseP
         (item) => item.course_level_id == chipFilterItem[0]
       );
     }
-    if (chipFilterItem[1] != 0) { 
+    if (chipFilterItem[1] != 0) {
       filteredCourse = (
         chipFilterItem[0] != 0 || chipFilterItem[1] != 0
           ? filteredCourse
           : courseDetails
       ).filter((item) => item.language_id == chipFilterItem[1]);
-      changeLanguage(chipFilterItem[1])
+      changeLanguage(chipFilterItem[1]);
     }
-    if (
-      chipFilterItem[0] === 0 &&
-      chipFilterItem[1] === 0 
-    ) {
+    if (chipFilterItem[0] === 0 && chipFilterItem[1] === 0) {
       setCourses([...courseDetails]);
     } else {
       setCourses([...filteredCourse]);
@@ -314,27 +315,30 @@ const LearnAtUrPace = ({ courseDetails, chipIconText, setChipIconText }: CourseP
                     onClickCardImage={() => onClickCardImage(item)}
                     prize={item.amount}
                     discount={item.discount}
+                    item={item}
                   />
                 </Grid>
               );
             })
           : null}
       </Grid>
-     {getFilterCourse.length > 6 && <Grid item>
-        <ButtonComp
-          style={{ border: '1.5px solid #3C78F0' }}
-          variant="outlined"
-          buttonFontFamily="Switzer"
-          buttonFontSize={theme.MetricsSizes.regular}
-          backgroundColor={theme.Colors.white}
-          buttonTextColor={'#3C78F0'}
-          btnBorderRadius={'4px'}
-          buttonText={'View All'}
-          btnWidth="100%"
-          iconImage={<img src={ArrowNext} style={{ marginLeft: '10px' }} />}
-          onClickButton={handleView}
-        />
-      </Grid>}
+      {getFilterCourse.length > 6 && (
+        <Grid item>
+          <ButtonComp
+            style={{ border: '1.5px solid #3C78F0' }}
+            variant="outlined"
+            buttonFontFamily="Switzer"
+            buttonFontSize={theme.MetricsSizes.regular}
+            backgroundColor={theme.Colors.white}
+            buttonTextColor={'#3C78F0'}
+            btnBorderRadius={'4px'}
+            buttonText={'View All'}
+            btnWidth="100%"
+            iconImage={<img src={ArrowNext} style={{ marginLeft: '10px' }} />}
+            onClickButton={handleView}
+          />
+        </Grid>
+      )}
       <ChipMenu
         anchorEl={anchorEl}
         {...menuItem}

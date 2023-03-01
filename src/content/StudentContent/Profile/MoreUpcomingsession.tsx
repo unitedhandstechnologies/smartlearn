@@ -277,6 +277,7 @@ const MoreUpcomingsession = ({ courseDetails = [] }: CourseProps) => {
                     courseType={item.course_type}
                     prize={item.amount}
                     onClickCardImage={() => onClickCardImage(item)}
+                    item={item}
                   />
                 </Grid>
               );

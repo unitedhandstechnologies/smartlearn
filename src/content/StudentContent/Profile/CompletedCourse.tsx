@@ -145,13 +145,12 @@ const courses = [
   }
 ];
 
-
 const CompletedCourse = () => {
   const theme = useTheme();
 
   const renderCardAction = () => {
     return (
-      <Grid style={{padding: '20px 0px'}}>
+      <Grid style={{ padding: '20px 0px' }}>
         <ButtonComp
           buttonText="View Certificate"
           btnWidth={'100%'}
@@ -205,6 +204,7 @@ const CompletedCourse = () => {
               locationName={item.meeting_location}
               subCategory={item.sub_category_name}
               courseType={item.course_type}
+              item={item}
             />
           );
         })}
