@@ -24,7 +24,7 @@ import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
 import ChipIconcomp from './ChipIconcomp';
 import ChipMenu from './ChipMenu';
-
+import { useNavigate } from 'react-router';
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -103,7 +103,7 @@ const LearnAtUrPace = ({
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
   const [searchValue, setSearchValue] = useState('');
-
+  const navigateTo = useNavigate();
   const getSearchValue = (searchValue) => {
     setSearchValue(searchValue);
   };
@@ -170,7 +170,10 @@ const LearnAtUrPace = ({
   };
 
   const onClickCardImage = (rowData) => {
-    console.log('rowData', rowData);
+    navigateTo('/home/course-details', {
+      state: { formData: { ...rowData } },
+      replace: true
+    });
   };
 
   const getFilterCourse = useMemo(() => {

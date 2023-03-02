@@ -141,11 +141,12 @@ const Mentors = ({
                       cursor: 'pointer'
                     }}
                     key={index}
-                    onClick={() =>
-                      viewButtonPosition === 'bottom'
-                        ? handleMentorClick(item)
-                        : null
-                    }
+                    // onClick={() =>
+                    //   viewButtonPosition === 'bottom'
+                    //     ? handleMentorClick(item)
+                    //     : null
+                    // }
+                    onClick={() => handleMentorClick(item)}
                   >
                     <img src={item.image_url} alt="" />
                     <ImageListItemBar

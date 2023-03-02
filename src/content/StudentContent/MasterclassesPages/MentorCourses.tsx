@@ -83,7 +83,7 @@ const MentorCreatedCourses = () => {
           <MentorProfile mentorDetails={state} category={mentorCategory} />
         </Grid>
         <Grid item xs={12} sm={7} md={8.7}>
-          {upcomingWorkShops.length ? (
+          {upcomingWorkShops?.length ? (
             <>
               <Grid
                 container
@@ -146,7 +146,7 @@ const MentorCreatedCourses = () => {
                   }
                 }}
               >
-                {upcomingWorkShops.map((item, index) => {
+                {upcomingWorkShops?.map((item, index) => {
                   return (
                     <Grid key={index} item xs={12} sm={12} md={5.5}>
                       <MuiCardComp
@@ -211,8 +211,8 @@ const MentorCreatedCourses = () => {
               }
             }}
           >
-            {course.length
-              ? course.map((item, index) => {
+            {course?.length
+              ? course?.map((item, index) => {
                   return (
                     <Grid key={index} item xs={12} sm={12} md={5.5}>
                       <MuiCardComp

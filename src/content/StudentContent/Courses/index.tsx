@@ -112,7 +112,7 @@ const Courses = () => {
     try {
       setLoading(true);
       const response: any = await API_SERVICES.courseManagementService.getAll(
-        DETECT_LANGUAGE[i18n.language]
+        DETECT_LANGUAGE[i18n.language] || 1
       );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.courses?.length) {

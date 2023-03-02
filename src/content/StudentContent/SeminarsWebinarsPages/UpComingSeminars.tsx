@@ -31,7 +31,7 @@ import ChipIconcomp from '../Courses/ChipIconcomp';
 import ChipMenu from '../Courses/ChipMenu';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
-
+import { useNavigate } from 'react-router';
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -110,7 +110,7 @@ const UpComingSeminars = ({
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
   const [searchValue, setSearchValue] = useState('');
-
+  const navigateTo = useNavigate();
   const getSearchValue = (searchValue) => {
     setSearchValue(searchValue);
   };
@@ -177,7 +177,10 @@ const UpComingSeminars = ({
   };
 
   const onClickCardImage = (rowData) => {
-    console.log('rowData', rowData);
+    navigateTo('/home/course-details', {
+      state: { formData: { ...rowData } },
+      replace: true
+    });
   };
 
   useEffect(() => {
