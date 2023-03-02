@@ -54,6 +54,7 @@ const CartPopover = (props: Props) => {
       navigateTo('/home/checkout-page', {
         replace: true
       });
+      handleClose()
     };
 
     const onClickRemoveCourse = async (rowData) => {
