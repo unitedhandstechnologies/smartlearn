@@ -116,6 +116,7 @@ import DownloadSvg from './downloadSvg.svg';
 import Language from './Language.svg'
 import Offline from './Offline.svg'
 import PayTMIcom from './paytm.svg'
+import LockIcon from './lock.svg';
 
 export {
   EnrollmentManagementIcon,
@@ -235,5 +236,6 @@ export {
   DownloadSvg,
   Language,
   Offline,
-  PayTMIcom
+  PayTMIcom,
+  LockIcon
 };

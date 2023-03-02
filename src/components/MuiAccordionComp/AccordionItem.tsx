@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import {
   Accordion,
@@ -134,6 +134,13 @@ export const AccordionItem = (props) => {
       ? classes.expandIconLeft
       : classes.expandIconRight;
   };
+
+  useEffect(() => {
+
+  }, [activeAccId,
+    activeItemIds,
+    renderExpandIcons
+  ]);
 
   return (
     <Accordion

@@ -25,7 +25,7 @@ import React from 'react';
 import { useTheme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgressWithLabel from './CircularProgressWithLable';
-import { TestTopic, TrophyLine, videoLine } from 'src/Assets/Images';
+import { LockIcon, TestTopic, TrophyLine, videoLine } from 'src/Assets/Images';
 import { greenTick } from 'src/Assets/Images';
 import { string } from 'prop-types';
 
@@ -81,7 +81,8 @@ const CourseTitleDetails = ({
     );
   };
 
-  const getCompletedSection = useCallback(() => {
+  const getCompletedSection : any  = React.useMemo(() => {
+    console.log("inside get section")
     let completedSection = Array(videoDetails?.length).fill(0);
     videoDetails.map((row, rowIndex) => {
       let fractionCount = 0;
@@ -94,15 +95,26 @@ const CourseTitleDetails = ({
       } else {
         completedSection[rowIndex] = 0;
       }
+      console.log("here");
+      
+      console.log("completedSection.reduce((a, b) => a + b, 0)",completedSection.reduce((a, b) => a + b, 0))
+      console.log("row?.length",row?.length)
+      if (completedSection.reduce((a, b) => a + b, 0)===row?.length){
+        console.log("completedSection.reduce((a, b) => a + b, 0)",completedSection.reduce((a, b) => a + b, 0))
+        console.log("row?.length",row?.length)
+        //API Call to update course completion
+      }
     });
     return completedSection;
-  }, [videoDetails]);
+    
+  }, [videoDetails,videoToPlayIndex]);
 
   const getAccordionQuizCertificateContents: any = React.useMemo(() => {
     return [
       {
         id: sectionData?.length + 1,
         renderAccordionTitle: () => (
+          <>
           <Grid
             container
             alignItems="center"
@@ -127,11 +139,17 @@ const CourseTitleDetails = ({
               Test Topic
             </Typography>
           </Grid>
+
+          <Grid item >
+            <img src={LockIcon} />
+          </Grid>
+          </>
         )
       },
       {
         id: sectionData?.length + 2,
         renderAccordionTitle: () => (
+          <>
           <Grid
             container
             alignItems="center"
@@ -156,6 +174,10 @@ const CourseTitleDetails = ({
               Get Your Certificate
             </Typography>
           </Grid>
+          <Grid item >
+          <img src={LockIcon} />
+          </Grid>
+        </>
         )
       }
     ];
@@ -202,7 +224,12 @@ const CourseTitleDetails = ({
               </Grid>
             ),
             accContentDetail: () => (
-              <Grid container direction="column" spacing={2}>
+              <Grid container direction="column" 
+                spacing={2} 
+                sx={{
+                  cursor : "pointer"
+                }}
+                >
                 {getLessonData.length
                   ? getLessonData.map((item, index) => {
                       let duration = String(item.duration);
@@ -281,9 +308,9 @@ const CourseTitleDetails = ({
           };
         })
       : [];
-  }, [sectionData, lessonData, videoToPlayIndex]);
+  }, [videoToPlayIndex]);
 
-  useEffect(() => {}, [videoDetails]);
+  useEffect(() => {}, [videoDetails,videoToPlayIndex]);
 
   return (
     <>
@@ -296,7 +323,7 @@ const CourseTitleDetails = ({
         iconColor={'primary'}
         isSectionCompleted={true}
         //customActiveAccItem = {[videoToPlayIndex.sectionNumber]}
-        completedSection={getCompletedSection()}
+        completedSection={getCompletedSection}
         renderExpandIcons={(isActive, completedCount) => {
           if (isActive) {
             return <ExpandLess color={'primary'} />;

@@ -14,7 +14,7 @@ const TopicsListGrid = styled(Grid)(({ theme }) => ({
 }));
 
 const RemainingTimeGrid = styled(Grid)(({ theme }) => ({
-  //display : 'flex',
+  display : 'flex',
  
 }));
 

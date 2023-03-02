@@ -67,7 +67,7 @@ const CourseMainPage = ({
 
   const handlePlayNext = useCallback(async () => {
     let updateData = {
-      played: 19
+      played: 1
     };
     let userId = 3;
     let id = 19;

@@ -59,7 +59,15 @@ const QuizResult = ({quizDataDetails}:Props) => {
                 paddingTop : '60px'
             }}
         >
-            Congratulation !
+            <Typography
+                sx={{
+                    color : theme.Colors.mediumGreenShade,
+                    fontSize : theme.MetricsSizes.regular_xxx,
+                    fontWeight : theme.fontWeight.mediumBold
+                }}
+            >
+                Congratulation !
+            </Typography>
         </Grid>
         <Grid item xs={12}
             sx={{

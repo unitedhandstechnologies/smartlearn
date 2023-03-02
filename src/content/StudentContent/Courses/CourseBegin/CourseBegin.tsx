@@ -173,29 +173,6 @@ const CourseBegin = () => {
     }
   }, []);
 
-  const updataVideoData = () => {
-    try {
-      let id = 30;
-      let userId = 15;
-      videoDetails.map((row, indexRow) => {
-        row.map(async (item, index) => {
-          let updateData = {
-            played: item.videoPlayedFraction
-          };
-          const responseUpdateVideoDetails: any =
-            await API_SERVICES.PreRecordedCourseVideoService.updateVideoDetails(
-              id,
-              userId,
-              item.lesson_id,
-              {
-                data: updateData
-              }
-            );
-        });
-      });
-    } catch (e) {}
-  };
-
   useEffect(() => {
     fetchData();
   }, []);

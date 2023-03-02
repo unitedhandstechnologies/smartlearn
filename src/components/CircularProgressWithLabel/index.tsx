@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
-import { useTheme } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core';
+
 
 interface Props {
     marks: any;
@@ -8,17 +9,20 @@ interface Props {
     value: number;
 }
 
+
+
 const CircularProgressWithLabel = ({ marks, outOf,  value }: Props) => {
 
     const theme = useTheme();
-  return (
+    return (
     <Box sx={{ position: 'relative', display: 'inline-flex' }}>
       <CircularProgress 
         variant="determinate" 
         value={value} 
         size={'150px'}
-        thickness={1.8}
-        color={"secondary"}
+        thickness={1.8}        
+        sx={{color:"#3CC878", /* : "#f2f4f0" */}}
+       
         />
       <Box
         sx={{
