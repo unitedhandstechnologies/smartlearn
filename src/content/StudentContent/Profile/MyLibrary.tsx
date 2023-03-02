@@ -214,13 +214,18 @@ const MyLibrary = ({ enrollCourse }) => {
         </Grid>
         <Grid item>
           <Heading
-            headingText={'Upcoming'}
+            headingText={
+              chipValue[0] === FILTER_CHIPS[0]
+                ? 'Upcoming'
+                : 'Courses you completed'
+            }
             headerFontSize={'24px'}
             headerFontWeight={theme.fontWeight.medium}
             headingColor={theme.Colors.blackBerry}
           />
         </Grid>
       </Grid>
+
       <Grid
         container
         //justifyContent={'center'}
@@ -232,51 +237,67 @@ const MyLibrary = ({ enrollCourse }) => {
           }
         }}
       >
-        {getCourses?.length
-          ? getCourses?.slice(0, 6).map((item, index) => {
-              return (
-                <Grid
+        {getCourses?.length ? (
+          getCourses?.slice(0, 6).map((item, index) => {
+            return (
+              <Grid
+                key={index}
+                item
+                xs={12}
+                sm={6}
+                md={4}
+                className={classes.eachItem}
+              >
+                <MuiCardComp
                   key={index}
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  className={classes.eachItem}
-                >
-                  <MuiCardComp
-                    key={index}
-                    imgUrl={item.image_url ? item.image_url : BasicStockIcon}
-                    rightText={item.course_type}
-                    //leftText={item.cost_type}
-                    heading={item.category_name}
-                    title={item.course_name}
-                    subText={item.course_description}
-                    courseLevel={item.course_level_name}
-                    courseLanguage={
-                      item.language_id === 1
-                        ? 'English'
-                        : item.language_id === 2
-                        ? 'Hindi'
-                        : 'Gjarati'
-                    }
-                    nextclass={item.starting_date}
-                    zoomLink={item.meeting_link}
-                    locationName={item.meeting_location}
-                    //subCategory={item.sub_category_name}
-                    courseType={item.course_type}
-                    prize={item.amount}
-                    onClickCardImage={() => onClickCardImage(item)}
-                    startLearning={false}
-                    item={item}
-                  />
-                </Grid>
-              );
-            })
-          : null}
+                  imgUrl={item.image_url ? item.image_url : BasicStockIcon}
+                  rightText={item.course_type}
+                  //leftText={item.cost_type}
+                  heading={item.category_name}
+                  title={item.course_name}
+                  subText={item.course_description}
+                  courseLevel={item.course_level_name}
+                  courseLanguage={
+                    item.language_id === 1
+                      ? 'English'
+                      : item.language_id === 2
+                      ? 'Hindi'
+                      : 'Gjarati'
+                  }
+                  nextclass={item.starting_date}
+                  zoomLink={item.meeting_link}
+                  locationName={item.meeting_location}
+                  //subCategory={item.sub_category_name}
+                  courseType={item.course_type}
+                  prize={item.amount}
+                  onClickCardImage={() => onClickCardImage(item)}
+                  startLearning={false}
+                  item={item}
+                />
+              </Grid>
+            );
+          })
+        ) : (
+          <Grid item container justifyContent="center">
+            <Heading
+              headingText={
+                chipValue[0] === FILTER_CHIPS[0]
+                  ? 'Not yet enroll the courses'
+                  : 'Not yet completed the courses'
+              }
+              headerFontSize={'20px'}
+              headerFontWeight={theme.fontWeight.medium}
+              headingColor={'#3C78F0'}
+            />
+          </Grid>
+        )}
       </Grid>
-      <ContinueLearning enrollCourse={enrollCourse} />
-      {/* <CompletedCourse />
-      <WishListCourse /> */}
+
+      {chipValue[0] === FILTER_CHIPS[0] ? (
+        <ContinueLearning enrollCourse={enrollCourse} />
+      ) : null}
+      {/* <CompletedCourse /> */}
+      {/* <WishListCourse /> */}
     </Grid>
   );
 };
