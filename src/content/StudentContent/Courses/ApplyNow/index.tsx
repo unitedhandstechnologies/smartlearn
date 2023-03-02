@@ -13,9 +13,9 @@ import FavIcon from '../../../../Assets/Images/FavIcon.svg';
 import { useNavigate } from 'react-router';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
 import { useTheme } from '@material-ui/core';
-import IconTextComp from 'src/components/IconTextComp';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
+import useCartInfo from 'src/hooks/useCartInfo';
 
 const classes = {
   containerStyle: {
@@ -89,6 +89,7 @@ type Props = {
 
 const ApplyNow = ({ course, timeType, duration }: Props) => {
   const { studentDetails } = useContext(StudentInfoContext);
+  const { updateCartInfo } = useCartInfo();
   const navigateTo = useNavigate();
   const theme = useTheme();
 
@@ -109,7 +110,10 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           data: data
         });
         if (createRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-          console.log('createRes--->', createRes);
+          if(createRes?.data?.AddToCart){
+            updateCartInfo(createRes?.data?.AddToCart[0].user_id)
+          }
+         
         }
         // navigateTo('/home/course-details', {
         //   state: { ...course },

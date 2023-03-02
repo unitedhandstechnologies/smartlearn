@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 import { ButtonComp, MuiConfirmModal } from 'src/components';
 import PopOver from 'src/components/PopOverComp';
 import { CONFIRM_MODAL, HTTP_STATUSES } from 'src/Config/constant';
+import useCartInfo from 'src/hooks/useCartInfo';
 import { API_SERVICES } from 'src/Services';
 
 const sumItems = ['Item(s):', 'Additional tax:', 'Subtotal:'];
@@ -20,15 +21,15 @@ type cartProps = {
 };
 
 type Props = {
-  carts: cartProps[];
+  carts: any;
   anchorEl: null | HTMLElement;
   handleClose: () => void;
-  fetchData?: () => void;
 };
 
 const CartPopover = (props: Props) => {
-  const { carts, anchorEl, handleClose, fetchData } = props;
+  const { carts, anchorEl, handleClose } = props;
   const theme = useTheme();
+  const { updateCartInfo } = useCartInfo();
   const { t } = useTranslation();
   const navigateTo = useNavigate();
   const [confirmModal, setConfirmModal] = useState<any>({ open: false });
@@ -69,7 +70,7 @@ const CartPopover = (props: Props) => {
         );
         if (deleteUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
           onCancelClick();
-          fetchData();
+          updateCartInfo(rowData?.user_id)
         }
       };
       let props = {

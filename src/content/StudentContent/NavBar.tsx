@@ -29,9 +29,7 @@ import NotificationPopover from './Courses/Notifications/StudentNotification';
 import { CartImg } from 'src/Assets';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import useStudentInfo from 'src/hooks/useStudentInfo';
-import { API_SERVICES } from 'src/Services';
-import { HTTP_STATUSES } from 'src/Config/constant';
-import { toast } from 'react-hot-toast';
+import useCartInfo from 'src/hooks/useCartInfo';
 
 const pages = [
   { label: 'Courses', path: 'courses' },
@@ -45,34 +43,10 @@ function NavBar() {
   const [open, setOpen] = React.useState(false);
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
-  const { studentDetails, updateStudentInfo } = useStudentInfo();
+  const { studentDetails } = useStudentInfo();
+  const { cartDetails } = useCartInfo();
   const [buttonValue, setButtonValue] = useState(-1);
-  const [addToCart, setAddToCart] = useState<any>([]);
-  const [loading, setLoading] = useState<boolean>(false)
   const theme = useTheme();
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      setAddToCart([]);
-      const response: any = await API_SERVICES.AddToCartService.getAllAddToCart(
-        studentDetails?.id
-      );
-      if(response?.status < HTTP_STATUSES.BAD_REQUEST){
-        if(response?.data?.AddToCart?.length) {
-          setAddToCart(response?.data?.AddToCart)
-        }
-      }
-    } catch (err) {
-      toast.error(err?.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(()=>{
-    fetchData()
-  },[studentDetails])
 
   const handleCartClick = (event) => {
     setCartOpen(event.currentTarget);
@@ -225,8 +199,7 @@ function NavBar() {
             <UserCart
               userName={studentDetails.user_name}
               image={studentDetails.image_url}
-              addToCart={addToCart}
-              fetchData={fetchData}
+              addToCart={cartDetails}
             />
           )}
         </Toolbar>
@@ -342,10 +315,9 @@ function NavBar() {
               />
             </ListItemButton>
             <CartPopover
-              carts={addToCart}
+              carts={cartDetails}
               anchorEl={cartOpen}
               handleClose={handleCartClose}
-              fetchData={fetchData}
             />
             <NotificationPopover
               notifications={notifications}

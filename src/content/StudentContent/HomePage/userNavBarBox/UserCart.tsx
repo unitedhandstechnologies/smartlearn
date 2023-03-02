@@ -33,11 +33,10 @@ type Props = {
   image?: string;
   userType?: number;
   addToCart?: any[];
-  fetchData?: () => void;
 };
 
 const UserCart = (props: Props) => {
-  const { userName, badgeContent, image, userType, addToCart, fetchData } = props;
+  const { userName, badgeContent, image, userType, addToCart } = props;
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
   const [profileOpen, setProfileOpen] = useState(null);
@@ -137,7 +136,6 @@ const UserCart = (props: Props) => {
         carts={addToCart}
         anchorEl={cartOpen}
         handleClose={handleCartClose}
-        fetchData={fetchData}
       />
       <NotificationPopover
         notifications={notifications}
