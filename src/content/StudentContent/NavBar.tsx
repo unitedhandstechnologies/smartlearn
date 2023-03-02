@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import {
   AppBar,
   Box,
@@ -29,6 +29,9 @@ import NotificationPopover from './Courses/Notifications/StudentNotification';
 import { CartImg } from 'src/Assets';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import useStudentInfo from 'src/hooks/useStudentInfo';
+import { API_SERVICES } from 'src/Services';
+import { HTTP_STATUSES } from 'src/Config/constant';
+import { toast } from 'react-hot-toast';
 
 const pages = [
   { label: 'Courses', path: 'courses' },
@@ -44,6 +47,32 @@ function NavBar() {
   const [bellOpen, setBellOpen] = useState(null);
   const { studentDetails, updateStudentInfo } = useStudentInfo();
   const [buttonValue, setButtonValue] = useState(-1);
+  const [addToCart, setAddToCart] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false)
+  const theme = useTheme();
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setAddToCart([]);
+      const response: any = await API_SERVICES.AddToCartService.getAllAddToCart(
+        studentDetails?.id
+      );
+      if(response?.status < HTTP_STATUSES.BAD_REQUEST){
+        if(response?.data?.AddToCart?.length) {
+          setAddToCart(response?.data?.AddToCart)
+        }
+      }
+    } catch (err) {
+      toast.error(err?.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(()=>{
+    fetchData()
+  },[studentDetails])
 
   const handleCartClick = (event) => {
     setCartOpen(event.currentTarget);
@@ -68,15 +97,6 @@ function NavBar() {
     setOpen(false);
   };
 
-  // const getTextColor = (name) => {
-  //   if (buttonValue === name) {
-  //     return '#78828C';
-  //   } else {
-  //     return '#3C414B';
-  //   }
-  // };
-
-  const theme = useTheme();
   return (
     <>
       <AppBar
@@ -205,6 +225,8 @@ function NavBar() {
             <UserCart
               userName={studentDetails.user_name}
               image={studentDetails.image_url}
+              addToCart={addToCart}
+              fetchData={fetchData}
             />
           )}
         </Toolbar>
@@ -320,9 +342,10 @@ function NavBar() {
               />
             </ListItemButton>
             <CartPopover
-              carts={carts}
+              carts={addToCart}
               anchorEl={cartOpen}
               handleClose={handleCartClose}
+              fetchData={fetchData}
             />
             <NotificationPopover
               notifications={notifications}

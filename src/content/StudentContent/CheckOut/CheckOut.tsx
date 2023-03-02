@@ -1,6 +1,10 @@
 import { useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
+import { HTTP_STATUSES } from 'src/Config/constant';
+import useStudentInfo from 'src/hooks/useStudentInfo';
+import { API_SERVICES } from 'src/Services';
 import CheckoutScreen from './CheckoutScreen';
 import Summary from './Summary';
 
@@ -32,9 +36,39 @@ const purchaseData = [
 ];
 const CheckOut = () => {
   const theme = useTheme();
-  let coursePrice = 4500;
-  let tax = (4500 / 100) * 10 * purchaseData.length;
-  let total = purchaseData.length * coursePrice + tax;
+  const [addToCart, setAddToCart]=useState<any>([]);
+  const [loading, setLoading]=useState<boolean>(false);
+  const { studentDetails, updateStudentInfo } = useStudentInfo();  
+  let total = 0;
+  let tax=0;
+  addToCart.forEach((item) => {
+      total += item.total
+      tax += item.tax  
+    return {total,tax}});
+  let totalAmount = total + tax;
+
+  const fetchData = async () => {
+    try {
+      setLoading(true);
+      setAddToCart([]);
+      const response: any = await API_SERVICES.AddToCartService.getAllAddToCart(
+        studentDetails?.id
+      );
+      if(response?.status < HTTP_STATUSES.BAD_REQUEST){
+        if(response?.data?.AddToCart?.length) {
+          setAddToCart(response?.data?.AddToCart)
+        }
+      }
+    } catch (err) {
+      toast.error(err?.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(()=>{
+    fetchData()
+  },[studentDetails])
 
   return (
     <Grid
@@ -48,14 +82,15 @@ const CheckOut = () => {
       }}
     >
       <Grid item xs>
-        <CheckoutScreen total={total} />
+        <CheckoutScreen total={totalAmount} />
       </Grid>
       <Grid item>
         <Summary
-          coursePrice={coursePrice}
+          coursePrice={total}
           tax={tax}
-          total={total}
-          purchaseData={purchaseData}
+          total={totalAmount}
+          purchaseData={addToCart}
+          fetchData={fetchData}
         />
       </Grid>
     </Grid>

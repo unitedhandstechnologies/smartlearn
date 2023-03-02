@@ -14,6 +14,8 @@ import { useNavigate } from 'react-router';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
 import { useTheme } from '@material-ui/core';
 import IconTextComp from 'src/components/IconTextComp';
+import { API_SERVICES } from 'src/Services';
+import { HTTP_STATUSES } from 'src/Config/constant';
 
 const classes = {
   containerStyle: {
@@ -86,9 +88,29 @@ type Props = {
 };
 
 const ApplyNow = ({ course, timeType, duration }: Props) => {
-  const handleClick = () => {
+  const { studentDetails } = useContext(StudentInfoContext);
+  const navigateTo = useNavigate();
+  const theme = useTheme();
+
+  let tax = (course?.amount * 10) / 100;
+  let totalPrice = course?.amount;
+
+  const handleClick = async () => {
     if (course.course_type !== 'Workshop') {
       if (studentDetails.id !== 0) {
+        let data = {
+          course_id: course?.course_id,
+          language_id: course?.language_id,
+          user_id: studentDetails?.id,
+          tax: tax,
+          total: totalPrice
+        };
+        const createRes: any = await API_SERVICES.AddToCartService.create({
+          data: data,
+        });
+        if (createRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+          console.log('createRes--->', createRes);
+        }
         // navigateTo('/home/course-details', {
         //   state: { ...course },
         //   replace: true
@@ -108,7 +130,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
   };
 
   const data = [
-    course.course_type === 'Recorded Course' && {
+    {
       name:
         duration !== undefined
           ? `${duration} ${timeType} of video tutorials`
@@ -119,7 +141,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
       name: '',
       img: DownloadSvg
     },
-    course.course_type === 'Recorded Course' && {
+    {
       name: 'Lifetime access to the course',
       img: LifeTime
     },
@@ -129,9 +151,6 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
     }
   ];
 
-  const { studentDetails } = useContext(StudentInfoContext);
-  const navigateTo = useNavigate();
-  const theme = useTheme();
   return (
     <Grid
       xs={12}
@@ -250,7 +269,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
                 sx={{
                   ...classes.gridStyle,
                   [theme.breakpoints.down('lg')]: {
-                    // justifyContent: 'center'
+                   // justifyContent: 'center'
                   }
                 }}
                 key={index}
@@ -258,7 +277,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
                 <img src={item.img} style={{ paddingRight: 10 }} alt="" />
                 <Typography sx={{ ...classes.textStyle }}>
                   {item.name}
-                </Typography>
+                </Typography>{' '}
               </Grid>
             )
           );

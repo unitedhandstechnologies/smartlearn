@@ -1,25 +1,37 @@
+import { useTheme } from '@material-ui/core';
 import { Divider } from '@mui/material';
 import { Grid, Typography } from '@mui/material';
-import { ButtonComp } from 'src/components';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
+import { ButtonComp, MuiConfirmModal } from 'src/components';
 import PopOver from 'src/components/PopOverComp';
+import { CONFIRM_MODAL, HTTP_STATUSES } from 'src/Config/constant';
+import { API_SERVICES } from 'src/Services';
 
 const sumItems = ['Item(s):', 'Additional tax:', 'Subtotal:'];
 
 type cartProps = {
-  courserType: string;
-  amount: number;
-  courseName: string;
-  availableSeat: number;
+  course_type: string;
+  total: number;
+  tax: number;
+  course_name: string;
+  available_student_count: number;
 };
 
 type Props = {
   carts: cartProps[];
   anchorEl: null | HTMLElement;
   handleClose: () => void;
+  fetchData?: () => void;
 };
 
 const CartPopover = (props: Props) => {
-  const { carts, anchorEl, handleClose } = props;
+  const { carts, anchorEl, handleClose, fetchData } = props;
+  const theme = useTheme();
+  const { t } = useTranslation();
+  const navigateTo = useNavigate();
+  const [confirmModal, setConfirmModal] = useState<any>({ open: false });
 
   const renderComponent = () => {
     let total = 0;
@@ -27,14 +39,46 @@ const CartPopover = (props: Props) => {
 
     const getTotals = (index) => {
       if (index === 0) {
-        carts.forEach((item) => (total += item.amount));
+        carts.forEach((item) => (total += item.total));
         return total;
       } else if (index === 1) {
-        tax = 450;
+        carts.forEach((item) => (tax += item.tax));
         return tax;
       } else {
         return total + tax;
       }
+    };
+
+    const handleClickButton = (data) => {
+      navigateTo('/home/checkout-page', {
+        replace: true
+      });
+    };
+
+    const onClickRemoveCourse = async (rowData) => {
+      const onCancelClick = () => {
+        setConfirmModal({ open: false });
+      };
+      const onConfirmClick = async () => {
+        const deleteUserRes: any = await API_SERVICES.AddToCartService.delete(
+          rowData?.id,
+          {
+            successMessage: 'Course removed Successfully',
+            failureMessage: 'Failed to delete Course'
+          }
+        );
+        if (deleteUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+          onCancelClick();
+          fetchData();
+        }
+      };
+      let props = {
+        color: theme.Colors.redPrimary,
+        description: 'Are you sure want to delete this Course?',
+        title: t('delete'),
+        iconType: CONFIRM_MODAL.delete
+      };
+      setConfirmModal({ open: true, onConfirmClick, onCancelClick, ...props });
     };
 
     return (
@@ -74,7 +118,7 @@ const CartPopover = (props: Props) => {
                     borderRadius: 17
                   }}
                 >
-                  {item.courserType}
+                  {item.course_type}
                 </Grid>
                 <Grid>
                   <ButtonComp
@@ -89,6 +133,7 @@ const CartPopover = (props: Props) => {
                       background: 'none',
                       border: 'none'
                     }}
+                    onClickButton={() => onClickRemoveCourse(item)}
                   />
                 </Grid>
               </Grid>
@@ -102,7 +147,7 @@ const CartPopover = (props: Props) => {
                       color: '#3C414B'
                     }}
                   >
-                    {item.courseName}
+                    {item.course_name}
                   </Typography>
                 </Grid>
                 <Grid xs={3.5} md={3.5} alignItems={'flex-end'}>
@@ -115,7 +160,7 @@ const CartPopover = (props: Props) => {
                       textAlign: 'end'
                     }}
                   >
-                    ₹{item.amount}
+                    ₹{item.total}
                   </Typography>
                 </Grid>
               </Grid>
@@ -154,7 +199,7 @@ const CartPopover = (props: Props) => {
                       textAlign: 'end'
                     }}
                   >
-                    {item.availableSeat}
+                    {item.available_student_count}
                   </Typography>
                 </Grid>
               </Grid>
@@ -220,8 +265,10 @@ const CartPopover = (props: Props) => {
             buttonFontWeight={400}
             btnBorderRadius={4}
             btnWidth={'100%'}
+            onClickButton={() => handleClickButton(carts)}
           />
         </Grid>
+        {confirmModal.open && <MuiConfirmModal {...confirmModal} />}
       </>
     );
   };

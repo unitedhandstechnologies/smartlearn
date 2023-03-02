@@ -43,10 +43,12 @@ const CheckoutScreen = ({total}) => {
   const edit = useEdit(initialValues);
 
   const handleChange = (e) => {
-    console.log('e', e);
-
     setIsChecked(!isChecked);
   };
+
+  const onClickCheckout = (val)=>{
+    console.log('val',val);   
+  }
   return (
     <Grid container spacing={2} direction={'column'}>
       <Grid item>
@@ -205,12 +207,12 @@ const CheckoutScreen = ({total}) => {
       <Grid item>
         {isChecked ? (
           <ButtonComp
-            buttonText={`Pay ₹${total} and complete checkout`}
+            buttonText={`Pay ₹${total.toFixed(2)} and complete checkout`}
             btnWidth={'100%'}
             btnBorderRadius={4}
             buttonFontSize={16}
             buttonFontWeight={theme.fontWeight.regular}
-
+            onClickButton={()=>onClickCheckout(total)}
           />
         ) : null}
       </Grid>

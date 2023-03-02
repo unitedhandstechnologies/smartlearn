@@ -32,10 +32,12 @@ type Props = {
   badgeContent?: number;
   image?: string;
   userType?: number;
+  addToCart?: any[];
+  fetchData?: () => void;
 };
 
 const UserCart = (props: Props) => {
-  const { userName, badgeContent, image, userType } = props;
+  const { userName, badgeContent, image, userType, addToCart, fetchData } = props;
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
   const [profileOpen, setProfileOpen] = useState(null);
@@ -97,7 +99,7 @@ const UserCart = (props: Props) => {
       <Grid>
         {userType === USER_TYPES.mentor ? null : (
           <IconButton aria-label="cart" onClick={handleCartClick}>
-            <Badge badgeContent={badgeContent || 4} color="secondary">
+            <Badge badgeContent={badgeContent || addToCart.length} color="secondary">
               <img src={CartImg} width={25} height={25} />
             </Badge>
           </IconButton>
@@ -132,9 +134,10 @@ const UserCart = (props: Props) => {
         </IconButton>
       </Grid>
       <CartPopover
-        carts={carts}
+        carts={addToCart}
         anchorEl={cartOpen}
         handleClose={handleCartClose}
+        fetchData={fetchData}
       />
       <NotificationPopover
         notifications={notifications}

@@ -1,8 +1,11 @@
 import { makeStyles, Typography, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import React, { useState } from 'react';
-import { ButtonComp, Heading } from 'src/components';
+import { useTranslation } from 'react-i18next';
+import { ButtonComp, Heading, MuiConfirmModal } from 'src/components';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
+import { CONFIRM_MODAL, HTTP_STATUSES } from 'src/Config/constant';
+import { API_SERVICES } from 'src/Services';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -15,10 +18,39 @@ type SummaryProps = {
   coursePrice?: number;
   tax?: number;
   total?: number;
+  fetchData?: () => void;
 };
 
-const Summary = ({ purchaseData, coursePrice, tax, total }: SummaryProps) => {
+const Summary = ({ purchaseData, coursePrice, tax, total, fetchData }: SummaryProps) => {
   const theme = useTheme();
+  const {t} = useTranslation();
+const [confirmModal, setConfirmModal]=useState<any>({open: false})
+
+  const onClickRemoveCourse = async (rowData) => { 
+    const onCancelClick = () => {
+      setConfirmModal({ open: false });
+    };
+    const onConfirmClick = async () => {
+      const deleteUserRes: any = await API_SERVICES.AddToCartService.delete(
+        rowData?.id,
+        {
+          successMessage: 'Course removed Successfully',
+          failureMessage: 'Failed to delete Course'
+        }
+      );
+      if (deleteUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+        onCancelClick();
+        fetchData();
+      }
+    };
+    let props = {
+      color: theme.Colors.redPrimary,
+      description: 'Are you sure want to delete this Course?',
+      title: t('delete'),
+      iconType: CONFIRM_MODAL.delete
+    };
+    setConfirmModal({ open: true, onConfirmClick, onCancelClick, ...props });
+  };
   return (
     <Grid
       container
@@ -52,7 +84,7 @@ const Summary = ({ purchaseData, coursePrice, tax, total }: SummaryProps) => {
         </Typography>
       </Grid>
       <Grid item>
-        <CourseDetails purchaseData={purchaseData} />
+        <CourseDetails purchaseData={purchaseData} onClickRemoveCourse={onClickRemoveCourse}/>
       </Grid>
       <Grid item>
         <Typography
@@ -88,7 +120,7 @@ const Summary = ({ purchaseData, coursePrice, tax, total }: SummaryProps) => {
               color: '#3C414B'
             }}
           >
-            {purchaseData.length} x ₹ {coursePrice}
+            ₹ {coursePrice}
           </Typography>
         </Grid>
       </Grid>
@@ -144,19 +176,16 @@ const Summary = ({ purchaseData, coursePrice, tax, total }: SummaryProps) => {
           </Typography>
         </Grid>
       </Grid>
+      {confirmModal.open && <MuiConfirmModal {...confirmModal} />}
     </Grid>
   );
 };
 
 export default Summary;
 
-export const CourseDetails = ({ purchaseData }) => {
+export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
   const theme = useTheme();
   const classes = useStyles();
-  const onClickRemoveCourse = (rowData) => {
-    console.log('rowData', rowData);
-  };
-
   return (
     <Grid container spacing={2} direction={'column'}>
       {purchaseData?.length
@@ -166,7 +195,7 @@ export const CourseDetails = ({ purchaseData }) => {
                 <Grid container item>
                   <Grid item xs>
                     <ChipComp
-                      label={item.chipValue}
+                      label={item.course_type}
                       style={{
                         borderColor: '#3CC878',
                         color: '#78828C',
@@ -198,7 +227,7 @@ export const CourseDetails = ({ purchaseData }) => {
                         color: '#3C414B'
                       }}
                     >
-                      {item.title}
+                      {item.course_name}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -210,7 +239,7 @@ export const CourseDetails = ({ purchaseData }) => {
                         color: '#3C414B'
                       }}
                     >
-                      ₹ {item.price}
+                      ₹ {item.total}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -224,15 +253,18 @@ export const CourseDetails = ({ purchaseData }) => {
                         color: '#3C414B'
                       }}
                     >
-                      {item.seat}
+                      No. of Available Seats
                     </Typography>
                   </Grid>
                   <Grid
                     item
+                    xs={3}
                     sx={{
                       border: '1px solid #3C78F0',
-                      padding: theme.spacing(0, 1, 0, 1),
-                      borderRadius: '8px'
+                      padding: 0.5,
+                      textAlign: 'center',
+                      borderRadius: '8px',
+                      alignSelf: 'center'
                     }}
                   >
                     <Typography
@@ -243,7 +275,7 @@ export const CourseDetails = ({ purchaseData }) => {
                         color: '#3C414B'
                       }}
                     >
-                      {item.seatCount}
+                      {item.available_student_count}
                     </Typography>
                   </Grid>
                 </Grid>
