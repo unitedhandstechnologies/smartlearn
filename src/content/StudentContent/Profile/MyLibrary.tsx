@@ -160,6 +160,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const FILTER_CHIPS = ['Active', 'Completed', 'Whishlist'];
+
 const MyLibrary = ({ enrollCourse }) => {
   const theme = useTheme();
   const classes = useStyles();
@@ -231,8 +232,8 @@ const MyLibrary = ({ enrollCourse }) => {
           }
         }}
       >
-        {getCourses.length
-          ? getCourses.slice(0, 6).map((item, index) => {
+        {getCourses?.length
+          ? getCourses?.slice(0, 6).map((item, index) => {
               return (
                 <Grid
                   key={index}

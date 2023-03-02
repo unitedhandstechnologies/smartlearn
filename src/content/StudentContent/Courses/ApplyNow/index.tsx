@@ -130,7 +130,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
   };
 
   const data = [
-    {
+    course.course_type === 'Recorded Course' && {
       name:
         duration !== undefined
           ? `${duration} ${timeType} of video tutorials`
@@ -141,7 +141,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
       name: '',
       img: DownloadSvg
     },
-    {
+    course.course_type === 'Recorded Course' && {
       name: 'Lifetime access to the course',
       img: LifeTime
     },
