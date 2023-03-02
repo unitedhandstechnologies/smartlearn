@@ -29,7 +29,6 @@ const RateYourExperience = ({ courseDetails }) => {
   const { studentDetails, updateStudentInfo } = useStudentInfo();
   const [courseRating, setCourseRating] = useState<number | null>();
   const [mentorRating, setMentorRating] = useState<number | null>();
-
   const [error, setError] = useState(false);
   const data = {
     course_rating: courseRating,
@@ -38,6 +37,7 @@ const RateYourExperience = ({ courseDetails }) => {
   };
   const RequiredFields = ['command'];
   const edit = useEdit(data);
+
   const handleClickOpen = () => {
     setOpen([true]);
   };
@@ -60,7 +60,7 @@ const RateYourExperience = ({ courseDetails }) => {
       let userData = { ...data, ...edit.edits };
       const response: any = await API_SERVICES.homeUserService.create(
         studentDetails?.id,
-        courseDetails[0]?.course_id,
+        courseDetails[0].course_id,
         {
           data: userData,
           successMessage: 'Ratings submitted successfully!',

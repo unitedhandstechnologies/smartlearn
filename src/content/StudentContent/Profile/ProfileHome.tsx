@@ -100,13 +100,18 @@ const ProfileHome = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  const completedCourse = enrollCourse.filter((item) => {
+    return item.status_id === 2;
+  });
   if (loading) {
     return <Loader />;
   } else {
     return (
       <Grid container sx={{ position: 'relative', background: '#ffffff' }}>
         <Container>
-          <RateYourExperience courseDetails={enrollCourse} />
+          {completedCourse ? (
+            <RateYourExperience courseDetails={completedCourse} />
+          ) : null}
 
           <Grid container direction="column" paddingTop={4}>
             <CourseBanner

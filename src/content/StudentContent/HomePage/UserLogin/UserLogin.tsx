@@ -78,7 +78,7 @@ const UserLogin = () => {
         display: 'flex',
         justifyContent: 'center',
         background: '#ffffff',
-        padding: '50px 0 80px',
+        padding: 4,
         [theme.breakpoints.down('sm')]: {
           flexDirection: 'column'
         }

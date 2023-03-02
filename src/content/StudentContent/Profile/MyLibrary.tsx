@@ -1,5 +1,5 @@
 import { makeStyles, useTheme } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Grid } from '@mui/material';
 import { Heading, MuiCardComp, MultiSelectChip } from 'src/components';
 import CompletedCourse from './CompletedCourse';
@@ -164,18 +164,28 @@ const MyLibrary = ({ enrollCourse }) => {
   const theme = useTheme();
   const classes = useStyles();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
+
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
   };
-  const enrolledCourse = enrollCourse.filter((item) => {
-    return (
-      item.course_type === COURSE_TYPE_NAME[1] ||
-      item.course_type === COURSE_TYPE_NAME[2] ||
-      item.course_type === COURSE_TYPE_NAME[3] ||
-      item.course_type === COURSE_TYPE_NAME[4] ||
-      item.course_type === COURSE_TYPE_NAME[5]
-    );
-  });
+  const getCourses: any[] = useMemo(() => {
+    //const activecCourses = [...enrollCourse];
+    if (chipValue[0] === FILTER_CHIPS[0]) {
+      const enrolledCourse = enrollCourse.filter(
+        (item) =>
+          item.course_type === COURSE_TYPE_NAME[1] ||
+          item.course_type === COURSE_TYPE_NAME[2] ||
+          item.course_type === COURSE_TYPE_NAME[3] ||
+          item.course_type === COURSE_TYPE_NAME[4] ||
+          item.course_type === COURSE_TYPE_NAME[5]
+      );
+      return enrolledCourse;
+    } else if (chipValue[0] === FILTER_CHIPS[1]) {
+      const completed = enrollCourse.filter((item) => item.status_id === 2);
+      return completed;
+    }
+  }, [chipValue, enrollCourse]);
+
   const onClickCardImage = (rowData) => {};
 
   return (
@@ -221,8 +231,8 @@ const MyLibrary = ({ enrollCourse }) => {
           }
         }}
       >
-        {enrolledCourse.length
-          ? enrolledCourse.slice(0, 6).map((item, index) => {
+        {getCourses.length
+          ? getCourses.slice(0, 6).map((item, index) => {
               return (
                 <Grid
                   key={index}

@@ -106,7 +106,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           total: totalPrice
         };
         const createRes: any = await API_SERVICES.AddToCartService.create({
-          data: data,
+          data: data
         });
         if (createRes?.status < HTTP_STATUSES.BAD_REQUEST) {
           console.log('createRes--->', createRes);
@@ -225,23 +225,42 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
               : '11 hours left at this price'}
           </TypographyText>
         </Grid>
-        <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
-          <ButtonComp
-            buttonText={
-              course.course_type === 'Workshop' ? 'Start learning' : 'Apply Now'
-            }
-            buttonTextColor={'#FFFFFF'}
-            buttonFontFamily={'Switzer'}
-            buttonFontSize={16}
-            btnWidth={'100%'}
-            btnBorderRadius={4}
-            height={'40px'}
-            onClickButton={handleClick}
-          />
-        </Grid>
-        <Grid sx={{ ...classes.favIcon, ml: 1 }}>
-          <img src={FavIcon} />
-        </Grid>
+        {course.student_enrolled_course_id ? (
+          <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
+            <ButtonComp
+              buttonText={'Enrolled'}
+              buttonTextColor={'#FFFFFF'}
+              buttonFontFamily={'Switzer'}
+              buttonFontSize={16}
+              btnWidth={'100%'}
+              btnBorderRadius={4}
+              height={'40px'}
+              onClickButton={handleClick}
+            />
+          </Grid>
+        ) : (
+          <>
+            <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
+              <ButtonComp
+                buttonText={
+                  course.course_type === 'Workshop'
+                    ? 'Start learning'
+                    : 'Apply Now'
+                }
+                buttonTextColor={'#FFFFFF'}
+                buttonFontFamily={'Switzer'}
+                buttonFontSize={16}
+                btnWidth={'100%'}
+                btnBorderRadius={4}
+                height={'40px'}
+                onClickButton={handleClick}
+              />
+            </Grid>
+            <Grid sx={{ ...classes.favIcon, ml: 1 }}>
+              <img src={FavIcon} />
+            </Grid>
+          </>
+        )}
 
         <Grid
           xs={12}
@@ -269,7 +288,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
                 sx={{
                   ...classes.gridStyle,
                   [theme.breakpoints.down('lg')]: {
-                   // justifyContent: 'center'
+                    // justifyContent: 'center'
                   }
                 }}
                 key={index}

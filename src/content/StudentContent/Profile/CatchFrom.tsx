@@ -195,14 +195,14 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
   //   }
   // }, [chipValue, courseDetails]);
 
-  // const onClickCardImage = (rowData) => {
-  //   if (rowData.course_type === COURSE_TYPE_NAME[6]) {
-  //     navigateTo('/home/pre-recordedCourse', {
-  //       state: { formData: { ...rowData } },
-  //       replace: true
-  //     });
-  //   }
-  // };
+  const onClickCardImage = (rowData) => {
+    if (rowData.course_type === COURSE_TYPE_NAME[6]) {
+      navigateTo('/home/course-details', {
+        state: { formData: { ...rowData } },
+        replace: true
+      });
+    }
+  };
 
   return (
     <Grid container direction="column" rowSpacing={3}>
@@ -279,7 +279,7 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
                     //subCategory={item.sub_category_name}
                     //courseType={item.course_type}
                     prize={item.amount}
-                    //onClickCardImage={() => onClickCardImage(item)}
+                    onClickCardImage={() => onClickCardImage(item)}
                     startLearning={false}
                     item={item}
                   />

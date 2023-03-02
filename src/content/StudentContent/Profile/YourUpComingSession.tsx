@@ -192,14 +192,12 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
   //   }
   // }, [chipValue, courseDetails]);
 
-  // const onClickCardImage = (rowData) => {
-  //   if (rowData.course_type === COURSE_TYPE_NAME[6]) {
-  //     navigateTo('/home/pre-recordedCourse', {
-  //       state: { formData: { ...rowData } },
-  //       replace: true
-  //     });
-  //   }
-  // };
+  const onClickCardImage = (rowData) => {
+    navigateTo('/home/course-details', {
+      state: { formData: { ...rowData } },
+      replace: true
+    });
+  };
 
   return (
     <Grid container direction="column" rowSpacing={3}>
@@ -276,7 +274,7 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
                     //subCategory={item.sub_category_name}
                     //courseType={item.course_type}
                     prize={item.amount}
-                    //onClickCardImage={() => onClickCardImage(item)}
+                    onClickCardImage={() => onClickCardImage(item)}
                     startLearning={false}
                   />
                 </Grid>
@@ -284,21 +282,6 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
             })
           : null}
       </Grid>
-      {/* <Grid item>
-        <ButtonComp
-          style={{ border: '1.5px solid #3C78F0' }}
-          variant="outlined"
-          buttonFontFamily="Switzer"
-          buttonFontSize={theme.MetricsSizes.regular}
-          backgroundColor={theme.Colors.white}
-          buttonTextColor={'#3C78F0'}
-          btnBorderRadius={'4px'}
-          buttonText={'View All'}
-          btnWidth="100%"
-          iconImage={<img src={ArrowNext} style={{ marginLeft: '8px' }} />}
-          onClickButton={() => {}}
-        />
-      </Grid> */}
     </Grid>
   );
 };
