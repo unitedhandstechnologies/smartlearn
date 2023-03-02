@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { HTTP_STATUSES } from 'src/Config/constant';
+import { API_SERVICES } from 'src/Services';
 
 export type StudentDetails = {
   id: number;
@@ -64,7 +67,24 @@ export const StudentInfoProvider = ({ children }: Props) => {
   const [studentDetails, setStudentDetails] = useState<StudentDetails>(
     INITIAL_STATE.studentDetails
   );
+  const fetchData = async () => {
+    try {
+      let id = parseInt(localStorage.getItem('userId'));
+      const response: any = await API_SERVICES.adminUserService.getById(id);
 
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        setStudentDetails((prevState: any) => {
+          return { ...prevState, ...response?.data?.user };
+        });
+      }
+    } catch (err) {
+      toast.error(err?.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   const contextValue = React.useMemo(() => {
     return {
       studentDetails: studentDetails,
@@ -78,3 +98,6 @@ export const StudentInfoProvider = ({ children }: Props) => {
     </StudentInfoContext.Provider>
   );
 };
+function updateStudentInfo(arg0: (prevState: any) => any) {
+  throw new Error('Function not implemented.');
+}
