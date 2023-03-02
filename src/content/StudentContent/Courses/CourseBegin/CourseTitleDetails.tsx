@@ -95,15 +95,7 @@ const CourseTitleDetails = ({
       } else {
         completedSection[rowIndex] = 0;
       }
-      console.log("here");
-      
-      console.log("completedSection.reduce((a, b) => a + b, 0)",completedSection.reduce((a, b) => a + b, 0))
-      console.log("row?.length",row?.length)
-      if (completedSection.reduce((a, b) => a + b, 0)===row?.length){
-        console.log("completedSection.reduce((a, b) => a + b, 0)",completedSection.reduce((a, b) => a + b, 0))
-        console.log("row?.length",row?.length)
-        //API Call to update course completion
-      }
+     
     });
     return completedSection;
     
