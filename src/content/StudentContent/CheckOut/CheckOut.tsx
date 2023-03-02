@@ -3,6 +3,7 @@ import { Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { HTTP_STATUSES } from 'src/Config/constant';
+import useCartInfo from 'src/hooks/useCartInfo';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import { API_SERVICES } from 'src/Services';
 import CheckoutScreen from './CheckoutScreen';
@@ -36,39 +37,14 @@ const purchaseData = [
 ];
 const CheckOut = () => {
   const theme = useTheme();
-  const [addToCart, setAddToCart]=useState<any>([]);
-  const [loading, setLoading]=useState<boolean>(false);
-  const { studentDetails, updateStudentInfo } = useStudentInfo();  
+  const { cartDetails } = useCartInfo();
   let total = 0;
   let tax=0;
-  addToCart.forEach((item) => {
+  cartDetails.forEach((item) => {
       total += item.total
       tax += item.tax  
     return {total,tax}});
   let totalAmount = total + tax;
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      setAddToCart([]);
-      const response: any = await API_SERVICES.AddToCartService.getAllAddToCart(
-        studentDetails?.id
-      );
-      if(response?.status < HTTP_STATUSES.BAD_REQUEST){
-        if(response?.data?.AddToCart?.length) {
-          setAddToCart(response?.data?.AddToCart)
-        }
-      }
-    } catch (err) {
-      toast.error(err?.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(()=>{
-    fetchData()
-  },[studentDetails])
 
   return (
     <Grid
@@ -88,9 +64,8 @@ const CheckOut = () => {
         <Summary
           coursePrice={total}
           tax={tax}
-          total={totalAmount}
-          purchaseData={addToCart}
-          fetchData={fetchData}
+          totalAmount={totalAmount}
+          purchaseData={cartDetails}
         />
       </Grid>
     </Grid>

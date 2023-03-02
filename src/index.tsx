@@ -10,15 +10,18 @@ import './Translations/i18n';
 import 'react-calendar/dist/Calendar.css';
 import './CalendarCustomStyle.css';
 import { StudentInfoProvider } from './contexts/StudentContext';
+import { CartInfoProvider } from './contexts/UserCardContext';
 
 ReactDOM.render(
   <HelmetProvider>
     <SidebarProvider>
       <UserInfoProvider>
         <StudentInfoProvider>
+          <CartInfoProvider>
           <BrowserRouter>
             <App />
           </BrowserRouter>
+          </CartInfoProvider>
         </StudentInfoProvider>
       </UserInfoProvider>
     </SidebarProvider>

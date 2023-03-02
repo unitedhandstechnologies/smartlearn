@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { ButtonComp, Heading, MuiConfirmModal } from 'src/components';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
 import { CONFIRM_MODAL, HTTP_STATUSES } from 'src/Config/constant';
+import useCartInfo from 'src/hooks/useCartInfo';
 import { API_SERVICES } from 'src/Services';
 
 const useStyles = makeStyles((theme) => ({
@@ -17,16 +18,21 @@ type SummaryProps = {
   purchaseData?: any[];
   coursePrice?: number;
   tax?: number;
-  total?: number;
-  fetchData?: () => void;
+  totalAmount?: number;
 };
 
-const Summary = ({ purchaseData, coursePrice, tax, total, fetchData }: SummaryProps) => {
+const Summary = ({
+  purchaseData,
+  coursePrice,
+  tax,
+  totalAmount,
+}: SummaryProps) => {
   const theme = useTheme();
-  const {t} = useTranslation();
-const [confirmModal, setConfirmModal]=useState<any>({open: false})
+  const { t } = useTranslation();
+  const { updateCartInfo } = useCartInfo();
+  const [confirmModal, setConfirmModal] = useState<any>({ open: false });
 
-  const onClickRemoveCourse = async (rowData) => { 
+  const onClickRemoveCourse = async (rowData) => {
     const onCancelClick = () => {
       setConfirmModal({ open: false });
     };
@@ -40,7 +46,7 @@ const [confirmModal, setConfirmModal]=useState<any>({open: false})
       );
       if (deleteUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
         onCancelClick();
-        fetchData();
+        updateCartInfo(rowData?.user_id);
       }
     };
     let props = {
@@ -84,7 +90,10 @@ const [confirmModal, setConfirmModal]=useState<any>({open: false})
         </Typography>
       </Grid>
       <Grid item>
-        <CourseDetails purchaseData={purchaseData} onClickRemoveCourse={onClickRemoveCourse}/>
+        <CourseDetails
+          purchaseData={purchaseData}
+          onClickRemoveCourse={onClickRemoveCourse}
+        />
       </Grid>
       <Grid item>
         <Typography
@@ -120,7 +129,7 @@ const [confirmModal, setConfirmModal]=useState<any>({open: false})
               color: '#3C414B'
             }}
           >
-            ₹ {coursePrice}
+            ₹ {coursePrice.toFixed(2)}
           </Typography>
         </Grid>
       </Grid>
@@ -146,7 +155,7 @@ const [confirmModal, setConfirmModal]=useState<any>({open: false})
               color: '#3C414B'
             }}
           >
-            ₹ {tax}
+            ₹ {tax.toFixed(2)}
           </Typography>
         </Grid>
       </Grid>
@@ -172,7 +181,7 @@ const [confirmModal, setConfirmModal]=useState<any>({open: false})
               color: '#3C414B'
             }}
           >
-            ₹ {total}
+            ₹ {totalAmount.toFixed(2)}
           </Typography>
         </Grid>
       </Grid>
@@ -258,12 +267,12 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
                   </Grid>
                   <Grid
                     item
-                    xs={3}
+                   xs={3}
                     sx={{
                       border: '1px solid #3C78F0',
                       padding: 0.5,
                       textAlign: 'center',
-                      borderRadius: '8px',
+                      borderRadius: '4px',
                       alignSelf: 'center'
                     }}
                   >

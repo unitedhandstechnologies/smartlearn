@@ -2,14 +2,15 @@ import { apiOptions } from 'src/Utils/apiOptions';
 import { apiRequest } from 'src/Utils/apiRequest';
 import { Config } from 'src/Config';
 
-type AddTOCartProps = {
-  data: {
+export type CartProps = {
     course_id: number;
     language_id: number;
     user_id: number;
     tax: number;
     total: number;
-  };
+}
+type AddTOCartProps = {
+  data: CartProps;
   successMessage?: string;
   failureMessage?: string;
 };
