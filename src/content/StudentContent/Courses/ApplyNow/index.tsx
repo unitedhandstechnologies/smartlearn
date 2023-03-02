@@ -157,7 +157,11 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
         >
           <Grid>
             <TypographyText sx={{ ...classes.price }}>
-              ₹{course.amount}
+              ₹
+              {(
+                course.amount -
+                (course.discount / 100) * course.amount
+              ).toFixed()}
             </TypographyText>
           </Grid>
           <Grid>
