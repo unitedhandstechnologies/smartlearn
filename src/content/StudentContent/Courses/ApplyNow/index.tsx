@@ -108,7 +108,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
   };
 
   const data = [
-    {
+    course.course_type === 'Recorded Course' && {
       name:
         duration !== undefined
           ? `${duration} ${timeType} of video tutorials`
@@ -119,7 +119,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
       name: '',
       img: DownloadSvg
     },
-    {
+    course.course_type === 'Recorded Course' && {
       name: 'Lifetime access to the course',
       img: LifeTime
     },
@@ -157,21 +157,23 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
         >
           <Grid>
             <TypographyText sx={{ ...classes.price }}>
-              ₹
-              {(
+              {course.cost_type === 'PAID'
+                ? `₹
+              ${(
                 course.amount -
                 (course.discount / 100) * course.amount
-              ).toFixed()}
+              ).toFixed()}`
+                : 'FREE'}
             </TypographyText>
           </Grid>
           <Grid>
             <TypographyText sx={{ ...classes.mrp }}>
-              ₹{course.amount}
+              {course.cost_type === 'PAID' ? `₹${course.amount}` : ''}
             </TypographyText>
           </Grid>
           <Grid>
             <TypographyText sx={{ ...classes.offer }}>
-              {course.discount}% off
+              {course.cost_type === 'PAID' ? `${course.discount}% off` : ''}
             </TypographyText>
           </Grid>
         </Grid>
@@ -233,9 +235,9 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           }}
         >
           <TypographyText
-            sx={{ fontSize: '18px', fontWeight: 600, padding: 1 }}
+            sx={{ fontSize: '18px', fontWeight: 600, paddingTop: 2 }}
           >
-            {course.cours_type !== 'Workshop'
+            {course.course_type !== 'Workshop'
               ? 'This course includes:'
               : 'This Workshop includes:'}
           </TypographyText>
@@ -248,7 +250,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
                 sx={{
                   ...classes.gridStyle,
                   [theme.breakpoints.down('lg')]: {
-                    justifyContent: 'center'
+                    // justifyContent: 'center'
                   }
                 }}
                 key={index}
@@ -256,7 +258,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
                 <img src={item.img} style={{ paddingRight: 10 }} alt="" />
                 <Typography sx={{ ...classes.textStyle }}>
                   {item.name}
-                </Typography>{' '}
+                </Typography>
               </Grid>
             )
           );
