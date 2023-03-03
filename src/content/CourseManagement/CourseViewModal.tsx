@@ -83,7 +83,10 @@ const CourseViewModal = (props: Props) => {
           rowData?.id,
           LANGUAGE_ID.english
         ),
-        API_SERVICES.quizService.getAllQuiz(LANGUAGE_ID.english, rowData?.course_id)
+        API_SERVICES.quizService.getAllQuiz(
+          LANGUAGE_ID.english,
+          rowData?.course_id
+        )
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.Lessons?.length) {
@@ -181,7 +184,7 @@ const CourseViewModal = (props: Props) => {
   );
 
   useEffect(() => {
-    fetchData()
+    fetchData();
   }, []);
 
   const getAccordionContents: any = React.useMemo(() => {
@@ -370,7 +373,11 @@ const CourseViewModal = (props: Props) => {
       },
       {
         content: 'Discount',
-        value: rowData?.discount
+        value: `${rowData?.discount}%`
+      },
+      {
+        content: 'Discount Amount',
+        value: rowData?.amount - (rowData?.discount / 100) * rowData?.amount
       },
       {
         content: 'CourseType ',
@@ -428,7 +435,7 @@ const CourseViewModal = (props: Props) => {
     contentDetails = contentDetails.filter(
       (i) => i.value != 'undefined' && i.value != ''
     );
-console.log(rowData, "instructor name")
+    console.log(rowData, 'instructor name');
     return (
       <Grid container>
         <Grid item xs={12}>

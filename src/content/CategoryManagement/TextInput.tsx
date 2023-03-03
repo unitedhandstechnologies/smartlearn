@@ -86,7 +86,7 @@ const TextInput = ({
       {!categories ? (
         <Grid item xs={6}>
            <TextInputComponent
-            inputLabel={'Course Image'}
+            inputLabel={'Category Image'}
             value={edit.getValue('image_url').split('/')[3] || profileImage}
             disabled
             InputProps={{
