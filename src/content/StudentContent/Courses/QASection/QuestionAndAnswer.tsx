@@ -177,13 +177,15 @@ const QuestionAndAnswer = ({
                 sx={{
                     display: 'flex',
                     alignItems: "center",
-                    justifyContent: "flex-end"
+                    justifyContent: "flex-end",
+                    paddingTop: "48px",
                 }}
             >
                 <ButtonComp
                     buttonTextColor={theme.Colors.whitePure}
                     buttonText={'Next'}
                     onClickButton={handleClickNextQuestion}
+                    iconImage={<ArrowForwardIcon />}
                 ></ButtonComp>
             </Grid>
         </Grid>

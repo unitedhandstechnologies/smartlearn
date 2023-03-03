@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   accordionDetailStyles: {
     backgroundColor: theme.Colors.whitePure,
     border: '0px solid',
-    borderColor: theme.Colors.whitePure
+    borderColor: theme.Colors.whitePure,
   },
   accordionSummaryStyle: {
     backgroundColor: theme.Colors.whiteLightGrey,
@@ -82,7 +82,7 @@ const CourseTitleDetails = ({
   };
 
   const getCompletedSection : any  = React.useMemo(() => {
-    console.log("inside get section")
+    console.log("inside ")
     let completedSection = Array(videoDetails?.length).fill(0);
     videoDetails.map((row, rowIndex) => {
       let fractionCount = 0;
@@ -95,7 +95,7 @@ const CourseTitleDetails = ({
       } else {
         completedSection[rowIndex] = 0;
       }
-     
+      
     });
     return completedSection;
     
@@ -219,7 +219,7 @@ const CourseTitleDetails = ({
               <Grid container direction="column" 
                 spacing={2} 
                 sx={{
-                  cursor : "pointer"
+                  cursor : "pointer",                  
                 }}
                 >
                 {getLessonData.length
@@ -227,7 +227,8 @@ const CourseTitleDetails = ({
                       let duration = String(item.duration);
                       let minSec = duration.split('.');
                       return (
-                        <Grid
+                        <>
+                       {/*  <Grid
                           item
                           key={index}
                           container
@@ -289,12 +290,107 @@ const CourseTitleDetails = ({
                                   {`  ${minSec[0]}m  ${minSec[1]}s`}
                                 </Typography>
                               </Grid>
+                              
                             </Grid>
+                            
                           </Grid>
                         </Grid>
+ */}
+                        <Grid container direction="row">
+                            <Grid 
+                              item 
+                              xs={10} 
+                              style={{
+                              padding: "10px 0px 16px 10px"}}
+                              
+                              >
+                            <Grid
+                          item
+                          key={index}
+                          container
+                          xs={12}
+                          style={{ gap: 10 }}
+                          alignItems="center"
+                          direction={'row'}
+                          onClick={() => {
+                            setTestTopic(false);
+                            setVideoToPlay(item.video_url);
+                            videoToPlayIndex.current = {
+                              sectionNumber: sectionNumber - 1,
+                              lessonNumber: index
+                            };
+                            setIsReady(false);
+                          }}
+                        >
+                          <Grid
+                            item
+                            display={'flex'}
+                            alignItems={'center'}
+                            justifyContent={'center'}
+                          >
+                            <CircularProgressWithLabel
+                              title={getSectionLessonValue(
+                                sectionNumber,
+                                index
+                              )}
+                              value={
+                                videoDetails[sectionNumber - 1][index]
+                                  .videoPlayedFraction * 100
+                              }
+                            />
+                          </Grid>
+                          <Grid item>
+                            <Grid container direction={'column'}>
+                              <Grid item xs={6}>
+                                <Typography
+                                  style={{
+                                    color: theme.Colors.blackPrimary,
+                                    fontWeight: 400,
+                                    fontSize: '16px'
+                                  }}
+                                >
+                                  {' '}
+                                  {`${item.lesson_name}`}
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <img src={videoLine}></img>
+                                <Typography
+                                  component={'span'}
+                                  style={{
+                                    color: theme.Colors.blackPrimary,
+                                    fontWeight: 400,
+                                    fontSize: '12px'
+                                  }}
+                                >
+                                  {`  ${minSec[0]}m  ${minSec[1]}s`}
+                                </Typography>
+                              </Grid>
+                              
+                            </Grid>
+                            
+                          </Grid>
+                        </Grid>
+                            </Grid>
+                            <Grid 
+                              item xs={2} 
+                              display={'flex'}
+                              alignItems={'center'}
+                              justifyContent={'center'}
+                              //style={{border:"1px solid blue"}}
+                              
+                              >
+                              {`${(videoDetails[sectionNumber - 1][index]
+                                  .videoPlayedFraction * 100).toFixed()}%`}
+                            </Grid>
+
+                          </Grid>
+
+                        </>
                       );
                     })
                   : null}
+                  
               </Grid>
             )
           };
