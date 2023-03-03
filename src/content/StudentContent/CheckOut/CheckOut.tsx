@@ -54,7 +54,7 @@ const CheckOut = () => {
     tax += item.tax;
     courseId = item.course_id;
     studentId = item.user_id;
-    rowId = item.id
+    rowId = item.id;
     return { total, tax, courseId, studentId, rowId };
   });
   let totalAmount = total + tax;
@@ -64,9 +64,8 @@ const CheckOut = () => {
   const onClickCheckout = async (amount) => {
     let data = {
       status_id: 1,
-      enrolled_date: '03-03-2023',
-      amount: amount,
-      level: '30%'
+      enrolled_date: new Date().toLocaleDateString(),
+      amount: amount
     };
     const enrollRes: any =
       await API_SERVICES.enrollmentManagementService.create(
@@ -74,14 +73,14 @@ const CheckOut = () => {
         courseId,
         {
           data: data,
-          successMessage: 'Course enrolled succefully',
+          successMessage: 'Course enrolled successfully',
           failureMessage: 'There is something wrong to enroll the course'
         }
       );
-      if(enrollRes?.status < HTTP_STATUSES.BAD_REQUEST){
-        console.log('enrollRes', enrollRes);
-        onClickRemoveCourse(rowId,studentId )
-      }
+    if (enrollRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+      console.log('enrollRes', enrollRes);
+      onClickRemoveCourse(rowId, studentId);
+    }
   };
 
   const onClickRemoveCourse = async (id, studentId) => {

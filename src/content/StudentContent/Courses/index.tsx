@@ -158,7 +158,6 @@ const Courses = () => {
             {/* <Quiz courseDetails={courseDetails} /> */}
             {/* <CourseBegin /> */}
           </Grid>
-          <CourseBegin />
         </Container>
       </Box>
     );

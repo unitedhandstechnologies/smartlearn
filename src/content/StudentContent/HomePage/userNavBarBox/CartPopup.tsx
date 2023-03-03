@@ -54,7 +54,7 @@ const CartPopover = (props: Props) => {
       navigateTo('/home/checkout-page', {
         replace: true
       });
-      handleClose()
+      handleClose();
     };
 
     const onClickRemoveCourse = async (rowData) => {
@@ -71,7 +71,7 @@ const CartPopover = (props: Props) => {
         );
         if (deleteUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
           onCancelClick();
-          updateCartInfo(rowData?.user_id)
+          updateCartInfo(rowData?.user_id);
         }
       };
       let props = {
@@ -98,7 +98,7 @@ const CartPopover = (props: Props) => {
           </Typography>
         </Grid>
         <Divider light={true} style={{ paddingTop: 17 }} />
-        {carts.map((item, index) => {
+        {carts?.map((item, index) => {
           return (
             <Grid key={index} padding={1} paddingTop={2}>
               <Grid

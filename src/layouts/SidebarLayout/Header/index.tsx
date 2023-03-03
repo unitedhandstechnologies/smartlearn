@@ -25,6 +25,7 @@ import { HTTP_STATUSES } from 'src/Config/constant';
 import LanguageSelection from './LanguageSelection';
 import { AvatarImg } from 'src/Assets';
 import UserCart from 'src/content/StudentContent/HomePage/userNavBarBox/UserCart';
+import { SignalCellularNull } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -278,13 +279,7 @@ const Header = (props: Props) => {
                   {userDetails.user_name}
                 </Typography>
               </>
-            ) : (
-              <UserCart
-                userName={userDetails.user_name}
-                image={userDetails.image_url}
-                userType={userDetails.user_type}
-              />
-            )}
+            ) : null}
           </Grid>
         </Grid>
       </Grid>
