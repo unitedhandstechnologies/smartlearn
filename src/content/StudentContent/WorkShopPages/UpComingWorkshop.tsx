@@ -262,7 +262,7 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
               }}
             />
           </Grid>
-          <Grid item paddingRight={2}>
+          {/* <Grid item paddingRight={2}>
             <InputBase
               onChange={(e) => getSearchValue(e.target.value)}
               value={searchValue}
@@ -296,7 +296,7 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
                 </InputAdornment>
               }
             />
-          </Grid>
+          </Grid> */}
         </Grid>
         <Grid paddingTop={2}>
           <img src={LineBarIcon} alt="" />
@@ -348,7 +348,7 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
                     onClickCardImage={() => onClickCardImage(item)}
                     prize={item.amount}
                     discount={item.discount}
-                />
+                  />
                 </Grid>
               );
             })

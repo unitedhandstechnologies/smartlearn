@@ -273,7 +273,7 @@ const UpComingWebinars = ({
                 />
               ))}
             </Grid>
-            <Grid item paddingBottom={2}>
+            {/* <Grid item paddingBottom={2}>
               <InputBase
                 onChange={(e) => getSearchValue(e.target.value)}
                 value={searchValue}
@@ -298,7 +298,7 @@ const UpComingWebinars = ({
                   </InputAdornment>
                 }
               />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Grid>
             <img src={LineBarIcon} alt="" />

@@ -269,7 +269,7 @@ const UpComingCourse = ({
                 ))}
               </Grid>
             </Grid>
-            <Grid paddingBottom={4}>
+            {/* <Grid paddingBottom={4}>
               <InputBase
                 onChange={(e) => getSearchValue(e.target.value)}
                 value={searchValue}
@@ -294,7 +294,7 @@ const UpComingCourse = ({
                   </InputAdornment>
                 }
               />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Grid>
             <img src={LineBarIcon} alt="" />

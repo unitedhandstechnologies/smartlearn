@@ -229,7 +229,7 @@ const LearnAtUrPace = ({
             xs
             style={{ paddingBottom: '20px', gap: '10px' }}
           >
-            {headerChipItem.map((item, index) => (
+            {headerChipItem?.map((item, index) => (
               <ChipIconcomp
                 key={index}
                 chipText={item.name}
@@ -241,7 +241,7 @@ const LearnAtUrPace = ({
               />
             ))}
           </Grid>
-          <Grid item paddingBottom={2}>
+          {/* <Grid item paddingBottom={2}>
             <InputBase
               onChange={(e) => getSearchValue(e.target.value)}
               value={searchValue}
@@ -266,7 +266,7 @@ const LearnAtUrPace = ({
                 </InputAdornment>
               }
             />
-          </Grid>
+          </Grid> */}
         </Grid>
         <Grid>
           <img src={LineBarIcon} alt="" />
