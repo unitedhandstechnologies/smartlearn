@@ -170,7 +170,7 @@ const RateYourExperience = ({ courseDetails }) => {
   const RatingDialogContent = () => {
     return (
       <>
-        {/* {reviewQuestions.map((question) => {
+        {/* {reviewQuestions?.map((question) => {
           return (
             <>
               <Typography style={typoGraphyStyle}>{question}</Typography>

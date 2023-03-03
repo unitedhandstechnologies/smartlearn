@@ -10,6 +10,7 @@ import useStudentInfo from 'src/hooks/useStudentInfo';
 import toast from 'react-hot-toast';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
+import { useLocation } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   gridStyle: {
@@ -56,9 +57,10 @@ const Profile = () => {
       component: () => <PaymentHistory />
     }
   ];
-  const [selectedTab, setSelectedTab] = useState(tabContent[0]?.id);
+  const { state }: any = useLocation();
+  const [selectedTab, setSelectedTab] = useState(state?.tabVal ?? tabContent[0]?.id);
   const onTabChange = (value: number) => {
-    setSelectedTab(value);
+    setSelectedTab(value);    
   };
 
   const renderTabContent = (tabVal?: any) => {

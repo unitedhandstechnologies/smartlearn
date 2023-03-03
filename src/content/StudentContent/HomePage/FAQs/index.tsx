@@ -43,7 +43,7 @@ const FAQs = ({ faqDetails }: FaqProps) => {
           </Grid>
         </Grid>
         <Grid container spacing={2}>
-          {faq.map((item, index) => (
+          {faq?.map((item, index) => (
             <Faq
               key={index}
               question={item.question}

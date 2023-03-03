@@ -105,7 +105,7 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
         }}
       >
         {recordeCourse.length ? (
-          recordeCourse.slice(0, 6).map((item, index) => {
+          recordeCourse.slice(0, 6)?.map((item, index) => {
             return (
               <Grid
                 key={index}

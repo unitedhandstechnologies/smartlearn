@@ -23,7 +23,7 @@ const Rateyourcourse = (props: Props) => {
   const renderComponenet = () => {
     return (
       <>
-        {notifications.map((notification, index) => {
+        {notifications?.map((notification, index) => {
           return (
             <Grid container key={index} gap={1} padding={1}>
               <Grid item paddingTop={0.4}>

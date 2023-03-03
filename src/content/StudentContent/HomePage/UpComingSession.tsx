@@ -121,7 +121,7 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
           }}
         >
           {getCourses.length
-            ? getCourses.slice(0, view).map((item, index) => {
+            ? getCourses.slice(0, view)?.map((item, index) => {
                 return (
                   <Grid
                     key={index}

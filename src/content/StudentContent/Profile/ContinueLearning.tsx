@@ -50,7 +50,7 @@ const ContinueLearning = ({ enrollCourse }) => {
         }}
       >
         {recordeCourse.length ? (
-          recordeCourse.slice(0, 6).map((item, index) => {
+          recordeCourse.slice(0, 6)?.map((item, index) => {
             return (
               <Grid
                 key={index}

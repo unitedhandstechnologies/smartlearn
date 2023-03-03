@@ -167,7 +167,7 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
             </Grid>
           </Grid>
         </Grid>
-        {courseRating.slice(0, view).map((item, index) => {
+        {courseRating.slice(0, view)?.map((item, index) => {
           return (
             <Grid
               item

@@ -27,7 +27,7 @@ const QuizResult = ({quizDataDetails}:Props) => {
 
   const getTotalCorrectAnswers = () => {
     let answerCount = 0;
-        quizDataDetails.map((item,index)=>{
+        quizDataDetails?.map((item,index)=>{
             answerCount = answerCount + item.correctCount;
         });
 

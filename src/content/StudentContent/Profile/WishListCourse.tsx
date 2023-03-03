@@ -219,7 +219,7 @@ const WishListCourse = () => {
         }}
       >
         {courses.length
-          ? courses.slice(0, 6).map((item, index) => {
+          ? courses.slice(0, 6)?.map((item, index) => {
               return (
                 <Grid
                   key={index}

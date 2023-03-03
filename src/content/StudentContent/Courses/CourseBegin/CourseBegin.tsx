@@ -117,7 +117,7 @@ const CourseBegin = () => {
                 //let tempElapsedTime = [0.07, 0.16, 0.2, 0.5, 0.0];
                 //let tempRemainingTime = [15.12, 4.33, 66.65, 7, 20.56];
                 if (sectionData1?.length) {
-                  sectionData1.map((item, index) => {
+                  sectionData1?.map((item, index) => {
                     const sectionNumber = index + 1;
                     let getLessonData: any = lessonData1.length
                       ? lessonData1.filter(
@@ -126,7 +126,7 @@ const CourseBegin = () => {
                         )
                       : [];
                     if (getLessonData.length) {
-                      getLessonData.map((item, index) => {
+                      getLessonData?.map((item, index) => {
                         let tempPercentagePlayed = videoPercentage.filter(
                           (itemVideo) =>
                             itemVideo.course_id === id &&

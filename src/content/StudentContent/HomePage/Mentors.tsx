@@ -125,7 +125,7 @@ const Mentors = ({
         }}
       >
         {mentors.length
-          ? mentors.slice(0, sliceValue).map((item, index) => {
+          ? mentors.slice(0, sliceValue)?.map((item, index) => {
               return (
                 <Grid
                   key={index}

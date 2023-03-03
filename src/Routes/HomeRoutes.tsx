@@ -18,6 +18,7 @@ import ForgetPassword from 'src/content/StudentContent/RegistrationPage/ForgetPa
 import PreRecordedDetails from 'src/content/StudentContent/Courses/PreRecordedDetails';
 import CheckOut from 'src/content/StudentContent/CheckOut/CheckOut';
 import MentorAfterReg from 'src/content/StudentContent/RegistrationPage/MentorAfterReg';
+import ThankyouEnrolling from 'src/content/StudentContent/CheckOut/ThankyouEnrolling';
 
 export const HomeRoutes: RouteObject[] = [
   {
@@ -47,7 +48,8 @@ export const HomeRoutes: RouteObject[] = [
       { path: 'forgetpassword', element: <ForgetPassword /> },
       { path: 'pre-recordedCourse-details', element: <CourseBegin /> },
       { path: 'checkout-page', element: <CheckOut /> },
-      { path: 'mentorAfterReg', element: <MentorAfterReg /> }
+      { path: 'mentorAfterReg', element: <MentorAfterReg /> },
+      { path: 'thankyou-page', element: <ThankyouEnrolling/>}
     ]
   }
 ];

@@ -103,7 +103,7 @@ const Reviews = ({ ratingData }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          {ratingData.slice(view[0], view[1]).map((item, index) => {
+          {ratingData.slice(view[0], view[1])?.map((item, index) => {
             return (
               <Grid item xs={12} sm={6} key={index}>
                 <ReviewBox

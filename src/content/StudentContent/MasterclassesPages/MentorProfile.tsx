@@ -83,7 +83,7 @@ const MentorProfile = ({ mentorDetails, category }: Props) => {
           Talks about:
         </Typography>
         <Grid container gap={1} paddingTop={1}>
-          {category.map((item, index) => (
+          {category?.map((item, index) => (
             <Grid key={index}>
               <ChipComp label={item} style={{ borderColor: '#3CC878' }} />
             </Grid>
@@ -101,7 +101,7 @@ const MentorProfile = ({ mentorDetails, category }: Props) => {
           Social links:
         </Typography>
         <Grid container>
-          {socialIcons.map((itm, index) => {
+          {socialIcons?.map((itm, index) => {
             return socialUrls[index] !== '' || undefined ? (
               <Grid key={index} marginLeft={-1.5}>
                 <IconButton onClick={() => window.open(socialUrls[index])}>

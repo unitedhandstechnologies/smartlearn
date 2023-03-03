@@ -25,7 +25,7 @@ const ChipMenu = ({
 
   const getMenuItems = () => {
     return menuItem?.length
-      ? menuItem.map((item, index) => {
+      ? menuItem?.map((item, index) => {
           return (
             <MenuItem key={index}>
               <Grid container style={{ gap: 10, alignItems: 'center' }}>

@@ -180,7 +180,7 @@ const CompletedCourse = () => {
           }
         }}
       >
-        {courses.map((item, index) => {
+        {courses?.map((item, index) => {
           return (
             <MuiCardComp
               key={index}

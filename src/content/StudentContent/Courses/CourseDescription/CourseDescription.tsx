@@ -259,7 +259,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
         </Grid>
         <Grid paddingTop={4}>
           <Heading headingText={'Learning Objectives'} {...headingProps} />
-          {objectives.map((item, index) => {
+          {objectives?.map((item, index) => {
             return (
               <Grid key={index} container gap={1} alignItems={'center'}>
                 <Grid item>

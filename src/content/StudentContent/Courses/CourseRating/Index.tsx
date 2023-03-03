@@ -72,7 +72,7 @@ const CourseRating = ({ course }) => {
         width: '100%'
       }}
     >
-      {reviews.map((item, index) => {
+      {reviews?.map((item, index) => {
         return (
           <Grid key={index}>
             <ReviewBox

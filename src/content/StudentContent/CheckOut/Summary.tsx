@@ -2,14 +2,12 @@ import { makeStyles, Typography, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
 import { ButtonComp, Heading, MuiConfirmModal } from 'src/components';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
 import { CONFIRM_MODAL, HTTP_STATUSES } from 'src/Config/constant';
 import useCartInfo from 'src/hooks/useCartInfo';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import { API_SERVICES } from 'src/Services';
-import { getUserId } from 'src/Utils';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -22,7 +20,6 @@ type SummaryProps = {
   coursePrice?: number;
   tax?: number;
   totalAmount?: number;
-  onClickRemoveCourse?: (ir: number, studentId: number) => void;
 };
 
 const Summary = ({
@@ -30,47 +27,38 @@ const Summary = ({
   coursePrice,
   tax,
   totalAmount,
-  onClickRemoveCourse
 }: SummaryProps) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const { updateCartInfo } = useCartInfo();
-  const { updateStudentInfo } = useStudentInfo();
-  const navigateTo = useNavigate();
-  // const [confirmModal, setConfirmModal] = useState<any>({ open: false });
+  const [confirmModal, setConfirmModal] = useState<any>({ open: false });
 
-  // const onClickRemoveCourse = async (id, studentId) => {
-  //   const onCancelClick = () => {
-  //     setConfirmModal({ open: false });
-  //   };
-  //   const onConfirmClick = async () => {
-  //     const deleteUserRes: any = await API_SERVICES.AddToCartService.delete(
-  //       id,
-  //       {
-  //         successMessage: 'Course removed Successfully',
-  //         failureMessage: 'Failed to delete Course'
-  //       }
-  //     );
-  //     if (deleteUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-  //       onCancelClick();
-  //       updateCartInfo(studentId?.user_id);
-  //     }
-  //   };
-  //   let props = {
-  //     color: theme.Colors.redPrimary,
-  //     description: 'Are you sure want to delete this Course?',
-  //     title: t('delete'),
-  //     iconType: CONFIRM_MODAL.delete
-  //   };
-  //   setConfirmModal({ open: true, onConfirmClick, onCancelClick, ...props });
-  // };
-  // if (!purchaseData?.length) {
-  //   navigateTo('/home/profilehome', {
-  //     replace: true
-  //   });
-  //   const userId = getUserId();
-  //   updateStudentInfo(userId);
-  // } else {
+  const onClickRemoveCourse = async (id, studentId) => {
+    const onCancelClick = () => {
+      setConfirmModal({ open: false });
+    };
+    const onConfirmClick = async () => {
+      const deleteUserRes: any = await API_SERVICES.AddToCartService.delete(
+        id,
+        {
+          successMessage: 'Course removed Successfully',
+          failureMessage: 'Failed to delete Course'
+        }
+      );
+      if (deleteUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+        onCancelClick();
+        updateCartInfo(studentId?.user_id);
+      }
+    };
+    let props = {
+      color: theme.Colors.redPrimary,
+      description: 'Are you sure want to delete this Course?',
+      title: t('delete'),
+      iconType: CONFIRM_MODAL.delete
+    };
+    setConfirmModal({ open: true, onConfirmClick, onCancelClick, ...props });
+  };
+
     return (
       <Grid
         container
@@ -199,7 +187,7 @@ const Summary = ({
             </Typography>
           </Grid>
         </Grid>
-        {/* {confirmModal.open && <MuiConfirmModal {...confirmModal} />} */}
+        {confirmModal.open && <MuiConfirmModal {...confirmModal} />}
       </Grid>
     );
 };
@@ -211,7 +199,7 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
   return (
     <Grid container spacing={2} direction={'column'}>
       {purchaseData?.length
-        ? purchaseData.map((item, index) => {
+        ? purchaseData?.map((item, index) => {
             return (
               <Grid item key={index}>
                 <Grid container item>

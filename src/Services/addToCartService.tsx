@@ -9,6 +9,7 @@ export type CartProps = {
     tax: number;
     total: number;
     id?: number;
+    course_name?: string;
 }
 type AddTOCartProps = {
   data: CartProps;

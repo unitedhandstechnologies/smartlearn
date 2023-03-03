@@ -91,7 +91,7 @@ const LearnTheWayBox = () => {
             }
           }}
         >
-          {learn.map((item, index) => {
+          {learn?.map((item, index) => {
             return (
               <Grid item key={index} xs={12} sm={6}>
                 <LearnTheWay

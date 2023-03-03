@@ -47,7 +47,7 @@ const quizPreview = ({
             </Typography>
         </Grid>
 
-        {quizDataDetails.map((item,index)=>{
+        {quizDataDetails?.map((item,index)=>{
             return(
             <>
             <Grid item xs={12}

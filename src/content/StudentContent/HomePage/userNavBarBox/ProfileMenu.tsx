@@ -72,7 +72,7 @@ const ProfileMenu = (props: Props) => {
     return (
       <Grid>
         {aboveMenuItemContent && aboveMenuItemContent()}
-        {menuItems.map((item, index) => {
+        {menuItems?.map((item, index) => {
           return (
             <MenuItem key={index} onClick={(event) => handleClick(event)}>
               {renderMenuItems(item, index)}

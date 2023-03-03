@@ -283,7 +283,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
               : 'This Workshop includes:'}
           </TypographyText>
         </Grid>
-        {data.map((item, index) => {
+        {data?.map((item, index) => {
           return (
             item.name !== '' && (
               <Grid

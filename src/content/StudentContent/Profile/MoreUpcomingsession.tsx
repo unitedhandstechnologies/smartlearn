@@ -244,7 +244,7 @@ const MoreUpcomingsession = ({ courseDetails = [] }: CourseProps) => {
         }}
       >
         {getCourses.length
-          ? getCourses.slice(0, 6).map((item, index) => {
+          ? getCourses.slice(0, 6)?.map((item, index) => {
               return (
                 <Grid
                   key={index}

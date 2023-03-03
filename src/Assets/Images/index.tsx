@@ -117,6 +117,7 @@ import Language from './Language.svg'
 import Offline from './Offline.svg'
 import PayTMIcom from './paytm.svg'
 import LockIcon from './lock.svg';
+import SpeechBubble from './speechBubble.svg'
 
 export {
   EnrollmentManagementIcon,
@@ -237,5 +238,6 @@ export {
   Language,
   Offline,
   PayTMIcom,
-  LockIcon
+  LockIcon,
+  SpeechBubble
 };

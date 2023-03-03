@@ -162,7 +162,7 @@ const CartPopover = (props: Props) => {
                       textAlign: 'end'
                     }}
                   >
-                    ₹{item.total}
+                    ₹{item.total.toFixed(2)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -223,7 +223,7 @@ const CartPopover = (props: Props) => {
           </Typography>
         </Grid>
         <Divider light={true} style={{ paddingTop: 15 }} />
-        {sumItems.map((itm, index) => {
+        {sumItems?.map((itm, index) => {
           return (
             <Grid key={index} container paddingLeft={1.5} paddingTop={1.3}>
               <Grid item>
@@ -251,7 +251,7 @@ const CartPopover = (props: Props) => {
                     textAlign: 'end'
                   }}
                 >
-                  ₹{getTotals(index)}
+                  ₹{getTotals(index).toFixed(2)}
                 </Typography>
                 {index == 1 ? (
                   <Divider light={true} style={{ paddingTop: 18 }} />
