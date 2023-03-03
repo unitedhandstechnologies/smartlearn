@@ -7,149 +7,7 @@ import ContinueLearning from './ContinueLearning';
 import WishListCourse from './WishListCourse';
 import { BasicStockIcon } from 'src/Assets';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
-
-const courses = [
-  {
-    id: 1,
-    mentor_id: 2,
-    mentor_name: 'Mentor',
-    category_id: 2,
-    category_name: 'FrontEnd English',
-    sub_category_id: 2,
-    sub_category_name: 'React',
-    course_level_id: 3,
-    course_level_name: 'Advanced',
-    image_url:
-      'https://smartlearn-video.s3.amazonaws.com/MicrosoftTeams-image%20%284%29.png',
-    chapter: 0,
-    section: 0,
-    course_type: 'webinar',
-    cost_type: 'Free',
-    amount: 0,
-    discount: 0,
-    starting_date: '2023-01-25',
-    ending_date: '2023-02-25',
-    duration: '2 hours',
-    course_mode: 'Online',
-    course_status: 'disabled',
-    starting_time: '01:12',
-    ending_time: '01:11',
-    meeting_location: '',
-    meeting_link: 'link',
-    created_at: '2023-02-09T07:46:29.756Z',
-    updated_at: '2023-02-09T19:41:14.823Z',
-    course_id: 1,
-    language_id: 1,
-    course_name: 'React English',
-    course_description: '.net',
-    requirements: 'undefined'
-  },
-  {
-    id: 2,
-    mentor_id: 2,
-    mentor_name: 'Mentor',
-    category_id: 2,
-    category_name: 'FrontEnd English',
-    sub_category_id: 2,
-    sub_category_name: 'React',
-    course_level_id: 3,
-    course_level_name: 'Biggner',
-    image_url:
-      'https://smartlearn-video.s3.amazonaws.com/MicrosoftTeams-image%20%284%29.png',
-    chapter: 0,
-    section: 0,
-    course_type: 'Live',
-    cost_type: '36% completed',
-    amount: 0,
-    discount: 0,
-    starting_date: '2023-01-25',
-    ending_date: '2023-02-25',
-    duration: '2 hours',
-    course_mode: 'Online',
-    course_status: 'disabled',
-    starting_time: '01:12',
-    ending_time: '01:11',
-    meeting_location: '',
-    meeting_link: 'link',
-    created_at: '2023-02-09T07:46:29.756Z',
-    updated_at: '2023-02-09T19:41:14.823Z',
-    course_id: 1,
-    language_id: 1,
-    course_name: 'React English',
-    course_description: '.net',
-    requirements: 'undefined'
-  },
-  {
-    id: 3,
-    mentor_id: 2,
-    mentor_name: 'Mentor',
-    category_id: 2,
-    category_name: 'FrontEnd English',
-    sub_category_id: 2,
-    sub_category_name: 'React',
-    course_level_id: 3,
-    course_level_name: 'Intermediate',
-    image_url:
-      'https://smartlearn-video.s3.amazonaws.com/MicrosoftTeams-image%20%284%29.png',
-    chapter: 0,
-    section: 0,
-    course_type: 'webinar',
-    cost_type: 'paid',
-    amount: 0,
-    discount: 0,
-    starting_date: '2023-01-25',
-    ending_date: '2023-02-25',
-    duration: '2 hours',
-    course_mode: 'Online',
-    course_status: 'disabled',
-    starting_time: '01:12',
-    ending_time: '01:11',
-    meeting_location: 'Bangalore',
-    meeting_link: '',
-    created_at: '2023-02-09T07:46:29.756Z',
-    updated_at: '2023-02-09T19:41:14.823Z',
-    course_id: 1,
-    language_id: 1,
-    course_name: 'React English',
-    course_description: '.net',
-    requirements: 'undefined'
-  },
-  {
-    id: 4,
-    mentor_id: 2,
-    mentor_name: 'Mentor',
-    category_id: 2,
-    category_name: 'FrontEnd English',
-    sub_category_id: 2,
-    sub_category_name: 'React',
-    course_level_id: 3,
-    course_level_name: 'Advanced',
-    image_url:
-      'https://smartlearn-video.s3.amazonaws.com/MicrosoftTeams-image%20%284%29.png',
-    chapter: 0,
-    section: 0,
-    course_type: 'webinar',
-    cost_type: '36% completed',
-    amount: 0,
-    discount: 0,
-    starting_date: '2023-01-25',
-    ending_date: '2023-02-25',
-    duration: '2 hours',
-    course_mode: 'Online',
-    course_status: 'disabled',
-    starting_time: '01:12',
-    ending_time: '01:11',
-    meeting_location: '',
-    meeting_link: 'link',
-    created_at: '2023-02-09T07:46:29.756Z',
-    updated_at: '2023-02-09T19:41:14.823Z',
-    course_id: 1,
-    language_id: 1,
-    course_name: 'React English',
-    course_description: '.net',
-    requirements: 'undefined'
-  }
-];
+import { useLocation, useNavigate } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -164,6 +22,7 @@ const FILTER_CHIPS = ['Active', 'Completed', 'Whishlist'];
 const MyLibrary = ({ enrollCourse }) => {
   const theme = useTheme();
   const classes = useStyles();
+  const navigateTo = useNavigate();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
 
   const handleChangeChipValue = (selectedChipItem: string[]) => {
@@ -187,7 +46,12 @@ const MyLibrary = ({ enrollCourse }) => {
     }
   }, [chipValue, enrollCourse]);
 
-  const onClickCardImage = (rowData) => {};
+  const onClickCardImage = (rowData) => {
+    navigateTo('/home/course-details', {
+      state: { formData: { ...rowData } },
+      replace: true
+    });
+  };
 
   return (
     <Grid container direction="column" rowSpacing={4}>
