@@ -179,15 +179,24 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           }}
         >
           <Grid>
-            <TypographyText sx={{ ...classes.price }}>
-              {course.cost_type === 'PAID'
-                ? `₹
+            {course.cost_type === 'PAID' ? (
+              <Typography sx={{ ...classes.price }}>{`₹
               ${(
                 course.amount -
                 (course.discount / 100) * course.amount
-              ).toFixed()}`
-                : 'FREE'}
-            </TypographyText>
+              ).toFixed()}`}</Typography>
+            ) : (
+              <Typography
+                sx={{
+                  fontSize: '28px',
+                  fontWeight: 700,
+                  fontFamily: 'Switzer',
+                  color: '#3CC878'
+                }}
+              >
+                Free
+              </Typography>
+            )}
           </Grid>
           <Grid>
             <TypographyText sx={{ ...classes.mrp }}>

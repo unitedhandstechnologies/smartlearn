@@ -5,8 +5,6 @@ import { Config } from 'src/Config';
 
 
 export const PreRecordedCourseVideoService = {
-  
-
   updateVideoDetails: async (
     courseId: number,
     userId: number,

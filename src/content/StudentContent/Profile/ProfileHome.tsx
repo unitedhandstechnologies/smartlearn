@@ -139,23 +139,24 @@ const ProfileHome = () => {
           >
             <YourUpComingSession courseDetails={enrollCourse} />
           </Grid>
-          <Grid
-            container
-            direction="column"
-            sx={{
-              padding: theme.spacing(7, 7),
-              backgroundImage: `url(${BackgroundLine})`,
-              [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
-            }}
-          >
-            <MoreUpcomingsession courseDetails={courseDetails} />
-          </Grid>
-          {/* <Grid
+        </Container>
+        <Grid
+          container
+          direction="column"
+          sx={{
+            padding: theme.spacing(7, 7),
+            backgroundImage: `url(${BackgroundLine})`,
+            [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
+          }}
+        >
+          <MoreUpcomingsession courseDetails={courseDetails} />
+        </Grid>
+        {/* <Grid
           container
           direction="column"
           style={{ padding: theme.spacing(7, 7) }}
         > */}
-        </Container>
+
         <LearnTheWayBox />
         <Container>
           <Mentors

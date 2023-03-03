@@ -234,7 +234,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
             {courseDescription?.requirements ? (
               <Grid item>
                 <ChipComp
-                  label={courseDescription?.requirements}
+                  label={courseDescription?.category_name}
                   style={{
                     borderColor: '#3CC878',
                     fontSize: theme.MetricsSizes.small_xxx,
@@ -243,7 +243,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                 />
               </Grid>
             ) : null}
-            {/* {courseDescription?.sub_category_name ? (
+            {courseDescription?.sub_category_name ? (
               <Grid item xs>
                 <ChipComp
                   label={courseDescription?.sub_category_name}
@@ -254,7 +254,13 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                   }}
                 />
               </Grid>
-            ) : null} */}
+            ) : null}
+          </Grid>
+        </Grid>
+        <Grid paddingTop={4}>
+          <Heading headingText={'Requirements'} {...headingProps} />
+          <Grid item>
+            <Typography style={typographyStylProps}>{courseDescription?.requirements}</Typography>
           </Grid>
         </Grid>
         <Grid paddingTop={4}>

@@ -333,7 +333,7 @@ const Registration = () => {
                   required
                   handleChange={handleChange}
                   value={edit.getValue('code')}
-                  isError={phoneError}
+                  isError={codeError}
                 />
               </Grid>
               <Grid item xs={9} md={9} sx={{ marginTop: '10px' }}>
