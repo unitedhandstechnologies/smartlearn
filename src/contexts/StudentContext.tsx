@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
+import { getUserId } from 'src/Utils';
 
 export type StudentDetails = {
   id: number;
@@ -68,14 +69,18 @@ export const StudentInfoProvider = ({ children }: Props) => {
     INITIAL_STATE.studentDetails
   );
   const fetchData = async () => {
+    const userId = getUserId();
     try {
-      let id = parseInt(localStorage.getItem('userId'));
-      const response: any = await API_SERVICES.adminUserService.getById(id);
+      if (userId !== null) {
+        const response: any = await API_SERVICES.adminUserService.getById(
+          userId
+        );
 
-      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        setStudentDetails((prevState: any) => {
-          return { ...prevState, ...response?.data?.user };
-        });
+        if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+          setStudentDetails((prevState: any) => {
+            return { ...prevState, ...response?.data?.user };
+          });
+        }
       }
     } catch (err) {
       toast.error(err?.message);

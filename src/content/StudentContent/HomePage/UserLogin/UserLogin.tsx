@@ -55,7 +55,7 @@ const UserLogin = () => {
             updateStudentInfo((prevState: any) => {
               return { ...prevState, ...getUserRes?.data?.user };
             });
-            updateCartInfo(getUserRes?.data?.user?.id)
+            updateCartInfo(getUserRes?.data?.user?.id);
           }
         }
         toast.success('Profile Login successfully');

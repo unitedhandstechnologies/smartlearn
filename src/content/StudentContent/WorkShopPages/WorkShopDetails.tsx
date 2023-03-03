@@ -85,7 +85,7 @@ const WorkShopDetails = () => {
             replace: true
           })
         }
-        sx={{cursor: 'pointer'}}
+        sx={{ cursor: 'pointer' }}
       >
         <Typography
           sx={{
