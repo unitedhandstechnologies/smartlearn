@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
-import { ListIcon, StatisticIcon } from 'src/Assets/Images';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { LineBarIcon, ListIcon, StatisticIcon } from 'src/Assets/Images';
 import { ButtonComp, Heading, MuiConfirmModal } from 'src/components';
 import { ContentDisplayTiles } from 'src/components/ContentDisplayTiles';
 import { Box, Grid, makeStyles, useTheme } from '@material-ui/core';
@@ -9,7 +9,7 @@ import {
   CONFIRM_MODAL,
   COURSE_TYPE_NAME,
   DETECT_LANGUAGE,
-  HTTP_STATUSES,
+  HTTP_STATUSES
 } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
 import { useSearchVal } from 'src/hooks/useSearchVal';
@@ -19,6 +19,7 @@ import AddNewCourseModal from './AddNewCourseModal';
 import CourseViewModal from './CourseViewModal';
 import { API_SERVICES } from 'src/Services';
 import toast from 'react-hot-toast';
+import { UserInfoContext } from 'src/contexts/UserContext';
 
 const useStyles = makeStyles((theme) => ({
   dividerStyle: {
@@ -47,6 +48,8 @@ function CourseManagement() {
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState<any>({ open: false });
   const [courseCount, setCourseCount] = useState(COURSE_COUNT);
+  const { userDetails } = useContext(UserInfoContext);
+
   const courseManagementDetails = [
     {
       heading: t('course.viewAllCourses'),
@@ -193,14 +196,19 @@ function CourseManagement() {
   const fetchData = useCallback(async () => {
     try {
       let params: any = {};
-      if (debValue !== '') {
-        params.searchString = debValue;
+      if (userDetails.user_type === 1 || userDetails.user_type === 2) {
+        if (debValue !== '') {
+          params.searchString = debValue;
+        }
+      } else if (userDetails.user_type === 3) {
+        params.mentor_id = userDetails.id;
       }
+
       const response: any = await Promise.all([
         API_SERVICES.courseManagementService.getAll(
           DETECT_LANGUAGE[i18n.language],
           params
-        ), 
+        ),
         API_SERVICES.courseManagementService.getStatistic()
       ]);
 
@@ -210,7 +218,6 @@ function CourseManagement() {
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
         setCourseCount(response[1]?.data?.courseStatus);
       }
-
     } catch (err) {
       toast.error(err?.message);
     } finally {
@@ -219,8 +226,8 @@ function CourseManagement() {
   }, [debValue, selectedCourseTypeVal]);
 
   useEffect(() => {
-    fetchData();   
-  }, [debValue,selectedCourseTypeVal]);
+    fetchData();
+  }, [debValue, selectedCourseTypeVal]);
 
   const onDeleteCourse = (rowData) => {
     const onCancelClick = () => {
@@ -307,16 +314,37 @@ function CourseManagement() {
     setConfirmModal({ open: true, onConfirmClick, onCancelClick, ...props });
   };
 
-   const getFilteredTableData = tableData.filter(
+  const getFilteredTableData = tableData.filter(
     (item) => item.course_type === COURSE_TYPE_NAME[selectedCourseTypeVal]
-  ); 
+  );
 
   if (loading) {
     return <Loader />;
   } else {
     return (
       <>
-        <Heading headingText={t('course.courseManagementDetails')} />
+        {userDetails.user_type === 3 ? (
+          <Grid>
+            <Heading
+              headingText={'Courses'}
+              headerFontSize={'32px'}
+              headerFontWeight={500}
+              headingColor={'#3C414B'}
+              headerFontFamily={'IBM Plex Serif'}
+              style={{
+                [theme.breakpoints.down('xs')]: {
+                  fontSize: 15
+                },
+                padding: '0px 0px 20px 0px'
+              }}
+            />
+            <Grid>
+              <img src={LineBarIcon} alt="" />
+            </Grid>
+          </Grid>
+        ) : (
+          <Heading headingText={t('course.courseManagementDetails')} />
+        )}
         <ButtonComp
           buttonText={t('course.addNewCourse')}
           onClickButton={() =>

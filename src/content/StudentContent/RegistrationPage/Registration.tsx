@@ -38,7 +38,8 @@ const Registration = () => {
   const navigateTo = useNavigate();
   const [permission, setPermission] = useState([]);
   const [userType, setUserType] = useState(USER_TYPE_ID.student);
-  console.log(permission, 'permission test');
+  const [instructorSignUp, setInstructorSignUp] = useState<boolean>(true);
+
   // const onClickEyeIcon = () => {
   //   setShowPassword(!showPassword);
   // };
@@ -141,6 +142,7 @@ const Registration = () => {
   const handleClick = () => {
     setUserType(USER_TYPE_ID.mentors);
     setPermission([1, 4, 8]);
+    setInstructorSignUp(false);
   };
   return (
     <Grid
@@ -169,19 +171,22 @@ const Registration = () => {
               ? 'Sign up and start learning'
               : 'Instructor Signup '}
           </Typography>
-          <Grid container item style={{ justifyContent: 'end' }}>
-            <ButtonComp
-              buttonText="Instructor SignUp"
-              backgroundColor="#3C78F0"
-              buttonTextColor={theme.Colors.white}
-              buttonFontSize={16}
-              buttonFontWeight={400}
-              btnWidth={'fit-content'}
-              height="40px"
-              buttonFontFamily="Switzer"
-              onClickButton={handleClick}
-            />
-          </Grid>
+          {instructorSignUp ? (
+            <Grid container item style={{ justifyContent: 'end' }}>
+              <ButtonComp
+                buttonText="Instructor SignUp"
+                backgroundColor="#3C78F0"
+                buttonTextColor={theme.Colors.white}
+                buttonFontSize={16}
+                buttonFontWeight={400}
+                btnWidth={'fit-content'}
+                height="40px"
+                buttonFontFamily="Switzer"
+                onClickButton={handleClick}
+              />
+            </Grid>
+          ) : null}
+
           <Typography
             style={{
               fontSize: 18,
@@ -450,20 +455,37 @@ const Registration = () => {
               }}
             >
               Have an account?{' '}
-              <span
-                style={{
-                  fontSize: 16,
-                  fontFamily: 'Switzer',
-                  fontWeight: 400,
-                  textAlign: 'center',
-                  color: '#3C78F0',
-                  cursor: 'pointer'
-                }}
-                onClick={() => navigateTo('/home/user-login')}
-              >
-                {' '}
-                Login
-              </span>
+              {instructorSignUp ? (
+                <span
+                  style={{
+                    fontSize: 16,
+                    fontFamily: 'Switzer',
+                    fontWeight: 400,
+                    textAlign: 'center',
+                    color: '#3C78F0',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => navigateTo('/home/user-login')}
+                >
+                  {' '}
+                  Login
+                </span>
+              ) : (
+                <span
+                  style={{
+                    fontSize: 16,
+                    fontFamily: 'Switzer',
+                    fontWeight: 400,
+                    textAlign: 'center',
+                    color: '#3C78F0',
+                    cursor: 'pointer'
+                  }}
+                  onClick={() => navigateTo('/admin/login')}
+                >
+                  {' '}
+                  Login
+                </span>
+              )}
             </Typography>
           </Grid>
         </Grid>

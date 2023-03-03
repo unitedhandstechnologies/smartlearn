@@ -1,11 +1,7 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useContext } from 'react';
 import { useState } from 'react';
 import { ContentDisplayTiles } from 'src/components/ContentDisplayTiles';
-import {
-  NewOrder,
-  ListIcon,
-  DownloadIcon
-} from 'src/Assets/Images';
+import { NewOrder, ListIcon, DownloadIcon } from 'src/Assets/Images';
 import toast from 'react-hot-toast';
 import { Loader } from 'src/components';
 import { Box, useTheme } from '@material-ui/core';
@@ -17,6 +13,7 @@ import { useDebounce } from 'src/hooks/useDebounce';
 import { useNavigate } from 'react-router';
 import InstructorReportsTable from './InstructorReportsTable';
 import InstructorModal from './InstructorModal';
+import { UserInfoContext } from 'src/contexts/UserContext';
 
 function AdminDashboard() {
   const theme = useTheme();
@@ -28,6 +25,7 @@ function AdminDashboard() {
   const navigateTo = useNavigate();
   const { searchValue } = useSearchVal();
   const debValue = useDebounce(searchValue, 1000);
+  const { userDetails } = useContext(UserInfoContext);
 
   const handleSetSelectedTab = (value) => {
     setSelectedTab(value);
@@ -45,13 +43,11 @@ function AdminDashboard() {
       if (debValue !== '') {
         params.searchString = debValue;
       }
-      const response: any = await(
-        API_SERVICES.instructorReportsService.getAllInstructorReports(
+      const response: any =
+        await API_SERVICES.instructorReportsService.getAllInstructorReports(
           params
-        )
-      );
-      console.log(response, "response");
-
+        );
+      console.log(response, 'response');
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.mentorPayouts?.length) {
           setTableData(response?.data?.mentorPayouts);
@@ -71,17 +67,17 @@ function AdminDashboard() {
   const overAllDetails = [
     {
       heading: t('reports.instructorReports'),
-      subText: "",
+      subText: '',
       iconImage: DownloadIcon
     },
     {
       heading: t('reports.salesReport'),
-      subText: "",
+      subText: '',
       iconImage: ListIcon
     },
     {
       heading: t('reports.paymentReports'),
-      subText:"",
+      subText: '',
       iconImage: NewOrder
     }
   ];

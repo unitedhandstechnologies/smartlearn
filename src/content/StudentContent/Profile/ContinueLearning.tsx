@@ -22,7 +22,7 @@ const ContinueLearning = ({ enrollCourse }) => {
     return item.course_type === COURSE_TYPE_NAME[6];
   });
   const onClickCardImage = (rowData) => {
-    if (rowData.course_type === 'Recorded Course') {
+    if (rowData.course_type === COURSE_TYPE_NAME[6]) {
       navigateTo('/home/pre-recordedCourse-details', {
         state: { ...rowData },
         replace: true

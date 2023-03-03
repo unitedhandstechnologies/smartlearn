@@ -37,6 +37,7 @@ const ProfileHome = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { studentDetails, updateStudentInfo } = useStudentInfo();
   const [enrollCourse, setEnrollCourse] = useState<any>([]);
+  const [rating, setRating] = useState<boolean>(false);
 
   // const { searchValue } = useSearchVal();
   // const debValue = useDebounce(searchValue, 2000)
@@ -109,7 +110,7 @@ const ProfileHome = () => {
     return (
       <Grid container sx={{ position: 'relative', background: '#ffffff' }}>
         <Container>
-          {completedCourse ? (
+          {rating ? (
             <RateYourExperience courseDetails={completedCourse} />
           ) : null}
 

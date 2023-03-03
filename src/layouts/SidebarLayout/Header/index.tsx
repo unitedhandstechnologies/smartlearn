@@ -23,7 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import LanguageSelection from './LanguageSelection';
-import { AvatarImg } from 'src/Assets';
+import { AvatarImg, LineBarIcon } from 'src/Assets';
 import { SignalCellularNull } from '@mui/icons-material';
 import UserCart from 'src/content/StudentContent/HomePage/userNavBarBox/UserCart';
 
@@ -175,9 +175,20 @@ const Header = (props: Props) => {
       </Grid>
       <Grid container alignItems="center">
         <Grid item>
-          <Typography className={styles.headerText}>{header}</Typography>
-          <Typography className={styles.subHeader}>{info}</Typography>
+          {userDetails.user_type === 1 || userDetails.user_type === 2 ? (
+            <>
+              <Typography className={styles.headerText}>{header}</Typography>
+              <Typography className={styles.subHeader}>{info}</Typography>
+            </>
+          ) : (
+            <Grid item container alignItems="center">
+              <Typography className={styles.headerText}>
+                Welcome back, {userDetails.first_name}{' '}
+              </Typography>
+            </Grid>
+          )}
         </Grid>
+
         <Grid container item xs alignItems="center" justifyContent="flex-end">
           <Grid item>
             {searchNeeded ? (

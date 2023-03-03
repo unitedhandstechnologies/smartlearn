@@ -241,7 +241,7 @@ function AdminDashboard() {
           </>
         ) : (
           <Grid>
-            {/* <Heading
+            <Heading
               headingText={'Dashboard'}
               headerFontSize={'32px'}
               headerFontWeight={500}
@@ -253,7 +253,7 @@ function AdminDashboard() {
                 },
                 padding: '0px 0px 20px 0px'
               }}
-            /> */}
+            />
             <Grid>
               <img src={LineBarIcon} alt="" />
             </Grid>
