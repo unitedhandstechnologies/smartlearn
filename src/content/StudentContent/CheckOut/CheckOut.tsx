@@ -55,8 +55,8 @@ const CheckOut = () => {
     tax += item.tax;
     courseId = item.course_id;
     studentId = item.user_id;
-    rowId = item.id
-    courseName = item.course_name
+    rowId = item.id;
+    courseName = item.course_name;
     return { total, tax, courseId, studentId, rowId, courseName };
   });
   let totalAmount = total + tax;
@@ -77,27 +77,19 @@ const CheckOut = () => {
           failureMessage: 'There is something wrong to enroll the course'
         }
       );
-      navigateTo('/home/thankyou-page',{
-        state: courseName,
-        replace: true
-      })
-      if(enrollRes?.status < HTTP_STATUSES.BAD_REQUEST){
-        console.log('enrollRes', enrollRes);
-        navigateTo('/home/thankyou-page',{
+    if (enrollRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+      const removeCart: any = await API_SERVICES.AddToCartService.delete(
+        rowId,
+        {}
+      );
+      if (removeCart?.status < HTTP_STATUSES.BAD_REQUEST) {
+        updateCartInfo(studentId);
+        navigateTo('/home/thankyou-page', {
           state: courseName,
           replace: true
-        })
-        const removeCart: any = API_SERVICES.AddToCartService.delete(
-          rowId,
-          {
-            successMessage: 'Course removed Successfully',
-            failureMessage: 'Failed to delete Course'
-          }
-        );
-        if (removeCart?.status < HTTP_STATUSES.BAD_REQUEST) {
-          updateCartInfo(studentId);
-        }
+        });
       }
+    }
   };
 
   return (

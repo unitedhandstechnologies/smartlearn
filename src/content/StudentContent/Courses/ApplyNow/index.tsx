@@ -6,7 +6,8 @@ import {
   DownloadSvg,
   LifeTime,
   CertificateIcon,
-  LocationIcon
+  LocationIcon,
+  Online
 } from '../../../../Assets/Images';
 import { ButtonComp } from 'src/components';
 import FavIcon from '../../../../Assets/Images/FavIcon.svg';
@@ -210,7 +211,13 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           }}
         >
           <img
-            src={course.course_type === 'Workshop' ? LocationIcon : ClockIcon}
+            src={
+              course.course_type === 'Workshop'
+                ? course.course_mode.toLowerCase() === 'online'
+                  ? Online
+                  : LocationIcon
+                : ClockIcon
+            }
             style={{ paddingRight: 15 }}
             alt=""
           />
