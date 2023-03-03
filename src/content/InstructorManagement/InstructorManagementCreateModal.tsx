@@ -159,7 +159,7 @@ const InstructorManagementCreateModal = (props: Props) => {
     edit.update({
       image_url: ''
     });
-    setProfileImage('No file choosen');
+    setProfileImage('No file chosen');
     if (!edit.allFilled('image_url')) {
       return;
     } else {

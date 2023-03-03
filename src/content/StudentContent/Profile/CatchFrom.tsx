@@ -30,7 +30,7 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
   };
-  const recordeCourse = courseDetails.filter((item) => {
+  const recordedCourse = courseDetails.filter((item) => {
     return item.course_type === COURSE_TYPE_NAME[6];
   });
 
@@ -104,8 +104,8 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
           }
         }}
       >
-        {recordeCourse.length ? (
-          recordeCourse.slice(0, 6)?.map((item, index) => {
+        {recordedCourse.length ? (
+          recordedCourse.slice(0, 6)?.map((item, index) => {
             return (
               <Grid
                 key={index}
@@ -129,7 +129,7 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
                       ? 'English'
                       : item.language_id === 2
                       ? 'Hindi'
-                      : 'Gjarati'
+                      : 'Gujarati'
                   }
                   nextclass={item.starting_date}
                   zoomLink={item.meeting_link}

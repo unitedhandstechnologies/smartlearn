@@ -126,7 +126,7 @@ const MyLibrary = ({ enrollCourse }) => {
                       ? 'English'
                       : item.language_id === 2
                       ? 'Hindi'
-                      : 'Gjarati'
+                      : 'Gujarati'
                   }
                   nextclass={item.starting_date}
                   zoomLink={item.meeting_link}

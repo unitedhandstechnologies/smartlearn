@@ -37,12 +37,12 @@ const CourseRating = ({ course }) => {
       img: course.course_type === 'Recorded Course' ? Star : CalenderImg
     },
     {
-      name: LANGUAGE_NAME[course.language_id],
+      name: LANGUAGE_NAME[course.language_id] || 'English',
       subText: 'Course language',
       img: chatIcon
     },
     {
-      name: COURSE_LEVEL_NAME[course.course_level_id],
+      name: COURSE_LEVEL_NAME[course.course_level_id] || 'Beginner',
       subText: 'Difficulty level',
       img: levelIcons[course.course_level_id]
     },
