@@ -98,7 +98,10 @@ const UserCart = (props: Props) => {
       <Grid>
         {userType === USER_TYPES.mentor ? null : (
           <IconButton aria-label="cart" onClick={handleCartClick}>
-            <Badge badgeContent={badgeContent || addToCart.length} color="secondary">
+            <Badge
+              badgeContent={badgeContent || addToCart.length}
+              color="secondary"
+            >
               <img src={CartImg} width={25} height={25} />
             </Badge>
           </IconButton>
@@ -132,11 +135,15 @@ const UserCart = (props: Props) => {
           <img src={BellImg} width={'23.33px'} height={'24.5px'} />
         </IconButton>
       </Grid>
-      <CartPopover
-        carts={addToCart}
-        anchorEl={cartOpen}
-        handleClose={handleCartClose}
-      />
+
+      {userType === USER_TYPES.mentor ? null : (
+        <CartPopover
+          carts={addToCart}
+          anchorEl={cartOpen}
+          handleClose={handleCartClose}
+        />
+      )}
+
       <NotificationPopover
         notifications={notifications}
         anchorEl={bellOpen}

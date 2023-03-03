@@ -24,8 +24,8 @@ import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import LanguageSelection from './LanguageSelection';
 import { AvatarImg } from 'src/Assets';
-import UserCart from 'src/content/StudentContent/HomePage/userNavBarBox/UserCart';
 import { SignalCellularNull } from '@mui/icons-material';
+import UserCart from 'src/content/StudentContent/HomePage/userNavBarBox/UserCart';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -279,7 +279,13 @@ const Header = (props: Props) => {
                   {userDetails.user_name}
                 </Typography>
               </>
-            ) : null}
+            ) : (
+              <UserCart
+                userName={userDetails.user_name}
+                image={userDetails.image_url}
+                userType={userDetails.user_type}
+              />
+            )}
           </Grid>
         </Grid>
       </Grid>
