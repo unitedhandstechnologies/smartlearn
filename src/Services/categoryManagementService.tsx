@@ -50,8 +50,6 @@ export const categoryManagementService = {
     //without Permission
   },
 
-  
-
   getCategoryById: async (categoryId: number) => {
     const options = await apiOptions({
       url: `${Config.BASE_URL}/api/getCategoryById/${categoryId}`,
@@ -144,18 +142,15 @@ export const categoryManagementService = {
 
   getAllSubCategoryByCategoryIdNoPermission: async (
     languageId: number,
-    category_id: number,
-    language_id: number
+    category_id: number
   ) => {
     const options = await apiOptions({
-      url: `${Config.BASE_URL}/api/getAllSubCategorys/language/${languageId}`,
-      method: 'get',
-      params: { category_id, language_id }
+      url: `${Config.BASE_URL}/api/getAllSubCategory/language/${languageId}/category/${category_id}`,
+      method: 'get'
     });
     return apiRequest(options);
     //return subCategoryData.subCategoryDataGet
   },
-
 
   getSubCategoryById: async (subCategoryId: number) => {
     const options = await apiOptions({

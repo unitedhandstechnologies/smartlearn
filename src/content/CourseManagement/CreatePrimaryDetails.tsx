@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Grid,
-  InputAdornment,
-  makeStyles,
-  useTheme
-} from '@material-ui/core';
+import { Grid, InputAdornment, makeStyles, useTheme } from '@material-ui/core';
 import MultipleSelectComp from './../../components/MultipleSelectComp/index';
 import AddCourseTitleAndDescription from './AddCourseTitleAndDescription';
 import { ButtonComp, TextInputComponent } from 'src/components';
@@ -13,7 +8,7 @@ import {
   COURSE_TYPE_NAME,
   DETECT_LANGUAGE,
   HTTP_STATUSES,
-  MODE_NAME,
+  MODE_NAME
 } from 'src/Config/constant';
 import { useEdit } from 'src/hooks/useEdit';
 import { API_SERVICES } from 'src/Services';
@@ -67,17 +62,17 @@ const CreatePrimaryDetails = ({
   const theme = useTheme();
   const { t, i18n } = useTranslation();
   const [subCategories, setSubCategories] = useState([]);
-  const [profileImage, setProfileImage] = useState('No file choosen'); 
+  const [profileImage, setProfileImage] = useState('No file choosen');
   const imageError = error && !edit.allFilled('image_url');
   const nameError = error && !edit.allFilled('mentor_name');
   const categoryError = error && !edit.allFilled('category_name');
   const subcategoryError = error && !edit.allFilled('sub_category_name');
-  const startTimeError =  error && !edit.allFilled('starting_time');
-  const endTimeError =  error && !edit.allFilled('ending_time');
+  const startTimeError = error && !edit.allFilled('starting_time');
+  const endTimeError = error && !edit.allFilled('ending_time');
   const startDateError = error && !edit.allFilled('starting_date');
   const endDateError = error && !edit.allFilled('ending_date');
 
-  console.log(mentors,"mentorname")
+  console.log(mentors, 'mentorname');
 
   const courseType = [
     { courseTypeId: 1, courseTypeName: 'Seminar' },
@@ -103,12 +98,11 @@ const CreatePrimaryDetails = ({
     const response: any =
       await API_SERVICES.categoryManagementService.getAllSubCategoryByCategoryIdNoPermission(
         getLanguageId,
-        id,
-        getLanguageId
+        id
       );
     if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-      if (response?.data?.subCategories?.length) {
-        setSubCategories(response?.data?.subCategories);
+      if (response?.data?.subCategory?.length) {
+        setSubCategories(response?.data?.subCategory);
       } else {
         setSubCategories([]);
       }
@@ -121,7 +115,12 @@ const CreatePrimaryDetails = ({
     let img = new Image();
     img.src = window.URL.createObjectURL(event.target.files[0]);
     img.onload = async () => {
-      if (img.width <= 350 && img.width >=300 && img.height <= 250 && img.height >=200) {
+      if (
+        img.width <= 350 &&
+        img.width >= 300 &&
+        img.height <= 250 &&
+        img.height >= 200
+      ) {
         const uploadImageRes: any =
           await API_SERVICES.imageUploadService.uploadImage(formData);
         if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -138,7 +137,6 @@ const CreatePrimaryDetails = ({
       }
     };
   };
-
 
   const removeProfile = () => {
     edit.update({
@@ -175,11 +173,12 @@ const CreatePrimaryDetails = ({
                 });
                 return;
               }
-              let mentorName = mentors.filter(
-                (item) => item.id === Number(e.target.value)
-              )[0].first_name + ' ' + mentors.filter(
-                (item) => item.id === Number(e.target.value)
-              )[0].last_name
+              let mentorName =
+                mentors.filter((item) => item.id === Number(e.target.value))[0]
+                  .first_name +
+                ' ' +
+                mentors.filter((item) => item.id === Number(e.target.value))[0]
+                  .last_name;
               edit.update({
                 mentor_id: e.target.value,
                 mentor_name: mentorName
@@ -302,7 +301,11 @@ const CreatePrimaryDetails = ({
             }}
             required
             isError={imageError}
-            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 350 X 250 resolution" }
+            helperText={
+              imageError
+                ? 'Please upload the profile image'
+                : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 350 X 250 resolution'
+            }
           />
         </Grid>
       </Grid>
@@ -341,7 +344,7 @@ const CreatePrimaryDetails = ({
             value={edit.getValue('starting_date')}
             onChange={(e) => edit.update({ starting_date: e.target.value })}
             required
-            isError={startDateError }
+            isError={startDateError}
             helperText={startDateError && 'Please select a Start Date'}
           />
         </Grid>
@@ -400,7 +403,11 @@ const CreatePrimaryDetails = ({
               renderValue={(value: any) => (value ? value : 'Select')}
               displayEmpty
               isError={error && !edit.allFilled('course_type')}
-              helperText={error && !edit.allFilled('course_type') && 'Please select a course type'}
+              helperText={
+                error &&
+                !edit.allFilled('course_type') &&
+                'Please select a course type'
+              }
             />
           </Grid>
           {/* {edit.getValue('course_type') === COURSE_TYPE_NAME[6] ? (
@@ -460,7 +467,11 @@ const CreatePrimaryDetails = ({
                   edit.update({ course_mode: e.target.value });
                 }}
                 isError={error && !edit.allFilled('course_mode')}
-                helperText={error && !edit.allFilled('course_mode') && 'Please select a course mode'}
+                helperText={
+                  error &&
+                  !edit.allFilled('course_mode') &&
+                  'Please select a course mode'
+                }
               />
             </Grid>
           )}
@@ -474,7 +485,11 @@ const CreatePrimaryDetails = ({
                 onChange={(e) => edit.update({ meeting_link: e.target.value })}
                 required
                 isError={error && !edit.allFilled('meeting_link')}
-                helperText={error && !edit.allFilled('meeting_link') && 'Please Enter link'}
+                helperText={
+                  error &&
+                  !edit.allFilled('meeting_link') &&
+                  'Please Enter link'
+                }
               />
             </Grid>
           ) : null}
@@ -490,7 +505,11 @@ const CreatePrimaryDetails = ({
                   }
                   required
                   isError={error && !edit.allFilled('meeting_location')}
-                  helperText={error && !edit.allFilled('meeting_location') && 'Please enter a meeting location'}
+                  helperText={
+                    error &&
+                    !edit.allFilled('meeting_location') &&
+                    'Please enter a meeting location'
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -504,8 +523,16 @@ const CreatePrimaryDetails = ({
                     edit.update({ total_no_of_students: e.target.value });
                   }}
                   required
-                  isError={(error && edit.getValue('total_no_of_students')<1) ? true : false}
-                  helperText={(error && edit.getValue('total_no_of_students')<1) ? "Count should be more than 0" : ""}
+                  isError={
+                    error && edit.getValue('total_no_of_students') < 1
+                      ? true
+                      : false
+                  }
+                  helperText={
+                    error && edit.getValue('total_no_of_students') < 1
+                      ? 'Count should be more than 0'
+                      : ''
+                  }
                 />
               </Grid>
             </>
@@ -545,7 +572,11 @@ const CreatePrimaryDetails = ({
               }}
               required
               isError={error && !edit.allFilled('cost_type')}
-              helperText={error && !edit.allFilled('cost_type') && 'Please select a cost type'}
+              helperText={
+                error &&
+                !edit.allFilled('cost_type') &&
+                'Please select a cost type'
+              }
             />
           </Grid>
           {edit.getValue('cost_type') === COURSE_PAYMENT_NAME[1] ? (
@@ -561,8 +592,12 @@ const CreatePrimaryDetails = ({
                     edit.update({ amount: e.target.value });
                   }}
                   required
-                  isError={(error && edit.getValue('amount')<1) ? true : false}
-                  helperText={(error && edit.getValue('amount')<1) ? "Fees cannot be 0" : ""}
+                  isError={error && edit.getValue('amount') < 1 ? true : false}
+                  helperText={
+                    error && edit.getValue('amount') < 1
+                      ? 'Fees cannot be 0'
+                      : ''
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -578,7 +613,11 @@ const CreatePrimaryDetails = ({
                   iconEnd={<PercentageIcon />}
                   required
                   isError={error && !edit.allFilled('discount')}
-                  helperText={error && !edit.allFilled('discount') && 'Please select discount'}
+                  helperText={
+                    error &&
+                    !edit.allFilled('discount') &&
+                    'Please select discount'
+                  }
                 />
               </Grid>
             </>
@@ -619,7 +658,11 @@ const CreatePrimaryDetails = ({
                 });
               }}
               isError={error && !edit.allFilled('course_level_name')}
-              helperText={error && !edit.allFilled('course_level_name') && 'Please select course level'}
+              helperText={
+                error &&
+                !edit.allFilled('course_level_name') &&
+                'Please select course level'
+              }
             />
           </Grid>
         </Grid>
