@@ -166,45 +166,47 @@ const CartPopover = (props: Props) => {
                   </Typography>
                 </Grid>
               </Grid>
-              <Grid
-                container
-                justifyContent={'space-between'}
-                alignItems={'center'}
-              >
-                <Grid paddingLeft={1}>
-                  <Typography
-                    style={{
-                      fontFamily: 'Switzer',
-                      fontSize: '18px',
-                      fontWeight: 500,
-                      color: '#3C414B'
-                    }}
-                  >
-                    No. of Seats
-                  </Typography>
-                </Grid>
+              {item.course_type !== 'Recorded Course' && (
                 <Grid
-                  style={{
-                    paddingLeft: 6,
-                    paddingRight: 6,
-                    border: '1.5px solid #3C78F0',
-                    borderRadius: 4,
-                    marginRight: 14
-                  }}
+                  container
+                  justifyContent={'space-between'}
+                  alignItems={'center'}
                 >
-                  <Typography
+                  <Grid paddingLeft={1}>
+                    <Typography
+                      style={{
+                        fontFamily: 'Switzer',
+                        fontSize: '18px',
+                        fontWeight: 500,
+                        color: '#3C414B'
+                      }}
+                    >
+                      No. of Seats
+                    </Typography>
+                  </Grid>
+                  <Grid
                     style={{
-                      fontFamily: 'Switzer',
-                      fontSize: '16px',
-                      fontWeight: 600,
-                      color: '#3C414B',
-                      textAlign: 'end'
+                      paddingLeft: 6,
+                      paddingRight: 6,
+                      border: '1.5px solid #3C78F0',
+                      borderRadius: 4,
+                      marginRight: 14
                     }}
                   >
-                    {item.available_student_count}
-                  </Typography>
+                    <Typography
+                      style={{
+                        fontFamily: 'Switzer',
+                        fontSize: '16px',
+                        fontWeight: 600,
+                        color: '#3C414B',
+                        textAlign: 'end'
+                      }}
+                    >
+                      {item.available_student_count}
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
+              )}
               {index != carts.length - 1 ? (
                 <Divider light={true} style={{ paddingTop: 20 }} />
               ) : null}
