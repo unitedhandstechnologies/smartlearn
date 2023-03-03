@@ -114,8 +114,8 @@ const CourseBegin = () => {
                       )
                   );
 
-                let tempElapsedTime = [0.07, 0.16, 0.2, 0.5, 0.0];
-                let tempRemainingTime = [15.12, 4.33, 66.65, 7, 20.56];
+                //let tempElapsedTime = [0.07, 0.16, 0.2, 0.5, 0.0];
+                //let tempRemainingTime = [15.12, 4.33, 66.65, 7, 20.56];
                 if (sectionData1?.length) {
                   sectionData1.map((item, index) => {
                     const sectionNumber = index + 1;
@@ -140,10 +140,10 @@ const CourseBegin = () => {
                           videoId: item.lesson_id,
                           videoDuration: item.duration,
                           videoPlayedFraction: tempPercentagePlayed[0].played,
-                          videoElapsedTime: tempElapsedTime[sectionNumber - 1],
-                          videoPlayingTime: 0.0,
-                          videoRemainingTime:
-                            tempRemainingTime[sectionNumber - 1]
+                          //videoElapsedTime: tempElapsedTime[sectionNumber - 1],
+                          //videoPlayingTime: 0.0,
+                          //videoRemainingTime:
+                            //tempRemainingTime[sectionNumber - 1]
                         };
                       });
                     }
@@ -173,6 +173,7 @@ const CourseBegin = () => {
     }
   }, []);
 
+  //const fetchSectionsCompletedDetails
   useEffect(() => {
     fetchData();
   }, []);

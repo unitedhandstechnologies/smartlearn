@@ -49,7 +49,7 @@ const getRemainingTime = ( )=>{
    (videoDetails.map((row,rowIndex)=>{
     row.map((item,index)=>{
 
-      totalTime = totalTime+ item.videoRemainingTime;
+      totalTime = totalTime+ item.videoDuration;
     })
   }));
  
@@ -65,7 +65,7 @@ const getRemainingTime = ( )=>{
   mins=(String(totalTime).split(".")[0]);
   secs=(String(totalTime).split(".")[1]);
   }
-  return `${hours}hours ${mins}mins ${secs.slice(0,2)}secs`
+  return `${hours}h ${mins}m ${secs.slice(0,2)}s remaining`
 };
 
 const studentDetails = {
