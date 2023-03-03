@@ -9,7 +9,27 @@ export type DefaultProp = {
   failureMessage?: string;
 };
 export const enrollmentManagementService = {
-  getAllBy: async (id: number,params?: any) => {
+  create: async (
+    studentId: number,
+    courseId: number,
+    { data, successMessage, failureMessage }: DefaultProp
+  ) => {
+    const options = await apiOptions({
+      url: `${Config.BASE_URL}/api/student/${studentId}/enrolledCourseCreate/course/${courseId}`,
+      method: 'post',
+      data: data
+    });
+    const toastMessageConfig = {
+      success: {
+        message: successMessage
+      },
+      failure: {
+        message: failureMessage
+      }
+    };
+    return apiRequest(options, toastMessageConfig);
+  },
+  getAllBy: async (id: number, params?: any) => {
     const options = await apiOptions({
       url: `${Config.BASE_URL}/api/getDistinctStudentInCourse/${id}`,
       method: 'get',
@@ -46,26 +66,6 @@ export const enrollmentManagementService = {
     const options = await apiOptions({
       url: `${Config.BASE_URL}/api/updateEnrolledCourse/${enrollId}`,
       method: 'patch',
-      data: data
-    });
-    const toastMessageConfig = {
-      success: {
-        message: successMessage
-      },
-      failure: {
-        message: failureMessage
-      }
-    };
-    return apiRequest(options, toastMessageConfig);
-  },
-  create: async (
-    studentId: number,
-    courseId: number,
-    { data, successMessage, failureMessage }: DefaultProp
-  ) => {
-    const options = await apiOptions({
-      url: `${Config.BASE_URL}/api/student/${studentId}/enrolledCourseCreate/course/${courseId}`,
-      method: 'post',
       data: data
     });
     const toastMessageConfig = {

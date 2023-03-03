@@ -2,7 +2,9 @@ import { useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { HTTP_STATUSES } from 'src/Config/constant';
+import { useTranslation } from 'react-i18next';
+import { MuiConfirmModal } from 'src/components';
+import { CONFIRM_MODAL, HTTP_STATUSES } from 'src/Config/constant';
 import useCartInfo from 'src/hooks/useCartInfo';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import { API_SERVICES } from 'src/Services';
@@ -37,15 +39,76 @@ const purchaseData = [
 ];
 const CheckOut = () => {
   const theme = useTheme();
-  const { cartDetails } = useCartInfo();
+  const { cartDetails, updateCartInfo } = useCartInfo();
+  const { t } = useTranslation();
+  const [confirmModal, setConfirmModal] = useState<any>({ open: false });
   let total = 0;
-  let tax=0;
-  cartDetails.forEach((item) => {
-      total += item.total
-      tax += item.tax  
-    return {total,tax}});
-  let totalAmount = total + tax;
+  let tax = 0;
+  let courseId;
+  let studentId;
+  let rowId;
+  console.log('cartDetails', cartDetails);
 
+  cartDetails.forEach((item) => {
+    total += item.total;
+    tax += item.tax;
+    courseId = item.course_id;
+    studentId = item.user_id;
+    rowId = item.id
+    return { total, tax, courseId, studentId, rowId };
+  });
+  let totalAmount = total + tax;
+  console.log('courseId', courseId);
+  console.log('Id', rowId);
+
+  const onClickCheckout = async (amount) => {
+    let data = {
+      status_id: 1,
+      enrolled_date: '03-03-2023',
+      amount: amount,
+      level: '30%'
+    };
+    const enrollRes: any =
+      await API_SERVICES.enrollmentManagementService.create(
+        studentId,
+        courseId,
+        {
+          data: data,
+          successMessage: 'Course enrolled succefully',
+          failureMessage: 'There is something wrong to enroll the course'
+        }
+      );
+      if(enrollRes?.status < HTTP_STATUSES.BAD_REQUEST){
+        console.log('enrollRes', enrollRes);
+        onClickRemoveCourse(rowId,studentId )
+      }
+  };
+
+  const onClickRemoveCourse = async (id, studentId) => {
+    const onCancelClick = () => {
+      setConfirmModal({ open: false });
+    };
+    const onConfirmClick = async () => {
+      const deleteUserRes: any = await API_SERVICES.AddToCartService.delete(
+        id,
+        {
+          successMessage: 'Course removed Successfully',
+          failureMessage: 'Failed to delete Course'
+        }
+      );
+      if (deleteUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+        onCancelClick();
+        updateCartInfo(studentId?.user_id);
+      }
+    };
+    let props = {
+      color: theme.Colors.redPrimary,
+      description: 'Are you sure want to delete this Course?',
+      title: t('delete'),
+      iconType: CONFIRM_MODAL.delete
+    };
+    setConfirmModal({ open: true, onConfirmClick, onCancelClick, ...props });
+  };
   return (
     <Grid
       container
@@ -58,7 +121,7 @@ const CheckOut = () => {
       }}
     >
       <Grid item xs>
-        <CheckoutScreen total={totalAmount} />
+        <CheckoutScreen total={totalAmount} onClickCheckout={onClickCheckout} />
       </Grid>
       <Grid item>
         <Summary
@@ -66,8 +129,10 @@ const CheckOut = () => {
           tax={tax}
           totalAmount={totalAmount}
           purchaseData={cartDetails}
+          onClickRemoveCourse={onClickRemoveCourse}
         />
       </Grid>
+      {confirmModal.open && <MuiConfirmModal {...confirmModal} />}
     </Grid>
   );
 };

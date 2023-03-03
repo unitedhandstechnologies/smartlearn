@@ -8,6 +8,7 @@ export type CartProps = {
     user_id: number;
     tax: number;
     total: number;
+    id?: number;
 }
 type AddTOCartProps = {
   data: CartProps;

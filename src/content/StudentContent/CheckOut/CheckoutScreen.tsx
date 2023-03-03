@@ -29,7 +29,7 @@ const city = [
     name: 'Rajapalayam'
   }
 ];
-const CheckoutScreen = ({total}) => {
+const CheckoutScreen = ({total, onClickCheckout}) => {
   const theme = useTheme();
   const [isChecked, setIsChecked] = useState(false);
   const initialValues = {
@@ -46,9 +46,9 @@ const CheckoutScreen = ({total}) => {
     setIsChecked(!isChecked);
   };
 
-  const onClickCheckout = (val)=>{
-    console.log('val',val);   
-  }
+  // const onClickCheckout = (val)=>{
+  //   console.log('val',val);   
+  // }
   return (
     <Grid container spacing={2} direction={'column'}>
       <Grid item>

@@ -98,6 +98,3 @@ export const StudentInfoProvider = ({ children }: Props) => {
     </StudentInfoContext.Provider>
   );
 };
-function updateStudentInfo(arg0: (prevState: any) => any) {
-  throw new Error('Function not implemented.');
-}

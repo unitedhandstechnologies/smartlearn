@@ -14,11 +14,14 @@ import Divider from '@mui/material/Divider';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import toast from 'react-hot-toast';
 import { Grid, Typography } from '@mui/material';
+import useCartInfo from 'src/hooks/useCartInfo';
+
 const UserLogin = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [loginForm, setLoginForm] = useState({ user_name: '', password: '' });
   const { updateStudentInfo } = useStudentInfo();
+  const { updateCartInfo } = useCartInfo();
   const onClickEyeIcon = () => {
     setShowPassword(!showPassword);
   };
@@ -52,6 +55,7 @@ const UserLogin = () => {
             updateStudentInfo((prevState: any) => {
               return { ...prevState, ...getUserRes?.data?.user };
             });
+            updateCartInfo(getUserRes?.data?.user?.id)
           }
         }
         toast.success('Profile Login successfully');
