@@ -7,7 +7,8 @@ import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
 import toast from 'react-hot-toast';
 import React from 'react';
-import { Loader } from 'src/components';
+import { ButtonComp, Loader } from 'src/components';
+import { useNavigate } from 'react-router';
 
 const TopicsListGrid = styled(Grid)(({ theme }) => ({
   padding : '24px 0px'
@@ -43,6 +44,7 @@ const CourseDetails = ({
   setIsReady
 }) => {
   const theme = useTheme();
+    const navigateTo = useNavigate();
 
 const getRemainingTime = ( )=>{
   let totalTime=0;
@@ -67,11 +69,7 @@ const getRemainingTime = ( )=>{
   }
   return `${hours}h ${mins}m ${secs.slice(0,2)}s remaining`
 };
-
-const studentDetails = {
-  remainingDuration : "11hrs 45mins 30 sec",
-};
-          
+        
   const topics = (sectionData, lessonData) => {
     return (
       <CourseTitleDetails 
@@ -88,15 +86,26 @@ const studentDetails = {
     )
   };
 
-
+const handleClickBackToLibrary = () =>{
+  navigateTo('/home/profile');
+};
 
     
   return (
     <Grid >
+      <ButtonComp
+        btnWidth={'100%'}
+        height={'75%'}
+        buttonTextColor={theme.Colors.whitePure}
+        buttonText={'Back to Library'}
+        onClickButton={handleClickBackToLibrary}
+      ></ButtonComp>
       <Typography 
         sx={{    
           fontWeight : 500,
-          fontSize : '24px'}}
+          fontSize : '24px',
+          paddingTop : '20px',
+        }}
       >
         {courseData.course_language[0].course_name}
       </Typography>

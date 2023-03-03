@@ -28,12 +28,16 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, 3)
   }
 }));
-const Profile = () => {
+
+interface NavigateProps {
+   state?: any;
+}
+
+const Profile = (props: NavigateProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const { studentDetails, updateStudentInfo } = useStudentInfo();
   const [enrollCourse, setEnrollCourse] = useState<any>([]);
-
   console.log(enrollCourse, 'test enrollCourse');
   const tabContent = [
     {

@@ -29,10 +29,19 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row'
   },
   playerContainer: {
-    padding: '32px'
+    padding: '32px',
+    [theme.breakpoints.down('sm')]: { 
+      padding: '10px',
+      }
   },
   mainContainer: {
-    [theme.breakpoints.down('sm')]: { flexWrap: ' wrap-reverse' }
+    paddingLeft: "30px",
+    paddingTop: '30px',
+    paddingBottom: '10px',
+    [theme.breakpoints.down('sm')]: { 
+      flexWrap: ' wrap-reverse',
+      paddingLeft: "0px",
+      }
   }
 }));
 
