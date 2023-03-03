@@ -141,7 +141,7 @@ const MuiCardComp = ({
               src={imgUrl}
               alt=""
               style={{
-                height: 228,
+                height: 188,
                 opacity: 0.5,
                 ...imageStyle
               }}
@@ -156,7 +156,7 @@ const MuiCardComp = ({
                 backgroundColor: 'transparent',
                 position: 'absolute',
                 overflow: 'visible',
-                bottom: title.length > 23 ? 50 : 80,
+                bottom: title.length > 23 ? 30 : 50,
                 paddingLeft: 20,
                 paddingRight: 5,
                 [theme.breakpoints.down('xs')]: {
@@ -181,7 +181,7 @@ const MuiCardComp = ({
       {progressValue ? <ProgressBar value={progressValue} /> : null}
       <CardContent
         sx={{
-          padding: '30px 16px 30px 0px'
+          padding: '15px 16px 5px 0px'
         }}
       >
         {heading ? (
@@ -200,39 +200,39 @@ const MuiCardComp = ({
               color: '#78828C',
               fontSize: '16px',
               fontWeight: 400,
-              padding: '8px 0px 16px 0px'
+              padding: '0px 0px 10px 0px'
             }}
           >
             <LinesEllipsis text={subText} maxLine={2} ellipsis="....." />
           </Typography>
         ) : null}
         {date ? (
-          <Grid style={{ padding: '10px 0px' }}>
+          <Grid style={{ padding: '5px 0px' }}>
             <IconTextComp icon={DateSvg} value={date} />
           </Grid>
         ) : null}
         {nextclass ? (
-          <Grid style={{ padding: '10px 0px' }}>
+          <Grid style={{ padding: '5px 0px' }}>
             <IconTextComp icon={DateSvg} nextvalue={nextclass} />
           </Grid>
         ) : null}
         {zoomLink ? (
-          <Grid style={{ padding: '10px 0px' }}>
+          <Grid style={{ padding: '5px 0px' }}>
             <IconTextComp icon={ZoomIcon} value={zoomLink ? 'Zoom' : null} />
           </Grid>
         ) : null}
         {courseType === COURSE_TYPE_NAME[6] ? (
-          <Grid style={{ padding: '10px 0px' }}>
+          <Grid style={{ padding: '5px 0px' }}>
             <IconTextComp icon={ZoomIcon} value={'Online'} />
           </Grid>
         ) : null}
         {locationName ? (
-          <Grid style={{ padding: '10px 0px' }}>
+          <Grid style={{ padding: '5px 0px' }}>
             <IconTextComp icon={LocationIcon} value={locationName} />
           </Grid>
         ) : null}
         {courseLevel ? (
-          <Grid style={{ padding: '10px 0px' }}>
+          <Grid style={{ padding: '5px 0px' }}>
             <IconTextComp
               icon={
                 courseLevel === 'Advanced'
@@ -246,7 +246,7 @@ const MuiCardComp = ({
           </Grid>
         ) : null}
         {courseLanguage ? (
-          <Grid style={{ padding: '10px 0px' }}>
+          <Grid style={{ padding: '5px 0px' }}>
             <IconTextComp icon={CommendIcon} value={courseLanguage} />
           </Grid>
         ) : null}
@@ -283,9 +283,9 @@ const MuiCardComp = ({
         <Grid
           container
           style={{
-            padding: '20px 0px',
+            padding: '10px 0px 0',
             display: 'flex',
-            alignContent: 'center',
+            alignItems: 'center',
             gap: 10
           }}
         >
@@ -350,8 +350,7 @@ const MuiCardComp = ({
             item
             style={{
               borderRadius: '6px',
-              background: '#F2F4F7',
-              marginLeft: 10
+              background: '#F2F4F7'
             }}
           >
             <IconButton

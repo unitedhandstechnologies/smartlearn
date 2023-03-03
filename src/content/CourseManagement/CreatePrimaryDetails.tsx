@@ -72,8 +72,6 @@ const CreatePrimaryDetails = ({
   const startDateError = error && !edit.allFilled('starting_date');
   const endDateError = error && !edit.allFilled('ending_date');
 
-  console.log(mentors, 'mentorname');
-
   const courseType = [
     { courseTypeId: 1, courseTypeName: 'Seminar' },
     { courseTypeId: 2, courseTypeName: 'Masterclass' },
@@ -142,7 +140,7 @@ const CreatePrimaryDetails = ({
     edit.update({
       image_url: ''
     });
-    setProfileImage('No file choosen');
+    setProfileImage('No file chosen');
     if (!edit.allFilled('image_url')) {
       return;
     } else {
@@ -589,7 +587,7 @@ const CreatePrimaryDetails = ({
                     if (isNaN(Number(e.target.value))) {
                       return;
                     }
-                    edit.update({ amount: e.target.value });
+                    edit.update({ amount: Number(e.target.value) });
                   }}
                   required
                   isError={error && edit.getValue('amount') < 1 ? true : false}
@@ -608,7 +606,7 @@ const CreatePrimaryDetails = ({
                     if (isNaN(Number(e.target.value))) {
                       return;
                     }
-                    edit.update({ discount: e.target.value });
+                    edit.update({ discount: Number(e.target.value) });
                   }}
                   iconEnd={<PercentageIcon />}
                   required
