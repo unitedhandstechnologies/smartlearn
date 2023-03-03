@@ -62,6 +62,9 @@ const CreatePrimaryDetails = ({
   const theme = useTheme();
   const { t, i18n } = useTranslation();
   const [subCategories, setSubCategories] = useState([]);
+  const [subCategoryValue, setSubCategoryValue] = useState(
+    edit.getValue('sub_category_id')
+  );
   const [profileImage, setProfileImage] = useState('No file choosen');
   const imageError = error && !edit.allFilled('image_url');
   const nameError = error && !edit.allFilled('mentor_name');
@@ -210,6 +213,7 @@ const CreatePrimaryDetails = ({
                   category_name: ''
                 });
                 setSubCategories([]);
+                setSubCategoryValue(0);
                 return;
               }
               let categoryName = categories.filter(
@@ -220,6 +224,7 @@ const CreatePrimaryDetails = ({
                 category_name: categoryName
               });
               getSubCategory(Number(e.target.value));
+              setSubCategoryValue(0);
             }}
             renderValue={(value: any) =>
               value ? edit.getValue('category_name') : 'Select'
@@ -248,6 +253,7 @@ const CreatePrimaryDetails = ({
                   sub_category_id: '',
                   sub_category_name: ''
                 });
+                setSubCategoryValue(e.target.value);
                 return;
               }
               let subCategoryName = subCategories.filter(
@@ -257,9 +263,10 @@ const CreatePrimaryDetails = ({
                 sub_category_id: e.target.value,
                 sub_category_name: subCategoryName
               });
+              setSubCategoryValue(e.target.value);
             }}
-            renderValue={(value: any) =>
-              value ? edit.getValue('sub_category_name') : 'Select'
+            renderValue={() =>
+              subCategoryValue ? edit.getValue('sub_category_name') : 'Select'
             }
             displayEmpty
             required
