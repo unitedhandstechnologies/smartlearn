@@ -8,7 +8,7 @@ import { API_SERVICES } from 'src/Services';
 import {
   CONFIRM_MODAL,
   DETECT_LANGUAGE,
-  HTTP_STATUSES,
+  HTTP_STATUSES
 } from 'src/Config/constant';
 import { useSearchVal } from 'src/hooks/useSearchVal';
 import { useDebounce } from 'src/hooks/useDebounce';
@@ -39,7 +39,10 @@ function CourseLevelManagement() {
               rowData?.course_level_id
             );
           if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-            if (response?.data?.course_level && response?.data?.course_level_language) {
+            if (
+              response?.data?.course_level &&
+              response?.data?.course_level_language
+            ) {
               setModalOpen({
                 open: true,
                 rowData: response.data,
@@ -57,7 +60,6 @@ function CourseLevelManagement() {
     []
   );
 
-
   const fetchData = async () => {
     try {
       setLoading(true);
@@ -67,11 +69,14 @@ function CourseLevelManagement() {
       if (debValue !== '') {
         params.searchString = debValue;
       }
-      const response: any = await  API_SERVICES.courseLevelService.getAllCourse(getLanguageId, params);
-      
+      const response: any = await API_SERVICES.courseLevelService.getAllCourse(
+        getLanguageId,
+        params
+      );
+
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        if (response?.data?.course_level?.length) {
-          setData(response?.data?.course_level);
+        if (response?.data?.courseLevel?.length) {
+          setData(response?.data?.courseLevel);
         }
       }
     } catch (err) {
@@ -87,7 +92,7 @@ function CourseLevelManagement() {
 
   return (
     <>
-      <Heading headingText={t('courselevel.createNewLevel')}/>
+      <Heading headingText={t('courselevel.createNewLevel')} />
       <ButtonComp
         btnWidth={84}
         backgroundColor={theme.Colors.primary}
@@ -112,7 +117,7 @@ function CourseLevelManagement() {
       />
       {modalOpen.open ? (
         <AddNewCourseLevelModal
-        handleClose={() => setModalOpen({ open: false })}
+          handleClose={() => setModalOpen({ open: false })}
           {...modalOpen}
           updateData={fetchData}
         />
