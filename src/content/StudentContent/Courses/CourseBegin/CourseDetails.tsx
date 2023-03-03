@@ -87,7 +87,10 @@ const getRemainingTime = ( )=>{
   };
 
 const handleClickBackToLibrary = () =>{
-  navigateTo('/home/profile');
+  navigateTo('/home/profile',{
+    state: { tabVal : 2 },
+    replace: true
+  });
 };
 
     

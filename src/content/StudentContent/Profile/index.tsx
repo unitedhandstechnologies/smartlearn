@@ -29,11 +29,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-interface NavigateProps {
-   state?: any;
-}
-
-const Profile = (props: NavigateProps) => {
+const Profile = () => {
   const classes = useStyles();
   const theme = useTheme();
   const { studentDetails, updateStudentInfo } = useStudentInfo();
