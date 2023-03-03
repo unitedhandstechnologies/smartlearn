@@ -34,29 +34,55 @@ const PreRecordedCourses = ({
   const theme = useTheme();
   const classes = useStyles();
   const navigateTo = useNavigate();
-
+  console.log(
+    data.student_enrolled_course_id,
+    'data.student_enrolled_course_id'
+  );
   return (
     <Container>
-      <ButtonComp
-        buttonText={'All courses'}
-        startIcon={
-          <span style={{ color: theme.Colors.secondary, paddingTop: 7 }}>
-            <ArrowBackIcon />
-          </span>
-        }
-        backgroundColor={'transparent'}
-        buttonTextColor={'#78828C'}
-        buttonFontFamily={'Switzer'}
-        buttonFontSize={18}
-        btnWidth={'fit-content'}
-        height={'40px'}
-        classes={{ root: classes.button }}
-        onClickButton={() =>
-          navigateTo('/home', {
-            replace: true
-          })
-        }
-      />
+      {data.student_enrolled_course_id ? (
+        <ButtonComp
+          buttonText={'All courses'}
+          startIcon={
+            <span style={{ color: theme.Colors.secondary, paddingTop: 7 }}>
+              <ArrowBackIcon />
+            </span>
+          }
+          backgroundColor={'transparent'}
+          buttonTextColor={'#78828C'}
+          buttonFontFamily={'Switzer'}
+          buttonFontSize={18}
+          btnWidth={'fit-content'}
+          height={'40px'}
+          classes={{ root: classes.button }}
+          onClickButton={() =>
+            navigateTo('/home/profilehome', {
+              replace: true
+            })
+          }
+        />
+      ) : (
+        <ButtonComp
+          buttonText={'All courses'}
+          startIcon={
+            <span style={{ color: theme.Colors.secondary, paddingTop: 7 }}>
+              <ArrowBackIcon />
+            </span>
+          }
+          backgroundColor={'transparent'}
+          buttonTextColor={'#78828C'}
+          buttonFontFamily={'Switzer'}
+          buttonFontSize={18}
+          btnWidth={'fit-content'}
+          height={'40px'}
+          classes={{ root: classes.button }}
+          onClickButton={() =>
+            navigateTo('/home', {
+              replace: true
+            })
+          }
+        />
+      )}
       <Grid sx={{ position: 'relative' }}>
         <Grid
           sx={{

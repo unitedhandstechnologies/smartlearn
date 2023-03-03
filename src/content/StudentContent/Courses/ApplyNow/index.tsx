@@ -110,10 +110,9 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           data: data
         });
         if (createRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-          if(createRes?.data?.AddToCart){
-            updateCartInfo(createRes?.data?.AddToCart[0].user_id)
+          if (createRes?.data?.AddToCart) {
+            updateCartInfo(createRes?.data?.AddToCart[0].user_id);
           }
-         
         }
         // navigateTo('/home/course-details', {
         //   state: { ...course },
@@ -239,7 +238,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
               btnWidth={'100%'}
               btnBorderRadius={4}
               height={'40px'}
-              onClickButton={handleClick}
+              //onClickButton={handleClick}
             />
           </Grid>
         ) : (
