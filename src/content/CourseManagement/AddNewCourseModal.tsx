@@ -43,7 +43,6 @@ interface Props {
   getCourseById: Awaited<(id: number) => Promise<void>>;
 }
 
-
 const AddNewCourseModal = ({
   onClose,
   updateData,
@@ -64,7 +63,6 @@ const AddNewCourseModal = ({
   const [rowItemData, setRowItemData] = useState<any>({});
   const courseRef = useRef({});
 
- 
   const types = {
     [CONFIRM_MODAL.create]: {
       handleType: 1
@@ -184,10 +182,9 @@ const AddNewCourseModal = ({
     'course_level_name',
     'course_mode',
     'meeting_location',
-    'total_no_of_students',
-  ]
-  
-  
+    'total_no_of_students'
+  ];
+
   const RequiredFieldsForRecorded = [
     'mentor_name',
     'image_url',
@@ -198,8 +195,8 @@ const AddNewCourseModal = ({
     'ending_date',
     'starting_time',
     'ending_time',
-    'course_level_name',
-  ]
+    'course_level_name'
+  ];
 
   const RequiredFieldsForOthers = [
     'mentor_name',
@@ -213,8 +210,8 @@ const AddNewCourseModal = ({
     'ending_time',
     'course_level_name',
     'course_mode',
-    'meeting_link',
-  ]
+    'meeting_link'
+  ];
 
   const renderTabContent = (tabVal?: any) => {
     const findActiveTab = tabItems.find(({ id }) => id === tabVal);
@@ -226,8 +223,12 @@ const AddNewCourseModal = ({
       let getLanguageId = DETECT_LANGUAGE[i18n.language];
       const response: any = await Promise.all([
         API_SERVICES.adminUserService.getAllUsers(),
-        API_SERVICES.categoryManagementService.getAllCategoryNoPermission(getLanguageId),
-        API_SERVICES.courseLevelManagementService.getAllCourseLevels(getLanguageId)
+        API_SERVICES.categoryManagementService.getAllCategoryNoPermission(
+          getLanguageId
+        ),
+        API_SERVICES.courseLevelManagementService.getAllCourseLevels(
+          getLanguageId
+        )
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.users) {
@@ -246,12 +247,12 @@ const AddNewCourseModal = ({
       }
       if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (
-          response[2]?.data?.course_level &&
-          response[2]?.data?.course_level?.length
+          response[2]?.data?.courseLevel &&
+          response[2]?.data?.courseLevel?.length
         ) {
-          const enabledCourseLevel = response[2]?.data?.course_level.filter(
-            (item)=> item.status === 1
-          )
+          const enabledCourseLevel = response[2]?.data?.courseLevel.filter(
+            (item) => item.status === 1
+          );
           setCourseLevels(enabledCourseLevel);
         }
       }
@@ -261,50 +262,46 @@ const AddNewCourseModal = ({
   };
 
   const handleNextClick = async () => {
-
     let RequiredFields;
-    if((edit.getValue('course_type')) === 'Recorded Course'){
-     if (( edit.getValue('cost_type') === 'Paid')){
-      let temp = ['amount', 'discount' ]
-     RequiredFields = [...RequiredFieldsForRecorded, ...temp];
+    if (edit.getValue('course_type') === 'Recorded Course') {
+      if (edit.getValue('cost_type') === 'Paid') {
+        let temp = ['amount', 'discount'];
+        RequiredFields = [...RequiredFieldsForRecorded, ...temp];
+      } else {
+        RequiredFields = RequiredFieldsForRecorded;
+      }
+    } else if (edit.getValue('course_type') === 'Seminar') {
+      if (edit.getValue('cost_type') === 'Paid') {
+        let temp = ['amount', 'discount'];
+        RequiredFields = [...RequiredFieldsForSeminar, ...temp];
+      } else {
+        RequiredFields = RequiredFieldsForSeminar;
+      }
+    } else {
+      if (edit.getValue('cost_type') === 'Paid') {
+        let temp = ['amount', 'discount'];
+        RequiredFields = [...RequiredFieldsForOthers, ...temp];
+      } else {
+        RequiredFields = RequiredFieldsForOthers;
+      }
     }
-    else{
-      RequiredFields = RequiredFieldsForRecorded
-     }
-    }
-    else if((edit.getValue('course_type')) === 'Seminar'){
-      if (( edit.getValue('cost_type') === 'Paid')){
-      let temp = ['amount', 'discount' ]
-     RequiredFields = [...RequiredFieldsForSeminar, ...temp];
-    }
-      else{
-        RequiredFields = RequiredFieldsForSeminar
-       }
-     }
-     else{ 
-       if (( edit.getValue('cost_type') === 'Paid')){
-      let temp = ['amount', 'discount' ]
-     RequiredFields = [...RequiredFieldsForOthers, ...temp];
-    }
-      else{
-        RequiredFields = RequiredFieldsForOthers
-       }
-    }
-    const dateFrom = new Date(edit.getValue('starting_date')); 
-    const dateTo = new Date(edit.getValue('ending_date')); 
-   
+    const dateFrom = new Date(edit.getValue('starting_date'));
+    const dateTo = new Date(edit.getValue('ending_date'));
+
     try {
-      if (dateFrom>=dateTo) {
+      if (dateFrom >= dateTo) {
         setError(true);
         setDateError(true);
-        return toast.error('Starting Date should be a Date previous to Ending Date');
-      } 
+        return toast.error(
+          'Starting Date should be a Date previous to Ending Date'
+        );
+      }
 
-      if (edit.getValue('starting_time')>edit.getValue('ending_time')) {
+      if (edit.getValue('starting_time') > edit.getValue('ending_time')) {
         setError(true);
         setTimeError(true);
         return toast.error('Starting Time should be less than Ending Time');
-      } 
+      }
 
       if (!edit.allFilled(...RequiredFields)) {
         setError(true);
@@ -322,6 +319,12 @@ const AddNewCourseModal = ({
           meeting_location: '',
           meeting_link: '',
           total_no_of_students: 0,
+          learn_objective: [],
+          discount_time: 2,
+          theory_date: '',
+          theory_time: '',
+          practical_time: '',
+          practical_date: '',
           ...edit.edits
         };
         const response: any =
