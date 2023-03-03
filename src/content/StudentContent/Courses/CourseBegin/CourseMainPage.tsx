@@ -17,6 +17,7 @@ import ReactPlayer from 'react-player';
 import React from 'react';
 import { number } from 'prop-types';
 import Quiz from 'src/content/StudentContent/Courses/QASection/Quiz';
+import { getUserId } from 'src/Utils';
 
 const useStyles = makeStyles((theme) => ({
   outerContainer: {
@@ -56,7 +57,8 @@ const CourseMainPage = ({
   setVideoDetails,
   videoPlaying,
   setVideoPlaying,
-  fetchData
+  fetchData,
+  data
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -64,13 +66,12 @@ const CourseMainPage = ({
   const [playerRef, setPlayerRef] = useState<any>();
   const [isReady, setIsReady] = React.useState(false);
   const timePaused = useRef(0);
-
+  const userId = getUserId();
   const handlePlayNext = useCallback(async () => {
     let updateData = {
       played: 1
     };
-    let userId = 3;
-    let id = 19;
+    let id = data.course_id;
     const responseUpdateVideoDetails: any =
       await API_SERVICES.PreRecordedCourseVideoService.updateVideoDetails(
         id,
@@ -146,6 +147,7 @@ const CourseMainPage = ({
   );
 
   const handleOnPause = useCallback(async () => {
+    let id = data.course_id;
     if (
       timePaused.current >
       videoDetails[videoToPlayIndex.current.sectionNumber][
@@ -155,8 +157,7 @@ const CourseMainPage = ({
       let updateData = {
         played: timePaused.current
       };
-      let userId = 3;
-      let id = 19;
+
       const responseUpdateVideoDetails: any =
         await API_SERVICES.PreRecordedCourseVideoService.updateVideoDetails(
           id,

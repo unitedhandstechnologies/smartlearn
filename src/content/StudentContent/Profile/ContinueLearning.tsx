@@ -18,7 +18,7 @@ const ContinueLearning = ({ enrollCourse }) => {
   const theme = useTheme();
   const classes = useStyles();
   const navigateTo = useNavigate();
-  const recordeCourse = enrollCourse.filter((item) => {
+  const recordedCourse = enrollCourse.filter((item) => {
     return item.course_type === COURSE_TYPE_NAME[6];
   });
   const onClickCardImage = (rowData) => {
@@ -49,8 +49,8 @@ const ContinueLearning = ({ enrollCourse }) => {
           }
         }}
       >
-        {recordeCourse.length ? (
-          recordeCourse.slice(0, 6)?.map((item, index) => {
+        {recordedCourse?.length ? (
+          recordedCourse?.slice(0, 6)?.map((item, index) => {
             return (
               <Grid
                 key={index}

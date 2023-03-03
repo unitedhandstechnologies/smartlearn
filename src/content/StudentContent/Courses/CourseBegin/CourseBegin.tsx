@@ -1,16 +1,12 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { Box, Grid, makeStyles, styled, useTheme } from '@material-ui/core';
-
-import CourseDetails from 'src/content/StudentContent/Courses/CourseBegin/CourseDetails';
+import { Grid, makeStyles, styled, useTheme } from '@material-ui/core';
 import toast from 'react-hot-toast';
 import { HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
 import { Loader } from 'src/components';
-import ReactPlayer from 'react-player';
-import React from 'react';
-import { number } from 'prop-types';
 import CourseMainPage from './CourseMainPage';
 import { useLocation } from 'react-router';
+import { getUserId } from 'src/Utils';
 
 const useStyles = makeStyles((theme) => ({
   outerContainer: {
@@ -26,12 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
   mainContainer: {
     [theme.breakpoints.down('sm')]: { flexWrap: ' wrap-reverse' }
-  }
-}));
-
-const MainGrid = styled(Grid)(({ theme }) => ({
-  sx: {
-    [theme.breakpoints.down('sm')]: { flexWrap: 'wrap-reverse' }
   }
 }));
 
@@ -54,12 +44,11 @@ const CourseBegin = () => {
     sectionNumber: 0,
     lessonNumber: 0
   });
-
+  const data = state;
   const fetchData = useCallback(async () => {
-    //let id = state?.course_id;
-    //console.log("id",id)
-    let id = 19;
-    let userId = 3;
+    let id = state?.course_id;
+    const userId = getUserId();
+
     try {
       const responseVideoDetails: any =
         await API_SERVICES.PreRecordedCourseVideoService.getVideoDetails(
@@ -139,11 +128,11 @@ const CourseBegin = () => {
                           videoName: item.lesson_name,
                           videoId: item.lesson_id,
                           videoDuration: item.duration,
-                          videoPlayedFraction: tempPercentagePlayed[0].played,
+                          videoPlayedFraction: tempPercentagePlayed[0].played
                           //videoElapsedTime: tempElapsedTime[sectionNumber - 1],
                           //videoPlayingTime: 0.0,
                           //videoRemainingTime:
-                            //tempRemainingTime[sectionNumber - 1]
+                          //tempRemainingTime[sectionNumber - 1]
                         };
                       });
                     }
@@ -198,6 +187,7 @@ const CourseBegin = () => {
         videoPlaying={videoPlaying}
         setVideoPlaying={setVideoPlaying}
         fetchData={fetchData}
+        data={data}
       />
     );
   }
