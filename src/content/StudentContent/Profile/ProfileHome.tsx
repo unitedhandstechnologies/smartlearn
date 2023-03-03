@@ -102,6 +102,9 @@ const ProfileHome = () => {
     fetchData();
   }, []);
   const completedCourse = enrollCourse.filter((item) => {
+    if (item.status_id === 2) {
+      setRating(true);
+    }
     return item.status_id === 2;
   });
   if (loading) {
