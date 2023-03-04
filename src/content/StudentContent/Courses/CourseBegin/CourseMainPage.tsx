@@ -143,12 +143,19 @@ const CourseMainPage = ({
   const handleOnReady = useCallback(
     (player) => {
       if (!isReady) {
-        player.seekTo(
+        if(videoDetails[videoToPlayIndex.current.sectionNumber][
+          videoToPlayIndex.current.lessonNumber
+        ].videoPlayedFraction===1){
+          player.seekTo(0.0);
+        }else{
+          player.seekTo(
           videoDetails[videoToPlayIndex.current.sectionNumber][
             videoToPlayIndex.current.lessonNumber
           ].videoPlayedFraction,
           'fraction'
         );
+        }
+        
         setIsReady(true);
       }
     },

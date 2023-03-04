@@ -81,6 +81,10 @@ const CourseTitleDetails = ({
     );
   };
 
+  const handleClickTestTopic = () => {
+    setTestTopic(true);
+  };
+
   const getCompletedSection : any  = React.useMemo(() => {
     console.log("inside ")
     let completedSection = Array(videoDetails?.length).fill(0);
@@ -112,7 +116,7 @@ const CourseTitleDetails = ({
             alignItems="center"
             style={{ gap: '10px' }}
             onClick={() => {
-              setTestTopic(true);
+              handleClickTestTopic();              
             }}
           >
             <img src={TestTopic} />

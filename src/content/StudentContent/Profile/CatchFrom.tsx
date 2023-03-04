@@ -20,7 +20,7 @@ const FILTER_CHIPS = ['Courses', 'Workshops', 'Seminars/Webinars'];
 type CourseProps = {
   courseDetails?: any[];
 };
-const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
+const CatchFrom = ({ courseDetails }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyles();
   const { state }: any = useLocation();

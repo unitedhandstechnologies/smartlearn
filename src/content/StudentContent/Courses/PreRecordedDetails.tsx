@@ -194,22 +194,27 @@ const PreRecordedDetails = () => {
           state.showZoomLink && data.course_mode==="Online"? 
           <Grid sx={{paddingTop: '20px'}}>
           <Typography
-          variant="h4"
+          //variant="h5"
           style={{
-            color: theme.Colors.blackBerry,
-            fontWeight: theme.fontWeight.medium,
-            fontSize: theme.MetricsSizes.regular
+            color: '#3C414B',
+            fontWeight: 500,
+            fontSize: 32,
+            //marginBottom: 20,
+            fontFamily: 'IBM Plex Serif'
           }}
           >
-          Zoom Link : <Typography
-            component={'span'}
+          Zoom Link <Typography
+            //component={'span'}
             variant="h5"
             style={{
               fontWeight: 400,
               fontSize: theme.MetricsSizes.regular,
               color: '#78828C'
             }}
-          ><a>{data.meeting_link}</a></Typography>
+          ><a href={data.meeting_link}
+              rel="noopener noreferrer"
+              target={'_blank'}
+          >{data.meeting_link}</a></Typography>
           </Typography>
           </Grid>
           : null

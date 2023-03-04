@@ -162,6 +162,20 @@ const CourseBegin = () => {
     }
   }, []);
 
+ /*  const fetchLevelCompleted = useCallback(async() => {
+    try {
+
+      const responseVideoDetails: any =
+        await API_SERVICES.PreRecordedCourseVideoService.getVideoDetails(
+          id,
+          userId
+        );
+
+    }catch(e){
+
+    }
+  },[]); */
+
   //const fetchSectionsCompletedDetails
   useEffect(() => {
     fetchData();
