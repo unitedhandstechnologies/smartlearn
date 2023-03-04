@@ -101,21 +101,23 @@ const ProfileHome = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  const completedCourse = enrollCourse.filter((item) => {
+
+ /*  const completedCourse = enrollCourse.filter((item) => {
     if (item.status_id === 2) {
       setRating(true);
+      console.log("setState")
     }
     return item.status_id === 2;
-  });
+  }); */
   if (loading) {
     return <Loader />;
   } else {
     return (
       <Grid container sx={{ position: 'relative', background: '#ffffff' }}>
         <Container>
-          {rating ? (
+{/*           {rating ? (
             <RateYourExperience courseDetails={completedCourse} />
-          ) : null}
+          ) : null} */}
 
           <Grid container direction="column" paddingTop={4}>
             <CourseBanner

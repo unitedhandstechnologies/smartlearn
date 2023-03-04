@@ -76,7 +76,7 @@ const ContinueLearning = ({ enrollCourse }) => {
                   //     ? 'Hindi'
                   //     : 'Gujarati'
                   // }
-                  nextclass={item.starting_date}
+                  //nextclass={item.starting_date}
                   zoomLink={item.meeting_link}
                   locationName={item.meeting_location}
                   //subCategory={item.sub_category_name}
