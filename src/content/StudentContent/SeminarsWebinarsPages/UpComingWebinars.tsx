@@ -351,6 +351,7 @@ const UpComingWebinars = ({
                       onClickCardImage={() => onClickCardImage(item)}
                       prize={item.amount}
                       discount={item.discount}
+                      item={item}
                     />
                   </Grid>
                 );

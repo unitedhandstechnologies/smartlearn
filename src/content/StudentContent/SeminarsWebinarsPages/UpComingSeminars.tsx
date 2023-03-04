@@ -318,6 +318,7 @@ const UpComingSeminars = ({
                       onClickCardImage={() => onClickCardImage(item)}
                       prize={item.amount}
                       discount={item.discount}
+                      item={item}
                     />
                   </Grid>
                 );
