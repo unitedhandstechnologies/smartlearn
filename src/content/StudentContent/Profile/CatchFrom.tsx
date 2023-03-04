@@ -119,7 +119,7 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
                   key={index}
                   imgUrl={item.image_url ? item.image_url : BasicStockIcon}
                   rightText={item.course_type}
-                  leftText={item.cost_type}
+                  leftText={`Completed  ${parseInt(item.level)}% `}
                   heading={item.category_name}
                   title={item.course_name}
                   subText={item.course_description}
@@ -131,7 +131,7 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
                   //     ? 'Hindi'
                   //     : 'Gujarati'
                   // }
-                  nextclass={item.starting_date}
+                  //nextclass={item.starting_date}
                   zoomLink={item.meeting_link}
                   locationName={item.meeting_location}
                   //subCategory={item.sub_category_name}
@@ -140,6 +140,7 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
                   onClickCardImage={() => onClickCardImage(item)}
                   startLearning={false}
                   item={item}
+                  progressValue={parseInt(item.level)}
                 />
               </Grid>
             );
