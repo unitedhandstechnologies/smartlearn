@@ -97,6 +97,7 @@ const CheckOut = () => {
       container
       spacing={4}
       sx={{
+        backgroundColor: theme.Colors.white,
         padding: 5,
         [theme.breakpoints.down('sm')]: {
           flexDirection: 'column'

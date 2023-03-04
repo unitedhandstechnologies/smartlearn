@@ -45,11 +45,11 @@ const useStyles = makeStyles((theme) => {
 });
 
 const objectives = [
-  'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.',
-  'Velit officia consequat duis enim velit mollit',
-  'Exercitation veniam consequat sunt nostrud amet.',
-  'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet',
-  'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet'
+  'One can learn the course of their choice through online resources.',
+  'Students learn more comfortably in an environment that suits them best.',
+  'Online courses look great on a resume and curriculum vitae.',
+  'Students can learn at their own pace.',
+  'Lower costs than conventional teaching approaches are provided by online Education.'
 ];
 
 const headingProps = {
@@ -260,7 +260,9 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
         <Grid paddingTop={4}>
           <Heading headingText={'Requirements'} {...headingProps} />
           <Grid item>
-            <Typography style={typographyStylProps}>{courseDescription?.requirements}</Typography>
+            <Typography style={typographyStylProps}>
+              {courseDescription?.requirements}
+            </Typography>
           </Grid>
         </Grid>
         <Grid paddingTop={4}>
