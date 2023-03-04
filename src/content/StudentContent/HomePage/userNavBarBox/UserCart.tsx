@@ -91,7 +91,7 @@ const UserCart = (props: Props) => {
         justifyContent: 'flex-end',
         width: 'fit-content',
         [theme.breakpoints.down('sm')]: {
-          diplay: 'none'
+          display: 'none'
         }
       }}
     >
@@ -99,7 +99,7 @@ const UserCart = (props: Props) => {
         {userType === USER_TYPES.mentor ? null : (
           <IconButton aria-label="cart" onClick={handleCartClick}>
             <Badge
-              badgeContent={badgeContent || addToCart.length}
+              badgeContent={badgeContent || addToCart?.length}
               color="secondary"
             >
               <img src={CartImg} width={25} height={25} />

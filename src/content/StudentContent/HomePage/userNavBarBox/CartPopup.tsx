@@ -39,10 +39,10 @@ const CartPopover = (props: Props) => {
     let tax = 0;
     const getTotals = (index) => {
       if (index === 0) {
-        carts.forEach((item) => (total += item.total));
+        carts?.forEach((item) => (total += item.total));
         return total;
       } else if (index === 1) {
-        carts.forEach((item) => (tax += item.tax));
+        carts?.forEach((item) => (tax += item.tax));
         return tax;
       } else {
         return total + tax;

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { HTTP_STATUSES } from 'src/Config/constant';
+import { HTTP_STATUSES, USER_TYPES } from 'src/Config/constant';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import { API_SERVICES } from 'src/Services';
 import { CartProps } from 'src/Services/addToCartService';
-
 
 export type CartInfo = {
   cartDetails: CartProps[];
@@ -11,8 +10,8 @@ export type CartInfo = {
 };
 
 export const INITIAL_STATE: CartInfo = {
-cartDetails: [],
-updateCartInfo: () => undefined
+  cartDetails: [],
+  updateCartInfo: () => undefined
 };
 
 export const CartInfoContext = React.createContext({
@@ -24,12 +23,13 @@ type Props = {
 };
 
 export const CartInfoProvider = ({ children }: Props) => {
+  const { studentDetails } = useStudentInfo();
   const [cartDetails, setCartDetails] = useState<CartProps[]>(
     INITIAL_STATE.cartDetails
   );
 
   const updateCartDetails = async (user_id: number) => {
-    if (user_id === 0) {
+    if (user_id === 0 && USER_TYPES.student === studentDetails.user_type) {
       setCartDetails(INITIAL_STATE.cartDetails);
       return;
     }

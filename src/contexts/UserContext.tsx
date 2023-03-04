@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import { HTTP_STATUSES } from 'src/Config/constant';
+import { API_SERVICES } from 'src/Services';
+import { getUserId } from 'src/Utils';
 
 export type UserDetails = {
   id: number;
@@ -52,7 +56,28 @@ export const UserInfoProvider = ({ children }: Props) => {
   const [userDetails, setUserDetails] = useState<UserDetails>(
     INITIAL_STATE.userDetails
   );
+  const fetchData = async () => {
+    const userId = getUserId();
+    try {
+      if (userId !== null) {
+        const getUserRes: any = await API_SERVICES.adminUserService.getById(
+          userId
+        );
 
+        if (getUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+          setUserDetails((prevState) => {
+            return { ...prevState, ...getUserRes?.data?.user };
+          });
+        }
+      }
+    } catch (err) {
+      toast.error(err?.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
   const contextValue = React.useMemo(() => {
     return {
       userDetails: userDetails,

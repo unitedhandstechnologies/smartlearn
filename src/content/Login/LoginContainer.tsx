@@ -62,9 +62,12 @@ const LoginContainer = ({
         data
       });
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        i18n.changeLanguage('en');
-        localStorage.setItem('token', JSON.stringify(response?.data?.token));
-        if (response?.data?.users?.length) {
+        if (
+          response?.data?.users?.length &&
+          response?.data?.users[0].user_type !== 4
+        ) {
+          i18n.changeLanguage('en');
+          localStorage.setItem('token', JSON.stringify(response?.data?.token));
           localStorage.setItem(
             'userId',
             JSON.stringify(response?.data.users[0].id)
@@ -77,11 +80,15 @@ const LoginContainer = ({
               return { ...prevState, ...getUserRes?.data?.user };
             });
           }
+          navigateTo('/admin', { replace: true });
+        } else {
+          navigateTo('/', { replace: true });
+          localStorage.clear();
+          i18n.changeLanguage('en');
         }
-        navigateTo('/admin', { replace: true });
       }
-    } catch (e) {
-      console.log(e, '---login err-----');
+    } catch (err) {
+      toast.error(err?.message);
     } finally {
       setLoading(false);
     }
