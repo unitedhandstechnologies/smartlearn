@@ -121,7 +121,6 @@ const AddNewCourseCategoryModal = ({
 
       let response: any;
       if (types[type].handleType === 1) {
-        console.log('categoryResponse', response);
         response = await API_SERVICES.categoryManagementService.create({
           data: uData,
           successMessage: 'New Category Added successfully!',

@@ -64,18 +64,18 @@ const ContinueLearning = ({ enrollCourse }) => {
                   key={index}
                   imgUrl={item.image_url ? item.image_url : BasicStockIcon}
                   rightText={item.course_type}
-                  //leftText={item.cost_type}
+                  // leftText={item.cost_type}
                   heading={item.category_name}
                   title={item.course_name}
                   subText={item.course_description}
                   courseLevel={item.course_level_name}
-                  courseLanguage={
-                    item.language_id === 1
-                      ? 'English'
-                      : item.language_id === 2
-                      ? 'Hindi'
-                      : 'Gjarati'
-                  }
+                  // courseLanguage={
+                  //   item.language_id === 1
+                  //     ? 'English'
+                  //     : item.language_id === 2
+                  //     ? 'Hindi'
+                  //     : 'Gujarati'
+                  // }
                   nextclass={item.starting_date}
                   zoomLink={item.meeting_link}
                   locationName={item.meeting_location}

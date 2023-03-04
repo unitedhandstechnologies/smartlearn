@@ -26,9 +26,8 @@ const typoGraphyStyle = {
 const RateYourExperience = ({ courseDetails }) => {
   const theme = useTheme();
   const [open, setOpen] = useState([]);
-  const { studentDetails, updateStudentInfo } = useStudentInfo();
-  const [courseRating, setCourseRating] = useState<number | null>();
-  const [mentorRating, setMentorRating] = useState<number | null>();
+  const [courseRating, setCourseRating] = useState<number | null>(0);
+  const [mentorRating, setMentorRating] = useState<number | null>(0);
   const [error, setError] = useState(false);
   const data = {
     course_rating: courseRating,
@@ -37,11 +36,10 @@ const RateYourExperience = ({ courseDetails }) => {
   };
   const RequiredFields = ['command'];
   const edit = useEdit(data);
-
+const commandError = error && !edit.getValue('command')
   const handleClickOpen = () => {
     setOpen([true]);
   };
-
   const handleClose = () => {
     setOpen([false]);
     setCourseRating(0);
@@ -59,8 +57,8 @@ const RateYourExperience = ({ courseDetails }) => {
       }
       let userData = { ...data, ...edit.edits };
       const response: any = await API_SERVICES.homeUserService.create(
-        studentDetails?.id,
-        courseDetails[0].course_id,
+        courseDetails?.student_id,
+        courseDetails.course_id,
         {
           data: userData,
           successMessage: 'Ratings submitted successfully!',
@@ -68,7 +66,7 @@ const RateYourExperience = ({ courseDetails }) => {
         }
       );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        setOpen([true, true]);
+        setOpen([false]);
         setCourseRating(0);
         setMentorRating(0);
       }
@@ -161,7 +159,7 @@ const RateYourExperience = ({ courseDetails }) => {
             color: '#3C78F0'
           }}
         >
-          Basics of stock marketing investing
+          {courseDetails?.course_name}
         </Typography>
       </>
     );
@@ -227,8 +225,8 @@ const RateYourExperience = ({ courseDetails }) => {
                 command: capitalizeFirstLetter(e.target.value)
               })
             }
-            //onChange={(e) => setCommand(e.target.value)}
-
+            isError={commandError}
+            helperText={commandError && 'Please enter your valuable command'}
             autoFocus
           />
         </Grid>
@@ -283,7 +281,7 @@ const RateYourExperience = ({ courseDetails }) => {
               marginTop: 7
             }}
           >
-            Basics of stock market investing
+            {courseDetails?.course_name}
           </Typography>
         </Grid>
         <Grid paddingTop={2}>

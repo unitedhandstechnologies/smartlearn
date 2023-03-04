@@ -16,6 +16,7 @@ import UpComingSession from '../HomePage/UpComingSession';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
 import { toast } from 'react-hot-toast';
+import RateYourExperience from '../HomePage/RateYourExperience/ExperienceRate';
 
 const data = [
   {
@@ -97,6 +98,8 @@ const PreRecordedDetails = () => {
   const [lessons, setLessons] = useState<any>([]);
   let data = { ...state?.formData };
   let totalDuration = 0;
+
+  console.log('data--->', data);
 
   const fetchData = useCallback(async () => {
     try {
@@ -181,6 +184,11 @@ const PreRecordedDetails = () => {
             </Grid>
           )}
         </Grid>
+        {data?.student_enrolled_course_id ? (
+          <Grid>
+            <RateYourExperience courseDetails={data} />
+          </Grid>
+        ) : null}
       </Container>
       {/* <Grid>
           <UpComingSession />

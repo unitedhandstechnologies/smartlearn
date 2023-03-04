@@ -37,7 +37,6 @@ const CartPopover = (props: Props) => {
   const renderComponent = () => {
     let total = 0;
     let tax = 0;
-
     const getTotals = (index) => {
       if (index === 0) {
         carts.forEach((item) => (total += item.total));

@@ -93,9 +93,8 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
   const { updateCartInfo } = useCartInfo();
   const navigateTo = useNavigate();
   const theme = useTheme();
-
   let tax = (course?.amount * 10) / 100;
-  let totalPrice = course?.amount;
+  let totalPrice = course?.amount - (course.discount / 100) * course.amount;
 
   const handleClick = async () => {
     if (course.course_type !== 'Workshop') {
@@ -115,10 +114,6 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
             updateCartInfo(createRes?.data?.AddToCart[0].user_id);
           }
         }
-        // navigateTo('/home/course-details', {
-        //   state: { ...course },
-        //   replace: true
-        // });
       } else {
         // navigateTo('/home/user-login', {
         //   state: {
@@ -133,6 +128,11 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
     }
   };
 
+  const handleNavigate = () => {
+      navigateTo('/home/profile', { 
+        state: {tabVal: 2},
+        replace: true });
+  }
   const data = [
     course.course_type === 'Recorded Course' && {
       name:
@@ -181,10 +181,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           <Grid>
             {course.cost_type === 'PAID' ? (
               <Typography sx={{ ...classes.price }}>{`₹
-              ${(
-                course.amount -
-                (course.discount / 100) * course.amount
-              ).toFixed()}`}</Typography>
+              ${totalPrice.toFixed()}`}</Typography>
             ) : (
               <Typography
                 sx={{
@@ -247,14 +244,14 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
         {course.student_enrolled_course_id ? (
           <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
             <ButtonComp
-              buttonText={'Enrolled'}
+              buttonText={'View Enrolled Courses'}
               buttonTextColor={'#FFFFFF'}
               buttonFontFamily={'Switzer'}
               buttonFontSize={16}
               btnWidth={'100%'}
               btnBorderRadius={4}
               height={'40px'}
-              //onClickButton={handleClick}
+              onClickButton={handleNavigate}
             />
           </Grid>
         ) : (

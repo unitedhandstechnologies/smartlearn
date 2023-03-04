@@ -124,13 +124,13 @@ const CatchFrom = ({ courseDetails = [] }: CourseProps) => {
                   title={item.course_name}
                   subText={item.course_description}
                   courseLevel={item.course_level_name}
-                  courseLanguage={
-                    item.language_id === 1
-                      ? 'English'
-                      : item.language_id === 2
-                      ? 'Hindi'
-                      : 'Gujarati'
-                  }
+                  // courseLanguage={
+                  //   item.language_id === 1
+                  //     ? 'English'
+                  //     : item.language_id === 2
+                  //     ? 'Hindi'
+                  //     : 'Gujarati'
+                  // }
                   nextclass={item.starting_date}
                   zoomLink={item.meeting_link}
                   locationName={item.meeting_location}

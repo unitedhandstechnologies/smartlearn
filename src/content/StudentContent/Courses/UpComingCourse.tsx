@@ -332,7 +332,7 @@ const UpComingCourse = ({
                           ? 'English'
                           : item.language_id === 2
                           ? 'Hindi'
-                          : 'Gjarati'
+                          : 'Gujarati'
                       }
                       date={`${item.starting_date} - ${item.ending_date}`}
                       zoomLink={item.meeting_link}
