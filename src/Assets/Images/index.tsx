@@ -117,7 +117,10 @@ import Language from './Language.svg'
 import Offline from './Offline.svg'
 import PayTMIcom from './paytm.svg'
 import LockIcon from './lock.svg';
-import SpeechBubble from './speechBubble.svg'
+import SpeechBubble from './speechBubble.svg';
+import Chat from './Chat.svg';
+import Persons from './Persons.svg';
+import Rupee from './Rupee.svg';
 
 export {
   EnrollmentManagementIcon,
@@ -239,5 +242,8 @@ export {
   Offline,
   PayTMIcom,
   LockIcon,
-  SpeechBubble
+  SpeechBubble,
+  Chat,
+  Persons, 
+  Rupee,
 };
