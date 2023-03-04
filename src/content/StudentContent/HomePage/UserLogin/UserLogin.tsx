@@ -1,5 +1,5 @@
 import { useTheme } from '@material-ui/core';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { LineBarIcon, Google } from 'src/Assets';
 import { ButtonComp, TextInputComponent } from 'src/components';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
@@ -75,6 +75,9 @@ const UserLogin = () => {
     }
   }, [loginForm]);
   const navigateTo = useNavigate();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Grid
       container

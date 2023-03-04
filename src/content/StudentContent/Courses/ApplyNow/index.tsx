@@ -11,7 +11,7 @@ import {
 } from '../../../../Assets/Images';
 import { ButtonComp } from 'src/components';
 import FavIcon from '../../../../Assets/Images/FavIcon.svg';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
 import { useTheme } from '@material-ui/core';
 import { API_SERVICES } from 'src/Services';
@@ -90,18 +90,21 @@ type Props = {
 
 const ApplyNow = ({ course, timeType, duration }: Props) => {
   const { studentDetails } = useContext(StudentInfoContext);
-  const { updateCartInfo } = useCartInfo();
+  const { updateCartInfo } = useCartInfo();  
   const navigateTo = useNavigate();
+  const {state} = useLocation();
+  let courseDetails = state ?? course;
+  
   const theme = useTheme();
-  let tax = (course?.amount * 10) / 100;
-  let totalPrice = course?.amount - (course.discount / 100) * course.amount;
+  let tax = (courseDetails?.amount * 10) / 100;
+  let totalPrice = courseDetails?.amount - (courseDetails.discount / 100) * courseDetails.amount;
 
   const handleClick = async () => {
-    if (course.course_type !== 'Workshop') {
+    if (courseDetails.course_type !== 'Workshop') {
       if (studentDetails.id !== 0) {
         let data = {
-          course_id: course?.course_id,
-          language_id: course?.language_id,
+          course_id: courseDetails?.course_id,
+          language_id: courseDetails?.language_id,
           user_id: studentDetails?.id,
           tax: tax,
           total: totalPrice
@@ -115,13 +118,13 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           }
         }
       } else {
-        // navigateTo('/home/user-login', {
-        //   state: {
-        //     details: { ...course },
-        //     route: '/home/course-details'
-        //   },
-        //   replace: true
-        // });
+        navigateTo('/home/user-login', {
+          state: {
+            details: { ...courseDetails },
+            route: '/home/course-details'
+          },
+          replace: true
+        });
       }
     } else {
       return null;
@@ -134,7 +137,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
         replace: true });
   }
   const data = [
-    course.course_type === 'Recorded Course' && {
+    courseDetails.course_type === 'Recorded Course' && {
       name:
         duration !== undefined
           ? `${duration} ${timeType} of video tutorials`
@@ -145,7 +148,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
       name: '',
       img: DownloadSvg
     },
-    course.course_type === 'Recorded Course' && {
+    courseDetails.course_type === 'Recorded Course' && {
       name: 'Lifetime access to the course',
       img: LifeTime
     },
@@ -179,7 +182,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           }}
         >
           <Grid>
-            {course.cost_type === 'PAID' ? (
+            {courseDetails.cost_type === 'PAID' ? (
               <Typography sx={{ ...classes.price }}>{`₹
               ${totalPrice.toFixed()}`}</Typography>
             ) : (
@@ -197,12 +200,12 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           </Grid>
           <Grid>
             <TypographyText sx={{ ...classes.mrp }}>
-              {course.cost_type === 'PAID' ? `₹${course.amount}` : ''}
+              {courseDetails.cost_type === 'PAID' ? `₹${courseDetails.amount}` : ''}
             </TypographyText>
           </Grid>
           <Grid>
             <TypographyText sx={{ ...classes.offer }}>
-              {course.cost_type === 'PAID' ? `${course.discount}% off` : ''}
+              {courseDetails.cost_type === 'PAID' ? `${courseDetails.discount}% off` : ''}
             </TypographyText>
           </Grid>
         </Grid>
@@ -218,8 +221,8 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
         >
           <img
             src={
-              course.course_type === 'Workshop'
-                ? course.course_mode.toLowerCase() === 'online'
+              courseDetails.course_type === 'Workshop'
+                ? courseDetails.course_mode.toLowerCase() === 'online'
                   ? Online
                   : LocationIcon
                 : ClockIcon
@@ -229,19 +232,19 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           />
           <TypographyText
             sx={{
-              color: course.course_type === 'Workshop' ? '#78828C' : '#FF783C',
+              color: courseDetails.course_type === 'Workshop' ? '#78828C' : '#FF783C',
               fontSize: theme.MetricsSizes.small_xx,
               fontWeight: theme.fontWeight.mediumBold
             }}
           >
-            {course.course_type === 'Workshop'
-              ? course.course_mode.toLowerCase() === 'online'
-                ? course.meeting_link
-                : course.meeting_location
+            {courseDetails.course_type === 'Workshop'
+              ? courseDetails.course_mode.toLowerCase() === 'online'
+                ? courseDetails.meeting_link
+                : courseDetails.meeting_location
               : '11 hours left at this price'}
           </TypographyText>
         </Grid>
-        {course.student_enrolled_course_id ? (
+        {courseDetails.student_enrolled_course_id ? (
           <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
             <ButtonComp
               buttonText={'View Enrolled Courses'}
@@ -259,7 +262,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
             <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
               <ButtonComp
                 buttonText={
-                  course.course_type === 'Workshop'
+                  courseDetails.course_type === 'Workshop'
                     ? 'Start learning'
                     : 'Apply Now'
                 }
@@ -291,7 +294,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           <TypographyText
             sx={{ fontSize: '18px', fontWeight: 600, paddingTop: 2 }}
           >
-            {course.course_type !== 'Workshop'
+            {courseDetails.course_type !== 'Workshop'
               ? 'This course includes:'
               : 'This Workshop includes:'}
           </TypographyText>
