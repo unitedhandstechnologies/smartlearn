@@ -237,8 +237,11 @@ const AddNewCourseModal = ({
               item.status_id === MENTOR_STATUS.accepted &&
               item.user_type === USER_TYPES.mentor
           );
-          if (USER_TYPES.admin === 1) {
-            setMentors(approvedMentorList);
+          if (
+            USER_TYPES.superAdmin ||
+            USER_TYPES.admin === userDetails.user_type
+          ) {
+            setMentors([...approvedMentorList]);
           } else {
             const mentor = approvedMentorList.filter(
               (item) => item.id === userDetails.id
