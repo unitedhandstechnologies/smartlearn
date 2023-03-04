@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { makeStyles, Grid, useTheme } from '@material-ui/core';
 import CreatePrimaryDetails from './CreatePrimaryDetails';
 import { DialogComp, MuiTabComponent } from 'src/components';
@@ -18,7 +18,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import DualActionButton from 'src/components/DualActionButton';
 import CreateCourseDetails from './CreateCourseDetails';
-
+import { UserInfoContext } from 'src/contexts/UserContext';
 const useStyles = makeStyles((theme) => ({
   dialogPaper: {
     width: 950,
@@ -164,7 +164,7 @@ const AddNewCourseModal = ({
   };
 
   const edit = useEdit(initialData);
-
+  const { userDetails } = useContext(UserInfoContext);
   const onTabChange = (value: any) => {
     setSelectedTab(value);
   };
@@ -237,12 +237,21 @@ const AddNewCourseModal = ({
               item.status_id === MENTOR_STATUS.accepted &&
               item.user_type === USER_TYPES.mentor
           );
-          setMentors(approvedMentorList);
+          if (USER_TYPES.admin === 1) {
+            setMentors(approvedMentorList);
+          } else {
+            const mentor = approvedMentorList.filter(
+              (item) => item.id === userDetails.id
+            );
+            setMentors(mentor);
+          }
         }
       }
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[1]?.data?.categories) {
-          setCategories(response[1]?.data?.categories);
+          const category = response[1]?.data?.categories;
+          const filteredCategory = category.filter((item) => item.status === 1);
+          setCategories(filteredCategory);
         }
       }
       if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {

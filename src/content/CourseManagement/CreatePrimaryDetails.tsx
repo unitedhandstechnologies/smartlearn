@@ -103,7 +103,11 @@ const CreatePrimaryDetails = ({
       );
     if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
       if (response?.data?.subCategory?.length) {
-        setSubCategories(response?.data?.subCategory);
+        const subcategory = response?.data?.subCategory;
+        const filteredSubcategory = subcategory.filter(
+          (item) => item.status === 1
+        );
+        setSubCategories(filteredSubcategory);
       } else {
         setSubCategories([]);
       }

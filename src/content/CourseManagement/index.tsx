@@ -213,7 +213,13 @@ function CourseManagement() {
       ]);
 
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
-        setTableData(response[0]?.data?.courses);
+        if (userDetails.user_type === 1) {
+          setTableData(response[0]?.data?.courses);
+        } else {
+          const courses = response[0]?.data?.courses;
+          const mentorCourses = courses.filter((item) => item.mentor_id === 2);
+          setTableData(mentorCourses);
+        }
       }
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
         setCourseCount(response[1]?.data?.courseStatus);
