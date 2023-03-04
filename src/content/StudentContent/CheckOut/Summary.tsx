@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonComp, Heading, MuiConfirmModal } from 'src/components';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
-import { CONFIRM_MODAL, HTTP_STATUSES } from 'src/Config/constant';
+import { CONFIRM_MODAL, COURSE_TYPE_NAME, HTTP_STATUSES } from 'src/Config/constant';
 import useCartInfo from 'src/hooks/useCartInfo';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import { API_SERVICES } from 'src/Services';
@@ -200,6 +200,8 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
     <Grid container spacing={2} direction={'column'}>
       {purchaseData?.length
         ? purchaseData?.map((item, index) => {
+          console.log('tem',item);
+          
             return (
               <Grid item key={index}>
                 <Grid container item>
@@ -253,7 +255,7 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid container item xs>
+                {item.course_type != COURSE_TYPE_NAME[6] ? <Grid container item xs>
                   <Grid item xs>
                     <Typography
                       style={{
@@ -288,7 +290,7 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
                       {item.available_student_count}
                     </Typography>
                   </Grid>
-                </Grid>
+                </Grid>: null}
               </Grid>
             );
           })

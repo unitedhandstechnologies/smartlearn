@@ -61,7 +61,7 @@ const UserLogin = () => {
         toast.success('Profile Login successfully');
         if (state) {
           navigateTo(state.route, {
-            state: { ...state.details },
+            state: { ...state },
             replace: true
           });
         } else {

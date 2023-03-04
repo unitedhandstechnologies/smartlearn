@@ -112,7 +112,6 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
       }
       if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
         {
-          console.log('courseDescription', response[2]);
           if (response[2]?.data?.quiz?.length) {
             setQuizData(response[2]?.data?.quiz);
           }
