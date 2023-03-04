@@ -319,6 +319,7 @@ const LearnAtUrPace = ({
                     prize={item.amount}
                     discount={item.discount}
                     item={item}
+                    //progressValue={parseInt(item.level)}
                   />
                 </Grid>
               );

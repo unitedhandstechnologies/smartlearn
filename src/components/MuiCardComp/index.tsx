@@ -178,7 +178,7 @@ const MuiCardComp = ({
           </ImageListItem>
         ) : null}
       </CardActionArea>
-      {progressValue ? <ProgressBar value={progressValue} /> : null}
+      {progressValue ? <ProgressBar style={{width:'100%'}} value={progressValue} /> : null}
       <CardContent
         sx={{
           padding: '15px 16px 5px 0px'

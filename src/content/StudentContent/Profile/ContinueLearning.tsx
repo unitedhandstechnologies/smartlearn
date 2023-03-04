@@ -85,6 +85,7 @@ const ContinueLearning = ({ enrollCourse }) => {
                   onClickCardImage={() => onClickCardImage(item)}
                   startLearning={false}
                   item={item}
+                  progressValue={parseInt(item.level)}
                 />
               </Grid>
             );

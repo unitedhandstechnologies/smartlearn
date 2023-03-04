@@ -24,6 +24,7 @@ const MyLibrary = ({ enrollCourse }) => {
   const classes = useStyles();
   const navigateTo = useNavigate();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
+  console.log("enrollCourse",enrollCourse)
 
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
@@ -136,7 +137,7 @@ const MyLibrary = ({ enrollCourse }) => {
                   prize={item.amount}
                   onClickCardImage={() => onClickCardImage(item)}
                   startLearning={false}
-                  item={item}
+                  item={item}                  
                 />
               </Grid>
             );
