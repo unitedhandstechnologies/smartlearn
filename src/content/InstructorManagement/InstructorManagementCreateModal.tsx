@@ -88,7 +88,7 @@ const InstructorManagementCreateModal = (props: Props) => {
     confirmPassword: rowData?.password || '',
     user_type: rowData?.user_type || USER_TYPE_ID.mentors,
     social_information_url: rowData?.social_information_url || '',
-    permissions: rowData.permissions,
+    permissions: rowData.permissions || [1, 4, 8],
     code: rowData?.code || '+91',
     language_id: rowData?.language_id || DETECT_LANGUAGE[i18n.language],
     image_url: rowData?.image_url || '',
