@@ -178,7 +178,9 @@ const MuiCardComp = ({
           </ImageListItem>
         ) : null}
       </CardActionArea>
-      {progressValue ? <ProgressBar style={{width:'100%'}} value={progressValue} /> : null}
+      {progressValue ? (
+        <ProgressBar style={{ width: '100%' }} value={progressValue} />
+      ) : null}
       <CardContent
         sx={{
           padding: '15px 16px 5px 0px'
@@ -286,28 +288,28 @@ const MuiCardComp = ({
             padding: '10px 0px 0',
             display: 'flex',
             alignItems: 'center',
-            gap: 10
+            gap: 5
           }}
         >
           <Grid item style={{ marginRight: 10 }}>
             {leftText === 'PAID' ? (
               <ListItemCell
                 title={
-                  <Grid>₹{(prize - (discount / 100) * prize).toFixed()}</Grid>
-                  // <Grid container style={{gap:5 }}>
-                  //   <Grid
-                  //     style={{
-                  //       textDecoration: 'line-through'
-                  //     }}
-                  //   >
-                  //     ₹{prize}
-                  //   </Grid>{' '}
-                  //   <Grid>{discount}% off</Grid>
-                  // </Grid>
+                  <Grid container style={{ gap: 5 }}>
+                    <Grid>₹{(prize - (discount / 100) * prize).toFixed()}</Grid>
+                    <Grid
+                      style={{
+                        textDecoration: 'line-through'
+                      }}
+                    >
+                      ₹{prize}
+                    </Grid>{' '}
+                    <Grid>{discount}% off</Grid>
+                  </Grid>
                 }
                 subTitle={'including GST'}
                 titleStyle={{
-                  fontSize: theme.MetricsSizes.regular,
+                  fontSize: theme.MetricsSizes.small_xx,
                   fontWeight: theme.fontWeight.bold
                 }}
               />
@@ -318,15 +320,16 @@ const MuiCardComp = ({
           <Grid item xs>
             <ButtonComp
               height={40}
-              buttonText="Start learning"
+              buttonText={"Start learning"}
               btnWidth={'100%'}
               backgroundColor={theme.Colors.secondary}
               buttonFontWeight={theme.fontWeight.regular}
-              buttonFontSize={16}
+              buttonFontSize={14}
               btnBorderRadius={'4px'}
               style={{
                 overflow: 'hidden',
-                textOverflow: 'ellipsis'
+                textOverflow: 'ellipsis',
+                padding: theme.spacing(0,0)
               }}
               onClickButton={() => {
                 if (studentDetails.id !== 0) {
