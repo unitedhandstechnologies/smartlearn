@@ -299,12 +299,13 @@ const MuiCardComp = ({
                     <Grid>₹{(prize - (discount / 100) * prize).toFixed()}</Grid>
                     <Grid
                       style={{
-                        textDecoration: 'line-through'
+                        textDecoration: 'line-through',
+                        color: "#78828C"
                       }}
                     >
                       ₹{prize}
                     </Grid>{' '}
-                    <Grid>{discount}% off</Grid>
+                    <Grid style={{ color:"#3CC878" }}>{discount}% off</Grid>
                   </Grid>
                 }
                 subTitle={'including GST'}
