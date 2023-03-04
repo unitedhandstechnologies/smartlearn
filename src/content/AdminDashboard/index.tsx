@@ -19,6 +19,7 @@ import { useDebounce } from 'src/hooks/useDebounce';
 import { useNavigate } from 'react-router';
 import { Grid } from '@mui/material';
 import { UserInfoContext } from 'src/contexts/UserContext';
+import MentorDashboard from '../MentorDashboard';
 
 const COUNT = {
   revenueCountYear: 235000,
@@ -240,24 +241,29 @@ function AdminDashboard() {
             </TabPanel>
           </>
         ) : (
-          <Grid>
-            <Heading
-              headingText={'Dashboard'}
-              headerFontSize={'32px'}
-              headerFontWeight={500}
-              headingColor={'#3C414B'}
-              headerFontFamily={'IBM Plex Serif'}
-              style={{
-                [theme.breakpoints.down('xs')]: {
-                  fontSize: 15
-                },
-                padding: '0px 0px 20px 0px'
-              }}
-            />
+          <>
             <Grid>
-              <img src={LineBarIcon} alt="" />
+              <Heading
+                headingText={'Dashboard'}
+                headerFontSize={'32px'}
+                headerFontWeight={500}
+                headingColor={'#3C414B'}
+                headerFontFamily={'IBM Plex Serif'}
+                style={{
+                  [theme.breakpoints.down('xs')]: {
+                    fontSize: 15
+                  },
+                  padding: '0px 0px 20px 0px'
+                }}
+              />
+              <Grid>
+                <img src={LineBarIcon} alt="" />
+              </Grid>
             </Grid>
-          </Grid>
+            <Grid paddingTop={4}>
+              <MentorDashboard />
+            </Grid>
+          </>
         )}
       </>
     );

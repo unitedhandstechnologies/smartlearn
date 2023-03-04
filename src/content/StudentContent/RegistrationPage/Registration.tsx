@@ -454,23 +454,26 @@ const Registration = () => {
                 cursor: 'pointer'
               }}
             >
-              Have an account?{' '}
-              {instructorSignUp ? (
-                <span
-                  style={{
-                    fontSize: 16,
-                    fontFamily: 'Switzer',
-                    fontWeight: 400,
-                    textAlign: 'center',
-                    color: '#3C78F0',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => navigateTo('/home/user-login')}
-                >
-                  {' '}
-                  Login
-                </span>
-              ) : (
+              Have an account? {/* {instructorSignUp ? ( */}
+              <span
+                style={{
+                  fontSize: 16,
+                  fontFamily: 'Switzer',
+                  fontWeight: 400,
+                  textAlign: 'center',
+                  color: '#3C78F0',
+                  cursor: 'pointer'
+                }}
+                onClick={
+                  instructorSignUp
+                    ? () => navigateTo('/home/user-login')
+                    : () => navigateTo('/admin/login')
+                }
+              >
+                {' '}
+                Login
+              </span>
+              {/* ) : (
                 <span
                   style={{
                     fontSize: 16,
@@ -485,7 +488,7 @@ const Registration = () => {
                   {' '}
                   Login
                 </span>
-              )}
+              )} */}
             </Typography>
           </Grid>
         </Grid>
