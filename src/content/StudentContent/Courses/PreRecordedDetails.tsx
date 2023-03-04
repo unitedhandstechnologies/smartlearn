@@ -7,7 +7,7 @@ import {
   DateSvg,
   ZoomIcon
 } from 'src/Assets';
-import { useTheme } from '@material-ui/core';
+import { useTheme, Typography } from '@material-ui/core';
 import CourseDescription from './CourseDescription/CourseDescription';
 import PreRecordedCourses from './PreRecordedCourses';
 import CourseRight from './CourseRight';
@@ -99,8 +99,6 @@ const PreRecordedDetails = () => {
   let data = { ...state?.formData };
   let totalDuration = 0;
 
-  console.log('data--->', data);
-
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
@@ -189,6 +187,32 @@ const PreRecordedDetails = () => {
             <RateYourExperience courseDetails={data} />
           </Grid>
         ) : null}
+        {
+          //console.log(state.showZoomLink)
+          //console.log(state.showZoomLink)
+          state.showZoomLink && data.course_mode==="Online"? 
+          <Grid sx={{paddingTop: '20px'}}>
+          <Typography
+          variant="h4"
+          style={{
+            color: theme.Colors.blackBerry,
+            fontWeight: theme.fontWeight.medium,
+            fontSize: theme.MetricsSizes.regular
+          }}
+          >
+          Zoom Link : <Typography
+            component={'span'}
+            variant="h5"
+            style={{
+              fontWeight: 400,
+              fontSize: theme.MetricsSizes.regular,
+              color: '#78828C'
+            }}
+          ><a>{data.meeting_link}</a></Typography>
+          </Typography>
+          </Grid>
+          : null
+        }
       </Container>
       {/* <Grid>
           <UpComingSession />

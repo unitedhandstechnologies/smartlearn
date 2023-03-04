@@ -49,7 +49,7 @@ const MyLibrary = ({ enrollCourse }) => {
 
   const onClickCardImage = (rowData) => {
     navigateTo('/home/course-details', {
-      state: { formData: { ...rowData } },
+      state: { formData: { ...rowData },showZoomLink: true },
       replace: true
     });
   };
