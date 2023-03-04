@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
 import { useLocation } from 'react-router';
+import { getUserId } from 'src/Utils';
 
 const useStyles = makeStyles((theme) => ({
   gridStyle: {
@@ -73,10 +74,11 @@ const Profile = () => {
   };
 
   const fetchData = async () => {
+    let userId = getUserId();
     try {
       const response: any =
         await API_SERVICES.enrollmentManagementService.getById(
-          studentDetails?.id,
+          userId,
           {
             failureMessage: 'No course enrolled with the Student'
           }
