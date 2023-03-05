@@ -131,7 +131,7 @@ const CatchFrom = ({ courseDetails }: CourseProps) => {
                   //     ? 'Hindi'
                   //     : 'Gujarati'
                   // }
-                  //nextclass={item.starting_date}
+                  //nextClass={item.starting_date}
                   zoomLink={item.meeting_link}
                   locationName={item.meeting_location}
                   //subCategory={item.sub_category_name}

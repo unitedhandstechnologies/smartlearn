@@ -4,7 +4,11 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonComp, Heading, MuiConfirmModal } from 'src/components';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
-import { CONFIRM_MODAL, COURSE_TYPE_NAME, HTTP_STATUSES } from 'src/Config/constant';
+import {
+  CONFIRM_MODAL,
+  COURSE_TYPE_NAME,
+  HTTP_STATUSES
+} from 'src/Config/constant';
 import useCartInfo from 'src/hooks/useCartInfo';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import { API_SERVICES } from 'src/Services';
@@ -26,7 +30,7 @@ const Summary = ({
   purchaseData,
   coursePrice,
   tax,
-  totalAmount,
+  totalAmount
 }: SummaryProps) => {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -59,137 +63,137 @@ const Summary = ({
     setConfirmModal({ open: true, onConfirmClick, onCancelClick, ...props });
   };
 
-    return (
-      <Grid
-        container
-        direction={'column'}
-        spacing={2}
-        sx={{
-          padding: theme.spacing(0.4),
-          border: '1px solid #3C78F0',
-          borderRadius: '8px'
-        }}
-      >
-        <Grid item>
-          <Heading
-            headingText={'Summary'}
-            headerFontSize={'24px'}
-            headerFontFamily={'IBM Plex Serif'}
-            headerFontWeight={500}
-            headingColor={'#3C414B'}
-          />
-        </Grid>
-        <Grid item>
-          <Typography
-            style={{
-              fontSize: '16px',
-              fontWeight: 400,
-              fontFamily: 'Switzer',
-              color: '#78828C'
-            }}
-          >
-            Items:
-          </Typography>
-        </Grid>
-        <Grid item>
-          <CourseDetails
-            purchaseData={purchaseData}
-            onClickRemoveCourse={onClickRemoveCourse}
-          />
-        </Grid>
-        <Grid item>
-          <Typography
-            style={{
-              fontSize: '16px',
-              fontWeight: 400,
-              fontFamily: 'Switzer',
-              color: '#78828C'
-            }}
-          >
-            Price:
-          </Typography>
-        </Grid>
-        <Grid container item>
-          <Grid item xs>
-            <Typography
-              style={{
-                fontSize: '18px',
-                fontWeight: 500,
-                fontFamily: 'Switzer',
-                color: '#3C414B'
-              }}
-            >
-              Item(s):
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              style={{
-                fontSize: '18px',
-                fontWeight: 400,
-                fontFamily: 'Switzer',
-                color: '#3C414B'
-              }}
-            >
-              ₹ {coursePrice.toFixed(2)}
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container item>
-          <Grid item xs>
-            <Typography
-              style={{
-                fontSize: '18px',
-                fontWeight: 400,
-                fontFamily: 'Switzer',
-                color: '#3C414B'
-              }}
-            >
-              Additional Tax:
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              style={{
-                fontSize: '18px',
-                fontWeight: 400,
-                fontFamily: 'Switzer',
-                color: '#3C414B'
-              }}
-            >
-              ₹ {tax.toFixed(2)}
-            </Typography>
-          </Grid>
-        </Grid>
-        <Grid container item>
-          <Grid item xs>
-            <Typography
-              style={{
-                fontSize: '24px',
-                fontWeight: 400,
-                fontFamily: 'Switzer',
-                color: '#3C414B'
-              }}
-            >
-              Subtotal:
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Typography
-              style={{
-                fontSize: '24px',
-                fontWeight: 600,
-                fontFamily: 'Switzer',
-                color: '#3C414B'
-              }}
-            >
-              ₹ {totalAmount.toFixed(2)}
-            </Typography>
-          </Grid>
-        </Grid>
-        {confirmModal.open && <MuiConfirmModal {...confirmModal} />}
+  return (
+    <Grid
+      container
+      direction={'column'}
+      spacing={2}
+      sx={{
+        padding: theme.spacing(0.4),
+        border: '1px solid #3C78F0',
+        borderRadius: '8px'
+      }}
+    >
+      <Grid item>
+        <Heading
+          headingText={'Summary'}
+          headerFontSize={'24px'}
+          headerFontFamily={'IBM Plex Serif'}
+          headerFontWeight={500}
+          headingColor={'#3C414B'}
+        />
       </Grid>
-    );
+      <Grid item>
+        <Typography
+          style={{
+            fontSize: '16px',
+            fontWeight: 400,
+            fontFamily: 'Switzer',
+            color: '#78828C'
+          }}
+        >
+          Items:
+        </Typography>
+      </Grid>
+      <Grid item>
+        <CourseDetails
+          purchaseData={purchaseData}
+          onClickRemoveCourse={onClickRemoveCourse}
+        />
+      </Grid>
+      <Grid item>
+        <Typography
+          style={{
+            fontSize: '16px',
+            fontWeight: 400,
+            fontFamily: 'Switzer',
+            color: '#78828C'
+          }}
+        >
+          Price:
+        </Typography>
+      </Grid>
+      <Grid container item>
+        <Grid item xs>
+          <Typography
+            style={{
+              fontSize: '18px',
+              fontWeight: 500,
+              fontFamily: 'Switzer',
+              color: '#3C414B'
+            }}
+          >
+            Item(s):
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography
+            style={{
+              fontSize: '18px',
+              fontWeight: 400,
+              fontFamily: 'Switzer',
+              color: '#3C414B'
+            }}
+          >
+            ₹ {coursePrice.toFixed(2)}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container item>
+        <Grid item xs>
+          <Typography
+            style={{
+              fontSize: '18px',
+              fontWeight: 400,
+              fontFamily: 'Switzer',
+              color: '#3C414B'
+            }}
+          >
+            Additional Tax:
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography
+            style={{
+              fontSize: '18px',
+              fontWeight: 400,
+              fontFamily: 'Switzer',
+              color: '#3C414B'
+            }}
+          >
+            ₹ {tax.toFixed(2)}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container item>
+        <Grid item xs>
+          <Typography
+            style={{
+              fontSize: '24px',
+              fontWeight: 400,
+              fontFamily: 'Switzer',
+              color: '#3C414B'
+            }}
+          >
+            Subtotal:
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography
+            style={{
+              fontSize: '24px',
+              fontWeight: 600,
+              fontFamily: 'Switzer',
+              color: '#3C414B'
+            }}
+          >
+            ₹ {totalAmount.toFixed(2)}
+          </Typography>
+        </Grid>
+      </Grid>
+      {confirmModal.open && <MuiConfirmModal {...confirmModal} />}
+    </Grid>
+  );
 };
 export default Summary;
 
@@ -200,8 +204,6 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
     <Grid container spacing={2} direction={'column'}>
       {purchaseData?.length
         ? purchaseData?.map((item, index) => {
-          console.log('tem',item);
-          
             return (
               <Grid item key={index}>
                 <Grid container item>
@@ -225,7 +227,9 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
                       buttonFontSize={theme.MetricsSizes.small_x}
                       buttonFontWeight={theme.fontWeight.regular}
                       classes={{ root: classes.button }}
-                      onClickButton={() => onClickRemoveCourse(item?.id, item?.user_id)}
+                      onClickButton={() =>
+                        onClickRemoveCourse(item?.id, item?.user_id)
+                      }
                     />
                   </Grid>
                 </Grid>
@@ -255,42 +259,44 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
                     </Typography>
                   </Grid>
                 </Grid>
-                {item.course_type != COURSE_TYPE_NAME[6] ? <Grid container item xs>
-                  <Grid item xs>
-                    <Typography
-                      style={{
-                        fontSize: '18px',
-                        fontWeight: 500,
-                        fontFamily: 'Switzer',
-                        color: '#3C414B'
+                {item.course_type != COURSE_TYPE_NAME[6] ? (
+                  <Grid container item xs>
+                    <Grid item xs>
+                      <Typography
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: 500,
+                          fontFamily: 'Switzer',
+                          color: '#3C414B'
+                        }}
+                      >
+                        No. of Available Seats
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={3}
+                      sx={{
+                        border: '1px solid #3C78F0',
+                        padding: 0.5,
+                        textAlign: 'center',
+                        borderRadius: '4px',
+                        alignSelf: 'center'
                       }}
                     >
-                      No. of Available Seats
-                    </Typography>
+                      <Typography
+                        style={{
+                          fontSize: '18px',
+                          fontWeight: 500,
+                          fontFamily: 'Switzer',
+                          color: '#3C414B'
+                        }}
+                      >
+                        {item.available_student_count}
+                      </Typography>
+                    </Grid>
                   </Grid>
-                  <Grid
-                    item
-                    xs={3}
-                    sx={{
-                      border: '1px solid #3C78F0',
-                      padding: 0.5,
-                      textAlign: 'center',
-                      borderRadius: '4px',
-                      alignSelf: 'center'
-                    }}
-                  >
-                    <Typography
-                      style={{
-                        fontSize: '18px',
-                        fontWeight: 500,
-                        fontFamily: 'Switzer',
-                        color: '#3C414B'
-                      }}
-                    >
-                      {item.available_student_count}
-                    </Typography>
-                  </Grid>
-                </Grid>: null}
+                ) : null}
               </Grid>
             );
           })

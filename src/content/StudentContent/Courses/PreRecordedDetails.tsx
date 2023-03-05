@@ -188,37 +188,39 @@ const PreRecordedDetails = () => {
             <RateYourExperience courseDetails={data} />
           </Grid>
         ) : null}
-        {
-          //console.log(state.showZoomLink)
-          //console.log(state.showZoomLink)
-          state.showZoomLink && data.course_mode==="Online"? 
-          <Grid sx={{paddingTop: '20px'}}>
-          <Typography
-          //variant="h5"
-          style={{
-            color: '#3C414B',
-            fontWeight: 500,
-            fontSize: 32,
-            //marginBottom: 20,
-            fontFamily: 'IBM Plex Serif'
-          }}
-          >
-          Zoom Link <Typography
-            //component={'span'}
-            variant="h5"
-            style={{
-              fontWeight: 400,
-              fontSize: theme.MetricsSizes.regular,
-              color: '#78828C'
-            }}
-          ><a href={data.meeting_link}
-              rel="noopener noreferrer"
-              target={'_blank'}
-          >{data.meeting_link}</a></Typography>
-          </Typography>
+        {state.showZoomLink && data.course_mode === 'Online' ? (
+          <Grid sx={{ paddingTop: '20px' }}>
+            <Typography
+              //variant="h5"
+              style={{
+                color: '#3C414B',
+                fontWeight: 500,
+                fontSize: 32,
+                //marginBottom: 20,
+                fontFamily: 'IBM Plex Serif'
+              }}
+            >
+              Zoom Link
+              <Typography
+                //component={'span'}
+                variant="h5"
+                style={{
+                  fontWeight: 400,
+                  fontSize: theme.MetricsSizes.regular,
+                  color: '#78828C'
+                }}
+              >
+                <a
+                  href={data.meeting_link}
+                  rel="noopener noreferrer"
+                  target={'_blank'}
+                >
+                  {data.meeting_link}
+                </a>
+              </Typography>
+            </Typography>
           </Grid>
-          : null
-        }
+        ) : null}
       </Container>
       {/* <Grid>
           <UpComingSession />

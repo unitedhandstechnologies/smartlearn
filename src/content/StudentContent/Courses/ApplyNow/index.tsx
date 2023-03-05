@@ -129,10 +129,11 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
   };
 
   const handleNavigate = () => {
-      navigateTo('/home/profile', { 
-        state: {tabVal: 2},
-        replace: true });
-  }
+    navigateTo('/home/profile', {
+      state: { tabVal: 2 },
+      replace: true
+    });
+  };
   const data = [
     course.course_type === 'Recorded Course' && {
       name:
@@ -169,78 +170,84 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
       }}
     >
       <Grid container justifyContent={'center'}>
-        <Grid
-          container
-          alignItems="center"
-          sx={{
-            [theme.breakpoints.down('lg')]: {
-              justifyContent: 'flex-start'
-            }
-          }}
-        >
-          <Grid>
-            {course.cost_type === 'PAID' ? (
-              <Typography sx={{ ...classes.price }}>{`₹
-              ${totalPrice.toFixed()}`}</Typography>
-            ) : (
-              <Typography
-                sx={{
-                  fontSize: '28px',
-                  fontWeight: 700,
-                  fontFamily: 'Switzer',
-                  color: '#3CC878'
-                }}
-              >
-                Free
-              </Typography>
-            )}
-          </Grid>
-          <Grid>
-            <TypographyText sx={{ ...classes.mrp }}>
-              {course.cost_type === 'PAID' ? `₹${course.amount}` : ''}
-            </TypographyText>
-          </Grid>
-          <Grid>
-            <TypographyText sx={{ ...classes.offer }}>
-              {course.cost_type === 'PAID' ? `${course.discount}% off` : ''}
-            </TypographyText>
-          </Grid>
-        </Grid>
-        <Grid
-          xs={12}
-          sx={{
-            ...classes.gridStyle,
-            paddingTop: '2px',
-            [theme.breakpoints.down('lg')]: {
-              //justifyContent: 'center'
-            }
-          }}
-        >
-          <img
-            src={
-              course.course_type === 'Workshop'
-                ? course.course_mode.toLowerCase() === 'online'
-                  ? Online
-                  : LocationIcon
-                : ClockIcon
-            }
-            style={{ paddingRight: 15 }}
-            alt=""
-          />
-          <TypographyText
+        {!course.student_enrolled_course_id && (
+          <Grid
+            container
+            alignItems="center"
             sx={{
-              color: course.course_type === 'Workshop' ? '#78828C' : '#FF783C',
-              fontSize: theme.MetricsSizes.small_xx,
-              fontWeight: theme.fontWeight.mediumBold
+              [theme.breakpoints.down('lg')]: {
+                justifyContent: 'flex-start'
+              }
             }}
           >
-            {course.course_type === 'Workshop'
-              ? course.course_mode.toLowerCase() === 'online'
-                ? course.meeting_link
-                : course.meeting_location
-              : '11 hours left at this price'}
-          </TypographyText>
-        </Grid>
+            <Grid>
+              {course.cost_type === 'PAID' ? (
+                <Typography sx={{ ...classes.price }}>{`₹
+              ${totalPrice.toFixed()}`}</Typography>
+              ) : (
+                <Typography
+                  sx={{
+                    fontSize: '28px',
+                    fontWeight: 700,
+                    fontFamily: 'Switzer',
+                    color: '#3CC878'
+                  }}
+                >
+                  Free
+                </Typography>
+              )}
+            </Grid>
+
+            <Grid>
+              <TypographyText sx={{ ...classes.mrp }}>
+                {course.cost_type === 'PAID' ? `₹${course.amount}` : ''}
+              </TypographyText>
+            </Grid>
+            <Grid>
+              <TypographyText sx={{ ...classes.offer }}>
+                {course.cost_type === 'PAID' ? `${course.discount}% off` : ''}
+              </TypographyText>
+            </Grid>
+          </Grid>
+        )}
+        {!course.student_enrolled_course_id && (
+          <Grid
+            xs={12}
+            sx={{
+              ...classes.gridStyle,
+              paddingTop: '2px',
+              [theme.breakpoints.down('lg')]: {
+                //justifyContent: 'center'
+              }
+            }}
+          >
+            <img
+              src={
+                course.course_type === 'Workshop'
+                  ? course.course_mode.toLowerCase() === 'online'
+                    ? Online
+                    : LocationIcon
+                  : ClockIcon
+              }
+              style={{ paddingRight: 15 }}
+              alt=""
+            />
+            <TypographyText
+              sx={{
+                color:
+                  course.course_type === 'Workshop' ? '#78828C' : '#FF783C',
+                fontSize: theme.MetricsSizes.small_xx,
+                fontWeight: theme.fontWeight.mediumBold
+              }}
+            >
+              {course.course_type === 'Workshop'
+                ? course.course_mode.toLowerCase() === 'online'
+                  ? course.meeting_link
+                  : course.meeting_location
+                : '11 hours left at this price'}
+            </TypographyText>
+          </Grid>
+        )}
         {course.student_enrolled_course_id ? (
           <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
             <ButtonComp

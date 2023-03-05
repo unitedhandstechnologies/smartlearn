@@ -88,7 +88,7 @@ type Props = {
   onClickCardImage?: (val: any) => void;
   prize?: any;
   startLearning?: boolean;
-  nextclass?: string;
+  nextClass?: string;
   course_id?: number;
   discount?: number;
   item?: any;
@@ -117,7 +117,7 @@ const MuiCardComp = ({
   discount,
   onClickCardImage,
   startLearning = true,
-  nextclass,
+  nextClass,
   item
 }: Props) => {
   const theme = useTheme();
@@ -213,9 +213,9 @@ const MuiCardComp = ({
             <IconTextComp icon={DateSvg} value={date} />
           </Grid>
         ) : null}
-        {nextclass ? (
+        {nextClass ? (
           <Grid style={{ padding: '5px 0px' }}>
-            <IconTextComp icon={DateSvg} nextvalue={nextclass} />
+            <IconTextComp icon={DateSvg} nextvalue={nextClass} />
           </Grid>
         ) : null}
         {zoomLink ? (
@@ -300,12 +300,12 @@ const MuiCardComp = ({
                     <Grid
                       style={{
                         textDecoration: 'line-through',
-                        color: "#78828C"
+                        color: '#78828C'
                       }}
                     >
                       ₹{prize}
                     </Grid>{' '}
-                    <Grid style={{ color:"#3CC878" }}>{discount}% off</Grid>
+                    <Grid style={{ color: '#3CC878' }}>{discount}% off</Grid>
                   </Grid>
                 }
                 subTitle={'including GST'}
@@ -321,7 +321,7 @@ const MuiCardComp = ({
           <Grid item xs>
             <ButtonComp
               height={40}
-              buttonText={"Start learning"}
+              buttonText={'Start learning'}
               btnWidth={'100%'}
               backgroundColor={theme.Colors.secondary}
               buttonFontWeight={theme.fontWeight.regular}
@@ -330,7 +330,7 @@ const MuiCardComp = ({
               style={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
-                padding: theme.spacing(0,0)
+                padding: theme.spacing(0, 0)
               }}
               onClickButton={() => {
                 if (studentDetails.id !== 0) {

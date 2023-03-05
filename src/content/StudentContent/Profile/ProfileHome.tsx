@@ -18,7 +18,7 @@ import WishListCourse from '../Profile/WishListCourse';
 import CourseBanner from '../Courses/CourseBanner';
 import CatchFrom from './CatchFrom';
 import YourUpComingSession from './YourUpComingSession';
-import MoreUpcomingsession from './MoreUpcomingsession';
+import MoreUpcomingSession from './MoreUpcomingSession';
 import LearnTheWayBox from '../HomePage/LearnTheWay/LearnTheWayBox';
 import Mentors from '../HomePage/Mentors';
 import Reviews from '../HomePage/Reviews';
@@ -60,7 +60,7 @@ const ProfileHome = () => {
         API_SERVICES.pageManagementService.getAllFaq(LANGUAGE_ID.english),
         API_SERVICES.homeUserService.getAllRatings(),
         API_SERVICES.enrollmentManagementService.getById(studentDetails?.id, {
-          failureMessage: 'No course enrolled with the Student'
+          failureMessage: ''
         })
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -102,7 +102,7 @@ const ProfileHome = () => {
     fetchData();
   }, []);
 
- /*  const completedCourse = enrollCourse.filter((item) => {
+  /*  const completedCourse = enrollCourse.filter((item) => {
     if (item.status_id === 2) {
       setRating(true);
       console.log("setState")
@@ -115,7 +115,7 @@ const ProfileHome = () => {
     return (
       <Grid container sx={{ position: 'relative', background: '#ffffff' }}>
         <Container>
-{/*           {rating ? (
+          {/*           {rating ? (
             <RateYourExperience courseDetails={completedCourse} />
           ) : null} */}
 
@@ -155,7 +155,7 @@ const ProfileHome = () => {
             [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
           }}
         >
-          <MoreUpcomingsession courseDetails={courseDetails} />
+          <MoreUpcomingSession courseDetails={courseDetails} />
         </Grid>
         {/* <Grid
           container

@@ -24,7 +24,6 @@ const MyLibrary = ({ enrollCourse }) => {
   const classes = useStyles();
   const navigateTo = useNavigate();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
-  console.log("enrollCourse",enrollCourse)
 
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
@@ -49,7 +48,7 @@ const MyLibrary = ({ enrollCourse }) => {
 
   const onClickCardImage = (rowData) => {
     navigateTo('/home/course-details', {
-      state: { formData: { ...rowData },showZoomLink: true },
+      state: { formData: { ...rowData }, showZoomLink: true },
       replace: true
     });
   };
@@ -129,7 +128,7 @@ const MyLibrary = ({ enrollCourse }) => {
                   //     ? 'Hindi'
                   //     : 'Gujarati'
                   // }
-                  nextclass={item.starting_date}
+                  nextClass={item.starting_date}
                   zoomLink={item.meeting_link}
                   locationName={item.meeting_location}
                   //subCategory={item.sub_category_name}
@@ -137,7 +136,7 @@ const MyLibrary = ({ enrollCourse }) => {
                   prize={item.amount}
                   onClickCardImage={() => onClickCardImage(item)}
                   startLearning={false}
-                  item={item}                  
+                  item={item}
                 />
               </Grid>
             );

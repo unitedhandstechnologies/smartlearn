@@ -7,7 +7,8 @@ import { WadeWarren } from '../../../../Assets/Images';
 import ApplyNow from '../ApplyNow';
 import { useNavigate } from 'react-router';
 import CourseBanner from '../CourseBanner';
-
+import { UserInfoContext } from 'src/contexts/UserContext';
+import useStudentInfo from 'src/hooks/useStudentInfo';
 const useStyles = makeStyles((theme) => ({
   button: {
     minWidth: 0,
@@ -34,13 +35,11 @@ const PreRecordedCourses = ({
   const theme = useTheme();
   const classes = useStyles();
   const navigateTo = useNavigate();
-  console.log(
-    data.student_enrolled_course_id,
-    'data.student_enrolled_course_id'
-  );
+  const { studentDetails } = useStudentInfo();
+
   return (
     <Container>
-      {data.student_enrolled_course_id ? (
+      {studentDetails.id != 0 ? (
         <ButtonComp
           buttonText={'All courses'}
           startIcon={

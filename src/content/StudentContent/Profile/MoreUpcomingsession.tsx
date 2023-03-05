@@ -20,7 +20,7 @@ const FILTER_CHIPS = ['Courses', 'Workshops', 'Seminars/Webinars'];
 type CourseProps = {
   courseDetails?: any[];
 };
-const MoreUpcomingsession = ({ courseDetails = [] }: CourseProps) => {
+const MoreUpcomingSession = ({ courseDetails = [] }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyles();
   const { state }: any = useLocation();
@@ -51,12 +51,10 @@ const MoreUpcomingsession = ({ courseDetails = [] }: CourseProps) => {
   }, [chipValue, courseDetails]);
 
   const onClickCardImage = (rowData) => {
-    if (rowData.course_type === COURSE_TYPE_NAME[6]) {
-      navigateTo('/home/course-details', {
-        state: { formData: { ...rowData } },
-        replace: true
-      });
-    }
+    navigateTo('/home/course-details', {
+      state: { formData: { ...rowData } },
+      replace: true
+    });
   };
 
   return (
@@ -169,4 +167,4 @@ const MoreUpcomingsession = ({ courseDetails = [] }: CourseProps) => {
   );
 };
 
-export default MoreUpcomingsession;
+export default MoreUpcomingSession;
