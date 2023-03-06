@@ -59,6 +59,17 @@ export const enrollmentManagementService = {
     return apiRequest(options, toastMessageConfig);
   },
 
+  getByCourseIdUserId: async (
+    studentId: number,
+    courseId: number,    
+  ) => {
+    const options = await apiOptions({
+      url: `${Config.BASE_URL}/api/getStudentByIdCourse/student/${studentId}/course/${courseId}`,
+      method: 'get'
+    });    
+    return apiRequest(options);
+  },
+
   replace: async (
     enrollId: number,
     { data, successMessage, failureMessage }: DefaultProp

@@ -65,7 +65,7 @@ const quizPreview = ({
             sx = {{
             }}
         
-        >
+        >   {quizDataDetails[index].option_1 &&
             <Grid xs={12} sm={6}>
                 <Grid
                 sx = {{
@@ -85,6 +85,8 @@ const quizPreview = ({
                 </Typography>
                 </Grid>
             </Grid>
+            }
+            {quizDataDetails[index].option_2 &&    
             <Grid xs={12} sm={6}
              sx = {{
                 borderRadius: '8px',
@@ -100,6 +102,8 @@ const quizPreview = ({
                     2.{quizDataDetails[index].option_2}
                 </Typography>
             </Grid>
+        }
+            {quizDataDetails[index].option_3 && 
             <Grid xs={12} sm={6}>
                 <Grid
              sx = {{
@@ -119,7 +123,8 @@ const quizPreview = ({
                 </Typography>
             </Grid>
             </Grid>
-
+            }
+            {quizDataDetails[index].option_4 && 
             <Grid xs={12} sm={6}
              sx = {{
                 borderRadius: '8px',
@@ -136,8 +141,9 @@ const quizPreview = ({
                     4.{quizDataDetails[index].option_4}
                 </Typography>
             </Grid>
+            }
         </Grid>
-
+        
         <DividerLine 
             marginValue={60} 
             backgroundColor = {theme.Colors.greyLightMedium}

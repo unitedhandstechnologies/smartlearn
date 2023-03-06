@@ -91,6 +91,7 @@ const QuestionAndAnswer = ({
                 }}
 
             >
+                {quizDataDetails[questionToDisplayIndex].option_1 &&
                 <Grid xs={12} sm={6}>
                     <Grid
 
@@ -115,6 +116,8 @@ const QuestionAndAnswer = ({
 
                     </Grid>
                 </Grid>
+                } 
+                {quizDataDetails[questionToDisplayIndex].option_2 &&             
                 <Grid xs={12} sm={6}
                     onClick={() => handleClickOption(2)}
                     sx={{
@@ -133,6 +136,8 @@ const QuestionAndAnswer = ({
                         2.{quizDataDetails[questionToDisplayIndex].option_2}
                     </Typography>
                 </Grid>
+                }
+                {quizDataDetails[questionToDisplayIndex].option_3 && 
                 <Grid xs={12} sm={6}>
                     <Grid
                         onClick={() => handleClickOption(3)}
@@ -155,6 +160,8 @@ const QuestionAndAnswer = ({
                         </Typography>
                     </Grid>
                 </Grid>
+                }
+                {quizDataDetails[questionToDisplayIndex].option_4 && 
                 <Grid xs={12} sm={6}
                     onClick={() => handleClickOption(4)}
                     sx={{
@@ -171,8 +178,10 @@ const QuestionAndAnswer = ({
                     <Typography>
                         4.{quizDataDetails[questionToDisplayIndex].option_4}
                     </Typography>
-                </Grid>
+                </Grid> 
+                }
             </Grid>
+           
             <Grid item xs={12}
                 sx={{
                     display: 'flex',

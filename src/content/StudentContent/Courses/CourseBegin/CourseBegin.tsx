@@ -38,6 +38,9 @@ const CourseBegin = () => {
   const [showCertificate,setShowCertificate] = useState(false);
   const [videoDetails, setVideoDetails] = useState<any[]>([]);
   const [videoPlaying, setVideoPlaying] = useState<Number>(0.0);
+  const [completedCourse, setCompletedCourse] = useState(false);
+  const [showQuizUnlockedMsg,setShowQuizUnlockedMsg]=useState(true);
+  const [completedQuiz,setCompletedQuiz]=useState(false);
 
   const [autoPlay, setAutoPlay] = useState(true);
   const { state }: any = useLocation();
@@ -163,23 +166,40 @@ const CourseBegin = () => {
     }
   }, []);
 
- /*  const fetchLevelCompleted = useCallback(async() => {
+ const fetchLevelCompleted = useCallback(async() => {
     try {
-
-      const responseVideoDetails: any =
-        await API_SERVICES.PreRecordedCourseVideoService.getVideoDetails(
+      let id = state?.course_id;
+      const userId = getUserId();
+      const responseCourseCompleted: any =
+        await API_SERVICES.enrollmentManagementService.getByCourseIdUserId(
+          userId,
           id,
-          userId
         );
-
+        if(responseCourseCompleted?.status < HTTP_STATUSES.BAD_REQUEST){
+          let islevelMax;
+          if(parseInt(responseCourseCompleted?.data?.enrolledCourse[0]?.level) === 100)
+          {
+            islevelMax=true;
+          }else{
+            islevelMax=false;
+          }
+          setCompletedCourse(islevelMax);
+          setCompletedQuiz(false)//here goes value from db);
+          if(responseCourseCompleted.data.enrolledCourse[0].level===100 && 
+            //responseCourseCompleted.data.enrolledCourse[0].quiz-completed)
+              true){
+                setShowQuizUnlockedMsg(false);
+              }
+        }
     }catch(e){
 
     }
-  },[]); */
+  },[]); 
 
   //const fetchSectionsCompletedDetails
   useEffect(() => {
     fetchData();
+    fetchLevelCompleted();
   }, []);
 
   if (loading) {
@@ -205,6 +225,13 @@ const CourseBegin = () => {
         data={data}
         setShowCertificate={setShowCertificate}
         showCertificate={showCertificate}
+        completedCourse={completedCourse}
+        setCompletedCourse={setCompletedCourse}
+        setShowQuizUnlockedMsg={setShowQuizUnlockedMsg}
+        showQuizUnlockedMsg={showQuizUnlockedMsg}
+        fetchLevelCompleted={fetchLevelCompleted}
+        completedQuiz={completedQuiz}
+        setCompletedQuiz={setCompletedQuiz}
       />
     );
   }

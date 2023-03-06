@@ -19,6 +19,7 @@ import { number } from 'prop-types';
 import Quiz from 'src/content/StudentContent/Courses/QASection/Quiz';
 import { getUserId } from 'src/Utils';
 import Certificate from 'src/content/StudentContent/Courses/Certificate';
+import QuizUnlockedMessage from './QuizUnlockedMessage';
 
 const useStyles = makeStyles((theme) => ({
   outerContainer: {
@@ -70,7 +71,14 @@ const CourseMainPage = ({
   fetchData,
   data,
   setShowCertificate,
-  showCertificate
+  showCertificate,
+  setCompletedCourse,
+  completedCourse,
+  setShowQuizUnlockedMsg,
+  showQuizUnlockedMsg,
+  fetchLevelCompleted,
+  completedQuiz,
+  setCompletedQuiz
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -79,6 +87,7 @@ const CourseMainPage = ({
   const [isReady, setIsReady] = React.useState(false);
   const timePaused = useRef(0);
   const userId = getUserId();
+
   const handlePlayNext = useCallback(async () => {
     let updateData = {
       played: 1
@@ -134,6 +143,13 @@ const CourseMainPage = ({
         setVideoToPlay(
           videoDetails[nextSectionIndex][nextLessonIndex].videoUrl
         );
+        fetchLevelCompleted();
+        /* if(!completedCourse){
+          //setShowQuizUnlockedMsg();    
+          
+          //setCompletedCourse(1);
+
+        }  */
       }
     }
   }, []);
@@ -251,15 +267,27 @@ const CourseMainPage = ({
           </>
         ) 
         }
-        { !showCertificate && testTopic &&
-         quizData.length ? (
-          <Quiz courseData={courseData} />
-        ) : (
-          testTopic ? 
-          'No Test topic Available' : null
-        )}
-        { showCertificate && !testTopic &&
-          <Certificate nameOnCertificate="Pranav Shardul"/>
+        {
+          showQuizUnlockedMsg && completedCourse && !completedQuiz && 
+            <QuizUnlockedMessage 
+              setTestTopic={setTestTopic}
+              setShowQuizUnlockedMsg={setShowQuizUnlockedMsg}
+            />
+        }
+        { completedCourse ? (
+          !showCertificate && testTopic &&
+          quizData.length ? (
+            <Quiz courseData={courseData} />
+          ) : (
+            testTopic ? 
+            'No Test topic Available' : null
+        )) : testTopic ?
+            'Complete the Course to Unlock Quiz' : null
+        }
+        { showCertificate && !testTopic && completedQuiz ?
+          <Certificate nameOnCertificate="Pranav Shardul"/> 
+          : showCertificate ? 
+            "Complete Course and Quiz to getyour Certificate" : null
         }
       </Grid>
     </Grid>

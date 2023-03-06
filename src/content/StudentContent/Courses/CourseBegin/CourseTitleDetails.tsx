@@ -138,7 +138,6 @@ const CourseTitleDetails = ({
               Test Topic
             </Typography>
           </Grid>
-
           <Grid item >
             <img src={LockIcon} />
           </Grid>
@@ -322,6 +321,7 @@ const CourseTitleDetails = ({
                           direction={'row'}
                           onClick={() => {
                             setTestTopic(false);
+                            setShowCertificate(false);
                             setVideoToPlay(item.video_url);
                             videoToPlayIndex.current = {
                               sectionNumber: sectionNumber - 1,
