@@ -71,7 +71,7 @@ const IconTextComp = (props: UHIconTextProps) => {
             variant={isBlur ? 'subtitle2' : 'h5'}
             className={isBlur ? classes.blurText : classes.clearText}
             style={{
-              color: valueColor || 'primary'
+              color: valueColor || '#3C414B'
             }}
           >
             {value}

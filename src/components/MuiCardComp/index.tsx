@@ -94,7 +94,7 @@ type Props = {
   course_id?: number;
   discount?: number;
   item?: any;
-  isActive?: boolean;
+  isActive?: any;
   handleOnClick?: (val: any) => void;
 };
 const MuiCardComp = ({

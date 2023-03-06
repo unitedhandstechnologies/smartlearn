@@ -16,6 +16,7 @@ import toast from 'react-hot-toast';
 import { Grid, Typography } from '@mui/material';
 import useCartInfo from 'src/hooks/useCartInfo';
 import { useEdit } from 'src/hooks/useEdit';
+import useWishliatInfo from 'src/hooks/useWishlistInfo';
 
 const UserLogin = () => {
   const theme = useTheme();
@@ -23,6 +24,7 @@ const UserLogin = () => {
   //const [loginForm, setLoginForm] = useState({ user_name: '', password: '' });
   const { updateStudentInfo } = useStudentInfo();
   const { updateCartInfo } = useCartInfo();
+  const { updateWishlistInfo } = useWishliatInfo();
   const onClickEyeIcon = () => {
     setShowPassword(!showPassword);
   };
@@ -66,6 +68,10 @@ const UserLogin = () => {
                 return { ...prevState, ...getUserRes?.data?.user };
               });
               updateCartInfo(getUserRes?.data?.user?.id);
+              updateWishlistInfo(
+                getUserRes?.data?.user?.id,
+                getUserRes?.data?.user?.language_id
+              );
             }
           }
           toast.success('Profile logged in successfully!');

@@ -1,13 +1,16 @@
 import { makeStyles, useTheme } from '@material-ui/core';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Grid } from '@mui/material';
 import { Heading, MuiCardComp, MultiSelectChip } from 'src/components';
 import CompletedCourse from './CompletedCourse';
 import ContinueLearning from './ContinueLearning';
 import WishListCourse from './WishListCourse';
 import { BasicStockIcon } from 'src/Assets';
-import { COURSE_TYPE_NAME } from 'src/Config/constant';
+import { COURSE_TYPE_NAME, DETECT_LANGUAGE } from 'src/Config/constant';
 import { useLocation, useNavigate } from 'react-router';
+import useWishliatInfo from 'src/hooks/useWishlistInfo';
+import { getUserId } from 'src/Utils';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -22,12 +25,21 @@ const FILTER_CHIPS = ['Active', 'Completed', 'Whishlist'];
 const MyLibrary = ({ enrollCourse }) => {
   const theme = useTheme();
   const classes = useStyles();
+  const userId = getUserId();
+  const { i18n } = useTranslation();
   const navigateTo = useNavigate();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
+  const { wishlistDetails, updateWishlistInfo } = useWishliatInfo();
+  let wishlistIds = [];
+  wishlistDetails.filter((item) => wishlistIds.push(item.id));
 
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
   };
+
+  useEffect(() => {
+    updateWishlistInfo(userId, DETECT_LANGUAGE[i18n.language]);
+  }, []);
   const getCourses: any[] = useMemo(() => {
     //const activecCourses = [...enrollCourse];
     if (chipValue[0] === FILTER_CHIPS[0]) {
@@ -43,6 +55,11 @@ const MyLibrary = ({ enrollCourse }) => {
     } else if (chipValue[0] === FILTER_CHIPS[1]) {
       const completed = enrollCourse.filter((item) => item.status_id === 2);
       return completed;
+    } else if (chipValue[0] === FILTER_CHIPS[2]) {
+      // let wishlistData = enrollCourse.filter((item) =>
+      //   wishlistDetails.some((val) => item.id === val.id)
+      // );
+      return wishlistDetails;
     }
   }, [chipValue, enrollCourse]);
 
@@ -116,27 +133,19 @@ const MyLibrary = ({ enrollCourse }) => {
                   key={index}
                   imgUrl={item.image_url ? item.image_url : BasicStockIcon}
                   rightText={item.course_type}
-                  //leftText={item.cost_type}
                   heading={item.category_name}
                   title={item.course_name}
                   subText={item.course_description}
                   courseLevel={item.course_level_name}
-                  // courseLanguage={
-                  //   item.language_id === 1
-                  //     ? 'English'
-                  //     : item.language_id === 2
-                  //     ? 'Hindi'
-                  //     : 'Gujarati'
-                  // }
                   nextClass={item.starting_date}
                   zoomLink={item.meeting_link}
                   locationName={item.meeting_location}
-                  //subCategory={item.sub_category_name}
                   courseType={item.course_type}
                   prize={item.amount}
                   onClickCardImage={() => onClickCardImage(item)}
                   startLearning={false}
                   item={item}
+                  // isActive={wishlistIds}
                 />
               </Grid>
             );

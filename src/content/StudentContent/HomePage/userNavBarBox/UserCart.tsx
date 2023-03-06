@@ -69,7 +69,7 @@ const UserCart = (props: Props) => {
         <IconTextComp
           icon={item.icon || null}
           value={item.name}
-          valueColor={`${index === 2 ? '#78828C' : '#3C414B'}`}
+          //valueColor={`${index === 2 ? '#78828C' : '#3C414B'}`}
         />
         {userType === USER_TYPES.mentor ? (
           index === 1 ? (

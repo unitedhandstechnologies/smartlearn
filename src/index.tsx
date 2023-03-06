@@ -11,6 +11,7 @@ import 'react-calendar/dist/Calendar.css';
 import './CalendarCustomStyle.css';
 import { StudentInfoProvider } from './contexts/StudentContext';
 import { CartInfoProvider } from './contexts/UserCardContext';
+import { WishlistInfoProvider } from './contexts/WishlistContext';
 
 ReactDOM.render(
   <HelmetProvider>
@@ -18,9 +19,11 @@ ReactDOM.render(
       <UserInfoProvider>
         <StudentInfoProvider>
           <CartInfoProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
+            <WishlistInfoProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </WishlistInfoProvider>
           </CartInfoProvider>
         </StudentInfoProvider>
       </UserInfoProvider>

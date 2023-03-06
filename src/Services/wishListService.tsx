@@ -38,13 +38,31 @@ export const WishListService = {
       url: `${Config.BASE_URL}/api/getWishListById/${id}`,
       method: 'get'
     });
-    return apiOptions(options);
+    return apiRequest(options);
   },
-  delete: async (courseId: number, wishlistId: number) => {
+  delete: async (
+    courseId: number,
+    wishlistId: number,
+    {
+      successMessage,
+      failureMessage
+    }: {
+      successMessage?: string;
+      failureMessage?: string;
+    }
+  ) => {
     const options = await apiOptions({
       url: `${Config.BASE_URL}/deleteRatings/studentEnrolledCourse/${courseId}/wishlist/${wishlistId}`,
       method: 'delete'
     });
-    return apiRequest(options);
+    const toastMessageConfig = {
+      success: {
+        message: successMessage
+      },
+      failure: {
+        message: failureMessage
+      }
+    };
+    return apiRequest(options, toastMessageConfig);
   }
 };

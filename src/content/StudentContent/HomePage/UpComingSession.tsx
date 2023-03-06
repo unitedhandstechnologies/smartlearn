@@ -10,6 +10,7 @@ import { useEdit } from 'src/hooks/useEdit';
 import useUserInfo from 'src/hooks/useUserInfo';
 import { API_SERVICES } from 'src/Services';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
+import useWishliatInfo from 'src/hooks/useWishlistInfo';
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -38,9 +39,15 @@ const UpComingSession = ({
   const navigateTo = useNavigate();
   const [view, setView] = useState(6);
   const [selectedItemId, setSelectedItemId] = useState<number[]>([]);
-  const [wishlistId, setWishlistId] = useState<number>(0);
   const { studentDetails } = useContext(StudentInfoContext);
-  let isActive: boolean;
+  const { wishlistDetails, updateWishlistInfo } = useWishliatInfo();
+  let isActive: any;
+  let wishlistIds = [];
+  let wishlistData = courseDetails.filter((item) =>
+    wishlistDetails.some((val) => item.id === val.id)
+  );
+  wishlistData.filter((item) => wishlistIds.push(item.id));
+
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
   };
@@ -79,9 +86,33 @@ const UpComingSession = ({
     });
   };
 
-  const onChange = (itemIds: any[]) => {
+  const onChange = async (itemIds: any[], item?: any) => {
     if (handleChangeItem) {
       handleChangeItem(itemIds);
+      if (studentDetails.id !== 0) {
+        const response: any = await API_SERVICES.WishListService.create(
+          studentDetails?.id,
+          item?.course_id,
+          { successMessage: 'Added Successfully' }
+        );
+        if (response?.status == HTTP_STATUSES.BAD_REQUEST) {
+          console.log('res', response);
+          if (response?.data?.wishlist) {
+            updateWishlistInfo(
+              response?.data?.wishlist?.id,
+              response?.data?.wishlist?.language_id
+            );
+          }
+        }
+      } else {
+        navigateTo('/home/user-login', {
+          state: {
+            details: { formData: item },
+            route: '/home/course-details'
+          },
+          replace: true
+        });
+      }
     } else {
       setSelectedItemId(itemIds);
     }
@@ -98,43 +129,21 @@ const UpComingSession = ({
     }
     return false;
   };
-  const handleIconClick = async (item) => {
-    if (studentDetails.id !== 0) {
-      let response: any;
-      if (isActive) {
-        response = await API_SERVICES.WishListService.delete(
-          item?.course_id,
-          wishlistId
-        );
-      } else {
-        response = await API_SERVICES.WishListService.create(
-          studentDetails?.id,
-          item?.course_id,
-          { successMessage: 'Added Successfully' }
-        );
+
+  const handleOnClick = async (item: any) => {
+    if (isUnselected(item)) {
+      const deleteRes: any = await API_SERVICES.WishListService.delete(
+        item?.course_id,
+        item?.id,
+        {}
+      );
+      if (deleteRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+        console.log('deleteRes', deleteRes);
+        updateWishlistInfo(item?.id, item?.language_id);
       }
-      if (response.status < HTTP_STATUSES.BAD_REQUEST) {
-        console.log('res', response);
-        setWishlistId(response?.data?.wishlist?.id);
-      }
-    } else {
-      navigateTo('/home/user-login', {
-        state: {
-          details: { formData: item },
-          route: '/home/course-details'
-        },
-        replace: true
-      });
-    }
-  };
-  const handleOnClick = (item: any) => {
-    console.log('hi', item);
-    console.log('hi---', item);
-    handleIconClick(item);
-    if (isUnselected(item?.id)) {
       return;
     }
-    onChange([...selectedItemId, item?.id]);
+    onChange([...selectedItemId, item?.id], item);
   };
 
   useEffect(() => {
@@ -202,7 +211,7 @@ const UpComingSession = ({
                       return selId === item.id;
                     })
                   : -1;
-                isActive = findActiveIcon !== -1;
+                isActive = wishlistIds ?? findActiveIcon !== -1;
                 return (
                   <Grid
                     key={index}

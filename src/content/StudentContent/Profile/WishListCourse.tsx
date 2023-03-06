@@ -5,8 +5,14 @@ import { Grid } from '@mui/material';
 import { BasicStockIcon } from 'src/Assets';
 import { API_SERVICES } from 'src/Services';
 import { getUserId } from 'src/Utils';
-import { DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
+import {
+  DETECT_LANGUAGE,
+  HTTP_STATUSES,
+  LANGUAGE_ID
+} from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
+import useWishliatInfo from 'src/hooks/useWishlistInfo';
+import { toast } from 'react-hot-toast';
 
 const courses = [
   {
@@ -162,30 +168,34 @@ const useStyles = makeStyles((theme) => ({
 const WishListCourse = () => {
   const theme = useTheme();
   const classes = useStyles();
+  const userId = getUserId();
   const { i18n } = useTranslation();
+  const { wishlistDetails, updateWishlistInfo } = useWishliatInfo();
   const [likedCourses, setLikedCourses] = useState<any>([]);
+  let wishlistIds = [];
+  wishlistDetails.filter((item) => wishlistIds.push(item.id));
 
   const fetchData = async () => {
     try {
       setLikedCourses([]);
-      const userId = getUserId();
       const response: any = await API_SERVICES.WishListService.getAllWishlist(
         userId,
         DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
       );
-      if(response.status < HTTP_STATUSES.BAD_REQUEST){
-        if(response?.data?.wishList?.length){
+      if (response.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (response?.data?.wishList?.length) {
           setLikedCourses(response?.data?.wishList);
         }
-        console.log('response',response?.data?.wishList);
-        
       }
-    } catch (err) {}
+    } catch (err) {
+      toast.error(err?.message);
+    }
   };
 
-  useEffect(()=>{
-    fetchData()
-  },[])
+  useEffect(() => {
+    updateWishlistInfo(userId, DETECT_LANGUAGE[i18n.language]);
+    fetchData();
+  }, []);
 
   const onClickCardImage = (rowData) => {};
   return (
@@ -247,6 +257,7 @@ const WishListCourse = () => {
                       prize={item.amount}
                       onClickCardImage={() => onClickCardImage(item)}
                       item={item}
+                      isActive={wishlistIds}
                     />
                   </Grid>
                 );
