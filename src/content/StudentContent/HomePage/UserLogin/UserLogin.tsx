@@ -39,34 +39,39 @@ const UserLogin = () => {
       const response: any = await API_SERVICES.authService.userLogin({
         data
       });
-      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        i18n.changeLanguage('en');
-        localStorage.setItem('token', JSON.stringify(response?.data?.token));
+      if (response?.data.users[0].user_type === USER_TYPE_ID.student) {
+        if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+          i18n.changeLanguage('en');
+          localStorage.setItem('token', JSON.stringify(response?.data?.token));
 
-        if (response?.data?.users?.length) {
-          localStorage.setItem(
-            'userId',
-            JSON.stringify(response?.data.users[0].id)
-          );
-          const getUserRes: any = await API_SERVICES.adminUserService.getById(
-            response?.data.users[0].id
-          );
-          if (getUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-            updateStudentInfo((prevState: any) => {
-              return { ...prevState, ...getUserRes?.data?.user };
+          if (response?.data?.users?.length) {
+            localStorage.setItem(
+              'userId',
+              JSON.stringify(response?.data.users[0].id)
+            );
+            const getUserRes: any = await API_SERVICES.adminUserService.getById(
+              response?.data.users[0].id
+            );
+            if (getUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+              updateStudentInfo((prevState: any) => {
+                return { ...prevState, ...getUserRes?.data?.user };
+              });
+              updateCartInfo(getUserRes?.data?.user?.id);
+            }
+          }
+          toast.success('Profile Login successfully');
+          if (state) {
+            navigateTo(state.route, {
+              state: { ...state },
+              replace: true
             });
-            updateCartInfo(getUserRes?.data?.user?.id);
+          } else {
+            navigateTo('/home/profilehome', { replace: true });
           }
         }
-        toast.success('Profile Login successfully');
-        if (state) {
-          navigateTo(state.route, {
-            state: { ...state },
-            replace: true
-          });
-        } else {
-          navigateTo('/home/profilehome', { replace: true });
-        }
+      } else {
+        toast.error('You are not a Student Users');
+        //navigateTo('/admin/login');
       }
     } catch (e) {
       console.log(e, '---login err-----');

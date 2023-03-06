@@ -454,7 +454,7 @@ const Registration = () => {
                 cursor: 'pointer'
               }}
             >
-              Have an account? {/* {instructorSignUp ? ( */}
+              Have an account?
               <span
                 style={{
                   fontSize: 16,
@@ -473,22 +473,6 @@ const Registration = () => {
                 {' '}
                 Login
               </span>
-              {/* ) : (
-                <span
-                  style={{
-                    fontSize: 16,
-                    fontFamily: 'Switzer',
-                    fontWeight: 400,
-                    textAlign: 'center',
-                    color: '#3C78F0',
-                    cursor: 'pointer'
-                  }}
-                  onClick={() => navigateTo('/admin/login')}
-                >
-                  {' '}
-                  Login
-                </span>
-              )} */}
             </Typography>
           </Grid>
         </Grid>
