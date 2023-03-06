@@ -144,7 +144,6 @@ function InstructorManagement() {
         }
       }
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
-        console.log('response[1]', response[1]);
         if (response[1]?.data?.mentorPayouts?.length) {
           setPayoutData(response[1]?.data?.mentorPayouts);
         }
@@ -256,14 +255,11 @@ function InstructorManagement() {
   };
 
   const onClickViewInstructorPayout = async (rowData: any) => {
-    console.log('rowData', rowData);
-
     const response: any =
       await API_SERVICES.instructorReportsService.getAllPaymentHistory(
         rowData?.mentor_id
       );
     if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-      console.log('paymentresponse', response);
       if (response?.data?.paymentHistory?.length) {
         setPaymentHistory(response?.data?.paymentHistory);
       }

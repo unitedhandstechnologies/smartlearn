@@ -87,15 +87,16 @@ const InstructorManagementCreateModal = (props: Props) => {
     password: rowData?.password || '',
     confirmPassword: rowData?.password || '',
     user_type: rowData?.user_type || USER_TYPE_ID.mentors,
-    social_information_url: rowData?.social_information_url || '',
-    social_information_url_2: rowData?.social_information_url_2 || '',
-    social_information_url_3: rowData?.social_information_url_3 || '',
+    social_information_url: rowData?.social_information_url || ' ',
+    social_information_url_2: rowData?.social_information_url_2 || ' ',
+    social_information_url_3: rowData?.social_information_url_3 || ' ',
     permissions: rowData.permissions || [1, 4, 8],
     code: rowData?.code || '+91',
     language_id: rowData?.language_id || DETECT_LANGUAGE[i18n.language],
     image_url: rowData?.image_url || '',
     gender: rowData?.gender || '',
-    qualification: rowData?.qualification || ''
+    qualification: rowData?.qualification || '',
+    about: rowData?.about || ''
   };
 
   const RequiredFields = [
@@ -214,22 +215,22 @@ const InstructorManagementCreateModal = (props: Props) => {
     let img = new Image();
     img.src = window.URL.createObjectURL(event.target.files[0]);
     img.onload = async () => {
-      // if (
-      //   img.width <= 270 &&
-      //   img.width >= 200 &&
-      //   img.height <= 350 &&
-      //   img.height >= 250
-      // ) {
-      const uploadImageRes: any =
-        await API_SERVICES.imageUploadService.uploadImage(formData);
-      if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-        toast.success(`${'Image Upload Successfully'}`);
-        if (uploadImageRes?.data?.images) {
-          edit.update({
-            image_url: uploadImageRes?.data?.images[0].Location
-          });
+      if (
+        img.width <= 270 &&
+        img.width >= 200 &&
+        img.height <= 350 &&
+        img.height >= 250
+      ) {
+        const uploadImageRes: any =
+          await API_SERVICES.imageUploadService.uploadImage(formData);
+        if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+          toast.success(`${'Image Upload Successfully'}`);
+          if (uploadImageRes?.data?.images) {
+            edit.update({
+              image_url: uploadImageRes?.data?.images[0].Location
+            });
+          }
         }
-        // }
       } else {
         alert(`Sorry, this image doesn't look like the size we wanted. It's 
         ${img.width} x ${img.height} but we require size image between 270 x 350 to 200 x 250.`);
@@ -399,18 +400,7 @@ const InstructorManagementCreateModal = (props: Props) => {
               }
             />
           </Grid>
-          <Grid item xs={12}>
-            <TextInputComponent
-              inputLabel={t('About')}
-              labelColor={theme.Colors.primary}
-              value={edit.getValue('about')}
-              onChange={(e) =>
-                edit.update({
-                  about: capitalizeFirstLetter(e.target.value)
-                })
-              }
-            />
-          </Grid>
+
           <Grid item xs={12}>
             <TextInputComponent
               inputLabel={t('email')}
@@ -493,6 +483,21 @@ const InstructorManagementCreateModal = (props: Props) => {
               value={edit.getValue('social_information_url_3')}
               onChange={(e) =>
                 edit.update({ social_information_url_3: e.target.value })
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextInputComponent
+              multiline={true}
+              maxRows={4}
+              inputHeight={100}
+              inputLabel={t('About')}
+              labelColor={theme.Colors.primary}
+              value={edit.getValue('about')}
+              onChange={(e) =>
+                edit.update({
+                  about: capitalizeFirstLetter(e.target.value)
+                })
               }
             />
           </Grid>

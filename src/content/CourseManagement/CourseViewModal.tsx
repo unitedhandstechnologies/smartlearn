@@ -435,7 +435,6 @@ const CourseViewModal = (props: Props) => {
     contentDetails = contentDetails.filter(
       (i) => i.value != 'undefined' && i.value != ''
     );
-    console.log(rowData, 'instructor name');
     return (
       <Grid container>
         <Grid item xs={12}>

@@ -60,8 +60,8 @@ const InstructorSettingsTable = ({
       field: 'action',
       headerName: t('course.action'),
       flex: 1.5,
-      sortable: true,
-      disableColumnMenu: true,
+      sortable: false,
+      disableColumnMenu: false,
       renderCell: ({ row }) => (
         <ButtonComp
           btnBorderRadius={theme.MetricsSizes.regular_x}
@@ -88,8 +88,6 @@ const InstructorSettingsTable = ({
       columns={columns}
       rows={rowItems}
       loading={loading}
-      checkboxSelection={true}
-      disableSelectionOnClick={true}
       autoHeight={true}
       hideFooterPagination={true}
       onSelectionModelChange={onSelectionModelChange}

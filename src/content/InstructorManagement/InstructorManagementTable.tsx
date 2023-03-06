@@ -60,11 +60,11 @@ const InstructorManagementTable = ({
   const statusFilter = [
     {
       id: 2,
-      value: 'enabled'
+      value: 'Enabled'
     },
     {
       id: 3,
-      value: 'disabled'
+      value: 'Disabled'
     }
   ];
 

@@ -28,8 +28,8 @@ const InstructorModal = (props: Props) => {
 
   const renderDialogContent = () => {
     const { getMonth, getDate, getYear } = getDateFormat(rowData?.updated_at);
-    const contentDetails = [
-      { content: t('Category.categoryCode'), value: rowData?.id },
+    let contentDetails = [
+      { content: t('instructorCode'), value: rowData?.id },
       {
         content: t('firstName'),
         value: rowData?.first_name
@@ -37,16 +37,56 @@ const InstructorModal = (props: Props) => {
       { content: t('lastName'), value: rowData?.last_name },
       { content: t('email'), value: rowData?.email_id },
       { content: t('phoneNumber'), value: rowData?.phone_number },
-      { content: t('about'), value: rowData?.about },
+      { content: t('About'), value: rowData?.about },
       {
         content: t('date'),
         value: `${getMonth} ${getDate}, ${getYear}`
       },
       {
+        content: t('adminManagement.socialMediaLinkFaceBook'),
+        value: (
+          <a
+            href={rowData?.social_information_url}
+            rel="noopener noreferrer"
+            target={'_blank'}
+          >
+            {rowData?.social_information_url}
+          </a>
+        )
+      },
+      {
+        content: t('adminManagement.socialMediaLinkInstagram'),
+        value: (
+          <a
+            href={rowData?.social_information_url_2}
+            rel="noopener noreferrer"
+            target={'_blank'}
+          >
+            {rowData?.social_information_url_2}
+          </a>
+        )
+      },
+      {
+        content: t('adminManagement.socialMediaLinkTwitter'),
+        value: (
+          <a
+            href={rowData?.social_information_url_3}
+            rel="noopener noreferrer"
+            target={'_blank'}
+          >
+            {rowData?.social_information_url_3}
+          </a>
+        )
+      },
+      {
         content: 'Profile Image',
-        value: <img src={rowData?.image_url} width={250} height={250}/>
+        value: <img src={rowData?.image_url} width={250} height={250} />
       }
     ];
+    contentDetails = contentDetails.filter(
+      (i) => i.value != 'undefined' && i.value != ''
+    );
+
     return (
       <Grid>
         <DialogContentDetails contentDetails={contentDetails} />
