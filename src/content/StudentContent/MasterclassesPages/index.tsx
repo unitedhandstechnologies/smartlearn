@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'react-hot-toast';
 import UpcomingMasterClass from './UpcomingMasterClass';
 import Mentors from '../HomePage/Mentors';
+import { useDebounce } from 'src/hooks/useDebounce';
 
 const Masterclasses = () => {
   const theme = useTheme();
@@ -23,12 +24,27 @@ const Masterclasses = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [chipIconText, setChipIconText] = useState([0, 0, 1]);
   const { i18n } = useTranslation();
+  const [searchval, setSearchVal] = useState('');
+  const debValue = useDebounce(searchval, 1000);
+
+  const handleSearchValue = (value) => {
+    setSearchVal(value);
+  };
+
+  const handleClearSearchValue = () => {
+    setSearchVal('');
+  };
+
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
+      let params: any = {};
+      if (debValue !== '') {
+        params.searchString = debValue;
+      }
       const response: any = await Promise.all([
         API_SERVICES.courseManagementService.getAll(
-          DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+          DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english, params
         ),
         API_SERVICES.homeUserService.getAll()
       ]);
@@ -55,11 +71,12 @@ const Masterclasses = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [DETECT_LANGUAGE[i18n.language], debValue]);
 
   useEffect(() => {
     fetchData();
-  }, [DETECT_LANGUAGE[i18n.language]]);
+  }, [fetchData]);
+
   const title = (
     <Typography
       sx={{
@@ -76,9 +93,9 @@ const Masterclasses = () => {
       <span style={{ color: theme.Colors.secondary }}>mentors</span>
     </Typography>
   );
-  if (loading) {
-    return <Loader />;
-  } else {
+  // if (loading) {
+  //   return <Loader />;
+  // } else {
     return (
       <Box sx={{ py: 5 }}>
         <Container>
@@ -89,6 +106,9 @@ const Masterclasses = () => {
               )}
               chipIconText={chipIconText}
               setChipIconText={setChipIconText}
+              onSearchValChange={handleSearchValue}
+              handleClearSearchValue={handleClearSearchValue}
+              searchval={searchval}  
             />
             <Mentors
               mentorDetails={mentorDetails}
@@ -106,6 +126,6 @@ const Masterclasses = () => {
       </Box>
     );
   }
-};
+// };
 
 export default memo(Masterclasses);

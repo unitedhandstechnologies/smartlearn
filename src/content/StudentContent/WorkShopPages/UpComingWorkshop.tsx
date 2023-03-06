@@ -17,6 +17,7 @@ import MuiCardComp from 'src/components/MuiCardComp';
 import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
 import { useNavigate } from 'react-router';
+import SearchComponent from '../SearchComponent';
 const courses = [
   {
     id: 1,
@@ -172,17 +173,20 @@ const FILTER_CHIPS = ['All', 'Stock market', 'Options trading', 'Mutual funds'];
 
 type WorkshopProps = {
   workshopDetails?: any[];
+  onSearchValChange?: (event) => void;
+  handleClearSearchValue?: () => void;
+  searchval?: string;
 };
-const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
+const UpComingWorkshop = ({
+  workshopDetails = [],
+  onSearchValChange,
+  handleClearSearchValue,
+  searchval
+}: WorkshopProps) => {
   const theme = useTheme();
   const classes = useStyles();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
-  const [searchValue, setSearchValue] = useState('');
 
-  const getSearchValue = (searchValue) => {
-    console.log(searchValue);
-    setSearchValue(searchValue);
-  };
   const navigateTo = useNavigate();
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
@@ -262,41 +266,13 @@ const UpComingWorkshop = ({ workshopDetails = [] }: WorkshopProps) => {
               }}
             />
           </Grid>
-          {/* <Grid item paddingRight={2}>
-            <InputBase
-              onChange={(e) => getSearchValue(e.target.value)}
-              value={searchValue}
-              placeholder={'Search'}
-              sx={{
-                width: 50,
-                height: 35,
-                transition: '0.5s',
-                ':hover': {
-                  width: 290,
-                  border: '1px solid #3C78F0',
-                  borderRadius: 50,
-                  fontSize: 16,
-                  fontWeight: 400,
-                  padding: theme.spacing(0.3, 0.5)
-                },
-                [theme.breakpoints.down('xs')]: {
-                  width: '100%',
-                  border: '1px solid #3C78F0',
-                  borderRadius: 50,
-                  fontSize: 16,
-                  fontWeight: 400,
-                  padding: theme.spacing(0.3, 0.5)
-                }
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton>
-                    <img src={SearchIconImg} width={'35px'} height={'35px'} />
-                  </IconButton>
-                </InputAdornment>
-              }
+          <Grid item paddingRight={2}>
+            <SearchComponent
+              onSearchValChange={onSearchValChange}
+              searchval={searchval}
+              handleClearSearchValue={handleClearSearchValue}
             />
-          </Grid> */}
+          </Grid>
         </Grid>
         <Grid paddingTop={2}>
           <img src={LineBarIcon} alt="" />

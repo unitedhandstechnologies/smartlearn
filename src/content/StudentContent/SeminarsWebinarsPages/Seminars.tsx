@@ -8,9 +8,9 @@ import {
   COURSE_STATUS_NAME,
   COURSE_TYPE_NAME,
   DETECT_LANGUAGE,
-  HTTP_STATUSES,
-  LANGUAGE_ID
+  HTTP_STATUSES
 } from 'src/Config/constant';
+import { useDebounce } from 'src/hooks/useDebounce';
 import { API_SERVICES } from 'src/Services';
 import UpComingSeminars from './UpComingSeminars';
 import UpComingWebinars from './UpComingWebinars';
@@ -23,12 +23,27 @@ const Seminars = () => {
   const [chipRecorderText, setChipRecorderText] = useState([0, 1]);
   const [chipIconText, setChipIconText] = useState([0, 0, 1]);
   const { i18n } = useTranslation();
+  const [searchval, setSearchVal] = useState('');
+  const debValue = useDebounce(searchval, 1000);
+
+  const handleSearchValue = (value) => {
+    setSearchVal(value);
+  };
+
+  const handleClearSearchValue = () => {
+    setSearchVal('');
+  };
 
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
+      let params: any = {};
+      if (debValue !== '') {
+        params.searchString = debValue;
+      }
       const response: any = await API_SERVICES.courseManagementService.getAll(
-        DETECT_LANGUAGE[i18n.language] || 1
+        DETECT_LANGUAGE[i18n.language] || 1,
+        params
       );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.courses?.length) {
@@ -53,33 +68,39 @@ const Seminars = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [DETECT_LANGUAGE[i18n.language], debValue]);
 
   useEffect(() => {
     fetchData();
-  }, [DETECT_LANGUAGE[i18n.language]]);
+  }, [fetchData]);
 
-  if (loading) {
-    return <Loader />;
-  } else {
-    return (
-      <Box sx={{ py: 5 }}>
-        <Container>
-          <Grid>
-            <UpComingSeminars
-              courseDetails={seminarCourseDetails}
-              chipIconText={chipRecorderText}
-              setChipIconText={setChipRecorderText}
-            />
-            <UpComingWebinars
-              courseDetails={webinarCourseDetails}
-              setChipIconText={setChipIconText}
-              chipIconText={chipIconText}
-            />
-          </Grid>
-        </Container>
-      </Box>
-    );
-  }
+  // if (loading) {
+  //   return <Loader />;
+  // } else {
+  return (
+    <Box sx={{ py: 5 }}>
+      <Container>
+        <Grid>
+          <UpComingSeminars
+            courseDetails={seminarCourseDetails}
+            chipIconText={chipRecorderText}
+            setChipIconText={setChipRecorderText}
+            onSearchValChange={handleSearchValue}
+            handleClearSearchValue={handleClearSearchValue}
+            searchval={searchval}
+          />
+          <UpComingWebinars
+            courseDetails={webinarCourseDetails}
+            setChipIconText={setChipIconText}
+            chipIconText={chipIconText}
+            onSearchValChange={handleSearchValue}
+            handleClearSearchValue={handleClearSearchValue}
+            searchval={searchval}
+          />
+        </Grid>
+      </Container>
+    </Box>
+  );
 };
+// };
 export default memo(Seminars);

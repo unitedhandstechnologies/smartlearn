@@ -15,17 +15,34 @@ import { toast } from 'react-hot-toast';
 import CourseBanner from '../Courses/CourseBanner';
 import UpComingWorkshop from './UpComingWorkshop';
 import WorkShopDetails from './WorkShopDetails';
+import { useDebounce } from 'src/hooks/useDebounce';
 
 const WorkShop = () => {
   const theme = useTheme();
   const [workshopDetails, setWorkshopDetails] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { i18n } = useTranslation();
+  const [searchval, setSearchVal] = useState('');
+  const debValue = useDebounce(searchval, 1000);
+
+  const handleSearchValue = (value) => {
+    setSearchVal(value);
+  };
+
+  const handleClearSearchValue = () => {
+    setSearchVal('');
+  };
+
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
+      let params: any = {};
+      if (debValue !== '') {
+        params.searchString = debValue;
+      }
       const response: any = await API_SERVICES.courseManagementService.getAll(
-        DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+        DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english,
+        params
       );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.courses?.length) {
@@ -42,15 +59,15 @@ const WorkShop = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [DETECT_LANGUAGE[i18n.language], debValue]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
-  if (loading) {
-    return <Loader />;
-  } else {
+  // if (loading) {
+  //   return <Loader />;
+  // } else {
     return (
       <Box sx={{ py: 5 }}>
         <Container>
@@ -62,11 +79,16 @@ const WorkShop = () => {
               }
             />
 
-            <UpComingWorkshop workshopDetails={workshopDetails} />
+            <UpComingWorkshop
+              workshopDetails={workshopDetails}
+              onSearchValChange={handleSearchValue}
+              handleClearSearchValue={handleClearSearchValue}
+              searchval={searchval}
+            />
           </Grid>
         </Container>
       </Box>
     );
   }
-};
+// };
 export default memo(WorkShop);

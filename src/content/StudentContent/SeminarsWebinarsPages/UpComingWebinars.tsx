@@ -31,6 +31,7 @@ import ChipMenu from '../Courses/ChipMenu';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
+import SearchComponent from '../SearchComponent';
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -114,12 +115,18 @@ type CourseProps = {
   courseDetails?: any[];
   setChipIconText?: React.Dispatch<React.SetStateAction<number[]>>;
   chipIconText?: number[];
+  onSearchValChange?: (event) => void;
+  handleClearSearchValue?: () => void;
+  searchval?: string;
 };
 
 const UpComingWebinars = ({
   courseDetails,
   setChipIconText,
-  chipIconText
+  chipIconText,
+  onSearchValChange,
+  handleClearSearchValue,
+  searchval
 }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
@@ -129,11 +136,7 @@ const UpComingWebinars = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
-  const [searchValue, setSearchValue] = useState('');
   const navigateTo = useNavigate();
-  const getSearchValue = (searchValue) => {
-    setSearchValue(searchValue);
-  };
 
   const handleOpen = (event, item) => {
     setMenuItem({
@@ -273,32 +276,13 @@ const UpComingWebinars = ({
                 />
               ))}
             </Grid>
-            {/* <Grid item paddingBottom={2}>
-              <InputBase
-                onChange={(e) => getSearchValue(e.target.value)}
-                value={searchValue}
-                placeholder={'Search'}
-                sx={{
-                  width: 65,
-                  transition: '0.5s',
-                  ':hover': {
-                    width: 300,
-                    border: '1px solid #3C78F0',
-                    borderRadius: 50,
-                    fontSize: 20,
-                    fontWeight: 400,
-                    padding: theme.spacing(0.3, 0.5)
-                  }
-                }}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <img src={SearchIconImg} />
-                    </IconButton>
-                  </InputAdornment>
-                }
+            <Grid item paddingBottom={2}>
+              <SearchComponent
+                onSearchValChange={onSearchValChange}
+                searchval={searchval}
+                handleClearSearchValue={handleClearSearchValue}
               />
-            </Grid> */}
+            </Grid>
           </Grid>
           <Grid>
             <img src={LineBarIcon} alt="" />

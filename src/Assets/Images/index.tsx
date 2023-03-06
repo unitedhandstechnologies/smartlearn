@@ -122,6 +122,7 @@ import Chat from './Chat.svg';
 import Persons from './Persons.svg';
 import Rupee from './Rupee.svg';
 import CertificateImage from './Certificate.svg';
+import CloseIcon from './CloseIcon.svg';
 
 export {
   EnrollmentManagementIcon,
@@ -247,5 +248,6 @@ export {
   Chat,
   Persons, 
   Rupee,
-  CertificateImage
+  CertificateImage,
+  CloseIcon
 };
