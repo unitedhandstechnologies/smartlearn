@@ -33,20 +33,14 @@ const CategoryModal = (props: Props) => {
   const fetchData = async () => {
     try {
       setCategoryData([]);
-      console.log(setCategoryData([]),'categoryDataResponse');
-
       const response: any = await (
         API_SERVICES.categoryManagementService.getCategoryById(
           rowData?.id,
         )
       );
-      console.log(response,'categoryResponse');
-      if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
-        if (response[0]?.data?.category_language?.length) {
-          setCategoryData(response[0]?.data?.category_language?.length);
+        if (response?.data?.category_language) {
+          setCategoryData(response?.data?.category_language);
         }
-      }
-      
     } catch (err) {
       toast.error(err?.message);
     }
@@ -66,12 +60,9 @@ const CategoryModal = (props: Props) => {
       },
       {
         content: t('language'),
-        value: 'English, Hindi, Gujarati'
-          // rowData?.language_id === 1
-          //   ? LANGUAGE_NAME[1]
-          //   : rowData?.language_id === 2
-          //   ? LANGUAGE_NAME[2]
-          //   : LANGUAGE_NAME[3]
+        value:categoryData.map((item)=>{
+          return (LANGUAGE_NAME[item.language_id])
+        }).join(',')        
       },
       {
         content: t('Category.sortNo'),
