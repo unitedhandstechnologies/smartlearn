@@ -1,11 +1,15 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { makeStyles, Typography, useTheme } from '@material-ui/core';
 import { Grid, Container } from '@mui/material';
 import { ArrowNext, BasicStockIcon, LineBarIcon } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
 import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
-import { COURSE_TYPE_NAME } from 'src/Config/constant';
+import { COURSE_TYPE_NAME, HTTP_STATUSES } from 'src/Config/constant';
 import { useLocation, useNavigate } from 'react-router';
+import { useEdit } from 'src/hooks/useEdit';
+import useUserInfo from 'src/hooks/useUserInfo';
+import { API_SERVICES } from 'src/Services';
+import { StudentInfoContext } from 'src/contexts/StudentContext';
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -19,15 +23,24 @@ const FILTER_CHIPS = ['Courses', 'Workshops', 'Seminars/Webinars'];
 
 type CourseProps = {
   courseDetails?: any[];
+  handleChangeItem?: (val: any) => void;
+  InitialItemVal?: any[];
 };
-const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
+const UpComingSession = ({
+  courseDetails = [],
+  handleChangeItem,
+  InitialItemVal
+}: CourseProps) => {
   const theme = useTheme();
   const classes = useStyles();
   const { state }: any = useLocation();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
   const navigateTo = useNavigate();
   const [view, setView] = useState(6);
-
+  const [selectedItemId, setSelectedItemId] = useState<number[]>([]);
+  const [wishlistId, setWishlistId] = useState<number>(0);
+  const { studentDetails } = useContext(StudentInfoContext);
+  let isActive: boolean;
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
   };
@@ -65,6 +78,68 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
       replace: true
     });
   };
+
+  const onChange = (itemIds: any[]) => {
+    if (handleChangeItem) {
+      handleChangeItem(itemIds);
+    } else {
+      setSelectedItemId(itemIds);
+    }
+  };
+
+  const isUnselected = (selId: number) => {
+    const items =
+      selectedItemId.length &&
+      selectedItemId.filter((itemId) => selId !== itemId);
+
+    if (items.length < selectedItemId.length) {
+      onChange(items);
+      return true;
+    }
+    return false;
+  };
+  const handleIconClick = async (item) => {
+    if (studentDetails.id !== 0) {
+      let response: any;
+      if (isActive) {
+        response = await API_SERVICES.WishListService.delete(
+          item?.course_id,
+          wishlistId
+        );
+      } else {
+        response = await API_SERVICES.WishListService.create(
+          studentDetails?.id,
+          item?.course_id,
+          { successMessage: 'Added Successfully' }
+        );
+      }
+      if (response.status < HTTP_STATUSES.BAD_REQUEST) {
+        console.log('res', response);
+        setWishlistId(response?.data?.wishlist?.id);
+      }
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          details: { formData: item },
+          route: '/home/course-details'
+        },
+        replace: true
+      });
+    }
+  };
+  const handleOnClick = (item: any) => {
+    console.log('hi', item);
+    console.log('hi---', item);
+    handleIconClick(item);
+    if (isUnselected(item?.id)) {
+      return;
+    }
+    onChange([...selectedItemId, item?.id]);
+  };
+
+  useEffect(() => {
+    setSelectedItemId(InitialItemVal);
+  }, [InitialItemVal]);
 
   return (
     <Container
@@ -122,6 +197,12 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
         >
           {getCourses.length
             ? getCourses.slice(0, view)?.map((item, index) => {
+                const findActiveIcon: number = selectedItemId.length
+                  ? selectedItemId.findIndex((selId) => {
+                      return selId === item.id;
+                    })
+                  : -1;
+                isActive = findActiveIcon !== -1;
                 return (
                   <Grid
                     key={index}
@@ -157,6 +238,8 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
                       course_id={item.course_id}
                       discount={item.discount}
                       item={item}
+                      isActive={isActive}
+                      handleOnClick={() => handleOnClick(item)}
                     />
                   </Grid>
                 );

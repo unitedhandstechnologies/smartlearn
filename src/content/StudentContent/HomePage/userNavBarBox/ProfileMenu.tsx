@@ -58,6 +58,7 @@ const ProfileMenu = (props: Props) => {
         navigateTo('/home/profile');
         handleClose();
       } else if (event.target.innerText === 'Your wishlist') {
+        navigateTo('/home/wish-list');
         handleClose();
       } else if (event.target.innerText === 'Logout') {
         updateStudentInfo(INITIAL_STATE.studentDetails);

@@ -19,6 +19,7 @@ import PreRecordedDetails from 'src/content/StudentContent/Courses/PreRecordedDe
 import CheckOut from 'src/content/StudentContent/CheckOut/CheckOut';
 import MentorAfterReg from 'src/content/StudentContent/RegistrationPage/MentorAfterReg';
 import ThankyouEnrolling from 'src/content/StudentContent/CheckOut/ThankyouEnrolling';
+import WishListCourse from 'src/content/StudentContent/Profile/WishListCourse';
 
 export const HomeRoutes: RouteObject[] = [
   {
@@ -49,7 +50,8 @@ export const HomeRoutes: RouteObject[] = [
       { path: 'pre-recordedCourse-details', element: <CourseBegin /> },
       { path: 'checkout-page', element: <CheckOut /> },
       { path: 'mentorAfterReg', element: <MentorAfterReg /> },
-      { path: 'thankyou-page', element: <ThankyouEnrolling/>}
+      { path: 'thankyou-page', element: <ThankyouEnrolling/>},
+      {path: 'wish-list', element: <WishListCourse/>}
     ]
   }
 ];

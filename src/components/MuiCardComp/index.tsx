@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Grid, InputAdornment, useTheme } from '@material-ui/core';
 import {
   Card,
@@ -22,7 +22,7 @@ import {
   WhiteDot,
   ZoomIcon
 } from 'src/Assets';
-import { COURSE_TYPE_NAME } from 'src/Config/constant';
+import { COURSE_TYPE_NAME, HTTP_STATUSES } from 'src/Config/constant';
 import ButtonComp from '../ButtonComp';
 import Heading from '../Heading';
 import IconTextComp from '../IconTextComp';
@@ -30,9 +30,11 @@ import ListItemCell from '../ListItemCell';
 import { ChipComp } from '../MultiSelectChip/ChipComp';
 import ProgressBar from '../ProgressBar';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
 import { useNavigate } from 'react-router';
+import { API_SERVICES } from 'src/Services';
 
 const TopBox = ({ leftText, rightText }) => {
   return (
@@ -92,6 +94,8 @@ type Props = {
   course_id?: number;
   discount?: number;
   item?: any;
+  isActive?: boolean;
+  handleOnClick?: (val: any) => void;
 };
 const MuiCardComp = ({
   course_id,
@@ -118,7 +122,9 @@ const MuiCardComp = ({
   onClickCardImage,
   startLearning = true,
   nextClass,
-  item
+  item,
+  isActive,
+  handleOnClick
 }: Props) => {
   const theme = useTheme();
   const navigateTo = useNavigate();
@@ -360,15 +366,16 @@ const MuiCardComp = ({
             <IconButton
               style={{
                 // color: '#3C78F0',
-                color: theme.Colors.darkGrayishBlue,
+                color: isActive ? '#3C78F0' : theme.Colors.darkGrayishBlue,
                 background: 'transparent',
                 [theme.breakpoints.down('md')]: {
                   display: 'none'
                 }
               }}
+              onClick={handleOnClick}
               disableRipple
             >
-              <FavoriteBorderIcon />
+              {isActive ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             </IconButton>
           </Grid>
           )

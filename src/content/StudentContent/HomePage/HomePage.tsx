@@ -24,6 +24,7 @@ import StartYourLearningBanner from './StartYourLearningBanner';
 import HomeBanner from './HomeBanner';
 import { BackgroundLine } from 'src/Assets';
 import WishListCourse from '../Profile/WishListCourse';
+import { useEdit } from 'src/hooks/useEdit';
 
 const HomePage = () => {
   const theme = useTheme();
@@ -33,6 +34,10 @@ const HomePage = () => {
   const [faqDetails, setFaqDetails] = useState([]);
   const [ratingData, setRatingData] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const initialValue = {
+    course: []
+  };
+  const edit = useEdit(initialValue);
   // const { searchValue } = useSearchVal();
   // const debValue = useDebounce(searchValue, 2000)
   const fetchData = useCallback(async () => {
@@ -51,7 +56,9 @@ const HomePage = () => {
           DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
         ),
         API_SERVICES.homeUserService.getAll(),
-        API_SERVICES.pageManagementService.getAllFaq(LANGUAGE_ID.english),
+        API_SERVICES.pageManagementService.getAllFaq(
+          DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+        ),
         API_SERVICES.homeUserService.getAllRatings()
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -90,6 +97,11 @@ const HomePage = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleChangeItem = (itemIds: any[]) => {
+    edit.update({ course: itemIds });
+  };
+
   if (loading) {
     return <Loader />;
   } else {
@@ -114,7 +126,11 @@ const HomePage = () => {
             [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
           }}
         >
-          <UpComingSession courseDetails={courseDetails} />
+          <UpComingSession
+            courseDetails={courseDetails}
+            InitialItemVal={edit.getValue('course')}
+            handleChangeItem={handleChangeItem}
+          />
         </Grid>
         <Grid
           container

@@ -26,6 +26,7 @@ import StartYourLearningBanner from '../HomePage/StartYourLearningBanner';
 import FAQs from '../HomePage/FAQs';
 import RateYourExperience from '../HomePage/RateYourExperience/ExperienceRate';
 import useStudentInfo from 'src/hooks/useStudentInfo';
+import { useEdit } from 'src/hooks/useEdit';
 
 const ProfileHome = () => {
   const theme = useTheme();
@@ -38,7 +39,14 @@ const ProfileHome = () => {
   const { studentDetails, updateStudentInfo } = useStudentInfo();
   const [enrollCourse, setEnrollCourse] = useState<any>([]);
   const [rating, setRating] = useState<boolean>(false);
+  const initialValue = {
+    course: []
+  };
+  const edit = useEdit(initialValue);
 
+  const handleChangeItem = (itemIds: any[]) => {
+    edit.update({ course: itemIds });
+  };
   // const { searchValue } = useSearchVal();
   // const debValue = useDebounce(searchValue, 2000)
   const fetchData = useCallback(async () => {
@@ -155,7 +163,11 @@ const ProfileHome = () => {
             [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
           }}
         >
-          <MoreUpcomingSession courseDetails={courseDetails} />
+          <MoreUpcomingSession
+            courseDetails={courseDetails}
+            InitialItemVal={edit.getValue('course')}
+            handleChangeItem={handleChangeItem}
+          />
         </Grid>
         {/* <Grid
           container

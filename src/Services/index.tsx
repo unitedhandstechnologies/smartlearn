@@ -3,7 +3,6 @@ import { enrollmentManagementService } from './enrollmentManagementService';
 import { adminUserService } from './AdminUserService';
 import { categoryManagementService } from './categoryManagementService';
 import { courseManagementService } from './courseManagementService';
-import { overViewServices } from './overViewServices';
 import { imageUploadService } from './imageUploadService';
 import { notificationService } from './notificationService';
 import { settingsPageService } from './settingsPageService';
@@ -19,6 +18,7 @@ import { homeUserService } from './HomeUserService';
 import {  instructorReportsService } from './InstructorReportsService';
 import { PreRecordedCourseVideoService } from './preRecordedCourseVideoService';
 import { AddToCartService } from './addToCartService';
+import {WishListService} from './wishListService'
 
 export const API_SERVICES = {
   authService,
@@ -26,7 +26,6 @@ export const API_SERVICES = {
   enrollmentManagementService,
   categoryManagementService,
   courseManagementService,
-  overViewServices,
   imageUploadService,
   notificationService,
   settingsPageService,
@@ -41,5 +40,6 @@ export const API_SERVICES = {
   homeUserService,
   instructorReportsService,
   PreRecordedCourseVideoService,
-  AddToCartService
+  AddToCartService,
+  WishListService
 };
