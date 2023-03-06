@@ -76,6 +76,8 @@ const StudentCreateModal = (props: Props) => {
     confirmPassword: rowData?.password || '',
     user_type: rowData?.user_type || USER_TYPE_ID.student,
     social_information_url: rowData?.social_information_url || '',
+    social_information_url_2: rowData?.social_information_url_2 || '',
+    social_information_url_3: rowData?.social_information_url_3 || '',
     permissions: [],
     code: rowData?.code || '+91',
     language_id: rowData?.language_id || DETECT_LANGUAGE[i18n.language],
@@ -118,16 +120,10 @@ const StudentCreateModal = (props: Props) => {
       edit.allFilled('email_id') &&
       !isValidEmail(edit.getValue('email_id')));
 
-  const websiteError =
-    (error && !edit.allFilled('social_information_url')) ||
-    (error &&
-      edit.allFilled('social_information_url') &&
-      !isWebsiteName(edit.getValue('social_information_url')));
-
   const phoneError =
     (error && !edit.allFilled('phone_number')) ||
     (error &&
-      edit.allFilled('phone_number') && 
+      edit.allFilled('phone_number') &&
       !isPhoneNumber(edit.getValue('phone_number')));
 
   const imageError = error && !edit.allFilled('image_url');
@@ -149,10 +145,10 @@ const StudentCreateModal = (props: Props) => {
         setError(true);
         return toast.error('Please fill all the required fields');
       }
-      if(!isPhoneNumber(edit.getValue('phone_number'))){
+      if (!isPhoneNumber(edit.getValue('phone_number'))) {
         setError(true);
         return toast.error('Please enter your valid 10 digit mobile number');
-      }else{
+      } else {
         setError(false);
       }
       if (
@@ -188,22 +184,22 @@ const StudentCreateModal = (props: Props) => {
     let img = new Image();
     img.src = window.URL.createObjectURL(event.target.files[0]);
     img.onload = async () => {
-      if (
-        img.width <= 270 &&
-        img.width >= 200 &&
-        img.height <= 350 &&
-        img.height >= 250
-      ) {
-        const uploadImageRes: any =
-          await API_SERVICES.imageUploadService.uploadImage(formData);
-        if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-          toast.success(`${'Image Upload Successfully'}`);
-          if (uploadImageRes?.data?.images) {
-            edit.update({
-              image_url: uploadImageRes?.data?.images[0].Location
-            });
-          }
+      // if (
+      //   img.width <= 270 &&
+      //   img.width >= 200 &&
+      //   img.height <= 350 &&
+      //   img.height >= 250
+      // ) {
+      const uploadImageRes: any =
+        await API_SERVICES.imageUploadService.uploadImage(formData);
+      if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+        toast.success(`${'Image Upload Successfully'}`);
+        if (uploadImageRes?.data?.images) {
+          edit.update({
+            image_url: uploadImageRes?.data?.images[0].Location
+          });
         }
+        // }
       } else {
         alert(`Sorry, this image doesn't look like the size we wanted. It's
         ${img.width} x ${img.height} but we require size image between 200 x 250 to 270 x 350.`);
@@ -214,7 +210,7 @@ const StudentCreateModal = (props: Props) => {
     edit.update({
       image_url: ''
     });
-    setProfileImage('No file choosen');
+    setProfileImage('No file chosen');
     if (!edit.allFilled('image_url')) {
       return;
     } else {
@@ -237,7 +233,7 @@ const StudentCreateModal = (props: Props) => {
             }
             required
             isError={firstNameError}
-            helperText={firstNameError && 'Please enter your vfirst name'}
+            helperText={firstNameError && 'Please enter your first name'}
           />
           <Grid item xs={12}>
             <TextInputComponent
@@ -318,7 +314,9 @@ const StudentCreateModal = (props: Props) => {
               }
               edit.update({ phone_number: e.target.value });
             }}
-            isError={phoneError && !isPhoneNumber(edit.getValue('phone_number')) }
+            isError={
+              phoneError && !isPhoneNumber(edit.getValue('phone_number'))
+            }
             helperText={
               phoneError && 'Please enter your valid 10 digit mobile number'
             }
@@ -356,13 +354,17 @@ const StudentCreateModal = (props: Props) => {
             }}
             required
             isError={imageError}
-            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 270 X 350 resolution" }
+            helperText={
+              imageError
+                ? 'Please upload the profile image'
+                : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 270 X 350 resolution'
+            }
           />
         </Grid>
         <Grid item xs={5}>
           <Avatar
             className={classes.avatarStyle}
-            alt="Prabu"
+            alt="Smart Learn"
             src={edit.getValue('image_url')}
           />
         </Grid>
@@ -435,14 +437,32 @@ const StudentCreateModal = (props: Props) => {
         </Grid>
         <Grid item xs={12}>
           <TextInputComponent
-            inputLabel={t('adminManagement.socialMediaLink')}
+            inputLabel={t('adminManagement.socialMediaLinkFaceBook')}
             labelColor={theme.Colors.primary}
             value={edit.getValue('social_information_url')}
             onChange={(e) =>
               edit.update({ social_information_url: e.target.value })
             }
-            isError={websiteError}
-            helperText={websiteError && 'Please enter valid URL'}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextInputComponent
+            inputLabel={t('adminManagement.socialMediaLinkInstagram')}
+            labelColor={theme.Colors.primary}
+            value={edit.getValue('social_information_url_2')}
+            onChange={(e) =>
+              edit.update({ social_information_url_2: e.target.value })
+            }
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextInputComponent
+            inputLabel={t('adminManagement.socialMediaLinkTwitter')}
+            labelColor={theme.Colors.primary}
+            value={edit.getValue('social_information_url_3')}
+            onChange={(e) =>
+              edit.update({ social_information_url_3: e.target.value })
+            }
           />
         </Grid>
       </Grid>

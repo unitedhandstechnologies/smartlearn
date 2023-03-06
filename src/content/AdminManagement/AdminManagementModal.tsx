@@ -163,11 +163,11 @@ const AdminManagementModal = (props: Props) => {
       if (!edit.allFilled(...RequiredFields)) {
         setError(true);
         return toast.error('Please fill all the details');
-      } 
-      if(!isPhoneNumber(edit.getValue('phone_number'))){
+      }
+      if (!isPhoneNumber(edit.getValue('phone_number'))) {
         setError(true);
         return toast.error('Please enter your valid 10 digit mobile number');
-      }else{
+      } else {
         setError(false);
       }
       if (
@@ -414,7 +414,11 @@ const AdminManagementModal = (props: Props) => {
               }}
               required
               isError={imageError}
-              helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 270 X 350 resolution"}            
+              helperText={
+                imageError
+                  ? 'Please upload the profile image'
+                  : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 270 X 350 resolution'
+              }
             />
           </Grid>
           <Grid item xs={5}>
@@ -500,7 +504,7 @@ const AdminManagementModal = (props: Props) => {
           </Grid> */}
           <Grid item xs={12}>
             <TextInputComponent
-              inputLabel={t('adminManagement.socialMediaLink')}
+              inputLabel={t('adminManagement.socialMediaLinkFaceBook')}
               labelColor={theme.Colors.primary}
               value={edit.getValue('social_information_url')}
               helperText={urlError && 'Please enter valid details'}

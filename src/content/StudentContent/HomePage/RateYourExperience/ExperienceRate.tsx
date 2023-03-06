@@ -1,19 +1,13 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Divider, Rating, useTheme } from '@mui/material';
+import { Grid, Typography, Rating, useTheme } from '@mui/material';
 import { ButtonComp, TextInputComponent } from 'src/components';
 import ReUseableDialogBox from './RatingDialog';
 import { RectangleBox } from 'src/Assets';
-import useStudentInfo from 'src/hooks/useStudentInfo';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import { useEdit } from 'src/hooks/useEdit';
 import toast from 'react-hot-toast';
 import { capitalizeFirstLetter } from 'src/Utils';
-
-const reviewQuestions = [
-  '1. How was your experience with the course?',
-  '2. How was your experience with your instructor?'
-];
 
 const typoGraphyStyle = {
   fontFamily: 'Switzer',
@@ -36,7 +30,7 @@ const RateYourExperience = ({ courseDetails }) => {
   };
   const RequiredFields = ['command'];
   const edit = useEdit(data);
-const commandError = error && !edit.getValue('command')
+  const commandError = error && !edit.getValue('command');
   const handleClickOpen = () => {
     setOpen([true]);
   };
@@ -71,7 +65,7 @@ const commandError = error && !edit.getValue('command')
         setMentorRating(0);
       }
     } catch (e) {
-      console.log(e, '---login err-----');
+      toast.error(e);
     } finally {
       // setLoading(false);
     }

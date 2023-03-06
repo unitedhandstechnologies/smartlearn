@@ -1,127 +1,17 @@
 import { memo, useState } from 'react';
 import { Grid, Typography, Divider, Rating } from '@mui/material';
-import {
-  BarIcon,
-  BasicStockIcon,
-  CommendIcon,
-  DateSvg,
-  LineBarIcon,
-  RatingImg,
-  WadeWarren,
-  ZoomIcon
-} from 'src/Assets';
-import MuiCardComp from 'src/components/MuiCardComp';
 import { Avatar, useTheme } from '@material-ui/core';
 import { Heading, ButtonComp } from 'src/components';
 import StarIcon from '@mui/icons-material/Star';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ApplyNow from './ApplyNow';
 
-const data = [
-  {
-    imgUrl: BasicStockIcon,
-    title: 'Professional Trading Course',
-    subText:
-      'Some description goes here like this. Second line of description goes here like...',
-    leftText: 'Free',
-    rightText: 'Live'
-  },
-  {
-    imgUrl: BasicStockIcon,
-    title: 'Basics of Stock Investing',
-    subText:
-      'Some description goes here like this. Second line of description goes here like...'
-    // leftText: 'Free',
-    // rightText: '12 Oct – 23 Oct, 2023'
-  },
-  {
-    imgUrl: BasicStockIcon,
-    title: 'title',
-    subText:
-      'Some description goes here like this. Second line of description goes here like...',
-    // leftText: 'Free',
-    rightText: '12 Oct – 23 Oct, 2023'
-  },
-  {
-    imgUrl: BasicStockIcon,
-    title: 'title',
-    subText:
-      'Some description goes here like this. Second line of description goes here like...',
-    leftText: 'Free'
-    // rightText: '12 Oct – 23 Oct, 2023'
-  },
-  {
-    imgUrl: BasicStockIcon,
-    title: 'title',
-    subText:
-      'Some description goes here like this. Second line of description goes here like...',
-    // leftText: 'Free',
-    rightText: '12 Oct – 23 Oct, 2023'
-  },
-  {
-    imgUrl: BasicStockIcon,
-    title: 'title',
-    subText:
-      'Some description goes here like this. Second line of description goes here like...',
-    leftText: 'Free'
-    // rightText: '12 Oct – 23 Oct, 2023'
-  }
-];
-
-const iconText = [
-  {
-    icon: DateSvg,
-    value: '25 Oct 2023'
-  },
-  {
-    icon: ZoomIcon,
-    value: 'Zoom'
-  },
-  {
-    icon: BarIcon,
-    value: 'Intermediate'
-  },
-  {
-    icon: CommendIcon,
-    value: 'Gujarati'
-  }
-];
-
-const chipItem = [
-  {
-    id: 1,
-    name: 'Stock Investment'
-  }
-];
-
-const reviews = [
-  {
-    name: 'Tracy Wang',
-    review:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.',
-    img: RatingImg
-  },
-  {
-    name: 'Tracy Wang',
-    img: RatingImg,
-    review:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.'
-  },
-  {
-    name: 'Tracy Wang',
-    img: RatingImg,
-    review:
-      'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.'
-  }
-];
-const rating = 4.5;
 const headingProps = {
   headingColor: '#3C414B',
   headerFontWeight: 500,
   headerFontSize: 32,
   headerFontFamily: 'IBM Plex Serif'
 };
-const typographyStylProps = {
+const typographyStyleProps = {
   fontSize: 18,
   fontWeight: 400,
   color: '#78828C'
@@ -167,7 +57,7 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
             </Grid>
           </Grid>
         </Grid>
-        {courseRating.slice(0, view)?.map((item, index) => {
+        {courseRating?.slice(0, view)?.map((item, index) => {
           return (
             <Grid
               item
@@ -205,7 +95,7 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
                 />
               </Grid>
 
-              <Typography style={typographyStylProps}>
+              <Typography style={typographyStyleProps}>
                 {item.command}
                 <Divider
                   style={{ height: 2, paddingTop: 20, color: '#B4BEC8' }}
@@ -215,7 +105,7 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
           );
         })}
       </Grid>
-      {courseRating.length > 3 && (
+      {courseRating?.length > 3 && (
         <Grid item xs={12}>
           <ButtonComp
             variant="outlined"

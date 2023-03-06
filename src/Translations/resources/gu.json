@@ -115,7 +115,9 @@
   "adminManagement": {
     "createNewAdmin": "નવું એડમિન બનાવો",
     "adminDetails": "એડમિન વિગતો",
-    "socialMediaLink": "સોશિયલ મીડિયા લિંક"
+    "socialMediaLinkFaceBook": "ફેસબુક લિંક",
+    "socialMediaLinkInstagram": "ઇન્સ્ટાગ્રામ લિંક",
+    "socialMediaLinkTwitter": "ટ્વિટર લિંક"
   },
   "home": {
     "dashboardReport": "ડેશબોર્ડ રિપોર્ટ",
@@ -230,14 +232,14 @@
     "newRequest": "નવી વિનંતીઓ",
     "acceptedInstructor": "સ્વીકૃત પ્રશિક્ષક"
   },
-  "courselevel" :{
-     "createNewLevel" :"નવો કોર્સ લેવલ બનાવો",
-     "edit": "કોર્સ સંપાદિત કરો",
-     "add" : "નવો કોર્સ લેવલ ઉમેરો",
-     "delete" :"શું તમે ખરેખર કોર્સ વિગતો કાઢી નાખવા માંગો છો?",
-     "details" :"કોર્સ લેવલની વિગતો",
-     "name" : "કોર્સ લેવલનું નામ",
-     "sort":"સૉર્ટ નંબર"
+  "courselevel": {
+    "createNewLevel": "નવો કોર્સ લેવલ બનાવો",
+    "edit": "કોર્સ સંપાદિત કરો",
+    "add": "નવો કોર્સ લેવલ ઉમેરો",
+    "delete": "શું તમે ખરેખર કોર્સ વિગતો કાઢી નાખવા માંગો છો?",
+    "details": "કોર્સ લેવલની વિગતો",
+    "name": "કોર્સ લેવલનું નામ",
+    "sort": "સૉર્ટ નંબર"
   },
   "reports": {
     "instructorReports": "પ્રશિક્ષક અહેવાલો",

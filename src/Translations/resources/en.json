@@ -126,9 +126,9 @@
   "adminManagement": {
     "createNewAdmin": "Create New Admin",
     "adminDetails": "Admin Details",
-    "socialMediaLinkFaceBook": "Social Media FaceBook Link ",
-    "socialMediaLinkInstagram": "Social Media Instagram Link ",
-    "socialMediaLinkTwitter": "Social Media Twitter Link "
+    "socialMediaLinkFaceBook": "FaceBook Link ",
+    "socialMediaLinkInstagram": "Instagram Link ",
+    "socialMediaLinkTwitter": "Twitter Link "
   },
   "home": {
     "dashboardReport": "Dashboard Report",

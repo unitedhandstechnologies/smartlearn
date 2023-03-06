@@ -105,7 +105,6 @@ const InstructorManagementCreateModal = (props: Props) => {
     'email_id',
     'password',
     'confirmPassword',
-    'social_information_url',
     'image_url',
     'phone_number'
   ];
@@ -134,11 +133,11 @@ const InstructorManagementCreateModal = (props: Props) => {
       edit.allFilled('email_id') &&
       !isValidEmail(edit.getValue('email_id')));
 
-  const urlError =
-    (error && !edit.allFilled('social_information_url')) ||
-    (error &&
-      edit.allFilled('social_information_url') &&
-      !isWebsiteName(edit.getValue('social_information_url')));
+  // const urlError =
+  //   (error && !edit.allFilled('social_information_url')) ||
+  //   (error &&
+  //     edit.allFilled('social_information_url') &&
+  //     !isWebsiteName(edit.getValue('social_information_url')));
 
   const phoneError =
     (error && !edit.allFilled('phone_number')) ||
@@ -472,9 +471,6 @@ const InstructorManagementCreateModal = (props: Props) => {
               inputLabel={t('adminManagement.socialMediaLinkFaceBook')}
               labelColor={theme.Colors.primary}
               value={edit.getValue('social_information_url')}
-              helperText={urlError && 'Please enter valid details'}
-              required
-              isError={urlError}
               onChange={(e) =>
                 edit.update({ social_information_url: e.target.value })
               }
@@ -485,9 +481,6 @@ const InstructorManagementCreateModal = (props: Props) => {
               inputLabel={t('adminManagement.socialMediaLinkInstagram')}
               labelColor={theme.Colors.primary}
               value={edit.getValue('social_information_url_2')}
-              helperText={urlError && 'Please enter valid details'}
-              required
-              isError={urlError}
               onChange={(e) =>
                 edit.update({ social_information_url_2: e.target.value })
               }
@@ -498,9 +491,6 @@ const InstructorManagementCreateModal = (props: Props) => {
               inputLabel={t('adminManagement.socialMediaLinkTwitter')}
               labelColor={theme.Colors.primary}
               value={edit.getValue('social_information_url_3')}
-              helperText={urlError && 'Please enter valid details'}
-              required
-              isError={urlError}
               onChange={(e) =>
                 edit.update({ social_information_url_3: e.target.value })
               }
