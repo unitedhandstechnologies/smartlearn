@@ -18,6 +18,7 @@ import React from 'react';
 import { number } from 'prop-types';
 import Quiz from 'src/content/StudentContent/Courses/QASection/Quiz';
 import { getUserId } from 'src/Utils';
+import Certificate from 'src/content/StudentContent/Courses/Certificate';
 
 const useStyles = makeStyles((theme) => ({
   outerContainer: {
@@ -67,7 +68,9 @@ const CourseMainPage = ({
   videoPlaying,
   setVideoPlaying,
   fetchData,
-  data
+  data,
+  setShowCertificate,
+  showCertificate
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -211,10 +214,11 @@ const CourseMainPage = ({
           setTestTopic={setTestTopic}
           videoDetails={videoDetails}
           setIsReady={setIsReady}
+          setShowCertificate={setShowCertificate}
         />
       </Grid>
       <Grid item xs={12} sm={9}>
-        {!testTopic ? (
+        {!testTopic && !showCertificate && (
           <>
             <Typography
               style={{
@@ -245,11 +249,18 @@ const CourseMainPage = ({
               />
             </Grid>
           </>
-        ) : quizData.length ? (
+        ) 
+        }
+        { !showCertificate && testTopic &&
+         quizData.length ? (
           <Quiz courseData={courseData} />
         ) : (
-          'No Test topic Available'
+          testTopic ? 
+          'No Test topic Available' : null
         )}
+        { showCertificate && !testTopic &&
+          <Certificate nameOnCertificate="Pranav Shardul"/>
+        }
       </Grid>
     </Grid>
   );

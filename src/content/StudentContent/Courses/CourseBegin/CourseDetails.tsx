@@ -41,7 +41,8 @@ const CourseDetails = ({
   quizData,
   setTestTopic,
   videoDetails,
-  setIsReady
+  setIsReady,
+  setShowCertificate
 }) => {
   const theme = useTheme();
     const navigateTo = useNavigate();
@@ -82,6 +83,7 @@ const getRemainingTime = ( )=>{
         setTestTopic = {setTestTopic}
         videoDetails={videoDetails}
         setIsReady={setIsReady}
+        setShowCertificate={setShowCertificate}
              />
     )
   };

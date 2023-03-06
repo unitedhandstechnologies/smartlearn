@@ -121,6 +121,7 @@ import SpeechBubble from './speechBubble.svg';
 import Chat from './Chat.svg';
 import Persons from './Persons.svg';
 import Rupee from './Rupee.svg';
+import CertificateImage from './Certificate.svg';
 
 export {
   EnrollmentManagementIcon,
@@ -246,4 +247,5 @@ export {
   Chat,
   Persons, 
   Rupee,
+  CertificateImage
 };

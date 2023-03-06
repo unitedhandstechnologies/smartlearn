@@ -35,6 +35,7 @@ const CourseBegin = () => {
   const [sectionData, setSectionData] = useState<any[]>([]);
   const [quizData, setQuizData] = useState<any[]>([]);
   const [testTopic, setTestTopic] = useState(false);
+  const [showCertificate,setShowCertificate] = useState(false);
   const [videoDetails, setVideoDetails] = useState<any[]>([]);
   const [videoPlaying, setVideoPlaying] = useState<Number>(0.0);
 
@@ -202,6 +203,8 @@ const CourseBegin = () => {
         setVideoPlaying={setVideoPlaying}
         fetchData={fetchData}
         data={data}
+        setShowCertificate={setShowCertificate}
+        showCertificate={showCertificate}
       />
     );
   }

@@ -54,7 +54,8 @@ const CourseTitleDetails = ({
   videoToPlayIndex,
   setTestTopic,
   videoDetails,
-  setIsReady
+  setIsReady,
+  setShowCertificate
 }) => {
   const classes = useStyles();
   //const icon = completed ? <CheckCircleIcon /> : <ExpandMoreIcon />;
@@ -83,6 +84,7 @@ const CourseTitleDetails = ({
 
   const handleClickTestTopic = () => {
     setTestTopic(true);
+    setShowCertificate(false);
   };
 
   const getCompletedSection : any  = React.useMemo(() => {
@@ -116,7 +118,8 @@ const CourseTitleDetails = ({
             alignItems="center"
             style={{ gap: '10px' }}
             onClick={() => {
-              handleClickTestTopic();              
+              handleClickTestTopic();      
+
             }}
           >
             <img src={TestTopic} />
@@ -152,6 +155,7 @@ const CourseTitleDetails = ({
             style={{ gap: '10px' }}
             onClick={() => {
               setTestTopic(false);
+              setShowCertificate(true);
             }}
           >
             <img src={TrophyLine} />
