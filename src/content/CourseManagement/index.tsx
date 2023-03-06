@@ -1,5 +1,12 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { LineBarIcon, ListIcon, StatisticIcon } from 'src/Assets/Images';
+import {
+  Chat,
+  LineBarIcon,
+  ListIcon,
+  Persons,
+  Rupee,
+  StatisticIcon
+} from 'src/Assets/Images';
 import { ButtonComp, Heading, MuiConfirmModal } from 'src/components';
 import { ContentDisplayTiles } from 'src/components/ContentDisplayTiles';
 import { Box, Grid, makeStyles, useTheme } from '@material-ui/core';
@@ -9,7 +16,8 @@ import {
   CONFIRM_MODAL,
   COURSE_TYPE_NAME,
   DETECT_LANGUAGE,
-  HTTP_STATUSES
+  HTTP_STATUSES,
+  USER_TYPE_ID
 } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
 import { useSearchVal } from 'src/hooks/useSearchVal';
@@ -20,6 +28,8 @@ import CourseViewModal from './CourseViewModal';
 import { API_SERVICES } from 'src/Services';
 import toast from 'react-hot-toast';
 import { UserInfoContext } from 'src/contexts/UserContext';
+import Details from '../MentorDashboard/Details';
+import CourseCount from '../MentorDashboard/CourseCount';
 
 const useStyles = makeStyles((theme) => ({
   dividerStyle: {
@@ -49,6 +59,60 @@ function CourseManagement() {
   const [modalOpen, setModalOpen] = useState<any>({ open: false });
   const [courseCount, setCourseCount] = useState(COURSE_COUNT);
   const { userDetails } = useContext(UserInfoContext);
+
+  const courseDetails = [
+    {
+      icon: Chat,
+      heading: 'Total ',
+      count: `50`,
+      reports: [
+        {
+          heading: '',
+          subText: ''
+        },
+        {
+          heading: '',
+          subText: ''
+        }
+      ]
+    },
+    {
+      icon: Chat,
+      heading: 'Active',
+      count: '24',
+      reports: [
+        {
+          heading: '',
+          subText: ''
+        }
+      ]
+    },
+    {
+      icon: Chat,
+      heading: 'Pending Review',
+      count: '40',
+      reports: [
+        {
+          heading: '',
+          subText: ''
+        }
+      ]
+    },
+    {
+      icon: Chat,
+      heading: 'Draft',
+
+      count: '4',
+
+      reports: [
+        {
+          heading: '',
+
+          subText: ''
+        }
+      ]
+    }
+  ];
 
   const courseManagementDetails = [
     {
@@ -173,7 +237,7 @@ function CourseManagement() {
   });
   const { searchValue, setSearchValue } = useSearchVal();
   const debValue = useDebounce(searchValue, 1000);
-
+  console.log(tableData, 'tableData');
   function TabPanel(props) {
     const { children, value, index } = props;
     return value === index && <>{children}</>;
@@ -196,14 +260,9 @@ function CourseManagement() {
   const fetchData = useCallback(async () => {
     try {
       let params: any = {};
-      if (userDetails.user_type === 1 || userDetails.user_type === 2) {
-        if (debValue !== '') {
-          params.searchString = debValue;
-        }
-      } else if (userDetails.user_type === 3) {
-        params.mentor_id = userDetails.id;
+      if (debValue !== '') {
+        params.searchString = debValue;
       }
-
       const response: any = await Promise.all([
         API_SERVICES.courseManagementService.getAll(
           DETECT_LANGUAGE[i18n.language],
@@ -213,11 +272,16 @@ function CourseManagement() {
       ]);
 
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
-        if (userDetails.user_type === 1) {
+        if (
+          userDetails.user_type === USER_TYPE_ID.superAdmin ||
+          userDetails.user_type === USER_TYPE_ID.admin
+        ) {
           setTableData(response[0]?.data?.courses);
-        } else {
+        } else if (userDetails.user_type === USER_TYPE_ID.mentors) {
           const courses = response[0]?.data?.courses;
-          const mentorCourses = courses.filter((item) => item.mentor_id === 2);
+          const mentorCourses = courses.filter(
+            (item) => item.mentor_id === userDetails.id
+          );
           setTableData(mentorCourses);
         }
       }
@@ -329,7 +393,7 @@ function CourseManagement() {
   } else {
     return (
       <>
-        {userDetails.user_type === 3 ? (
+        {userDetails.user_type === USER_TYPE_ID.mentors ? (
           <Grid>
             <Heading
               headingText={'Courses'}
@@ -347,51 +411,98 @@ function CourseManagement() {
             <Grid>
               <img src={LineBarIcon} alt="" />
             </Grid>
+            <Grid item style={{ marginTop: 4 }}>
+              <ButtonComp
+                buttonText={t('course.addNewCourse')}
+                onClickButton={() =>
+                  onCreateOrEditButtonClick({}, CONFIRM_MODAL.create)
+                }
+                backgroundColor={theme.Colors.primary}
+                height="33px"
+                buttonFontSize={theme.MetricsSizes.tiny_xxx}
+                buttonTextColor={theme.Colors.white}
+                buttonFontWeight={theme.fontWeight.medium}
+                btnWidth={'fit-content'}
+                btnBorderRadius={100}
+                endIcon={<AddCircleOutline fontSize="small" />}
+              />
+            </Grid>
+            <Grid container spacing={2} style={{ marginTop: 4 }}>
+              {courseDetails?.map((item, index) => {
+                return (
+                  <Grid item key={index}>
+                    <CourseCount
+                      icon={item.icon}
+                      heading={item.heading}
+                      count={item.count}
+
+                      //handleClickIcon={() => handleClickDetails(index)}
+                    />
+                  </Grid>
+                );
+              })}
+            </Grid>
+            <Box sx={{ mt: 3 }}>
+              <CourseManagementTable
+                onClickActionButton={onActionButtonClick}
+                tableRowData={tableData}
+                //onClickCancelOrAccept={onClickCancelOrAccept}
+                onEditCourseDetais={(rowData) =>
+                  onCreateOrEditButtonClick(rowData, CONFIRM_MODAL.edit)
+                }
+                onDeleteCourse={onDeleteCourse}
+                onClickAcceptCourse={onClickAcceptCourse}
+                updateData={fetchData}
+              />
+            </Box>
           </Grid>
         ) : (
-          <Heading headingText={t('course.courseManagementDetails')} />
-        )}
-        <ButtonComp
-          buttonText={t('course.addNewCourse')}
-          onClickButton={() =>
-            onCreateOrEditButtonClick({}, CONFIRM_MODAL.create)
-          }
-          backgroundColor={theme.Colors.primary}
-          height="33px"
-          buttonFontSize={theme.MetricsSizes.tiny_xxx}
-          buttonTextColor={theme.Colors.white}
-          buttonFontWeight={theme.fontWeight.medium}
-          btnWidth={'fit-content'}
-          btnBorderRadius={100}
-          endIcon={<AddCircleOutline fontSize="small" />}
-        />
-        <ContentDisplayTiles
-          displayContent={courseManagementDetails}
-          isTileTypeOrders={true}
-          onTabChange={handleSetSelectedTab}
-          tabValue={selectedTab}
-        />
-        <TabPanel value={selectedTab} index={0}>
-          <ContentDisplayTiles
-            displayContent={courseSubCategory}
-            isTileTypeOrders={true}
-            onTabChange={handleSetSelectedTabVal}
-            tabValue={selectedCourseTypeVal}
-          />
-          <Box sx={{ mt: 3 }}>
-            <CourseManagementTable
-              onClickActionButton={onActionButtonClick}
-              tableRowData={getFilteredTableData}
-              //onClickCancelOrAccept={onClickCancelOrAccept}
-              onEditCourseDetais={(rowData) =>
-                onCreateOrEditButtonClick(rowData, CONFIRM_MODAL.edit)
+          <>
+            <Heading headingText={t('course.courseManagementDetails')} />
+            <ButtonComp
+              buttonText={t('course.addNewCourse')}
+              onClickButton={() =>
+                onCreateOrEditButtonClick({}, CONFIRM_MODAL.create)
               }
-              onDeleteCourse={onDeleteCourse}
-              onClickAcceptCourse={onClickAcceptCourse}
-              updateData={fetchData}
+              backgroundColor={theme.Colors.primary}
+              height="33px"
+              buttonFontSize={theme.MetricsSizes.tiny_xxx}
+              buttonTextColor={theme.Colors.white}
+              buttonFontWeight={theme.fontWeight.medium}
+              btnWidth={'fit-content'}
+              btnBorderRadius={100}
+              endIcon={<AddCircleOutline fontSize="small" />}
             />
-          </Box>
-        </TabPanel>
+            <ContentDisplayTiles
+              displayContent={courseManagementDetails}
+              isTileTypeOrders={true}
+              onTabChange={handleSetSelectedTab}
+              tabValue={selectedTab}
+            />
+            <TabPanel value={selectedTab} index={0}>
+              <ContentDisplayTiles
+                displayContent={courseSubCategory}
+                isTileTypeOrders={true}
+                onTabChange={handleSetSelectedTabVal}
+                tabValue={selectedCourseTypeVal}
+              />
+              <Box sx={{ mt: 3 }}>
+                <CourseManagementTable
+                  onClickActionButton={onActionButtonClick}
+                  tableRowData={getFilteredTableData}
+                  //onClickCancelOrAccept={onClickCancelOrAccept}
+                  onEditCourseDetais={(rowData) =>
+                    onCreateOrEditButtonClick(rowData, CONFIRM_MODAL.edit)
+                  }
+                  onDeleteCourse={onDeleteCourse}
+                  onClickAcceptCourse={onClickAcceptCourse}
+                  updateData={fetchData}
+                />
+              </Box>
+            </TabPanel>
+          </>
+        )}
+
         <TabPanel value={selectedTab} index={1}>
           <ContentDisplayTiles
             displayContent={statisticDetails}

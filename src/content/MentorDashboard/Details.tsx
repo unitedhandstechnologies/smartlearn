@@ -38,6 +38,10 @@ const Details = ({
 }: Props) => {
   const theme = useTheme();
   const classes = useStyles();
+  const newDate = new Date();
+  const month = newDate.toLocaleString('default', { month: 'short' });
+  const year = newDate.getFullYear();
+
   return (
     <Box
       sx={{
@@ -135,7 +139,7 @@ const Details = ({
         </Grid>
       </Grid>
       {questions === 'Have any questions?' ? (
-        <Grid item paddingTop={5}>
+        <Grid item paddingTop={4}>
           <Typography
             sx={{
               color: '#3C78F0',
@@ -170,7 +174,7 @@ const Details = ({
             spacing={0.5}
             alignItems="center"
             item
-            xs={8}
+            xs={10}
             display="flex"
             justifyContent={'space-between'}
             sx={{
@@ -180,7 +184,7 @@ const Details = ({
               // borderRadius: '15px'
             }}
           >
-            {reports.map((item, index) => {
+            {reports?.map((item, index) => {
               return (
                 <Grid item key={index}>
                   <Typography
@@ -192,7 +196,9 @@ const Details = ({
                       textAlign: 'center'
                     }}
                   >
-                    {item.heading}
+                    {item.heading === 'This month'
+                      ? `This month (${month} '${year} )`
+                      : item.heading}
                   </Typography>
                   <Typography
                     sx={{
@@ -200,7 +206,7 @@ const Details = ({
                       fontSize: 18,
                       fontWeight: 700,
                       fontFamily: 'Switzer',
-                      textAlign: 'center'
+                      textAlign: 'start'
                     }}
                   >
                     {item.subText}

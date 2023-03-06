@@ -6,7 +6,7 @@ import Details from './Details';
 const courseDetails = [
   {
     icon: Rupee,
-    heading: 'Total Revenue',
+    heading: 'Total Revenue ',
     count: `50,000.00`,
     reports: [
       {
@@ -85,7 +85,7 @@ const MentorDashboard = () => {
   return (
     <Grid>
       <Grid container spacing={4}>
-        {courseDetails.map((item, index) => {
+        {courseDetails?.map((item, index) => {
           return (
             <Grid item key={index} xs={6}>
               <Details

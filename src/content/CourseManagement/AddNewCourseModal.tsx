@@ -13,7 +13,8 @@ import {
   HTTP_STATUSES,
   LANGUAGE_ID,
   MENTOR_STATUS,
-  USER_TYPES
+  USER_TYPES,
+  USER_TYPE_ID
 } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
 import DualActionButton from 'src/components/DualActionButton';
@@ -82,7 +83,11 @@ const AddNewCourseModal = ({
           dateError={dateError}
           edit={edit}
           categories={categories}
-          mentors={mentors}
+          mentors={
+            userDetails.user_type === USER_TYPE_ID.mentors
+              ? mentorCourse
+              : mentors
+          }
           courseLevels={courseLevels}
           isDisableCourseType={
             rowItemData?.course?.course_type === COURSE_TYPE_NAME[6] &&
@@ -242,12 +247,13 @@ const AddNewCourseModal = ({
             USER_TYPES.admin === userDetails.user_type
           ) {
             setMentors([...approvedMentorList]);
-          } else {
-            const mentor = approvedMentorList.filter(
-              (item) => item.id === userDetails.id
-            );
-            setMentors(mentor);
           }
+          // else {
+          //   const mentor = approvedMentorList.filter(
+          //     (item) => item.id === userDetails.id
+          //   );
+          //   setMentors(mentor);
+          // }
         }
       }
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -272,6 +278,9 @@ const AddNewCourseModal = ({
       toast.error(err);
     }
   };
+
+  const mentorCourse = mentors.filter((item) => item.id === userDetails.id);
+  console.log(userDetails, 'userDetails');
 
   const handleNextClick = async () => {
     let RequiredFields;

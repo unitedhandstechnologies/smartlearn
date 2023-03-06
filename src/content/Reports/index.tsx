@@ -1,11 +1,16 @@
 import { useEffect, useCallback, useContext } from 'react';
 import { useState } from 'react';
 import { ContentDisplayTiles } from 'src/components/ContentDisplayTiles';
-import { NewOrder, ListIcon, DownloadIcon } from 'src/Assets/Images';
+import {
+  NewOrder,
+  ListIcon,
+  DownloadIcon,
+  LineBarIcon
+} from 'src/Assets/Images';
 import toast from 'react-hot-toast';
-import { Loader } from 'src/components';
+import { Heading, Loader } from 'src/components';
 import { Box, useTheme } from '@material-ui/core';
-import { HTTP_STATUSES } from 'src/Config/constant';
+import { HTTP_STATUSES, USER_TYPE_ID } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
 import { API_SERVICES } from 'src/Services';
 import { useSearchVal } from 'src/hooks/useSearchVal';
@@ -14,6 +19,7 @@ import { useNavigate } from 'react-router';
 import InstructorReportsTable from './InstructorReportsTable';
 import InstructorModal from './InstructorModal';
 import { UserInfoContext } from 'src/contexts/UserContext';
+import { Grid } from '@mui/material';
 
 function AdminDashboard() {
   const theme = useTheme();
@@ -30,7 +36,9 @@ function AdminDashboard() {
   const handleSetSelectedTab = (value) => {
     setSelectedTab(value);
   };
-
+  const reportMentor = tableData.filter((item) => {
+    return item.mentor_id === userDetails.id;
+  });
   const onClickViewReportsdetails = (rowData: any) => {
     setModalOpen({ open: true, rowData: rowData });
   };
@@ -92,16 +100,42 @@ function AdminDashboard() {
   } else {
     return (
       <>
-        <ContentDisplayTiles
-          displayContent={overAllDetails}
-          isTileTypeOrders={true}
-          onTabChange={handleSetSelectedTab}
-          tabValue={selectedTab}
-        />
+        {userDetails.user_type === USER_TYPE_ID.mentors ? (
+          <Grid>
+            <Heading
+              headingText={'Reports'}
+              headerFontSize={'32px'}
+              headerFontWeight={500}
+              headingColor={'#3C414B'}
+              headerFontFamily={'IBM Plex Serif'}
+              style={{
+                [theme.breakpoints.down('xs')]: {
+                  fontSize: 15
+                },
+                padding: '0px 0px 20px 0px'
+              }}
+            />
+            <Grid>
+              <img src={LineBarIcon} alt="" />
+            </Grid>
+          </Grid>
+        ) : (
+          <ContentDisplayTiles
+            displayContent={overAllDetails}
+            isTileTypeOrders={true}
+            onTabChange={handleSetSelectedTab}
+            tabValue={selectedTab}
+          />
+        )}
+
         <Box sx={{ mt: 3 }}>
           <TabPanel value={selectedTab} index={0}>
             <InstructorReportsTable
-              tableRowData={tableData}
+              tableRowData={
+                userDetails.user_type === USER_TYPE_ID.mentors
+                  ? reportMentor
+                  : tableData
+              }
               handleViewReports={onClickViewReportsdetails}
               // handleDeleteReport={handleDeleteReport}
               // handleEditReport={(rowData) =>
