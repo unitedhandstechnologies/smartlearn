@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, makeStyles, Theme } from '@material-ui/core';
 import { DialogComp, DialogContentDetails } from 'src/components';
 import { useTranslation } from 'react-i18next';
 import { getDateFormat } from 'src/Utils';
-import { LANGUAGE_NAME } from 'src/Config/constant';
+import { HTTP_STATUSES, LANGUAGE_NAME } from 'src/Config/constant';
+import { API_SERVICES } from 'src/Services';
+import { toast } from 'react-hot-toast';
 
 const useStyles = makeStyles((theme: Theme) => {
   return {
@@ -26,6 +28,33 @@ const CategoryModal = (props: Props) => {
   const { onClose, rowData } = props;
   const classes = useStyles();
   const { t } = useTranslation();
+  const [categoryData, setCategoryData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      setCategoryData([]);
+      console.log(setCategoryData([]),'categoryDataResponse');
+
+      const response: any = await (
+        API_SERVICES.categoryManagementService.getCategoryById(
+          rowData?.id,
+        )
+      );
+      console.log(response,'categoryResponse');
+      if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (response[0]?.data?.category_language?.length) {
+          setCategoryData(response[0]?.data?.category_language?.length);
+        }
+      }
+      
+    } catch (err) {
+      toast.error(err?.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const renderDialogContent = () => {
     const { getMonth, getDate, getYear } = getDateFormat(rowData?.updated_at);
@@ -37,12 +66,12 @@ const CategoryModal = (props: Props) => {
       },
       {
         content: t('language'),
-        value:
-          rowData?.language_id === 1
-            ? LANGUAGE_NAME[1]
-            : rowData?.language_id === 2
-            ? LANGUAGE_NAME[2]
-            : LANGUAGE_NAME[3]
+        value: 'English, Hindi, Gujarati'
+          // rowData?.language_id === 1
+          //   ? LANGUAGE_NAME[1]
+          //   : rowData?.language_id === 2
+          //   ? LANGUAGE_NAME[2]
+          //   : LANGUAGE_NAME[3]
       },
       {
         content: t('Category.sortNo'),

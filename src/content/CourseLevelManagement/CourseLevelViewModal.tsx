@@ -35,12 +35,12 @@ const CourseLevelViewModal = (props: Props) => {
       },
       {
         content: t('language'),
-        value:
-          rowData?.language_id === 1
-            ? LANGUAGE_NAME[1]
-            : rowData?.language_id === 2
-            ? LANGUAGE_NAME[2]
-            : LANGUAGE_NAME[3]
+        value:'English, Hindi, Gujarati'
+          // rowData?.language_id === 1
+          //   ? LANGUAGE_NAME[1]
+          //   : rowData?.language_id === 2
+          //   ? LANGUAGE_NAME[2]
+          //   : LANGUAGE_NAME[3]
       },
       {
         content: 'Sort No',

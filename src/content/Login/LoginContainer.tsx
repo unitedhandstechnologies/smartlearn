@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Grid, useTheme, IconButton } from '@material-ui/core';
+import { Grid, useTheme, IconButton, Typography } from '@material-ui/core';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 import { ButtonComp, TextInputComponent } from 'src/components';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
@@ -59,7 +59,8 @@ const LoginContainer = ({
         password: loginForm.password
       };
       const response: any = await API_SERVICES.authService.userLogin({
-        data
+        data,
+        successMessage:'User logged in successfully!'
       });
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (
@@ -162,6 +163,25 @@ const LoginContainer = ({
               }
             }}
           />
+          <Grid>
+          <Typography
+            style={{
+              color: '#3C78F0',
+              fontSize: 16,
+              fontFamily: 'Switzer',
+              fontWeight: 400,
+              textAlign: 'start',
+              paddingTop: 5,
+              cursor: 'pointer'
+            }}
+            onClick={() => navigateTo('/home/forgetpassword', {
+              state: { adminForgetpassword: true },
+              replace: true
+            })}
+          >
+            Forgot password?
+          </Typography>
+        </Grid>
         </Grid>
         <Grid item xs={8} style={{ marginTop: theme.MetricsSizes.x_large }}>
           <ButtonComp

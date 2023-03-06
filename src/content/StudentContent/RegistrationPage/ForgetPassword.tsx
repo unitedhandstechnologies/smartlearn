@@ -12,10 +12,13 @@ import toast from 'react-hot-toast';
 import { useEdit } from 'src/hooks/useEdit';
 import { isValidEmail } from 'src/Utils';
 import { Grid } from '@mui/material';
+import { useLocation } from 'react-router';
+
 const ForgetPassword = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
-
+  const { state } = useLocation();
+//const forgetpassword = state;
   const [error, setError] = useState(false);
   const { updateStudentInfo } = useStudentInfo();
   const INITIAL_DATA = {
@@ -131,7 +134,11 @@ const ForgetPassword = () => {
                   color: '#3C78F0',
                   cursor: 'pointer'
                 }}
-                onClick={() => navigateTo('/home/user-login')}
+                onClick={
+                  state
+                    ? () => navigateTo('/admin/login')
+                    : () => navigateTo('/home/user-login')
+                }
               >
                 Log in
               </span>
