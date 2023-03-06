@@ -15,11 +15,12 @@ import useStudentInfo from 'src/hooks/useStudentInfo';
 import toast from 'react-hot-toast';
 import { Grid, Typography } from '@mui/material';
 import useCartInfo from 'src/hooks/useCartInfo';
+import { useEdit } from 'src/hooks/useEdit';
 
 const UserLogin = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
-  const [loginForm, setLoginForm] = useState({ user_name: '', password: '' });
+  //const [loginForm, setLoginForm] = useState({ user_name: '', password: '' });
   const { updateStudentInfo } = useStudentInfo();
   const { updateCartInfo } = useCartInfo();
   const onClickEyeIcon = () => {
@@ -27,15 +28,26 @@ const UserLogin = () => {
   };
   const { i18n } = useTranslation();
   const { state }: any = useLocation();
+  const [error, setError] = useState(false);
+  const STUDENT_INITIAL_DATA = {
+    user_name: '',
+    password: ''
+  };
+  const RequiredFields = ['password', 'user_name'];
+  const edit = useEdit(STUDENT_INITIAL_DATA);
 
-  const onClickLogin = useCallback(async () => {
+  const onClickLogin = async () => {
     try {
+      if (!edit.allFilled(...RequiredFields)) {
+        setError(true);
+        return toast.error('Please fill username and password');
+      }
       //  setLoading(true);
       let data = {
-        user_name: loginForm.user_name,
-        password: loginForm.password,
-        user_type: USER_TYPE_ID.student
+        ...STUDENT_INITIAL_DATA,
+        ...edit.edits
       };
+      console.log(data, 'tttt');
       const response: any = await API_SERVICES.authService.userLogin({
         data
       });
@@ -59,7 +71,7 @@ const UserLogin = () => {
               updateCartInfo(getUserRes?.data?.user?.id);
             }
           }
-          toast.success('Profile Login successfully');
+          toast.success('Profile logged in successfully!');
           if (state) {
             navigateTo(state.route, {
               state: { ...state },
@@ -78,7 +90,7 @@ const UserLogin = () => {
     } finally {
       // setLoading(false);
     }
-  }, [loginForm]);
+  };
   const navigateTo = useNavigate();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -186,11 +198,9 @@ const UserLogin = () => {
               variant="outlined"
               borderColor={'#3C78F0'}
               labelColor={'#78828C'}
-              value={loginForm.user_name}
+              value={edit.getValue('user_name')}
               size="medium"
-              onChange={(e) =>
-                setLoginForm({ ...loginForm, user_name: e.target.value })
-              }
+              onChange={(e) => edit.update({ user_name: e.target.value })}
               onKeyPress={(event) => {
                 if (event.key === 'Enter') {
                   onClickLogin();
@@ -204,11 +214,10 @@ const UserLogin = () => {
               variant="outlined"
               labelColor={'#78828C'}
               borderColor={'#3C78F0'}
+              value={edit.getValue('password')}
               size="medium"
               type={showPassword ? 'text' : 'password'}
-              onChange={(e) =>
-                setLoginForm({ ...loginForm, password: e.target.value })
-              }
+              onChange={(e) => edit.update({ password: e.target.value })}
               InputProps={{
                 endAdornment: (
                   <IconButton
