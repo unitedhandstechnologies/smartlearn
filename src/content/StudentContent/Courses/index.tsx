@@ -77,6 +77,9 @@ const Courses = () => {
             courseDetails={courseDetails}
             chipIconText={chipRecorderText}
             setChipIconText={setChipRecorderText}
+            onSearchValChange={handleSearchValue}
+            handleClearSearchValue={handleClearSearchValue}
+            searchval={searchval}
           />
         </Grid>
       </Container>

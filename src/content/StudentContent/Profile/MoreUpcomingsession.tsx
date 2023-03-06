@@ -26,6 +26,7 @@ const MoreUpcomingSession = ({ courseDetails = [] }: CourseProps) => {
   const { state }: any = useLocation();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
   const navigateTo = useNavigate();
+  const [view, setView] = useState(6);
 
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
@@ -55,6 +56,14 @@ const MoreUpcomingSession = ({ courseDetails = [] }: CourseProps) => {
       state: { formData: { ...rowData } },
       replace: true
     });
+  };
+
+  const handleView = () => {
+    if (view === 6) {
+      setView(getCourses.length);
+    } else {
+      setView(6);
+    }
   };
 
   return (
@@ -106,7 +115,7 @@ const MoreUpcomingSession = ({ courseDetails = [] }: CourseProps) => {
           }}
         >
           {getCourses.length
-            ? getCourses.slice(0, 6)?.map((item, index) => {
+            ? getCourses.slice(0, view)?.map((item, index) => {
                 return (
                   <Grid
                     key={index}
@@ -148,19 +157,25 @@ const MoreUpcomingSession = ({ courseDetails = [] }: CourseProps) => {
             : null}
         </Grid>
         <Grid item>
-          <ButtonComp
-            style={{ border: '1.5px solid #3C78F0' }}
-            variant="outlined"
-            buttonFontFamily="Switzer"
-            buttonFontSize={theme.MetricsSizes.regular}
-            backgroundColor={theme.Colors.white}
-            buttonTextColor={'#3C78F0'}
-            btnBorderRadius={'4px'}
-            buttonText={'View All'}
-            btnWidth="100%"
-            iconImage={<img src={ArrowNext} style={{ marginLeft: '8px' }} />}
-            onClickButton={() => {}}
-          />
+          {getCourses.length > 6 && (
+            <ButtonComp
+              style={{ border: '1.5px solid #3C78F0' }}
+              variant="outlined"
+              buttonFontFamily="Switzer"
+              buttonFontSize={theme.MetricsSizes.regular}
+              backgroundColor={theme.Colors.white}
+              buttonTextColor={'#3C78F0'}
+              btnBorderRadius={'4px'}
+              buttonText={view === 6 ? 'View All' : 'Back'}
+              btnWidth="100%"
+              iconImage={
+                view === 6 ? (
+                  <img src={ArrowNext} style={{ marginLeft: '8px' }} />
+                ) : null
+              }
+              onClickButton={handleView}
+            />
+          )}
         </Grid>
       </Grid>
     </Container>

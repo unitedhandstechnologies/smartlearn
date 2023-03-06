@@ -25,6 +25,8 @@ import { COURSE_TYPE_NAME } from 'src/Config/constant';
 import ChipIconcomp from './ChipIconcomp';
 import ChipMenu from './ChipMenu';
 import { useNavigate } from 'react-router';
+import SearchComponent from '../SearchComponent';
+
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -88,11 +90,17 @@ type CourseProps = {
   courseDetails?: any[];
   chipIconText?: number[];
   setChipIconText?: React.Dispatch<React.SetStateAction<number[]>>;
+  onSearchValChange?: (event) => void;
+  handleClearSearchValue?: () => void;
+  searchval?: string;
 };
 const LearnAtUrPace = ({
   courseDetails,
   chipIconText,
-  setChipIconText
+  setChipIconText,
+  onSearchValChange,
+  handleClearSearchValue,
+  searchval
 }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
@@ -241,32 +249,13 @@ const LearnAtUrPace = ({
               />
             ))}
           </Grid>
-          {/* <Grid item paddingBottom={2}>
-            <InputBase
-              onChange={(e) => getSearchValue(e.target.value)}
-              value={searchValue}
-              placeholder={'Search'}
-              sx={{
-                width: 65,
-                transition: '0.5s',
-                ':hover': {
-                  width: 300,
-                  border: '1px solid #3C78F0',
-                  borderRadius: 50,
-                  fontSize: 20,
-                  fontWeight: 400,
-                  padding: theme.spacing(0.3, 0.5)
-                }
-              }}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton>
-                    <img src={SearchIconImg} />
-                  </IconButton>
-                </InputAdornment>
-              }
+          <Grid item paddingBottom={2}>
+            <SearchComponent
+              onSearchValChange={onSearchValChange}
+              searchval={searchval}
+              handleClearSearchValue={handleClearSearchValue}
             />
-          </Grid> */}
+          </Grid>
         </Grid>
         <Grid>
           <img src={LineBarIcon} alt="" />
@@ -336,10 +325,14 @@ const LearnAtUrPace = ({
             backgroundColor={theme.Colors.white}
             buttonTextColor={'#3C78F0'}
             btnBorderRadius={'4px'}
-            buttonText={'View All'}
+            buttonText={view === 6 ? 'View All' : 'Back'}
             btnWidth="100%"
-            iconImage={<img src={ArrowNext} style={{ marginLeft: '10px' }} />}
-            onClickButton={handleView}
+            iconImage={
+              view === 6 ? (
+                <img src={ArrowNext} style={{ marginLeft: '8px' }} />
+              ) : null
+            }
+          onClickButton={handleView}
           />
         </Grid>
       )}

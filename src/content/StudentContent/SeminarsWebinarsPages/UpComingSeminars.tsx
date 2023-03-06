@@ -268,7 +268,7 @@ const UpComingSeminars = ({
           }}
         >
           {courses.length
-            ? courses.slice(0, 6).map((item, index) => {
+            ? courses.slice(0, view).map((item, index) => {
                 return (
                   <Grid
                     key={index}
@@ -310,7 +310,7 @@ const UpComingSeminars = ({
             : null}
         </Grid>
         <Grid item>
-          <ButtonComp
+        {courses.length > 6 && <ButtonComp
             style={{ border: '1.5px solid #3C78F0' }}
             variant="outlined"
             buttonFontFamily="Switzer"
@@ -326,7 +326,7 @@ const UpComingSeminars = ({
               ) : null
             }
             onClick={handleView}
-          />
+          />}
         </Grid>
       </Grid>
       <ChipMenu
