@@ -28,7 +28,6 @@ const UserLogin = () => {
   };
   const { i18n } = useTranslation();
   const { state }: any = useLocation();
-  const [error, setError] = useState(false);
   const STUDENT_INITIAL_DATA = {
     user_name: '',
     password: ''
@@ -39,15 +38,13 @@ const UserLogin = () => {
   const onClickLogin = async () => {
     try {
       if (!edit.allFilled(...RequiredFields)) {
-        setError(true);
-        return toast.error('Please fill username and password');
+        return toast.error('Please fill the username and password');
       }
       //  setLoading(true);
       let data = {
         ...STUDENT_INITIAL_DATA,
         ...edit.edits
       };
-      console.log(data, 'tttt');
       const response: any = await API_SERVICES.authService.userLogin({
         data
       });

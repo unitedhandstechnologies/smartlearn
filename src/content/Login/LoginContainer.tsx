@@ -11,6 +11,7 @@ import { API_SERVICES } from 'src/Services';
 import useUserInfo from 'src/hooks/useUserInfo';
 import logo from '../../Assets/Images/Logo.svg';
 import { useTranslation } from 'react-i18next';
+import { useEdit } from 'src/hooks/useEdit';
 
 const useStyles: any = makeStyles((theme) => ({
   centerAlign: {
@@ -50,17 +51,26 @@ const LoginContainer = ({
   const navigateTo = useNavigate();
   const { updateUserInfo } = useUserInfo();
   const { i18n } = useTranslation();
+  const INITIAL_DATA = {
+    user_name: '',
+    password: ''
+  };
+  const RequiredFields = ['password', 'user_name'];
+  const edit = useEdit(INITIAL_DATA);
 
-  const onClickLogin = useCallback(async () => {
+  const onClickLogin = async () => {
     try {
+      if (!edit.allFilled(...RequiredFields)) {
+        return toast.error('Please fill the username and password');
+      }
       setLoading(true);
       let data = {
-        user_name: loginForm.user_name,
-        password: loginForm.password
+        ...INITIAL_DATA,
+        ...edit.edits
       };
       const response: any = await API_SERVICES.authService.userLogin({
         data,
-        successMessage:'User logged in successfully!'
+        successMessage: 'User logged in successfully!'
       });
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (
@@ -93,7 +103,7 @@ const LoginContainer = ({
     } finally {
       setLoading(false);
     }
-  }, [loginForm]);
+  };
   const onClickEyeIcon = () => {
     setShowPassword(!showPassword);
   };
@@ -117,11 +127,9 @@ const LoginContainer = ({
             inputLabel={'UserName'}
             variant="outlined"
             labelColor={theme.Colors.darkGreen}
-            value={loginForm.user_name}
+            value={edit.getValue('user_name')}
             size="medium"
-            onChange={(e) =>
-              setLoginForm({ ...loginForm, user_name: e.target.value })
-            }
+            onChange={(e) => edit.update({ user_name: e.target.value })}
             // onKeyPress={(event) => {
             //   if (event.key === 'Enter') {
             //     onClickLogin();
@@ -136,10 +144,9 @@ const LoginContainer = ({
             variant="outlined"
             labelColor={theme.Colors.darkGreen}
             size="medium"
+            value={edit.getValue('password')}
             type={showPassword ? 'text' : 'password'}
-            onChange={(e) =>
-              setLoginForm({ ...loginForm, password: e.target.value })
-            }
+            onChange={(e) => edit.update({ password: e.target.value })}
             InputProps={{
               endAdornment: (
                 <IconButton
@@ -164,24 +171,26 @@ const LoginContainer = ({
             }}
           />
           <Grid>
-          <Typography
-            style={{
-              color: '#3C78F0',
-              fontSize: 16,
-              fontFamily: 'Switzer',
-              fontWeight: 400,
-              textAlign: 'start',
-              paddingTop: 5,
-              cursor: 'pointer'
-            }}
-            onClick={() => navigateTo('/home/forgetpassword', {
-              state: { adminForgetpassword: true },
-              replace: true
-            })}
-          >
-            Forgot password?
-          </Typography>
-        </Grid>
+            <Typography
+              style={{
+                color: '#3C78F0',
+                fontSize: 16,
+                fontFamily: 'Switzer',
+                fontWeight: 400,
+                textAlign: 'start',
+                paddingTop: 5,
+                cursor: 'pointer'
+              }}
+              onClick={() =>
+                navigateTo('/home/forgetpassword', {
+                  state: { adminForgetpassword: true },
+                  replace: true
+                })
+              }
+            >
+              Forgot password?
+            </Typography>
+          </Grid>
         </Grid>
         <Grid item xs={8} style={{ marginTop: theme.MetricsSizes.x_large }}>
           <ButtonComp
