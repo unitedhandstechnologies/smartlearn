@@ -5,7 +5,11 @@ import { useEdit } from 'src/hooks/useEdit';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import toast from 'react-hot-toast';
-import { capitalizeFirstLetter } from 'src/Utils';
+import {
+  capitalizeFirstLetter,
+  isPhoneNumber,
+  isValidEmail
+} from 'src/Utils';
 import { t } from 'i18next';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -38,6 +42,8 @@ const ApplicationConfiguration = () => {
   const theme = useTheme();
   const classes = useStyles();
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
   const defaultValues = {
     id: 0,
     app_name: '',
@@ -55,8 +61,32 @@ const ApplicationConfiguration = () => {
     site_copyright: ''
   };
 
+  const RequiredFields = [
+    'app_name',
+    'meta_keyword',
+    'app_email',
+    'app_contact_no',
+    'app_contact_address',
+    'student_app_appstore_link',
+    'instructor_android_link',
+    'admin_app_android_link',
+    'site_copyright'
+  ];
+
   const [appConfiguration, setAppConfiguration] = useState(defaultValues);
   const edit = useEdit(appConfiguration);
+
+  const phoneError =
+    (error && !edit.allFilled('app_contact_no')) ||
+    (error &&
+      edit.allFilled('app_contact_no') &&
+      !isPhoneNumber(edit.getValue('app_contact_no')));
+
+  const emailError =
+    (error && !edit.allFilled('app_email')) ||
+    (error &&
+      edit.allFilled('app_email') &&
+      !isValidEmail(edit.getValue('app_email')));
 
   const fetchData = async () => {
     const response: any =
@@ -75,6 +105,16 @@ const ApplicationConfiguration = () => {
     let id = appConfiguration.id;
     try {
       let updateAppConfig = { ...appConfiguration, ...edit.edits };
+      if (!edit.allFilled(...RequiredFields)) {
+        setError(true);
+        return toast.error('Please fill all the required fields');
+      }
+      if (!isPhoneNumber(edit.getValue('phone_number'))) {
+        setError(true);
+        return toast.error('Please enter your valid 10 digit mobile number');
+      }else{
+        setError(false);
+      }
       let response: any =
         await API_SERVICES.settingsPageService.updateAppConfiguration(id, {
           data: updateAppConfig,
@@ -106,6 +146,7 @@ const ApplicationConfiguration = () => {
                 });
               }}
               required
+              isError={error && !edit.allFilled('app_name')}
             />
           </Grid>
           <Grid item xs={6}>
@@ -129,6 +170,7 @@ const ApplicationConfiguration = () => {
                 })
               }
               required
+              isError={error && !edit.allFilled('meta_keyword')}
             />
           </Grid>
           <Grid item xs={6}>
@@ -140,6 +182,8 @@ const ApplicationConfiguration = () => {
                 edit.update({ app_email: e.target.value });
               }}
               required
+              isError={emailError}
+              helperText={emailError && 'Please enter valid Email id'}
             />
           </Grid>
           <Grid item xs={6}>
@@ -154,6 +198,10 @@ const ApplicationConfiguration = () => {
                 edit.update({ app_contact_no: e.target.value });
               }}
               required
+              isError={phoneError}
+              helperText={
+                phoneError && 'Please enter valid 10 digit mobile number'
+              }
             />
           </Grid>
           <Grid item xs={6}>
@@ -167,6 +215,8 @@ const ApplicationConfiguration = () => {
                 });
               }}
               required
+              isError={error && !edit.allFilled('app_contact_address')}
+              helperText={error && 'Please enter contact address'}
             />
           </Grid>
           {/* <Grid item xs={6}>
@@ -202,6 +252,7 @@ const ApplicationConfiguration = () => {
               onChange={(e) => {
                 edit.update({ student_app_appstore_link: e.target.value });
               }}
+              isError={error && !edit.allFilled('student_app_appstore_link')}
             />
           </Grid>
           <Grid item xs={6}>
@@ -215,6 +266,7 @@ const ApplicationConfiguration = () => {
                   instructor_android_link: e.target.value
                 });
               }}
+              isError={error && !edit.allFilled('instructor_android_link')}
             />
           </Grid>
           <Grid item xs={6}>
@@ -228,6 +280,7 @@ const ApplicationConfiguration = () => {
                   admin_app_android_link: e.target.value
                 });
               }}
+              isError={error && !edit.allFilled('admin_app_android_link')}
             />
           </Grid>
 
@@ -242,6 +295,7 @@ const ApplicationConfiguration = () => {
                 })
               }
               required
+              isError={error && !edit.allFilled('site_copyright')}
             />
           </Grid>
         </Grid>
