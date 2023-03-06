@@ -347,7 +347,7 @@ const MuiCardComp = ({
                 } else {
                   navigateTo('/home/user-login', {
                     state: {
-                      details: { formData: item },
+                      formData: item,
                       route: '/home/course-details'
                     },
                     replace: true

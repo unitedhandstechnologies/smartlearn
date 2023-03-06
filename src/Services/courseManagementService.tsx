@@ -2,24 +2,8 @@ import { apiOptions } from 'src/Utils/apiOptions';
 import { apiRequest } from 'src/Utils/apiRequest';
 import { Config } from 'src/Config';
 
-type vendorCreate = {
-  data: {
-    order_management_id: string;
-    name: string;
-    gst: string;
-    full_address: string;
-    location: string;
-    contact_name: string;
-    mobile_number: string;
-    landline_number: string;
-    email_id: string;
-    website: string;
-    established_year: string;
-    vehicle_owned: number[];
-    image_url: string;
-    map_url: string;
-    pincode: string;
-  };
+type courseCreate = {
+  data: {};
   successMessage?: string;
   failureMessage?: string;
 };
@@ -54,11 +38,11 @@ export const courseManagementService = {
     });
     return apiRequest(options);
   },
-  getAll: async (language_id: number, params? : any) => {
+  getAll: async (language_id: number, params?: any) => {
     const options = await apiOptions({
       url: `${Config.BASE_URL}/api/getAllCourse/language/${language_id}`,
       method: 'get',
-      params : params
+      params: params
     });
     return apiRequest(options);
   },
@@ -110,7 +94,7 @@ export const courseManagementService = {
     data,
     successMessage,
     failureMessage
-  }: vendorCreate) => {
+  }: courseCreate) => {
     const options = await apiOptions({
       url: `${Config.BASE_URL}/`,
       method: 'post',
@@ -158,13 +142,4 @@ export const courseManagementService = {
     return apiRequest(options);
     //return data.dataGet;
   }
-
-
-
-
-
 };
-
-
-
-
