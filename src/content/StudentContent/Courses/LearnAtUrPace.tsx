@@ -135,14 +135,6 @@ const LearnAtUrPace = ({
     setChipFilterItem([...chipIconText]);
   };
 
-  const handleView = () => {
-    if (view === 6) {
-      setView(courses.length);
-    } else {
-      setView(6);
-    }
-  };
-
   const handleApply = () => {
     let filteredCourse = [];
     if (chipFilterItem[0] != 0) {
@@ -190,6 +182,14 @@ const LearnAtUrPace = ({
     });
     return recordedCourse;
   }, [courseDetails]);
+
+  const handleView = () => {
+    if (view === 6) {
+      setView(getFilterCourse?.length);
+    } else {
+      setView(6);
+    }
+  };
 
   return (
     <Grid container justifyContent={'center'} direction="column" rowSpacing={3}>
