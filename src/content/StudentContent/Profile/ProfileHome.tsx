@@ -18,7 +18,7 @@ import WishListCourse from '../Profile/WishListCourse';
 import CourseBanner from '../Courses/CourseBanner';
 import CatchFrom from './CatchFrom';
 import YourUpComingSession from './YourUpComingSession';
-import MoreUpcomingSession from './MoreUpcomingSession';
+import MoreUpcomingSession from './MoreUpcomingsession';
 import LearnTheWayBox from '../HomePage/LearnTheWay/LearnTheWayBox';
 import Mentors from '../HomePage/Mentors';
 import Reviews from '../HomePage/Reviews';

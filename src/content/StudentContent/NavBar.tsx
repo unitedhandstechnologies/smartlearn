@@ -30,6 +30,7 @@ import { CartImg } from 'src/Assets';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import useCartInfo from 'src/hooks/useCartInfo';
+import { USER_TYPE_ID } from 'src/Config/constant';
 
 const pages = [
   { label: 'Courses', path: 'courses' },
@@ -160,7 +161,7 @@ function NavBar() {
               </Button>
             ))}
           </Box>
-          {studentDetails.id === 0 && (
+          {/* {studentDetails.id === 0 && (
             <Box
               sx={{
                 display: { xs: 'none', md: 'flex' },
@@ -194,13 +195,48 @@ function NavBar() {
                 />
               </Box>
             </Box>
-          )}
-          {studentDetails.id !== 0 && (
+          )} */}
+          {studentDetails.id !== 0 &&
+          studentDetails.user_type === USER_TYPE_ID.student ? (
             <UserCart
               userName={studentDetails.user_name}
               image={studentDetails.image_url}
               addToCart={cartDetails}
             />
+          ) : (
+            <Box
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                alignItems: 'center',
+                gap: 1
+              }}
+            >
+              <ButtonComp
+                variant="outlined"
+                btnWidth={78}
+                height={40}
+                buttonFontFamily="Switzer"
+                buttonFontSize={theme.MetricsSizes.regular}
+                backgroundColor={theme.Colors.white}
+                buttonTextColor={'#3C78F0'}
+                buttonText={'Login'}
+                btnBorderRadius={4}
+                onClickButton={() => navigateTo('/home/user-login')}
+              />
+              <Box sx={{ display: { xs: 'none', lg: 'flex' } }}>
+                <ButtonComp
+                  btnWidth={240}
+                  height={40}
+                  buttonFontFamily="Switzer"
+                  buttonFontSize={theme.MetricsSizes.small_xxx}
+                  backgroundColor={'#3C78F0'}
+                  buttonTextColor={theme.Colors.white}
+                  btnBorderRadius={4}
+                  buttonText={'Start learning for free'}
+                  onClickButton={() => navigateTo('/home/user-login')}
+                />
+              </Box>
+            </Box>
           )}
         </Toolbar>
       </AppBar>
