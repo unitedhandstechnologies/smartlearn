@@ -128,6 +128,7 @@ const MuiCardComp = ({
   const theme = useTheme();
   const navigateTo = useNavigate();
   const { studentDetails } = useContext(StudentInfoContext);
+  const [isVisible, setIsVisible] = useState(false);
 
   return (
     <Card
@@ -138,6 +139,8 @@ const MuiCardComp = ({
         height: '100%',
         ...cardStyle
       }}
+      onMouseOver={()=>{setIsVisible(true)}}
+      onMouseLeave={()=>setIsVisible(false)}
     >
       <CardActionArea onClick={onClickCardImage} sx={{ background: 'black' }}>
         {imgUrl ? (
@@ -286,7 +289,7 @@ const MuiCardComp = ({
           ) : null}
         </Grid>
       </CardActions>
-      {startLearning ? (
+      {startLearning && isVisible ? (
         <Grid
           container
           style={{
@@ -297,7 +300,7 @@ const MuiCardComp = ({
           }}
         >
           <Grid item style={{ marginRight: 10 }}>
-            {leftText === 'PAID' ? (
+            {leftText === 'PAID'  ? (
               <ListItemCell
                 title={
                   <Grid container style={{ gap: 5 }}>
