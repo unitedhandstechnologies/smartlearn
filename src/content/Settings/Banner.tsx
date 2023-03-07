@@ -8,8 +8,10 @@ import { toast } from 'react-hot-toast';
 import { API_SERVICES } from 'src/Services';
 import {
   CONFIRM_MODAL,
+  DETECT_LANGUAGE,
   HANDLE_SUBMIT,
-  HTTP_STATUSES
+  HTTP_STATUSES,
+  LANGUAGE_ID
 } from 'src/Config/constant';
 import { useSearchVal } from 'src/hooks/useSearchVal';
 import { useDebounce } from 'src/hooks/useDebounce';
@@ -46,7 +48,6 @@ function Banner() {
 
   const fetchData = useCallback(async () => {
     try {
-      let languageId = 1;
       setLoading(true);
       setData([]);
       let params: any = {};
@@ -55,7 +56,7 @@ function Banner() {
       }
       const response: any =
         await API_SERVICES.bannerManagementService.getAllBannerManagement(
-          languageId,
+          DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english,
           params
         );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {

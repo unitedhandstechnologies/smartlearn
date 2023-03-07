@@ -53,5 +53,12 @@ export const homeUserService = {
       }
     };
     return apiRequest(options, toastMessageConfig);
+  },
+  getAllStudentBannerManagement: async (languageId: number) => {
+    const options = await apiOptions({
+      url: `${Config.BASE_URL}/api/getAllStudentBannerManagement/${languageId}`,
+      method: 'get'
+    });
+    return apiRequest(options)
   }
 };

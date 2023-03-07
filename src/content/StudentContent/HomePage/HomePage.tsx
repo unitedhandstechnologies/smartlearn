@@ -23,21 +23,22 @@ import { toast } from 'react-hot-toast';
 import StartYourLearningBanner from './StartYourLearningBanner';
 import HomeBanner from './HomeBanner';
 import { BackgroundLine } from 'src/Assets';
-import WishListCourse from '../Profile/WishListCourse';
 import { useEdit } from 'src/hooks/useEdit';
 
 const HomePage = () => {
   const theme = useTheme();
   const { i18n } = useTranslation();
-  const [courseDetails, setCourseDetails] = useState([]);
-  const [mentorDetails, setMentorDetails] = useState([]);
-  const [faqDetails, setFaqDetails] = useState([]);
-  const [ratingData, setRatingData] = useState([]);
+  const [courseDetails, setCourseDetails] = useState<any>([]);
+  const [mentorDetails, setMentorDetails] = useState<any>([]);
+  const [faqDetails, setFaqDetails] = useState<any>([]);
+  const [ratingData, setRatingData] = useState<any>([]);
+  const [bannerManagement, setBannerManagement] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const initialValue = {
     course: []
   };
   const edit = useEdit(initialValue);
+  let imgData = [];
   // const { searchValue } = useSearchVal();
   // const debValue = useDebounce(searchValue, 2000)
   const fetchData = useCallback(async () => {
@@ -47,6 +48,7 @@ const HomePage = () => {
       setMentorDetails([]);
       setFaqDetails([]);
       setRatingData([]);
+      setBannerManagement([]);
       // const params: any = {};
       // if(debValue !== '') {
       //   params.searchString = debValue
@@ -59,7 +61,10 @@ const HomePage = () => {
         API_SERVICES.pageManagementService.getAllFaq(
           DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
         ),
-        API_SERVICES.homeUserService.getAllRatings()
+        API_SERVICES.homeUserService.getAllRatings(),
+        API_SERVICES.homeUserService.getAllStudentBannerManagement(
+          DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+        )
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.courses?.length) {
@@ -87,6 +92,11 @@ const HomePage = () => {
           setRatingData(response[3]?.data?.ratings);
         }
       }
+      if(response[4]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if(response[4]?.data?.bannerManagement?.length){
+          setBannerManagement(response[4]?.data?.bannerManagement) 
+        }
+      }
     } catch (err) {
       toast.error(err?.message);
     } finally {
@@ -108,7 +118,7 @@ const HomePage = () => {
     return (
       <Grid container sx={{ position: 'relative' }}>
         <Grid container direction="column">
-          <HomeBanner />
+          <HomeBanner bannerManagement={bannerManagement}/>
         </Grid>
         <Grid
           container
@@ -167,7 +177,6 @@ const HomePage = () => {
           }}
         >
           <FAQs faqDetails={faqDetails} />
-          {/* <WishListCourse/> */}
         </Grid>
       </Grid>
     );

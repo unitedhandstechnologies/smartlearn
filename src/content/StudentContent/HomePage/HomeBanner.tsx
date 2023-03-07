@@ -4,8 +4,10 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import { ArrowNext, HomePageRight, whiteLine } from 'src/Assets';
 import { ButtonComp } from 'src/components';
+import Carousel from 'react-bootstrap/Carousel';
+import 'bootstrap/dist/css/bootstrap.css';
 
-const HomeBanner = () => {
+const HomeBanner = ({ bannerManagement }) => {
   const theme = useTheme();
   const navigateTo = useNavigate();
   return (
@@ -25,7 +27,7 @@ const HomeBanner = () => {
           flexDirection: 'column',
           padding: theme.spacing(4, 0, 2, 4),
           background: '#3C78F0',
-          zIndex: 1,
+          zIndex: 5,
           [theme.breakpoints.up('md')]: {
             padding: theme.spacing(4, 0, 2, 4),
             clipPath: 'polygon(0% 0%, 100% 0%, 94% 100%, 0% 100%)'
@@ -88,6 +90,7 @@ const HomeBanner = () => {
           background: '#3C78F0',
           width: '25%',
           left: '40%',
+          zIndex: 1,
           [theme.breakpoints.down('sm')]: {
             display: 'none'
           }
@@ -104,12 +107,31 @@ const HomeBanner = () => {
           height: '100%'
         }}
       >
-        <img
-          src={HomePageRight}
-          style={{
-            height: '100%'
-          }}
-        />
+        <Carousel>
+          {bannerManagement?.length
+            ? bannerManagement.map((item, index) => {
+                console.log('it', item.banner_image);
+                return (
+                  <Carousel.Item
+                    interval={1500}
+                    key={index}
+                    style={{ height: '500px' }}
+                  >
+                    <img
+                      className="d-block w-100"
+                      src={item.banner_image}
+                      alt="Image One"
+                      width="100%"
+                      height="500px"
+                    />
+                    <Carousel.Caption>
+                      <h3>{item.banner_name}</h3>
+                    </Carousel.Caption>
+                  </Carousel.Item>
+                );
+              })
+            : null}
+        </Carousel>
       </Grid>
     </Grid>
   );
