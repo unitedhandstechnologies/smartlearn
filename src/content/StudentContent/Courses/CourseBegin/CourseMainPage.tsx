@@ -104,6 +104,7 @@ const CourseMainPage = ({
           data: updateData
         }
       );
+      fetchLevelCompleted();
     let tempVideoDetails = videoDetails;
     tempVideoDetails[videoToPlayIndex.current.sectionNumber][
       videoToPlayIndex.current.lessonNumber
@@ -144,12 +145,6 @@ const CourseMainPage = ({
           videoDetails[nextSectionIndex][nextLessonIndex].videoUrl
         );
         fetchLevelCompleted();
-        /* if(!completedCourse){
-          //setShowQuizUnlockedMsg();    
-          
-          //setCompletedCourse(1);
-
-        }  */
       }
     }
   }, []);
