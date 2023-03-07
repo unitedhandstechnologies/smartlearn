@@ -31,29 +31,27 @@ const MentorCreatedCourses = () => {
   const mentorCategory = [];
 
   state?.courses
-    ?.filter((crs) => crs.mentor_id === state.id)
+    ?.filter((crs) => crs?.mentor_id === state?.id)
     .map((crs) => {
-      if (!mentorCategory.includes(crs.category_name)) {
-        mentorCategory.push(crs.category_name);
+      if (!mentorCategory.includes(crs?.category_name)) {
+        mentorCategory.push(crs?.category_name);
       }
     });
 
-  console.log(mentorCategory, 'categor');
-
   const upcomingWorkShops = state?.courses?.filter(
     (course) =>
-      course.course_type === COURSE_TYPE_NAME[4] &&
-      course.mentor_id === state.id
+      course?.course_type === COURSE_TYPE_NAME[4] &&
+      course?.mentor_id === state?.id
   );
   const course = state?.courses?.filter(
     (course) =>
-      course.course_type !== COURSE_TYPE_NAME[4] &&
-      course.mentor_id === state.id
+      course?.course_type !== COURSE_TYPE_NAME[4] &&
+      course?.mentor_id === state?.id
   );
 
   const onClickCardImage = (item) => {
-    navigateTo('/home/mentor-courseProfile/masterClass-courseDetails', {
-      state: { ...item, mentor_profile: state.image_url },
+    navigateTo('/home/course-details', {
+      state: { formData: item },
       replace: true
     });
   };
@@ -165,7 +163,7 @@ const MentorCreatedCourses = () => {
                             ? 'English'
                             : item.language_id === 2
                             ? 'Hindi'
-                            : 'Gjarati'
+                            : 'Gujarati'
                         }
                         date={`${item.starting_date} - ${item.ending_date}`}
                         zoomLink={item.meeting_link}
