@@ -243,7 +243,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
             >
               {course?.course_type === 'Workshop'
                 ? course?.course_mode.toLowerCase() === 'online'
-                  ? course?.meeting_link
+                  ? 'Zoom'
                   : course?.meeting_location
                 : '11 hours left at this price'}
             </TypographyText>

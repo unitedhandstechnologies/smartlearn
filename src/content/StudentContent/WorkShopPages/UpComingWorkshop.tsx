@@ -216,7 +216,7 @@ const UpComingWorkshop = ({
 
   const onClickCardImage = (rowData) => {
     if (rowData.course_type === COURSE_TYPE_NAME[4]) {
-      navigateTo('/home/workshopDetails', {
+      navigateTo('/home/course-details', {
         state: { formData: { ...rowData } },
         replace: true
       });

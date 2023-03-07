@@ -23,12 +23,14 @@ type PreRecordedCourseProps = {
   data?: any;
   mentorDetails?: any;
   totalDuration?: number;
+  course?: any;
 };
 
 const PreRecordedCourses = ({
   data,
   mentorDetails,
-  totalDuration
+  totalDuration,
+  course
 }: PreRecordedCourseProps) => {
   const theme = useTheme();
   const classes = useStyles();

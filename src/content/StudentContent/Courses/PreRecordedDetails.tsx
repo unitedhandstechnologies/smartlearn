@@ -107,7 +107,8 @@ const PreRecordedDetails = () => {
     >
       <Grid item xs={12}>
         <PreRecordedCourses
-          data={course[0]}
+          course={course[0]}
+          data={data}
           mentorDetails={mentorDetails}
           totalDuration={totalDuration}
         />
