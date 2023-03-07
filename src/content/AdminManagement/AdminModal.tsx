@@ -37,14 +37,14 @@ const AdminModal = (props: Props) => {
       { content: t('lastName'), value: rowData?.last_name },
       { content: t('email'), value: rowData?.email_id },
       { content: t('phoneNumber'), value: rowData?.phone_number },
-      {
-        content: t('socialMedialLink'),
-        value: rowData?.social_information_url
-      },
       { content: t('name'), value: rowData?.user_name },
       {
         content: t('date'),
         value: `${getMonth} ${getDate}, ${getYear}`
+      },
+      {
+        content: 'Profile Image',
+        value: <img src={rowData?.image_url} width={250} height={250}/>
       }
     ];
     return (
@@ -56,7 +56,7 @@ const AdminModal = (props: Props) => {
 
   return (
     <DialogComp
-      dialogTitle={t('studentDetails')}
+      dialogTitle={t('adminManagement.adminDetails')}
       open={true}
       onClose={onClose}
       dialogClasses={{ paper: classes.dialogPaper }}

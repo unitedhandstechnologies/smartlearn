@@ -502,7 +502,7 @@ const AdminManagementModal = (props: Props) => {
               }
             />
           </Grid> */}
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <TextInputComponent
               inputLabel={t('adminManagement.socialMediaLinkFaceBook')}
               labelColor={theme.Colors.primary}
@@ -514,7 +514,7 @@ const AdminManagementModal = (props: Props) => {
               }
               required
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <Typography>{t('accessPermission')}</Typography>
           </Grid>

@@ -107,11 +107,11 @@ const AdminManagementTable = ({
   const statusFilter = [
     {
       id: 2,
-      name: 'enabled'
+      name: 'Enabled'
     },
     {
       id: 3,
-      name: 'disabled'
+      name: 'Disabled'
     }
   ];
 
@@ -125,6 +125,7 @@ const AdminManagementTable = ({
       disableColumnSeparator: true,
       renderCell: ({ row }) => (
         <ListItemCell
+          avatarImg={row?.image_url}
           title={`${row?.first_name} ${row?.last_name}`}
           subTitle={
             row?.user_type === USER_TYPE_ID.superAdmin ? 'SuperAdmin' : 'Admin'
