@@ -19,7 +19,7 @@ const Courses = () => {
   const [courseDetails, setCourseDetails] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const { i18n } = useTranslation();
-  const [chipIconText, setChipIconText] = useState([0, 0, 1]);
+  const [chipIconText, setChipIconText] = useState([0, 0, 1, 0]);
   const [chipRecorderText, setChipRecorderText] = useState([0, 1]);
   const [searchval, setSearchVal] = useState('');
   const debValue = useDebounce(searchval, 1000);

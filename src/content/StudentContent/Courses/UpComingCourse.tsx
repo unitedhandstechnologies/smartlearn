@@ -101,6 +101,25 @@ const headerChipItem = [
         label: 'Gujarati'
       }
     ]
+  },
+  {
+    name: 'Cost',
+    img: Language,
+    id: 3,
+    labelItems: [
+      {
+        id: 0,
+        label: 'All'
+      },
+      {
+        id: 1,
+        label: 'FREE'
+      },
+      {
+        id: 2,
+        label: 'PAID'
+      }
+    ]
   }
 ];
 
@@ -184,10 +203,24 @@ const UpComingCourse = ({
       ).filter((item) => item.language_id == chipFilterItem[2]);
       changeLanguage(chipFilterItem[2]);
     }
+    if (chipFilterItem[3] != 0) {
+      filteredCourse = (
+        chipFilterItem[0] != 0 || chipFilterItem[1] != 0 || chipFilterItem[2] != 0
+          ? filteredCourse
+          : courseDetails
+      ).filter((item) => {
+        let tempValue;
+        if(item.cost_type==="PAID")
+          tempValue=2;
+          if(item.cost_type==="FREE")
+          tempValue=1;
+        return tempValue === chipFilterItem[3]});     
+    }
     if (
       chipFilterItem[0] === 0 &&
       chipFilterItem[1] === 0 &&
-      chipFilterItem[2] === 0
+      chipFilterItem[2] === 0 &&
+      chipFilterItem[3] === 0 
     ) {
       setCourses([...courseDetails]);
     } else {
