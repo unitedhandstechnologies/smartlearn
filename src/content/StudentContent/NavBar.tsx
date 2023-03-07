@@ -116,8 +116,8 @@ function NavBar() {
             variant="h5"
             noWrap
             component={Link}
-            to={studentDetails.id === 0 ? '/' : '/home/profilehome'}
-            onClick={() =>setButtonValue(-1)}
+            to={studentDetails?.id === 0 ? '/' : '/home/profilehome'}
+            onClick={() => setButtonValue(-1)}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -198,11 +198,13 @@ function NavBar() {
               </Box>
             </Box>
           )} */}
-          {studentDetails.id !== 0 &&
-          studentDetails.user_type === USER_TYPE_ID.student ? (
+          {studentDetails?.id !== 0 &&
+          studentDetails?.user_type === USER_TYPE_ID.student ? (
             <UserCart
-              userName={studentDetails.user_name}
-              image={studentDetails.image_url}
+              userName={
+                studentDetails?.first_name + ' ' + studentDetails?.last_name
+              }
+              image={studentDetails?.image_url}
               addToCart={cartDetails}
             />
           ) : (
@@ -280,12 +282,12 @@ function NavBar() {
         </Grid>
         <Divider />
         <List>
-          {pages.map((item, index) => (
+          {pages?.map((item, index) => (
             <ListItem key={index} component={RouterLink} to={item.path}>
               <ListItemButton>
                 <ListItemText
                   onClick={handleDrawerClose}
-                  primary={item.label}
+                  primary={item?.label}
                 />
               </ListItemButton>
             </ListItem>
@@ -391,20 +393,5 @@ const notifications = [
   {
     title: 'Upcoming workshop alert',
     content: 'You have a workshop to attend tomorrow. Tap to view the details'
-  }
-];
-
-const carts = [
-  {
-    courserType: 'Course',
-    amount: 4500,
-    courseName: 'Basics of Stock Market investments',
-    availableSeat: 2
-  },
-  {
-    courserType: 'Worshop',
-    amount: 4500,
-    courseName: 'Basics of Stock Market investments',
-    availableSeat: 2
   }
 ];

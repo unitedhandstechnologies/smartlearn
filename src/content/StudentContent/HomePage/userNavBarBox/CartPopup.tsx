@@ -93,7 +93,7 @@ const CartPopover = (props: Props) => {
               color: '#78828C'
             }}
           >
-            items:
+            Items:
           </Typography>
         </Grid>
         <Divider light={true} style={{ paddingTop: 17 }} />
@@ -119,12 +119,12 @@ const CartPopover = (props: Props) => {
                     borderRadius: 17
                   }}
                 >
-                  {item.course_type}
+                  {item?.course_type}
                 </Grid>
                 <Grid>
                   <ButtonComp
                     variant={'outlined'}
-                    buttonText={'remove'}
+                    buttonText={'Remove'}
                     buttonTextColor={'#78828C'}
                     buttonFontSize={12}
                     buttonFontFamily={'Switzer'}
@@ -148,7 +148,7 @@ const CartPopover = (props: Props) => {
                       color: '#3C414B'
                     }}
                   >
-                    {item.course_name}
+                    {item?.course_name}
                   </Typography>
                 </Grid>
                 <Grid xs={3.5} md={3.5} alignItems={'flex-end'}>
@@ -161,11 +161,11 @@ const CartPopover = (props: Props) => {
                       textAlign: 'end'
                     }}
                   >
-                    ₹{item.total.toFixed(2)}
+                    ₹{item?.total.toFixed(2)}
                   </Typography>
                 </Grid>
               </Grid>
-              {item.course_type !== 'Recorded Course' && (
+              {item?.course_type === 'Seminar' && (
                 <Grid
                   container
                   justifyContent={'space-between'}
@@ -201,12 +201,12 @@ const CartPopover = (props: Props) => {
                         textAlign: 'end'
                       }}
                     >
-                      {item.available_student_count}
+                      {item?.available_student_count}
                     </Typography>
                   </Grid>
                 </Grid>
               )}
-              {index != carts.length - 1 ? (
+              {index != carts?.length - 1 ? (
                 <Divider light={true} style={{ paddingTop: 20 }} />
               ) : null}
             </Grid>
@@ -220,11 +220,11 @@ const CartPopover = (props: Props) => {
               color: '#78828C'
             }}
           >
-            pricing:
+            Pricing:
           </Typography>
         </Grid>
         <Divider light={true} style={{ paddingTop: 15 }} />
-        {sumItems?.map((itm, index) => {
+        {sumItems?.map((item, index) => {
           return (
             <Grid key={index} container paddingLeft={1.5} paddingTop={1.3}>
               <Grid item>
@@ -236,7 +236,7 @@ const CartPopover = (props: Props) => {
                     color: '#3C414B'
                   }}
                 >
-                  {itm}
+                  {item}
                 </Typography>
                 {index == 1 ? (
                   <Divider light={true} style={{ paddingTop: 18 }} />
