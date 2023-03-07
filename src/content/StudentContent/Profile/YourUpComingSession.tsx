@@ -107,7 +107,7 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
         }}
       >
         {enrolledCourse.length ? (
-          enrolledCourse.slice(0, 6)?.map((item, index) => {
+          enrolledCourse?.map((item, index) => {
             return (
               <Grid
                 key={index}
@@ -141,6 +141,7 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
                   prize={item.amount}
                   onClickCardImage={() => onClickCardImage(item)}
                   startLearning={false}
+                  item={item}
                 />
               </Grid>
             );

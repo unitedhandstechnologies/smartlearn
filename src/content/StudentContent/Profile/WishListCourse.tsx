@@ -257,7 +257,7 @@ const WishListCourse = () => {
                       prize={item.amount}
                       onClickCardImage={() => onClickCardImage(item)}
                       item={item}
-                      isActive={wishlistIds}
+                      // isActive={wishlistIds}
                     />
                   </Grid>
                 );

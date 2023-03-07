@@ -40,29 +40,11 @@ export const WishListService = {
     });
     return apiRequest(options);
   },
-  delete: async (
-    courseId: number,
-    wishlistId: number,
-    {
-      successMessage,
-      failureMessage
-    }: {
-      successMessage?: string;
-      failureMessage?: string;
-    }
-  ) => {
+  delete: async (userId: number, courseId: number) => {
     const options = await apiOptions({
-      url: `${Config.BASE_URL}/deleteRatings/studentEnrolledCourse/${courseId}/wishlist/${wishlistId}`,
+      url: `${Config.BASE_URL}/api/deleteWishlist/user/${userId}/course/${courseId}`,
       method: 'delete'
     });
-    const toastMessageConfig = {
-      success: {
-        message: successMessage
-      },
-      failure: {
-        message: failureMessage
-      }
-    };
-    return apiRequest(options, toastMessageConfig);
+    return apiRequest(options);
   }
 };

@@ -10,13 +10,15 @@ import {
   Online
 } from '../../../../Assets/Images';
 import { ButtonComp } from 'src/components';
-import FavIcon from '../../../../Assets/Images/FavIcon.svg';
+// import FavIcon from '../../../../Assets/Images/FavIcon.svg';
 import { useNavigate } from 'react-router';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
-import { useTheme } from '@material-ui/core';
+import { IconButton, useTheme } from '@material-ui/core';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import useCartInfo from 'src/hooks/useCartInfo';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const classes = {
   containerStyle: {
@@ -279,9 +281,29 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
                 onClickButton={handleClick}
               />
             </Grid>
-            <Grid sx={{ ...classes.favIcon, ml: 1 }}>
-              <img src={FavIcon} />
-            </Grid>
+            <Grid
+            item
+            style={{
+              marginLeft: 5,
+              borderRadius: '6px',
+              background: '#F2F4F7',
+              height: "41px"
+            }}
+          >
+            <IconButton
+              style={{
+                color:  '#3C78F0', //: theme.Colors.darkGrayishBlue,
+                background: 'transparent',
+                [theme.breakpoints.down('md')]: {
+                  display: 'none'
+                }
+              }}
+              // onClick={() => handleOnClick(item,isActive)}
+              disableRipple
+            >
+              {<FavoriteBorderIcon />}
+            </IconButton>
+          </Grid>
           </>
         )}
 

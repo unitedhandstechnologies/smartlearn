@@ -2,8 +2,6 @@ import { memo, useCallback, useEffect, useState } from 'react';
 import { Grid, Typography, Container } from '@mui/material';
 import { ButtonComp, Loader } from 'src/components';
 import { useTheme } from '@material-ui/core';
-import { useSearchVal } from 'src/hooks/useSearchVal';
-import { useDebounce } from 'src/hooks/useDebounce';
 import { API_SERVICES } from 'src/Services';
 import {
   DETECT_LANGUAGE,
@@ -14,7 +12,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-hot-toast';
 import { BackgroundLine } from 'src/Assets';
-import WishListCourse from '../Profile/WishListCourse';
 import CourseBanner from '../Courses/CourseBanner';
 import CatchFrom from './CatchFrom';
 import YourUpComingSession from './YourUpComingSession';
@@ -24,7 +21,6 @@ import Mentors from '../HomePage/Mentors';
 import Reviews from '../HomePage/Reviews';
 import StartYourLearningBanner from '../HomePage/StartYourLearningBanner';
 import FAQs from '../HomePage/FAQs';
-import RateYourExperience from '../HomePage/RateYourExperience/ExperienceRate';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import { useEdit } from 'src/hooks/useEdit';
 
@@ -39,14 +35,6 @@ const ProfileHome = () => {
   const { studentDetails, updateStudentInfo } = useStudentInfo();
   const [enrollCourse, setEnrollCourse] = useState<any>([]);
   const [rating, setRating] = useState<boolean>(false);
-  const initialValue = {
-    course: []
-  };
-  const edit = useEdit(initialValue);
-
-  const handleChangeItem = (itemIds: any[]) => {
-    edit.update({ course: itemIds });
-  };
   // const { searchValue } = useSearchVal();
   // const debValue = useDebounce(searchValue, 2000)
   const fetchData = useCallback(async () => {
@@ -123,10 +111,6 @@ const ProfileHome = () => {
     return (
       <Grid container sx={{ position: 'relative', background: '#ffffff' }}>
         <Container>
-          {/*           {rating ? (
-            <RateYourExperience courseDetails={completedCourse} />
-          ) : null} */}
-
           <Grid container direction="column" paddingTop={4}>
             <CourseBanner
               course={'Sometitle goes here'}
@@ -165,16 +149,8 @@ const ProfileHome = () => {
         >
           <MoreUpcomingSession
             courseDetails={courseDetails}
-            InitialItemVal={edit.getValue('course')}
-            handleChangeItem={handleChangeItem}
           />
         </Grid>
-        {/* <Grid
-          container
-          direction="column"
-          style={{ padding: theme.spacing(7, 7) }}
-        > */}
-
         <LearnTheWayBox />
         <Container>
           <Mentors
@@ -206,17 +182,3 @@ const ProfileHome = () => {
   }
 };
 export default memo(ProfileHome);
-const notifications = [
-  {
-    title: '1.How was your experience with the course?',
-    content: ''
-  },
-  {
-    title: '2. How was your experience with your instructor?',
-    content: ''
-  },
-  {
-    title: '3. How can we improve to provide you a better experience?',
-    content: ''
-  }
-];

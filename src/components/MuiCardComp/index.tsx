@@ -94,11 +94,10 @@ type Props = {
   course_id?: number;
   discount?: number;
   item?: any;
-  isActive?: any;
-  handleOnClick?: (val: any) => void;
+  isActive?: boolean;
+  handleOnClick?: (item,isActive) => void;
 };
 const MuiCardComp = ({
-  course_id,
   imgUrl,
   heading,
   title,
@@ -365,14 +364,13 @@ const MuiCardComp = ({
           >
             <IconButton
               style={{
-                // color: '#3C78F0',
                 color: isActive ? '#3C78F0' : theme.Colors.darkGrayishBlue,
                 background: 'transparent',
                 [theme.breakpoints.down('md')]: {
                   display: 'none'
                 }
               }}
-              onClick={handleOnClick}
+              onClick={() => handleOnClick(item,isActive)}
               disableRipple
             >
               {isActive ? <FavoriteIcon /> : <FavoriteBorderIcon />}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Container, makeStyles, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import { ArrowNext, BasicStockIcon, LineBarIcon } from 'src/Assets';
@@ -7,14 +7,13 @@ import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
 import {
   COURSE_TYPE_NAME,
   DETECT_LANGUAGE,
-  HTTP_STATUSES
+  HTTP_STATUSES,
+  LANGUAGE_ID
 } from 'src/Config/constant';
 import { useLocation, useNavigate } from 'react-router';
-import { StudentInfoContext } from 'src/contexts/StudentContext';
 import { API_SERVICES } from 'src/Services';
-import useWishliatInfo from 'src/hooks/useWishlistInfo';
+import i18n from 'src/Translations/i18n';
 import { getUserId } from 'src/Utils';
-import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -28,31 +27,18 @@ const FILTER_CHIPS = ['Courses', 'Workshops', 'Seminars/Webinars'];
 
 type CourseProps = {
   courseDetails?: any[];
-  InitialItemVal: any[];
-  handleChangeItem: (val: any) => void;
 };
 const MoreUpcomingSession = ({
   courseDetails = [],
-  InitialItemVal,
-  handleChangeItem
 }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyles();
-  const { i18n } = useTranslation();
   const { state }: any = useLocation();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
   const navigateTo = useNavigate();
   const [view, setView] = useState(6);
-  const [selectedItemId, setSelectedItemId] = useState<number[]>([]);
+  const [whistList, setWishList] = useState([]);
   const userId = getUserId();
-  const { studentDetails } = useContext(StudentInfoContext);
-  const { wishlistDetails, updateWishlistInfo } = useWishliatInfo();
-  let isActive: any;
-  let wishlistIds = [];
-  let wishlistData = courseDetails.filter((item) =>
-    wishlistDetails.some((val) => item.id === val.id)
-  );
-  wishlistData.filter((item) => wishlistIds.push(item.id));
 
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
@@ -92,66 +78,49 @@ const MoreUpcomingSession = ({
     }
   };
 
-  const onChange = async (itemIds: any[], item?: any) => {
-    if (handleChangeItem) {
-      handleChangeItem(itemIds);
-      if (studentDetails.id !== 0) {
-        const response: any = await API_SERVICES.WishListService.create(
-          studentDetails?.id,
-          item?.course_id,
-          { successMessage: 'Added Successfully' }
-        );
-        if (response?.status == HTTP_STATUSES.BAD_REQUEST) {
-          console.log('res', response);
-          if (response?.data?.wishlist) {
-            updateWishlistInfo(userId, DETECT_LANGUAGE[i18n.language]);
-          }
-        }
-      } else {
-        navigateTo('/home/user-login', {
-          state: {
-            details: { formData: item },
-            route: '/home/course-details'
-          },
-          replace: true
-        });
-      }
-    } else {
-      setSelectedItemId(itemIds);
+  const getAllWishList = async () => {
+    let response: any = await API_SERVICES.WishListService.getAllWishlist(
+      userId,
+      DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+    );
+    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        const getIds = response.data.wishList.map((i) => i.course_id);
+        setWishList(getIds);
     }
-  };
-
-  const isUnselected = (item: any) => {
-    const items =
-      selectedItemId.length &&
-      selectedItemId.filter((itemId) => item?.id !== itemId);
-    if (items.length < selectedItemId.length) {
-      onChange(items, item);
-      return true;
-    }
-    return false;
-  };
-
-  const handleOnClick = async (item: any) => {
-    if (isUnselected(item)) {
-      const deleteRes: any = await API_SERVICES.WishListService.delete(
-        item?.course_id,
-        item?.id,
-        {}
-      );
-      if (deleteRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-        console.log('deleteRes', deleteRes);
-        updateWishlistInfo(item?.user_id, item?.language_id);
-      }
-      return;
-    }
-    onChange([...selectedItemId, item?.id], item);
   };
 
   useEffect(() => {
-    updateWishlistInfo(userId, DETECT_LANGUAGE[i18n.language]);
-    setSelectedItemId(InitialItemVal);
-  }, [InitialItemVal]);
+    getAllWishList();
+  }, []);
+
+  const handleIconClick = async (item, isActive) => {
+    if (userId !== 0) {
+      let response: any;
+      if (isActive) {
+        response = await API_SERVICES.WishListService.delete(
+          userId,
+          item?.course_id
+        );
+      } else {
+        response = await API_SERVICES.WishListService.create(
+          userId,
+          item?.course_id,
+          { successMessage: 'Successfully Added In WishList' }
+        );
+      }
+      if (response.status < HTTP_STATUSES.BAD_REQUEST) {
+        await getAllWishList();
+      }
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          details: { formData: item },
+          route: '/home/course-details'
+        },
+        replace: true
+      });
+    }
+  };
 
   return (
     <Container
@@ -192,7 +161,6 @@ const MoreUpcomingSession = ({
         </Grid>
         <Grid
           container
-          //justifyContent={'center'}
           spacing={4}
           sx={{
             paddingBottom: '30px',
@@ -202,13 +170,7 @@ const MoreUpcomingSession = ({
           }}
         >
           {getCourses.length
-            ? getCourses.slice(0, 6)?.map((item, index) => {
-                const findActiveIcon: number = selectedItemId.length
-                  ? selectedItemId.findIndex((selId) => {
-                      return selId === item.id;
-                    })
-                  : -1;
-                isActive = wishlistIds ?? findActiveIcon !== -1;
+            ? getCourses.slice(0, view)?.map((item, index) => {
                 return (
                   <Grid
                     key={index}
@@ -244,8 +206,8 @@ const MoreUpcomingSession = ({
                       course_id={item.course_id}
                       discount={item.discount}
                       item={item}
-                      isActive={isActive}
-                      handleOnClick={() => handleOnClick(item)}
+                      isActive={whistList.includes(item.id)}
+                      handleOnClick={handleIconClick}
                     />
                   </Grid>
                 );
