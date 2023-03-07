@@ -4,13 +4,15 @@ import { Grid, Container } from '@mui/material';
 import { ArrowNext, BasicStockIcon, LineBarIcon } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
 import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
-import { COURSE_TYPE_NAME, HTTP_STATUSES } from 'src/Config/constant';
+import { COURSE_TYPE_NAME, DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
 import { useLocation, useNavigate } from 'react-router';
 import { useEdit } from 'src/hooks/useEdit';
 import useUserInfo from 'src/hooks/useUserInfo';
 import { API_SERVICES } from 'src/Services';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
 import useWishlistInfo from 'src/hooks/useWishlistInfo';
+import { getUserId } from 'src/Utils';
+import i18n from 'src/Translations/i18n';
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -24,13 +26,9 @@ const FILTER_CHIPS = ['Courses', 'Workshops', 'Seminars/Webinars'];
 
 type CourseProps = {
   courseDetails?: any[];
-  handleChangeItem?: (val: any) => void;
-  InitialItemVal?: any[];
 };
 const UpComingSession = ({
   courseDetails = [],
-  handleChangeItem,
-  InitialItemVal
 }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyles();
@@ -38,15 +36,8 @@ const UpComingSession = ({
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
   const navigateTo = useNavigate();
   const [view, setView] = useState(6);
-  const [selectedItemId, setSelectedItemId] = useState<number[]>([]);
-  const { studentDetails } = useContext(StudentInfoContext);
-  const { wishlistDetails, updateWishlistInfo } = useWishlistInfo();
-  let isActive: any;
-  let wishlistIds = [];
-  let wishlistData = courseDetails?.filter((item) =>
-    wishlistDetails?.some((val) => item?.id === val.id)
-  );
-  wishlistData?.filter((item) => wishlistIds?.push(item.id));
+  const [whistList, setWishList] = useState([]);
+  const userId = getUserId();
 
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
@@ -86,68 +77,50 @@ const UpComingSession = ({
     });
   };
 
-  const onChange = async (itemIds: any[], item?: any) => {
-    if (handleChangeItem) {
-      handleChangeItem(itemIds);
-      if (studentDetails.id !== 0) {
-        const response: any = await API_SERVICES.WishListService.create(
-          studentDetails?.id,
-          item?.course_id,
-          { successMessage: 'Added Successfully' }
-        );
-        if (response?.status == HTTP_STATUSES.BAD_REQUEST) {
-          console.log('res', response);
-          if (response?.data?.wishlist) {
-            updateWishlistInfo(
-              response?.data?.wishlist?.id,
-              response?.data?.wishlist?.language_id
-            );
-          }
-        }
-      } else {
-        navigateTo('/home/user-login', {
-          state: {
-            details: { formData: item },
-            route: '/home/course-details'
-          },
-          replace: true
-        });
-      }
-    } else {
-      setSelectedItemId(itemIds);
+  const getAllWishList = async () => {
+    let response: any = await API_SERVICES.WishListService.getAllWishlist(
+      userId,
+      DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+    );
+    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        const getIds = response.data.wishList.map((i) => i.course_id);
+        setWishList(getIds);
     }
-  };
-
-  const isUnselected = (selId: number) => {
-    const items =
-      selectedItemId.length &&
-      selectedItemId.filter((itemId) => selId !== itemId);
-
-    if (items.length < selectedItemId.length) {
-      onChange(items);
-      return true;
-    }
-    return false;
-  };
-
-  const handleOnClick = async (item: any) => {
-    if (isUnselected(item)) {
-      const deleteRes: any = await API_SERVICES.WishListService.delete(
-        item?.course_id,
-        item?.id
-      );
-      if (deleteRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-        console.log('deleteRes', deleteRes);
-        updateWishlistInfo(item?.id, item?.language_id);
-      }
-      return;
-    }
-    onChange([...selectedItemId, item?.id], item);
   };
 
   useEffect(() => {
-    setSelectedItemId(InitialItemVal);
-  }, [InitialItemVal]);
+    getAllWishList();
+  }, []);
+
+  const handleIconClick = async (item, isActive) => {
+    if (userId !== null) {
+      let response: any;
+      if (isActive) {
+        response = await API_SERVICES.WishListService.delete(
+          userId,
+          item?.course_id
+        );
+      } else {
+        response = await API_SERVICES.WishListService.create(
+          userId,
+          item?.course_id,
+          { successMessage: 'Successfully Added In WishList' }
+        );
+      }
+      if (response.status < HTTP_STATUSES.BAD_REQUEST) {
+        await getAllWishList();
+      }
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          details: { formData: item },
+          route: '/home/course-details'
+        },
+        replace: true
+      });
+    }
+  };
+
 
   return (
     <Container
@@ -205,12 +178,6 @@ const UpComingSession = ({
         >
           {getCourses.length
             ? getCourses.slice(0, view)?.map((item, index) => {
-                const findActiveIcon: number = selectedItemId.length
-                  ? selectedItemId.findIndex((selId) => {
-                      return selId === item.id;
-                    })
-                  : -1;
-                isActive = wishlistIds ?? findActiveIcon !== -1;
                 return (
                   <Grid
                     key={index}
@@ -246,8 +213,8 @@ const UpComingSession = ({
                       course_id={item.course_id}
                       discount={item.discount}
                       item={item}
-                      isActive={isActive}
-                      handleOnClick={() => handleOnClick(item)}
+                      isActive={whistList.includes(item.id)}
+                      handleOnClick={handleIconClick}
                     />
                   </Grid>
                 );

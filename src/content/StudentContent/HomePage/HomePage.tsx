@@ -23,7 +23,6 @@ import { toast } from 'react-hot-toast';
 import StartYourLearningBanner from './StartYourLearningBanner';
 import HomeBanner from './HomeBanner';
 import { BackgroundLine } from 'src/Assets';
-import { useEdit } from 'src/hooks/useEdit';
 
 const HomePage = () => {
   const theme = useTheme();
@@ -34,13 +33,9 @@ const HomePage = () => {
   const [ratingData, setRatingData] = useState<any>([]);
   const [bannerManagement, setBannerManagement] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const initialValue = {
-    course: []
-  };
-  const edit = useEdit(initialValue);
-  let imgData = [];
   // const { searchValue } = useSearchVal();
   // const debValue = useDebounce(searchValue, 2000)
+
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
@@ -108,9 +103,6 @@ const HomePage = () => {
     fetchData();
   }, []);
 
-  const handleChangeItem = (itemIds: any[]) => {
-    edit.update({ course: itemIds });
-  };
 
   if (loading) {
     return <Loader />;
@@ -138,8 +130,6 @@ const HomePage = () => {
         >
           <UpComingSession
             courseDetails={courseDetails}
-            InitialItemVal={edit.getValue('course')}
-            handleChangeItem={handleChangeItem}
           />
         </Grid>
         <Grid

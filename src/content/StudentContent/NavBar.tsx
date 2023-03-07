@@ -89,6 +89,7 @@ function NavBar() {
             }}
             component={Link}
             to={studentDetails.id === 0 ? '/' : '/home/profilehome'}
+            onClick={() => setButtonValue(-1)}
           >
             <img
               src={logo}
@@ -116,6 +117,7 @@ function NavBar() {
             noWrap
             component={Link}
             to={studentDetails.id === 0 ? '/' : '/home/profilehome'}
+            onClick={() =>setButtonValue(-1)}
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
