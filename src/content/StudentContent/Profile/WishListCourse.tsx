@@ -11,151 +11,8 @@ import {
   LANGUAGE_ID
 } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
-import useWishliatInfo from 'src/hooks/useWishlistInfo';
+import useWishlistInfo from 'src/hooks/useWishlistInfo';
 import { toast } from 'react-hot-toast';
-
-const courses = [
-  {
-    id: 1,
-    mentor_id: 2,
-    mentor_name: 'Mentor',
-    category_id: 2,
-    category_name: 'FrontEnd English',
-    sub_category_id: 2,
-    sub_category_name: 'React',
-    course_level_id: 3,
-    course_level_name: 'Advanced',
-    image_url:
-      'https://smartlearn-video.s3.amazonaws.com/MicrosoftTeams-image%20%284%29.png',
-    chapter: 0,
-    section: 0,
-    course_type: 'webinar',
-    cost_type: 'Free',
-    amount: 0,
-    discount: 0,
-    starting_date: '2023-01-25',
-    ending_date: '2023-02-25',
-    duration: '2 hours',
-    course_mode: 'Online',
-    course_status: 'disabled',
-    starting_time: '01:12',
-    ending_time: '01:11',
-    meeting_location: '',
-    meeting_link: 'link',
-    created_at: '2023-02-09T07:46:29.756Z',
-    updated_at: '2023-02-09T19:41:14.823Z',
-    course_id: 1,
-    language_id: 1,
-    course_name: 'React English',
-    course_description: '.net',
-    requirements: 'undefined'
-  },
-  {
-    id: 2,
-    mentor_id: 2,
-    mentor_name: 'Mentor',
-    category_id: 2,
-    category_name: 'FrontEnd English',
-    sub_category_id: 2,
-    sub_category_name: 'React',
-    course_level_id: 3,
-    course_level_name: 'Biggner',
-    image_url:
-      'https://smartlearn-video.s3.amazonaws.com/MicrosoftTeams-image%20%284%29.png',
-    chapter: 0,
-    section: 0,
-    course_type: 'Live',
-    cost_type: 'paid',
-    amount: 0,
-    discount: 0,
-    starting_date: '2023-01-25',
-    ending_date: '2023-02-25',
-    duration: '2 hours',
-    course_mode: 'Online',
-    course_status: 'disabled',
-    starting_time: '01:12',
-    ending_time: '01:11',
-    meeting_location: '',
-    meeting_link: 'link',
-    created_at: '2023-02-09T07:46:29.756Z',
-    updated_at: '2023-02-09T19:41:14.823Z',
-    course_id: 1,
-    language_id: 1,
-    course_name: 'React English',
-    course_description: '.net',
-    requirements: 'undefined'
-  },
-  {
-    id: 3,
-    mentor_id: 2,
-    mentor_name: 'Mentor',
-    category_id: 2,
-    category_name: 'FrontEnd English',
-    sub_category_id: 2,
-    sub_category_name: 'React',
-    course_level_id: 3,
-    course_level_name: 'Intermediate',
-    image_url:
-      'https://smartlearn-video.s3.amazonaws.com/MicrosoftTeams-image%20%284%29.png',
-    chapter: 0,
-    section: 0,
-    course_type: 'webinar',
-    cost_type: 'paid',
-    amount: 0,
-    discount: 0,
-    starting_date: '2023-01-25',
-    ending_date: '2023-02-25',
-    duration: '2 hours',
-    course_mode: 'Online',
-    course_status: 'disabled',
-    starting_time: '01:12',
-    ending_time: '01:11',
-    meeting_location: 'Bangalore',
-    meeting_link: '',
-    created_at: '2023-02-09T07:46:29.756Z',
-    updated_at: '2023-02-09T19:41:14.823Z',
-    course_id: 1,
-    language_id: 1,
-    course_name: 'React English',
-    course_description: '.net',
-    requirements: 'undefined'
-  },
-  {
-    id: 4,
-    mentor_id: 2,
-    mentor_name: 'Mentor',
-    category_id: 2,
-    category_name: 'FrontEnd English',
-    sub_category_id: 2,
-    sub_category_name: 'React',
-    course_level_id: 3,
-    course_level_name: 'Advanced',
-    image_url:
-      'https://smartlearn-video.s3.amazonaws.com/MicrosoftTeams-image%20%284%29.png',
-    chapter: 0,
-    section: 0,
-    course_type: 'webinar',
-    cost_type: 'paid',
-    amount: 0,
-    discount: 0,
-    starting_date: '2023-01-25',
-    ending_date: '2023-02-25',
-    duration: '2 hours',
-    course_mode: 'Online',
-    course_status: 'disabled',
-    starting_time: '01:12',
-    ending_time: '01:11',
-    meeting_location: '',
-    meeting_link: 'link',
-    created_at: '2023-02-09T07:46:29.756Z',
-    updated_at: '2023-02-09T19:41:14.823Z',
-    course_id: 1,
-    language_id: 1,
-    course_name: 'React English',
-    course_description: '.net',
-    requirements: 'undefined'
-  }
-];
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -170,7 +27,7 @@ const WishListCourse = () => {
   const classes = useStyles();
   const userId = getUserId();
   const { i18n } = useTranslation();
-  const { wishlistDetails, updateWishlistInfo } = useWishliatInfo();
+  const { wishlistDetails, updateWishlistInfo } = useWishlistInfo();
   const [likedCourses, setLikedCourses] = useState<any>([]);
   let wishlistIds = [];
   wishlistDetails.filter((item) => wishlistIds.push(item.id));
@@ -223,8 +80,8 @@ const WishListCourse = () => {
             }
           }}
         >
-          {likedCourses.length
-            ? likedCourses.slice(0, 6)?.map((item, index) => {
+          {likedCourses?.length
+            ? likedCourses?.slice(0, 6)?.map((item, index) => {
                 return (
                   <Grid
                     key={index}
@@ -247,7 +104,7 @@ const WishListCourse = () => {
                           ? 'English'
                           : item.language_id === 2
                           ? 'Hindi'
-                          : 'Gjarati'
+                          : 'Gujarati'
                       }
                       date={`${item.starting_date} - ${item.ending_date}`}
                       zoomLink={item.meeting_link}

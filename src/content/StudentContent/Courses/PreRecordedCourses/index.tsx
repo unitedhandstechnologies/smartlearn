@@ -1,14 +1,12 @@
-import { memo, useCallback, useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { ButtonComp } from 'src/components';
 import { useTheme, makeStyles, Container } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import { WadeWarren } from '../../../../Assets/Images';
 import ApplyNow from '../ApplyNow';
 import { useNavigate } from 'react-router';
 import CourseBanner from '../CourseBanner';
-import { UserInfoContext } from 'src/contexts/UserContext';
 import useStudentInfo from 'src/hooks/useStudentInfo';
+
 const useStyles = makeStyles((theme) => ({
   button: {
     minWidth: 0,
@@ -93,9 +91,9 @@ const PreRecordedCourses = ({
         >
           <CourseBanner
             courseDetails={data}
-            courseTitle={data.course_name}
-            mentorName={data.mentor_name}
-            mentorProfile={mentorDetails.image_url}
+            courseTitle={data?.course_name}
+            mentorName={data?.mentor_name}
+            mentorProfile={mentorDetails?.image_url}
             bannerOuterContainerStyle={{
               minHeight: 360
             }}

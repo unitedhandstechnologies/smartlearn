@@ -25,31 +25,31 @@ const CourseRating = ({ course }) => {
   const reviews = [
     {
       name:
-        course.course_type === 'Recorded Course'
-          ? course.ratings || 4.5
-          : course.starting_date,
+        course?.course_type === 'Recorded Course'
+          ? course?.ratings || 4.5
+          : course?.starting_date,
       subText:
-        course.course_type === 'Recorded Course'
+        course?.course_type === 'Recorded Course'
           ? 'Rating'
-          : course.course_type === 'Masterclass'
+          : course?.course_type === 'Masterclass'
           ? 'Starts from '
           : 'Happening on',
-      img: course.course_type === 'Recorded Course' ? Star : CalenderImg
+      img: course?.course_type === 'Recorded Course' ? Star : CalenderImg
     },
     {
-      name: LANGUAGE_NAME[course.language_id] || 'English',
+      name: LANGUAGE_NAME[course?.language_id] || 'English',
       subText: 'Course language',
       img: chatIcon
     },
     {
-      name: COURSE_LEVEL_NAME[course.course_level_id] || 'Beginner',
+      name: COURSE_LEVEL_NAME[course?.course_level_id] || 'Beginner',
       subText: 'Difficulty level',
-      img: levelIcons[course.course_level_id]
+      img: levelIcons[course?.course_level_id]
     },
     {
-      name: course.course_mode || 'Offline',
+      name: course?.course_mode || 'Offline',
       subText: 'Study mode',
-      img: course.course_mode === 'Online' ? Online : OfflineImg
+      img: course?.course_mode === 'Online' ? Online : OfflineImg
     }
   ];
 
@@ -76,9 +76,9 @@ const CourseRating = ({ course }) => {
         return (
           <Grid key={index}>
             <ReviewBox
-              name={item.name}
-              subText={item.subText}
-              courseIcon={item.img}
+              name={item?.name}
+              subText={item?.subText}
+              courseIcon={item?.img}
               spacingRating={0}
               sx={{
                 boxShadow: 'white',

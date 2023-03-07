@@ -10,7 +10,7 @@ import { useEdit } from 'src/hooks/useEdit';
 import useUserInfo from 'src/hooks/useUserInfo';
 import { API_SERVICES } from 'src/Services';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
-import useWishliatInfo from 'src/hooks/useWishlistInfo';
+import useWishlistInfo from 'src/hooks/useWishlistInfo';
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -40,13 +40,13 @@ const UpComingSession = ({
   const [view, setView] = useState(6);
   const [selectedItemId, setSelectedItemId] = useState<number[]>([]);
   const { studentDetails } = useContext(StudentInfoContext);
-  const { wishlistDetails, updateWishlistInfo } = useWishliatInfo();
+  const { wishlistDetails, updateWishlistInfo } = useWishlistInfo();
   let isActive: any;
   let wishlistIds = [];
-  let wishlistData = courseDetails.filter((item) =>
-    wishlistDetails.some((val) => item.id === val.id)
+  let wishlistData = courseDetails?.filter((item) =>
+    wishlistDetails?.some((val) => item?.id === val.id)
   );
-  wishlistData.filter((item) => wishlistIds.push(item.id));
+  wishlistData?.filter((item) => wishlistIds?.push(item.id));
 
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
@@ -57,7 +57,7 @@ const UpComingSession = ({
     if (chipValue[0] === FILTER_CHIPS[0]) {
       return courses;
     } else if (chipValue[0] === FILTER_CHIPS[1]) {
-      const workShop = courseDetails.filter(
+      const workShop = courseDetails?.filter(
         (item) => item.course_type === COURSE_TYPE_NAME[4]
       );
       return workShop;
@@ -134,8 +134,7 @@ const UpComingSession = ({
     if (isUnselected(item)) {
       const deleteRes: any = await API_SERVICES.WishListService.delete(
         item?.course_id,
-        item?.id,
-        {}
+        item?.id
       );
       if (deleteRes?.status < HTTP_STATUSES.BAD_REQUEST) {
         console.log('deleteRes', deleteRes);

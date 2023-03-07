@@ -1,31 +1,8 @@
 import { Typography, useTheme, Avatar, makeStyles } from '@material-ui/core';
 import { Grid, Box } from '@mui/material';
 import React from 'react';
-import { chatIcon, Star, whiteLine, Intermediate, Online } from 'src/Assets';
+import { whiteLine } from 'src/Assets';
 import CourseRating from './CourseRating/Index';
-
-const review = [
-  {
-    name: '4.5',
-    subText: 'Ratings',
-    img: Star
-  },
-  {
-    name: 'English',
-    subText: 'Course language',
-    img: chatIcon
-  },
-  {
-    name: 'Intermediate',
-    subText: 'Difficulty level',
-    img: Intermediate
-  },
-  {
-    name: 'Online',
-    subText: 'Study mode',
-    img: Online
-  }
-];
 
 const useStyles = makeStyles((theme) => ({
   button: {

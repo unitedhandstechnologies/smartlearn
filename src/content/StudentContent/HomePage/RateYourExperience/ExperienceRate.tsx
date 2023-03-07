@@ -52,7 +52,7 @@ const RateYourExperience = ({ courseDetails }) => {
       let userData = { ...data, ...edit.edits };
       const response: any = await API_SERVICES.homeUserService.create(
         courseDetails?.student_id,
-        courseDetails.course_id,
+        courseDetails?.course_id,
         {
           data: userData,
           successMessage: 'Ratings submitted successfully!',

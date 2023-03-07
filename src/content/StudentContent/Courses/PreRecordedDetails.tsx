@@ -6,32 +6,45 @@ import PreRecordedCourses from './PreRecordedCourses';
 import CourseRight from './CourseRight';
 import { useLocation } from 'react-router';
 import { API_SERVICES } from 'src/Services';
-import { HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
+import {
+  DETECT_LANGUAGE,
+  HTTP_STATUSES,
+  LANGUAGE_ID
+} from 'src/Config/constant';
 import { toast } from 'react-hot-toast';
 import RateYourExperience from '../HomePage/RateYourExperience/ExperienceRate';
+import { useTranslation } from 'react-i18next';
 
 const PreRecordedDetails = () => {
   const theme = useTheme();
+  const { t, i18n } = useTranslation();
   const [loading, setLoading] = useState<boolean>(false);
   const [mentorDetails, setMentorDetails] = useState<any>([]);
   const [courseRating, setCourseRating] = useState<any>([]);
   const [averageRating, setAverageRating] = useState<number>();
   const { state }: any = useLocation();
-  const [lessons, setLessons] = useState<any>([]);
+  const [lessonData, setLessonData] = useState<any>([]);
+  const [sectionData, setSectionData] = useState<any[]>([]);
+  const [course, setCourse] = useState<any>([]);
   let data = { ...state?.formData };
   let totalDuration = 0;
-
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
       setMentorDetails([]);
       setCourseRating([]);
+      setCourse([]);
       const response: any = await Promise.all([
         API_SERVICES.adminUserService.getById(data.mentor_id),
         API_SERVICES.homeUserService.getAllCourseRating(data?.course_id),
         API_SERVICES.sectionAndLessonService.getAllLessonByCourseId(
           data?.course_id,
           LANGUAGE_ID.english
+        ),
+        API_SERVICES.courseManagementService.getAll(LANGUAGE_ID.english),
+        API_SERVICES.sectionAndLessonService.getAllSection(
+          data?.course_id,
+          DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
         )
       ]);
 
@@ -48,7 +61,22 @@ const PreRecordedDetails = () => {
       }
       if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[2]?.data?.Lessons?.length) {
-          setLessons(response[2]?.data?.Lessons);
+          setLessonData(response[2]?.data?.Lessons);
+        }
+      }
+      if (response[3]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (response[3]?.data?.courses?.length) {
+          const courses = response[3]?.data?.courses;
+          const filteredCourse = courses?.filter(
+            (item) => item.course_id === data?.course_id
+          );
+
+          setCourse(filteredCourse);
+        }
+      }
+      if (response[4]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (response[4]?.data?.Section?.length) {
+          setSectionData(response[4]?.data?.Section);
         }
       }
     } catch (err) {
@@ -58,7 +86,7 @@ const PreRecordedDetails = () => {
     }
   }, []);
 
-  lessons.forEach((element) => (totalDuration += element.duration));
+  lessonData.forEach((element) => (totalDuration += element.duration));
   if (totalDuration > 60) {
     totalDuration = totalDuration / 60;
   }
@@ -79,7 +107,7 @@ const PreRecordedDetails = () => {
     >
       <Grid item xs={12}>
         <PreRecordedCourses
-          data={data}
+          data={course[0]}
           mentorDetails={mentorDetails}
           totalDuration={totalDuration}
         />
@@ -94,7 +122,12 @@ const PreRecordedDetails = () => {
           }}
         >
           <Grid item xs={12} md={9} paddingTop={5}>
-            <CourseDescription courseDescription={data} />
+            <CourseDescription
+              courseDescription={course[0]}
+              courseId={data}
+              sectionData={sectionData}
+              lessonData={lessonData}
+            />
           </Grid>
           {courseRating?.length && (
             <Grid container item xs={12} md={3} paddingTop={'9%'}>
@@ -107,10 +140,10 @@ const PreRecordedDetails = () => {
         </Grid>
         {data?.student_enrolled_course_id ? (
           <Grid>
-            <RateYourExperience courseDetails={data} />
+            <RateYourExperience courseDetails={course[0]} />
           </Grid>
         ) : null}
-        {state.showZoomLink && data.course_mode === 'Online' ? (
+        {state.showZoomLink && course[0]?.course_mode === 'Online' ? (
           <Grid sx={{ paddingTop: '20px' }}>
             <Typography
               style={{
@@ -131,11 +164,11 @@ const PreRecordedDetails = () => {
                 }}
               >
                 <a
-                  href={data.meeting_link}
+                  href={data?.meeting_link}
                   rel="noopener noreferrer"
                   target={'_blank'}
                 >
-                  {data.meeting_link}
+                  {data?.meeting_link}
                 </a>
               </Typography>
             </Typography>

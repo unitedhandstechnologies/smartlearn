@@ -2,13 +2,11 @@ import { makeStyles, useTheme } from '@material-ui/core';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Grid } from '@mui/material';
 import { Heading, MuiCardComp, MultiSelectChip } from 'src/components';
-import CompletedCourse from './CompletedCourse';
 import ContinueLearning from './ContinueLearning';
-import WishListCourse from './WishListCourse';
 import { BasicStockIcon } from 'src/Assets';
 import { COURSE_TYPE_NAME, DETECT_LANGUAGE } from 'src/Config/constant';
-import { useLocation, useNavigate } from 'react-router';
-import useWishliatInfo from 'src/hooks/useWishlistInfo';
+import { useNavigate } from 'react-router';
+import useWishlistInfo from 'src/hooks/useWishlistInfo';
 import { getUserId } from 'src/Utils';
 import { useTranslation } from 'react-i18next';
 
@@ -20,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const FILTER_CHIPS = ['Active', 'Completed', 'Whishlist'];
+const FILTER_CHIPS = ['Active', 'Completed', 'Wishlist'];
 
 const MyLibrary = ({ enrollCourse }) => {
   const theme = useTheme();
@@ -29,7 +27,7 @@ const MyLibrary = ({ enrollCourse }) => {
   const { i18n } = useTranslation();
   const navigateTo = useNavigate();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
-  const { wishlistDetails, updateWishlistInfo } = useWishliatInfo();
+  const { wishlistDetails, updateWishlistInfo } = useWishlistInfo();
   let wishlistIds = [];
   wishlistDetails.filter((item) => wishlistIds.push(item.id));
 

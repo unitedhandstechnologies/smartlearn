@@ -60,7 +60,7 @@ const headingProps = {
   headerFontFamily: 'IBM Plex Serif'
 };
 
-const typographyStylProps = {
+const typographyStyleProps = {
   fontFamily: 'Switzer',
   fontSize: 18,
   fontWeight: 400,
@@ -69,54 +69,65 @@ const typographyStylProps = {
 };
 type CourseDescriptionProps = {
   courseDescription?: any;
+  courseId?: any;
+  sectionData?: any;
+  lessonData?: any;
 };
-const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
+const CourseDescription = ({
+  courseDescription,
+  courseId,
+  sectionData,
+  lessonData
+}: CourseDescriptionProps) => {
+  console.log(courseDescription, 'courseDescription');
   const theme = useTheme();
   const classes = useStyles();
   const { t, i18n } = useTranslation();
-  const [lessonData, setLessonData] = useState<any[]>([]);
-  const [sectionData, setSectionData] = useState<any[]>([]);
-  const [quizData, setQuizData] = useState<any[]>([]);
-  const [openVideoPreview, setOpenVideoPreview] = useState<any>({ open: false });
+  // const [lessonData, setLessonData] = useState<any[]>([]);
+  // const [sectionData, setSectionData] = useState<any[]>([]);
+  // const [quizData, setQuizData] = useState<any[]>([]);
+  const [openVideoPreview, setOpenVideoPreview] = useState<any>({
+    open: false
+  });
   const [openQuizModal, setOpenQuizModal] = useState<any>({
     open: false
   });
   const fetchData = async () => {
     try {
-      setLessonData([]);
-      setSectionData([]);
-      setQuizData([]);
+      // setLessonData([]);
+      // setSectionData([]);
+      // setQuizData([]);
       const response: any = await Promise.all([
         API_SERVICES.sectionAndLessonService.getAllLessonByCourseId(
-          courseDescription?.id,
+          courseId?.id,
           LANGUAGE_ID.english
         ),
         API_SERVICES.sectionAndLessonService.getAllSection(
-          courseDescription?.id,
+          courseId?.id,
           DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
-        ),
-        API_SERVICES.quizService.getAllQuiz(
-          LANGUAGE_ID.english,
-          courseDescription?.course_id
         )
+        // API_SERVICES.quizService.getAllQuiz(
+        //   LANGUAGE_ID.english,
+        //   courseDescription?.course_id
+        // )
       ]);
-      if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
-        if (response[0]?.data?.Lessons?.length) {
-          setLessonData(response[0]?.data?.Lessons);
-        }
-      }
-      if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
-        if (response[1]?.data?.Section?.length) {
-          setSectionData(response[1]?.data?.Section);
-        }
-      }
-      if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
-        {
-          if (response[2]?.data?.quiz?.length) {
-            setQuizData(response[2]?.data?.quiz);
-          }
-        }
-      }
+      // if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
+      //   if (response[0]?.data?.Lessons?.length) {
+      //     setLessonData(response[0]?.data?.Lessons);
+      //   }
+      // }
+      // if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
+      //   if (response[1]?.data?.Section?.length) {
+      //     setSectionData(response[1]?.data?.Section);
+      //   }
+      // }
+      // if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
+      //   {
+      //     if (response[2]?.data?.quiz?.length) {
+      //       setQuizData(response[2]?.data?.quiz);
+      //     }
+      //   }
+      // }
     } catch (err) {
       toast.error(err?.message);
     }
@@ -136,8 +147,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
     setOpenVideoPreview({
       open: true,
       dialogTitle: lessonName,
-      renderDialogContent: () =>
-        renderCont(videoUrl)
+      renderDialogContent: () => renderCont(videoUrl)
     });
   };
 
@@ -152,9 +162,9 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
   const getAccordionContents: any = React.useMemo(() => {
     return sectionData?.length
       ? sectionData?.map((item, index) => {
-        const sectionNumber = index;
+          const sectionNumber = index;
           let getLessonData: any = lessonData?.length
-            ? lessonData.filter(
+            ? lessonData?.filter(
                 (lessonItm) => lessonItm.section_id === item.section_id
               )
             : [];
@@ -187,7 +197,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                           alignItems="center"
                         >
                           <img
-                            src={item.video_url ? VideoImg : PdfImg}
+                            src={item?.video_url ? VideoImg : PdfImg}
                             width={'18px'}
                             height={'18px'}
                           />
@@ -199,24 +209,31 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                               color: '#78828C'
                             }}
                           >
-                            {item.lesson_name}
+                            {item?.lesson_name}
                           </Typography>
                           <Grid
                             item
                             xs
                             justifyContent="flex-end"
                             style={{ display: 'flex' }}
-                          >{ index===0 && sectionNumber===0 &&
-                            <ButtonComp
-                              style={{
-                                marginRight: '10px'
-                              }}
-                              buttonFontSize={12}
-                              height={"25px"}
-                              buttonTextColor={theme.Colors.whitePure}
-                              buttonText={'Preview'}
-                              onClickButton={()=>handleClickPreview(item.lesson_name, item.video_url)}                           
-                          ></ButtonComp>}
+                          >
+                            {index === 0 && sectionNumber === 0 && (
+                              <ButtonComp
+                                style={{
+                                  marginRight: '10px'
+                                }}
+                                buttonFontSize={12}
+                                height={'25px'}
+                                buttonTextColor={theme.Colors.whitePure}
+                                buttonText={'Preview'}
+                                onClickButton={() =>
+                                  handleClickPreview(
+                                    item?.lesson_name,
+                                    item?.video_url
+                                  )
+                                }
+                              ></ButtonComp>
+                            )}
                             <Typography
                               variant="h5"
                               style={{
@@ -225,7 +242,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                                 color: '#78828C'
                               }}
                             >
-                              {item.duration} min
+                              {item?.duration} min
                             </Typography>
                           </Grid>
                         </Grid>
@@ -257,7 +274,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
       <Grid item xs={12}>
         <Grid paddingTop={0}>
           <Heading headingText={'Course description'} {...headingProps} />
-          <Typography style={typographyStylProps}>
+          <Typography style={typographyStyleProps}>
             {courseDescription?.course_description}
           </Typography>
         </Grid>
@@ -293,7 +310,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
         <Grid paddingTop={4}>
           <Heading headingText={'Requirements'} {...headingProps} />
           <Grid item>
-            <Typography style={typographyStylProps}>
+            <Typography style={typographyStyleProps}>
               {courseDescription?.requirements}
             </Typography>
           </Grid>
@@ -310,13 +327,13 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                   />
                 </Grid>
                 <Grid item xs>
-                  <Typography style={typographyStylProps}>{item}</Typography>
+                  <Typography style={typographyStyleProps}>{item}</Typography>
                 </Grid>
               </Grid>
             );
           })}
         </Grid>
-        {courseDescription.course_type === COURSE_TYPE_NAME[6] && (
+        {courseDescription?.course_type === COURSE_TYPE_NAME[6] && (
           <Grid paddingTop={4}>
             <Heading headingText={'Topics in this course'} {...headingProps} />
             {courseDescription?.course_type === 'Recorded Course' && (
@@ -334,16 +351,16 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
         )}
       </Grid>
       {openVideoPreview && (
-          <DialogComp
-            open={true}
-            dialogClasses={{ paper: classes.dialogPaper }}
-            dialogTitleStyle={{
-              color: theme.Colors.blackMedium
-            }}
-            onClose={handleClosePreviewDialog}
-            {...openVideoPreview}
-          />
-        )}
+        <DialogComp
+          open={true}
+          dialogClasses={{ paper: classes.dialogPaper }}
+          dialogTitleStyle={{
+            color: theme.Colors.blackMedium
+          }}
+          onClose={handleClosePreviewDialog}
+          {...openVideoPreview}
+        />
+      )}
     </Grid>
   );
 };

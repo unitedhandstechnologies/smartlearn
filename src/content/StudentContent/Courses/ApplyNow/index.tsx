@@ -1,4 +1,4 @@
-import { Grid, styled, Typography, Box } from '@mui/material';
+import { Grid, styled, Typography } from '@mui/material';
 import React, { useContext } from 'react';
 import {
   ClockIcon,
@@ -18,7 +18,6 @@ import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import useCartInfo from 'src/hooks/useCartInfo';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const classes = {
   containerStyle: {
@@ -96,10 +95,10 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
   const navigateTo = useNavigate();
   const theme = useTheme();
   let tax = (course?.amount * 10) / 100;
-  let totalPrice = course?.amount - (course.discount / 100) * course.amount;
+  let totalPrice = course?.amount - (course?.discount / 100) * course?.amount;
 
   const handleClick = async () => {
-    if (course.course_type !== 'Workshop') {
+    if (course?.course_type !== 'Workshop') {
       if (studentDetails.id !== 0) {
         let data = {
           course_id: course?.course_id,
@@ -137,7 +136,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
     });
   };
   const data = [
-    course.course_type === 'Recorded Course' && {
+    course?.course_type === 'Recorded Course' && {
       name:
         duration !== undefined
           ? `${duration} ${timeType} of video tutorials`
@@ -148,7 +147,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
       name: '',
       img: DownloadSvg
     },
-    course.course_type === 'Recorded Course' && {
+    course?.course_type === 'Recorded Course' && {
       name: 'Lifetime access to the course',
       img: LifeTime
     },
@@ -172,7 +171,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
       }}
     >
       <Grid container justifyContent={'center'}>
-        {!course.student_enrolled_course_id && (
+        {!course?.student_enrolled_course_id && (
           <Grid
             container
             alignItems="center"
@@ -183,9 +182,9 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
             }}
           >
             <Grid>
-              {course.cost_type === 'PAID' ? (
+              {course?.cost_type === 'PAID' ? (
                 <Typography sx={{ ...classes.price }}>{`₹
-              ${totalPrice.toFixed()}`}</Typography>
+              ${totalPrice?.toFixed()}`}</Typography>
               ) : (
                 <Typography
                   sx={{
@@ -202,17 +201,17 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
 
             <Grid>
               <TypographyText sx={{ ...classes.mrp }}>
-                {course.cost_type === 'PAID' ? `₹${course.amount}` : ''}
+                {course?.cost_type === 'PAID' ? `₹${course?.amount}` : ''}
               </TypographyText>
             </Grid>
             <Grid>
               <TypographyText sx={{ ...classes.offer }}>
-                {course.cost_type === 'PAID' ? `${course.discount}% off` : ''}
+                {course?.cost_type === 'PAID' ? `${course?.discount}% off` : ''}
               </TypographyText>
             </Grid>
           </Grid>
         )}
-        {!course.student_enrolled_course_id && (
+        {!course?.student_enrolled_course_id && (
           <Grid
             xs={12}
             sx={{
@@ -225,8 +224,8 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           >
             <img
               src={
-                course.course_type === 'Workshop'
-                  ? course.course_mode.toLowerCase() === 'online'
+                course?.course_type === 'Workshop'
+                  ? course?.course_mode.toLowerCase() === 'online'
                     ? Online
                     : LocationIcon
                   : ClockIcon
@@ -237,20 +236,20 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
             <TypographyText
               sx={{
                 color:
-                  course.course_type === 'Workshop' ? '#78828C' : '#FF783C',
+                  course?.course_type === 'Workshop' ? '#78828C' : '#FF783C',
                 fontSize: theme.MetricsSizes.small_xx,
                 fontWeight: theme.fontWeight.mediumBold
               }}
             >
-              {course.course_type === 'Workshop'
-                ? course.course_mode.toLowerCase() === 'online'
-                  ? course.meeting_link
-                  : course.meeting_location
+              {course?.course_type === 'Workshop'
+                ? course?.course_mode.toLowerCase() === 'online'
+                  ? course?.meeting_link
+                  : course?.meeting_location
                 : '11 hours left at this price'}
             </TypographyText>
           </Grid>
         )}
-        {course.student_enrolled_course_id ? (
+        {course?.student_enrolled_course_id ? (
           <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
             <ButtonComp
               buttonText={'View Enrolled Courses'}
@@ -268,7 +267,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
             <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
               <ButtonComp
                 buttonText={
-                  course.course_type === 'Workshop'
+                  course?.course_type === 'Workshop'
                     ? 'Start learning'
                     : 'Apply Now'
                 }
@@ -282,28 +281,28 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
               />
             </Grid>
             <Grid
-            item
-            style={{
-              marginLeft: 5,
-              borderRadius: '6px',
-              background: '#F2F4F7',
-              height: "41px"
-            }}
-          >
-            <IconButton
+              item
               style={{
-                color:  '#3C78F0', //: theme.Colors.darkGrayishBlue,
-                background: 'transparent',
-                [theme.breakpoints.down('md')]: {
-                  display: 'none'
-                }
+                marginLeft: 5,
+                borderRadius: '6px',
+                background: '#F2F4F7',
+                height: '41px'
               }}
-              // onClick={() => handleOnClick(item,isActive)}
-              disableRipple
             >
-              {<FavoriteBorderIcon />}
-            </IconButton>
-          </Grid>
+              <IconButton
+                style={{
+                  color: '#3C78F0', //: theme.Colors.darkGrayishBlue,
+                  background: 'transparent',
+                  [theme.breakpoints.down('md')]: {
+                    display: 'none'
+                  }
+                }}
+                // onClick={() => handleOnClick(item,isActive)}
+                disableRipple
+              >
+                {<FavoriteBorderIcon />}
+              </IconButton>
+            </Grid>
           </>
         )}
 
@@ -320,14 +319,14 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           <TypographyText
             sx={{ fontSize: '18px', fontWeight: 600, paddingTop: 2 }}
           >
-            {course.course_type !== 'Workshop'
+            {course?.course_type !== 'Workshop'
               ? 'This course includes:'
               : 'This Workshop includes:'}
           </TypographyText>
         </Grid>
         {data?.map((item, index) => {
           return (
-            item.name !== '' && (
+            item?.name !== '' && (
               <Grid
                 container
                 sx={{
@@ -338,9 +337,9 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
                 }}
                 key={index}
               >
-                <img src={item.img} style={{ paddingRight: 10 }} alt="" />
+                <img src={item?.img} style={{ paddingRight: 10 }} alt="" />
                 <Typography sx={{ ...classes.textStyle }}>
-                  {item.name}
+                  {item?.name}
                 </Typography>{' '}
               </Grid>
             )
