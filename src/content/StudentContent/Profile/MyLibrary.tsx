@@ -38,6 +38,7 @@ const MyLibrary = ({ enrollCourse }) => {
   useEffect(() => {
     updateWishlistInfo(userId, DETECT_LANGUAGE[i18n.language]);
   }, []);
+
   const getCourses: any[] = useMemo(() => {
     //const activecCourses = [...enrollCourse];
     if (chipValue[0] === FILTER_CHIPS[0]) {
@@ -63,7 +64,12 @@ const MyLibrary = ({ enrollCourse }) => {
 
   const onClickCardImage = (rowData) => {
     navigateTo('/home/course-details', {
-      state: { formData: { ...rowData }, showZoomLink: true },
+      state: {
+        formData: { ...rowData },
+        backBtnTxt: 'All Courses',
+        backBtnRoute: '/home/profilehome',
+        showZoomLink: true
+      },
       replace: true
     });
   };
@@ -143,7 +149,8 @@ const MyLibrary = ({ enrollCourse }) => {
                   onClickCardImage={() => onClickCardImage(item)}
                   startLearning={false}
                   item={item}
-                  // isActive={wishlistIds}
+                  backBtnTxt={"All Courses"}
+                  backBtnRoute={"/home/profilehome"}      
                 />
               </Grid>
             );

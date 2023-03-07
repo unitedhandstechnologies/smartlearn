@@ -245,10 +245,26 @@ const UpComingCourse = ({
   };
 
   const onClickCardImage = (rowData) => {
-    navigateTo('/home/course-details', {
-      state: { formData: { ...rowData } },
-      replace: true
-    });
+    if (userId !== null) {
+      navigateTo('/home/course-details', {
+        state: {
+          formData: { ...rowData },
+          backBtnTxt: 'All Courses',
+          backBtnRoute: '/home/courses'
+        },
+        replace: true
+      });
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          formData: { ...rowData },
+          route: '/home/course-details',
+          backBtnTxt: 'All Courses',
+          backBtnRoute: '/home/courses'
+        },
+        replace: true
+      });
+    }
   };
 
   const getAllWishList = async () => {
@@ -272,7 +288,7 @@ const UpComingCourse = ({
   }, [courseDetails]);
 
   const handleIconClick = async (item, isActive) => {
-    if (userId !== 0) {
+    if (userId !== null) {
       let response: any;
       if (isActive) {
         response = await API_SERVICES.WishListService.delete(
@@ -292,8 +308,10 @@ const UpComingCourse = ({
     } else {
       navigateTo('/home/user-login', {
         state: {
-          details: { formData: item },
-          route: '/home/course-details'
+          formData: item,
+          route: '/home/course-details',
+          backBtnTxt: 'All Courses',
+          backBtnRoute: '/home/courses'
         },
         replace: true
       });
@@ -413,6 +431,8 @@ const UpComingCourse = ({
                       item={item}
                       isActive={whistList.includes(item.id)}
                       handleOnClick={handleIconClick}
+                      backBtnTxt={'All Courses'}
+                      backBtnRoute={'/home/courses'}
                     />
                   </Grid>
                 );

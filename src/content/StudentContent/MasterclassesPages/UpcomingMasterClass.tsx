@@ -28,7 +28,11 @@ import { useNavigate } from 'react-router';
 import SearchComponent from '../SearchComponent';
 import { getUserId } from 'src/Utils';
 import { API_SERVICES } from 'src/Services';
-import { DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
+import {
+  DETECT_LANGUAGE,
+  HTTP_STATUSES,
+  LANGUAGE_ID
+} from 'src/Config/constant';
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -213,10 +217,26 @@ const UpComingCourse = ({
   };
 
   const onClickCardImage = (rowData) => {
-    navigateTo('/home/course-details', {
-      state: { formData: { ...rowData } },
-      replace: true
-    });
+    if (userId !== null) {
+      navigateTo('/home/course-details', {
+        state: {
+          formData: { ...rowData },
+          backBtnTxt: 'All masterclasses',
+          backBtnRoute: '/home/masterclasses'
+        },
+        replace: true
+      });
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          formData: { ...rowData },
+          route: '/home/course-details',
+          backBtnTxt: 'All masterclasses',
+          backBtnRoute: '/home/masterclasses'
+        },
+        replace: true
+      });
+    }
   };
 
   const getAllWishList = async () => {
@@ -225,8 +245,8 @@ const UpComingCourse = ({
       DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
     );
     if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        const getIds = response.data.wishList.map((i) => i.course_id);
-        setWishList(getIds);
+      const getIds = response.data.wishList.map((i) => i.course_id);
+      setWishList(getIds);
     }
   };
 
@@ -240,7 +260,7 @@ const UpComingCourse = ({
   }, [courseDetails]);
 
   const handleIconClick = async (item, isActive) => {
-    if (userId !== 0) {
+    if (userId !== null) {
       let response: any;
       if (isActive) {
         response = await API_SERVICES.WishListService.delete(
@@ -260,8 +280,10 @@ const UpComingCourse = ({
     } else {
       navigateTo('/home/user-login', {
         state: {
-          details: { formData: item },
-          route: '/home/course-details'
+          formData: item,
+          route: '/home/course-details',
+          backBtnTxt: 'All masterclasses',
+          backBtnRoute: '/home/masterclasses'
         },
         replace: true
       });
@@ -320,7 +342,7 @@ const UpComingCourse = ({
               </Grid>
             </Grid>
             <Grid paddingBottom={2}>
-            <SearchComponent
+              <SearchComponent
                 onSearchValChange={onSearchValChange}
                 searchval={searchval}
                 handleClearSearchValue={handleClearSearchValue}
@@ -379,6 +401,8 @@ const UpComingCourse = ({
                       item={item}
                       isActive={whistList.includes(item.id)}
                       handleOnClick={handleIconClick}
+                      backBtnTxt={'All masterclasses'}
+                      backBtnRoute={'/home/masterclasses'}
                     />
                   </Grid>
                 );

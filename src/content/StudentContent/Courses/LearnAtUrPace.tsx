@@ -26,6 +26,7 @@ import ChipIconcomp from './ChipIconcomp';
 import ChipMenu from './ChipMenu';
 import { useNavigate } from 'react-router';
 import SearchComponent from '../SearchComponent';
+import { getUserId } from 'src/Utils';
 
 const useStyle = makeStyles((theme) => ({
   eachItem: {
@@ -112,6 +113,8 @@ const LearnAtUrPace = ({
   const [view, setView] = useState(6);
   const [searchValue, setSearchValue] = useState('');
   const navigateTo = useNavigate();
+  const userId = getUserId();
+
   const getSearchValue = (searchValue) => {
     setSearchValue(searchValue);
   };
@@ -170,10 +173,26 @@ const LearnAtUrPace = ({
   };
 
   const onClickCardImage = (rowData) => {
-    navigateTo('/home/course-details', {
-      state: { formData: { ...rowData } },
-      replace: true
-    });
+    if (userId !== null) {
+      navigateTo('/home/course-details', {
+        state: {
+          formData: { ...rowData },
+          backBtnTxt: 'All Courses',
+          backBtnRoute: '/home/courses'
+        },
+        replace: true
+      });
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          formData: { ...rowData },
+          route: '/home/course-details',
+          backBtnTxt: 'All Courses',
+          backBtnRoute: '/home/courses'
+        },
+        replace: true
+      });
+    }
   };
 
   const getFilterCourse = useMemo(() => {
@@ -308,6 +327,8 @@ const LearnAtUrPace = ({
                     prize={item.amount}
                     discount={item.discount}
                     item={item}
+                    backBtnTxt={'All Courses'}
+                    backBtnRoute={'/home/courses'}
                     //progressValue={parseInt(item.level)}
                   />
                 </Grid>
@@ -332,7 +353,7 @@ const LearnAtUrPace = ({
                 <img src={ArrowNext} style={{ marginLeft: '8px' }} />
               ) : null
             }
-          onClickButton={handleView}
+            onClickButton={handleView}
           />
         </Grid>
       )}

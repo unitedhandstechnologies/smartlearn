@@ -95,7 +95,9 @@ type Props = {
   discount?: number;
   item?: any;
   isActive?: boolean;
-  handleOnClick?: (item,isActive) => void;
+  handleOnClick?: (item, isActive) => void;
+  backBtnTxt?: string;
+  backBtnRoute?: string;
 };
 const MuiCardComp = ({
   imgUrl,
@@ -123,7 +125,9 @@ const MuiCardComp = ({
   nextClass,
   item,
   isActive,
-  handleOnClick
+  handleOnClick,
+  backBtnTxt,
+  backBtnRoute
 }: Props) => {
   const theme = useTheme();
   const navigateTo = useNavigate();
@@ -139,8 +143,10 @@ const MuiCardComp = ({
         height: '100%',
         ...cardStyle
       }}
-      onMouseEnter={()=>{setIsVisible(true)}}
-      onMouseLeave={()=>setIsVisible(false)}
+      onMouseEnter={() => {
+        setIsVisible(true);
+      }}
+      onMouseLeave={() => setIsVisible(false)}
     >
       <CardActionArea onClick={onClickCardImage} sx={{ background: 'black' }}>
         {imgUrl ? (
@@ -300,7 +306,7 @@ const MuiCardComp = ({
           }}
         >
           <Grid item style={{ marginRight: 10 }}>
-            {leftText === 'PAID'  ? (
+            {leftText === 'PAID' ? (
               <ListItemCell
                 title={
                   <Grid container style={{ gap: 5 }}>
@@ -343,14 +349,20 @@ const MuiCardComp = ({
               onClickButton={() => {
                 if (studentDetails.id !== 0) {
                   navigateTo('/home/course-details', {
-                    state: { formData: item },
+                    state: {
+                      formData: item,
+                      backBtnTxt: backBtnTxt,
+                      backBtnRoute: backBtnRoute
+                    },
                     replace: true
                   });
                 } else {
                   navigateTo('/home/user-login', {
                     state: {
                       formData: item,
-                      route: '/home/course-details'
+                      route: '/home/course-details',
+                      backBtnTxt: backBtnTxt,
+                      backBtnRoute: backBtnRoute
                     },
                     replace: true
                   });
@@ -373,7 +385,7 @@ const MuiCardComp = ({
                   display: 'none'
                 }
               }}
-              onClick={() => handleOnClick(item,isActive)}
+              onClick={() => handleOnClick(item, isActive)}
               disableRipple
             >
               {isActive ? <FavoriteIcon /> : <FavoriteBorderIcon />}

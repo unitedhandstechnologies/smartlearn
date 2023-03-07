@@ -14,6 +14,7 @@ import MentorProfile from './MentorProfile';
 import { useLocation, useNavigate } from 'react-router';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { getUserId } from 'src/Utils';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -29,6 +30,7 @@ const MentorCreatedCourses = () => {
   const { state }: any = useLocation();
   const navigateTo = useNavigate();
   const mentorCategory = [];
+  const userId = getUserId();
 
   state?.courses
     ?.filter((crs) => crs?.mentor_id === state?.id)
@@ -49,11 +51,27 @@ const MentorCreatedCourses = () => {
       course?.mentor_id === state?.id
   );
 
-  const onClickCardImage = (item) => {
-    navigateTo('/home/course-details', {
-      state: { formData: item },
-      replace: true
-    });
+  const onClickCardImage = (rowData) => {
+    if (userId !== null) {
+      navigateTo('/home/course-details', {
+        state: {
+          formData: { ...rowData },
+          backBtnTxt: 'All masterclasses',
+          backBtnRoute: '/home/masterclasses'
+        },
+        replace: true
+      });
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          formData: { ...rowData },
+          route: '/home/course-details',
+          backBtnTxt: 'All masterclasses',
+          backBtnRoute: '/home/masterclasses'
+        },
+        replace: true
+      });
+    }
   };
 
   return (
@@ -174,6 +192,8 @@ const MentorCreatedCourses = () => {
                         prize={item.amount}
                         discount={item.discount}
                         item={item}
+                        backBtnTxt={'All masterclasses'}
+                        backBtnRoute={'/home/masterclasses'}
                       />
                     </Grid>
                   );
@@ -240,6 +260,8 @@ const MentorCreatedCourses = () => {
                         prize={item.amount}
                         discount={item.discount}
                         item={item}
+                        backBtnTxt={'All masterclasses'}
+                        backBtnRoute={'/home/masterclasses'}
                       />
                     </Grid>
                   );

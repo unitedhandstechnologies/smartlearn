@@ -65,7 +65,11 @@ const MoreUpcomingSession = ({
 
   const onClickCardImage = (rowData) => {
     navigateTo('/home/course-details', {
-      state: { formData: { ...rowData } },
+      state: {
+        formData: { ...rowData },
+        backBtnTxt: 'All Courses',
+        backBtnRoute: '/home/profilehome'
+      },
       replace: true
     });
   };
@@ -94,7 +98,7 @@ const MoreUpcomingSession = ({
   }, []);
 
   const handleIconClick = async (item, isActive) => {
-    if (userId !== 0) {
+    if (userId !== null) {
       let response: any;
       if (isActive) {
         response = await API_SERVICES.WishListService.delete(
@@ -114,9 +118,11 @@ const MoreUpcomingSession = ({
     } else {
       navigateTo('/home/user-login', {
         state: {
-          details: { formData: item },
-          route: '/home/course-details'
-        },
+          formData: item,
+          route: '/home/course-details',
+          backBtnTxt: 'All Courses',
+          backBtnRoute: '/home/profilehome'
+          },
         replace: true
       });
     }
@@ -208,6 +214,8 @@ const MoreUpcomingSession = ({
                       item={item}
                       isActive={whistList.includes(item.id)}
                       handleOnClick={handleIconClick}
+                      backBtnTxt={"All Courses"}
+                      backBtnRoute={"/home/profilehome"}
                     />
                   </Grid>
                 );

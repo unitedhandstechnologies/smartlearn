@@ -13,6 +13,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import useWishlistInfo from 'src/hooks/useWishlistInfo';
 import { toast } from 'react-hot-toast';
+import { useNavigate } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -29,6 +30,8 @@ const WishListCourse = () => {
   const { i18n } = useTranslation();
   const { wishlistDetails, updateWishlistInfo } = useWishlistInfo();
   const [likedCourses, setLikedCourses] = useState<any>([]);
+  const navigateTo = useNavigate();
+
   let wishlistIds = [];
   wishlistDetails.filter((item) => wishlistIds.push(item.id));
 
@@ -54,7 +57,17 @@ const WishListCourse = () => {
     fetchData();
   }, []);
 
-  const onClickCardImage = (rowData) => {};
+  const onClickCardImage = (rowData) => {
+    navigateTo('/home/course-details', {
+      state: {
+        formData: { ...rowData },
+        backBtnTxt: 'All Courses',
+        backBtnRoute: '/home/profilehome'
+      },
+      replace: true
+    });
+  };
+
   return (
     <Container
       maxWidth="lg"
@@ -114,7 +127,8 @@ const WishListCourse = () => {
                       prize={item.amount}
                       onClickCardImage={() => onClickCardImage(item)}
                       item={item}
-                      // isActive={wishlistIds}
+                      backBtnTxt={"All Courses"}
+                      backBtnRoute={"/home/profilehome"}          
                     />
                   </Grid>
                 );

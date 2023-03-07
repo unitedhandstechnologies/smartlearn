@@ -52,10 +52,15 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
 
   const onClickCardImage = (rowData) => {
     navigateTo('/home/course-details', {
-      state: { formData: { ...rowData } },
+      state: {
+        formData: { ...rowData },
+        backBtnTxt: 'All Courses',
+        backBtnRoute: '/home/profilehome'
+      },
       replace: true
     });
   };
+  
   const enrolledCourse = courseDetails.filter(
     (item) =>
       item.course_type === COURSE_TYPE_NAME[1] ||
@@ -142,6 +147,8 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
                   onClickCardImage={() => onClickCardImage(item)}
                   startLearning={false}
                   item={item}
+                  backBtnTxt={"All Courses"}
+                  backBtnRoute={"/home/profilehome"}      
                 />
               </Grid>
             );

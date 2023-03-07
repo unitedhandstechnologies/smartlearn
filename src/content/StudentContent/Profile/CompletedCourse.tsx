@@ -205,6 +205,8 @@ const CompletedCourse = () => {
               subCategory={item.sub_category_name}
               courseType={item.course_type}
               item={item}
+              backBtnTxt={"All Courses"}
+              backBtnRoute={"/home/profilehome"}  
             />
           );
         })}

@@ -54,12 +54,16 @@ const CatchFrom = ({ courseDetails }: CourseProps) => {
   // }, [chipValue, courseDetails]);
 
   const onClickCardImage = (rowData) => {
-    if (rowData.course_type === COURSE_TYPE_NAME[6]) {
+    // if (rowData.course_type === COURSE_TYPE_NAME[6]) {
       navigateTo('/home/course-details', {
-        state: { formData: { ...rowData } },
-        replace: true
+        state: {
+          formData: { ...rowData },
+          backBtnTxt: 'All Courses',
+          backBtnRoute: '/home/profilehome'
+        },
+          replace: true
       });
-    }
+    // }
   };
 
   return (
@@ -141,6 +145,8 @@ const CatchFrom = ({ courseDetails }: CourseProps) => {
                   startLearning={false}
                   item={item}
                   progressValue={parseInt(item.level)}
+                  backBtnTxt={"All Courses"}
+                  backBtnRoute={"/home/profilehome"}  
                 />
               </Grid>
             );

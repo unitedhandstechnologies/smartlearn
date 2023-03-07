@@ -116,6 +116,8 @@ const PreRecordedDetails = () => {
             data={data}
             mentorDetails={mentorDetails}
             totalDuration={totalDuration}
+            backBtnRoute={state?.backBtnRoute}
+            backBtnTxt={state?.backBtnTxt}
           />
         </Grid>
         <Container>

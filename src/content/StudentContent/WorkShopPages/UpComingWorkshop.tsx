@@ -15,7 +15,12 @@ import {
 } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
 import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
-import { COURSE_TYPE_NAME, DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
+import {
+  COURSE_TYPE_NAME,
+  DETECT_LANGUAGE,
+  HTTP_STATUSES,
+  LANGUAGE_ID
+} from 'src/Config/constant';
 import { useNavigate } from 'react-router';
 import SearchComponent from '../SearchComponent';
 import { getUserId } from 'src/Utils';
@@ -220,9 +225,23 @@ const UpComingWorkshop = ({
   }, [chipValue, workshopDetails]);
 
   const onClickCardImage = (rowData) => {
-    if (rowData.course_type === COURSE_TYPE_NAME[4]) {
+    if (userId !== null) {
       navigateTo('/home/course-details', {
-        state: { formData: { ...rowData } },
+        state: {
+          formData: { ...rowData },
+          backBtnTxt: 'All WorkShops',
+          backBtnRoute: '/home/workshops'
+        },
+        replace: true
+      });
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          formData: { ...rowData },
+          route: '/home/course-details',
+          backBtnTxt: 'All WorkShops',
+          backBtnRoute: '/home/workshops'
+        },
         replace: true
       });
     }
@@ -234,8 +253,8 @@ const UpComingWorkshop = ({
       DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
     );
     if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        const getIds = response.data.wishList.map((i) => i.course_id);
-        setWishList(getIds);
+      const getIds = response.data.wishList.map((i) => i.course_id);
+      setWishList(getIds);
     }
   };
 
@@ -244,7 +263,7 @@ const UpComingWorkshop = ({
   }, []);
 
   const handleIconClick = async (item, isActive) => {
-    if (userId !== 0) {
+    if (userId !== null) {
       let response: any;
       if (isActive) {
         response = await API_SERVICES.WishListService.delete(
@@ -264,8 +283,10 @@ const UpComingWorkshop = ({
     } else {
       navigateTo('/home/user-login', {
         state: {
-          details: { formData: item },
-          route: '/home/course-details'
+          formData: item,
+          route: '/home/course-details',
+          backBtnTxt: 'All WorkShops',
+          backBtnRoute: '/home/workshops'
         },
         replace: true
       });
@@ -376,6 +397,8 @@ const UpComingWorkshop = ({
                     item={item}
                     isActive={whistList.includes(item.id)}
                     handleOnClick={handleIconClick}
+                    backBtnTxt={'All WorkShops'}
+                    backBtnRoute={'/home/workshops'}
                   />
                 </Grid>
               );

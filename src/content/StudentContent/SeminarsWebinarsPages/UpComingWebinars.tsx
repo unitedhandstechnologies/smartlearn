@@ -28,7 +28,12 @@ import Offline from '../../../Assets/Images/Offline.svg';
 import Language from '../../../Assets/Images/Language.svg';
 import ChipIconcomp from '../Courses/ChipIconcomp';
 import ChipMenu from '../Courses/ChipMenu';
-import { COURSE_TYPE_NAME, DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
+import {
+  COURSE_TYPE_NAME,
+  DETECT_LANGUAGE,
+  HTTP_STATUSES,
+  LANGUAGE_ID
+} from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import SearchComponent from '../SearchComponent';
@@ -217,10 +222,26 @@ const UpComingWebinars = ({
   };
 
   const onClickCardImage = (rowData) => {
-    navigateTo('/home/course-details', {
-      state: { formData: { ...rowData } },
-      replace: true
-    });
+    if (userId !== null) {
+      navigateTo('/home/course-details', {
+        state: {
+          formData: { ...rowData },
+          backBtnTxt: 'All Webinars',
+          backBtnRoute: '/home/seminars-webinars'
+        },
+        replace: true
+      });
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          formData: { ...rowData },
+          route: '/home/course-details',
+          backBtnTxt: 'All Webinars',
+          backBtnRoute: '/home/seminars-webinars'
+        },
+        replace: true
+      });
+    }
   };
 
   const getAllWishList = async () => {
@@ -229,8 +250,8 @@ const UpComingWebinars = ({
       DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
     );
     if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        const getIds = response.data.wishList.map((i) => i.course_id);
-        setWishList(getIds);
+      const getIds = response.data.wishList.map((i) => i.course_id);
+      setWishList(getIds);
     }
   };
 
@@ -244,7 +265,7 @@ const UpComingWebinars = ({
   }, [courseDetails]);
 
   const handleIconClick = async (item, isActive) => {
-    if (userId !== 0) {
+    if (userId !== null) {
       let response: any;
       if (isActive) {
         response = await API_SERVICES.WishListService.delete(
@@ -264,8 +285,10 @@ const UpComingWebinars = ({
     } else {
       navigateTo('/home/user-login', {
         state: {
-          details: { formData: item },
-          route: '/home/course-details'
+          formData: item,
+          route: '/home/course-details',
+          backBtnTxt: 'All Webinars',
+          backBtnRoute: '/home/seminars-webinars'
         },
         replace: true
       });
@@ -383,6 +406,8 @@ const UpComingWebinars = ({
                       item={item}
                       isActive={whistList.includes(item.id)}
                       handleOnClick={handleIconClick}
+                      backBtnTxt={'All Webinars'}
+                      backBtnRoute={'/home/seminars-webinars'}
                     />
                   </Grid>
                 );
@@ -390,23 +415,25 @@ const UpComingWebinars = ({
             : null}
         </Grid>
         <Grid item>
-         {courses.length > 6 && <ButtonComp
-            style={{ border: '1.5px solid #3C78F0' }}
-            variant="outlined"
-            buttonFontFamily="Switzer"
-            buttonFontSize={theme.MetricsSizes.regular}
-            backgroundColor={theme.Colors.white}
-            buttonTextColor={'#3C78F0'}
-            btnBorderRadius={'4px'}
-            buttonText={view === 6 ? 'View All' : 'Back'}
-            btnWidth="100%"
-            iconImage={
-              view === 6 ? (
-                <img src={ArrowNext} style={{ marginLeft: '8px' }} />
-              ) : null
-            }
-            onClick={handleView}
-          />}
+          {courses.length > 6 && (
+            <ButtonComp
+              style={{ border: '1.5px solid #3C78F0' }}
+              variant="outlined"
+              buttonFontFamily="Switzer"
+              buttonFontSize={theme.MetricsSizes.regular}
+              backgroundColor={theme.Colors.white}
+              buttonTextColor={'#3C78F0'}
+              btnBorderRadius={'4px'}
+              buttonText={view === 6 ? 'View All' : 'Back'}
+              btnWidth="100%"
+              iconImage={
+                view === 6 ? (
+                  <img src={ArrowNext} style={{ marginLeft: '8px' }} />
+                ) : null
+              }
+              onClick={handleView}
+            />
+          )}
         </Grid>
       </Grid>
       <ChipMenu

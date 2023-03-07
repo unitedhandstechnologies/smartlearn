@@ -5,7 +5,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ApplyNow from '../ApplyNow';
 import { useNavigate } from 'react-router';
 import CourseBanner from '../CourseBanner';
-import useStudentInfo from 'src/hooks/useStudentInfo';
+// import useStudentInfo from 'src/hooks/useStudentInfo';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -24,64 +24,44 @@ type PreRecordedCourseProps = {
   mentorDetails?: any;
   totalDuration?: number;
   course?: any;
+  backBtnTxt?: string;
+  backBtnRoute?: string;
 };
 
 const PreRecordedCourses = ({
   data,
   mentorDetails,
   totalDuration,
-  course
+  course,
+  backBtnTxt,
+  backBtnRoute
 }: PreRecordedCourseProps) => {
   const theme = useTheme();
   const classes = useStyles();
   const navigateTo = useNavigate();
-  const { studentDetails } = useStudentInfo();
 
   return (
     <Container>
-      {studentDetails.id != 0 ? (
-        <ButtonComp
-          buttonText={'All courses'}
-          startIcon={
-            <span style={{ color: theme.Colors.secondary, paddingTop: 7 }}>
-              <ArrowBackIcon />
-            </span>
-          }
-          backgroundColor={'transparent'}
-          buttonTextColor={'#78828C'}
-          buttonFontFamily={'Switzer'}
-          buttonFontSize={18}
-          btnWidth={'fit-content'}
-          height={'40px'}
-          classes={{ root: classes.button }}
-          onClickButton={() =>
-            navigateTo('/home/profilehome', {
-              replace: true
-            })
-          }
-        />
-      ) : (
-        <ButtonComp
-          buttonText={'All courses'}
-          startIcon={
-            <span style={{ color: theme.Colors.secondary, paddingTop: 7 }}>
-              <ArrowBackIcon />
-            </span>
-          }
-          backgroundColor={'transparent'}
-          buttonTextColor={'#78828C'}
-          buttonFontFamily={'Switzer'}
-          buttonFontSize={18}
-          btnWidth={'fit-content'}
-          height={'40px'}
-          classes={{ root: classes.button }}
-          onClickButton={() =>
-            navigateTo('/home', {
-              replace: true
-            })
-          }
-        />
-      )}
+      <ButtonComp
+        buttonText={backBtnTxt || "All Courses"}
+        startIcon={
+          <span style={{ color: theme.Colors.secondary }}>
+            <ArrowBackIcon />
+          </span>
+        }
+        backgroundColor={'transparent'}
+        buttonTextColor={'#78828C'}
+        buttonFontFamily={'Switzer'}
+        buttonFontSize={18}
+        btnWidth={'fit-content'}
+        height={'40px'}
+        classes={{ root: classes.button }}
+        onClickButton={() =>
+          navigateTo(backBtnRoute || "/home", {
+            replace: true
+          })
+        }
+      />
       <Grid sx={{ position: 'relative' }}>
         <Grid
           sx={{

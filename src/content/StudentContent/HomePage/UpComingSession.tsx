@@ -4,7 +4,12 @@ import { Grid, Container } from '@mui/material';
 import { ArrowNext, BasicStockIcon, LineBarIcon } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
 import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
-import { COURSE_TYPE_NAME, DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
+import {
+  COURSE_TYPE_NAME,
+  DETECT_LANGUAGE,
+  HTTP_STATUSES,
+  LANGUAGE_ID
+} from 'src/Config/constant';
 import { useLocation, useNavigate } from 'react-router';
 import { useEdit } from 'src/hooks/useEdit';
 import useUserInfo from 'src/hooks/useUserInfo';
@@ -27,9 +32,7 @@ const FILTER_CHIPS = ['Courses', 'Workshops', 'Seminars/Webinars'];
 type CourseProps = {
   courseDetails?: any[];
 };
-const UpComingSession = ({
-  courseDetails = [],
-}: CourseProps) => {
+const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyles();
   const { state }: any = useLocation();
@@ -71,10 +74,26 @@ const UpComingSession = ({
   };
 
   const onClickCardImage = (rowData) => {
-    navigateTo('/home/course-details', {
-      state: { formData: { ...rowData } },
-      replace: true
-    });
+    if (userId !== null) {
+      navigateTo('/home/course-details', {
+        state: {
+          formData: { ...rowData },
+          backBtnTxt: 'All Courses',
+          backBtnRoute: '/home/profilehome'
+        },
+        replace: true
+      });
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          formData: { ...rowData },
+          route: '/home/course-details',
+          backBtnTxt: 'All Courses',
+          backBtnRoute: '/home/profilehome'
+        },
+        replace: true
+      });
+    }
   };
 
   const getAllWishList = async () => {
@@ -83,8 +102,8 @@ const UpComingSession = ({
       DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
     );
     if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        const getIds = response.data.wishList.map((i) => i.course_id);
-        setWishList(getIds);
+      const getIds = response.data.wishList.map((i) => i.course_id);
+      setWishList(getIds);
     }
   };
 
@@ -113,14 +132,15 @@ const UpComingSession = ({
     } else {
       navigateTo('/home/user-login', {
         state: {
-          details: { formData: item },
-          route: '/home/course-details'
+          formData: item,
+          route: '/home/course-details',
+          backBtnTxt: 'All Courses',
+          backBtnRoute: '/home/profilehome'
         },
         replace: true
       });
     }
   };
-
 
   return (
     <Container
@@ -215,6 +235,8 @@ const UpComingSession = ({
                       item={item}
                       isActive={whistList.includes(item.id)}
                       handleOnClick={handleIconClick}
+                      backBtnTxt={'All Courses'}
+                      backBtnRoute={'/home/profilehome'}
                     />
                   </Grid>
                 );
