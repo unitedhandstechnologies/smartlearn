@@ -76,7 +76,10 @@ const ProfileDetails = () => {
     email_id: studentDetails.email_id || '',
     password: '',
     confirmPassword: '',
-    code: '91'
+    code: '91',
+    social_information_url: studentDetails.social_information_url || '',
+    social_information_url_2: studentDetails.social_information_url_2 || '',
+    social_information_url_3: studentDetails.social_information_url_3 || ''
   };
   const edit = useEdit(initialValues);
   const [isEdit, setIsEdit] = useState<number>(0);
@@ -372,6 +375,57 @@ const ProfileDetails = () => {
               name="email_id"
               disabled={isEdit !== 4}
               iconEnd={<EditComp btnId={4} />}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextInputComponent
+              inputLabel="FaceBook Link"
+              labelColor={'#78828C'}
+              borderColor={'#3C78F0'}
+              value={edit.getValue('social_information_url')}
+              inputRef={(ele) => {
+                if (ele) {
+                  ele.focus();
+                }
+              }}
+              onChange={handleChange}
+              name="social_information_url"
+              disabled={isEdit !== 5}
+              iconEnd={<EditComp btnId={5} />}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextInputComponent
+              inputLabel="Instagram Link"
+              labelColor={'#78828C'}
+              borderColor={'#3C78F0'}
+              value={edit.getValue('social_information_url_2')}
+              inputRef={(ele) => {
+                if (ele) {
+                  ele.focus();
+                }
+              }}
+              onChange={handleChange}
+              name="social_information_url_2"
+              disabled={isEdit !== 6}
+              iconEnd={<EditComp btnId={6} />}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextInputComponent
+              inputLabel="Twitter Link "
+              labelColor={'#78828C'}
+              borderColor={'#3C78F0'}
+              value={edit.getValue('social_information_url_3')}
+              inputRef={(ele) => {
+                if (ele) {
+                  ele.focus();
+                }
+              }}
+              onChange={handleChange}
+              name="social_information_url_3"
+              disabled={isEdit !== 7}
+              iconEnd={<EditComp btnId={7} />}
             />
           </Grid>
         </Grid>

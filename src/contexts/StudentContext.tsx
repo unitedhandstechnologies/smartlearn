@@ -17,6 +17,8 @@ export type StudentDetails = {
   qualification: string;
   role: string;
   social_information_url: string;
+  social_information_url_2: string;
+  social_information_url_3: string;
   user_type: number;
   status_id: number;
   user_name: string;
@@ -45,6 +47,8 @@ export const INITIAL_STATE: StudentInfo = {
     qualification: '',
     role: '',
     social_information_url: '',
+    social_information_url_2: '',
+    social_information_url_3: '',
     user_type: 0,
     status_id: 0,
     user_name: '',
