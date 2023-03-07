@@ -51,42 +51,61 @@ const UserLogin = () => {
         data
       });
       if (response?.data.users[0].user_type === USER_TYPE_ID.student) {
-        if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-          i18n.changeLanguage('en');
-          localStorage.setItem('token', JSON.stringify(response?.data?.token));
-
-          if (response?.data?.users?.length) {
+        if (response?.data.users[0].is_verify === true) {
+          if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+            i18n.changeLanguage('en');
             localStorage.setItem(
-              'userId',
-              JSON.stringify(response?.data.users[0].id)
+              'token',
+              JSON.stringify(response?.data?.token)
             );
-            const getUserRes: any = await API_SERVICES.adminUserService.getById(
-              response?.data.users[0].id
-            );
-            if (getUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-              updateStudentInfo((prevState: any) => {
-                return { ...prevState, ...getUserRes?.data?.user };
-              });
-              updateCartInfo(getUserRes?.data?.user?.id);
-              updateWishlistInfo(
-                getUserRes?.data?.user?.id,
-                getUserRes?.data?.user?.language_id
+
+            if (response?.data?.users?.length) {
+              localStorage.setItem(
+                'userId',
+                JSON.stringify(response?.data.users[0].id)
               );
+              const getUserRes: any =
+                await API_SERVICES.adminUserService.getById(
+                  response?.data.users[0].id
+                );
+              if (getUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+                updateStudentInfo((prevState: any) => {
+                  return { ...prevState, ...getUserRes?.data?.user };
+                });
+                updateCartInfo(getUserRes?.data?.user?.id);
+                updateWishlistInfo(
+                  getUserRes?.data?.user?.id,
+                  getUserRes?.data?.user?.language_id
+                );
+              }
+            }
+            toast.success('Profile logged in successfully!');
+            if (state) {
+              navigateTo(state.route, {
+                state: { ...state },
+                replace: true
+              });
+            } else {
+              navigateTo('/home/profilehome', { replace: true });
             }
           }
-          toast.success('Profile logged in successfully!');
-          if (state) {
-            navigateTo(state.route, {
-              state: { ...state },
-              replace: true
-            });
-          } else {
-            navigateTo('/home/profilehome', { replace: true });
-          }
+        } else {
+          toast.error(
+            'you are not verified user,again resend verification link'
+          );
+          navigateTo('/home/afterRegMessage', {
+            state: {
+              data: {
+                email_id: response?.data.users[0].email_id,
+                first_name: response?.data.users[0].first_name,
+                id: response?.data.users[0].id
+              }
+            },
+            replace: true
+          });
         }
       } else {
         toast.error('You are not a Student Users');
-        //navigateTo('/admin/login');
       }
     } catch (e) {
       console.log(e, '---login err-----');

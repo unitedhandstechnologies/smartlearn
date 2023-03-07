@@ -35,7 +35,7 @@ export const adminUserService = {
     return apiRequest(options);
   },
 
-  getAllUsers :async (params: any = {}) => {
+  getAllUsers: async (params: any = {}) => {
     const options = await apiOptions({
       url: `${Config.BASE_URL}/api/getAllUsers`,
       method: 'get',
@@ -51,7 +51,13 @@ export const adminUserService = {
     });
     return apiRequest(options);
   },
-
+  resendMail: async (id: number) => {
+    const options = await apiOptions({
+      url: `${Config.BASE_URL}/api/resendMail/user/${id}`,
+      method: 'get'
+    });
+    return apiRequest(options);
+  },
   update: async (
     id: number,
     { data, successMessage, failureMessage }: UserDetailsProp

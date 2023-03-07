@@ -9,7 +9,10 @@ export type UserDetails = {
   first_name: string;
   last_name: string;
   phone_number: string;
+  email_id: string;
   social_information_url: string;
+  social_information_url_2: string;
+  social_information_url_3: string;
   user_type: number;
   status_id: number;
   user_name: string;
@@ -18,6 +21,8 @@ export type UserDetails = {
   updated_at: string;
   permissions: number[];
   image_url: string;
+  qualification: string;
+  about: string;
 };
 
 export type UserInfo = {
@@ -31,7 +36,10 @@ export const INITIAL_STATE: UserInfo = {
     first_name: '',
     last_name: '',
     phone_number: '',
+    email_id: '',
     social_information_url: '',
+    social_information_url_2: '',
+    social_information_url_3: '',
     image_url: '',
     user_type: 0,
     status_id: 0,
@@ -39,7 +47,9 @@ export const INITIAL_STATE: UserInfo = {
     password: '',
     created_at: '',
     updated_at: '',
-    permissions: []
+    permissions: [],
+    qualification: '',
+    about: ''
   },
   updateUserInfo: () => undefined
 };

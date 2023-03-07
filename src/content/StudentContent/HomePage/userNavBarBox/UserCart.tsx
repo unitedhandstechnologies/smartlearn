@@ -72,7 +72,7 @@ const UserCart = (props: Props) => {
           //valueColor={`${index === 2 ? '#78828C' : '#3C414B'}`}
         />
         {userType === USER_TYPES.mentor ? (
-          index === 1 ? (
+          index === 2 ? (
             <Divider variant="middle" sx={{ marginTop: 2 }} />
           ) : null
         ) : index === 2 ? (
@@ -181,6 +181,10 @@ const items = [
   }
 ];
 const itemsMentor = [
+  {
+    name: 'Profile',
+    icon: MenuProfileImg
+  },
   {
     name: 'Go to SmartLearn',
     icon: ArrowNext

@@ -37,7 +37,10 @@ const ProfileMenu = (props: Props) => {
   const handleClick = (event) => {
     console.log(event.target.innerText, 'event');
     if (userType === USER_TYPES.mentor) {
-      if (event.target.innerText === 'Go to SmartLearn') {
+      if (event.target.innerText === 'Profile') {
+        navigateTo('/mentorProfile');
+        handleClose();
+      } else if (event.target.innerText === 'Go to SmartLearn') {
         navigateTo('/home');
         handleClose();
       } else if (event.target.innerText === 'Contact us') {

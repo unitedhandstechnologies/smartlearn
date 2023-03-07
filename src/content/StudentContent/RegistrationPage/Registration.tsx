@@ -28,6 +28,7 @@ import { useEdit } from 'src/hooks/useEdit';
 import { capitalizeFirstLetter, isPhoneNumber, isValidEmail } from 'src/Utils';
 import { t } from 'i18next';
 import CountryCode from 'src/components/CountryCode';
+import AfterRegMessage from './AfterRegMessage';
 
 const Registration = () => {
   const theme = useTheme();
@@ -118,8 +119,9 @@ const Registration = () => {
           navigateTo('/home/afterRegMessage', {
             state: {
               data: {
-                email_id: edit.getValue('email_id'),
-                first_name: edit.getValue('first_name')
+                email_id: response?.data?.user.email_id,
+                first_name: response?.data?.user.first_name,
+                id: response?.data?.user.id
               }
             },
             replace: true
@@ -135,8 +137,9 @@ const Registration = () => {
           navigateTo('/home/afterRegMessage', {
             state: {
               data: {
-                email_id: edit.getValue('email_id'),
-                first_name: edit.getValue('first_name')
+                email_id: response?.data?.user.email_id,
+                first_name: response?.data?.user.first_name,
+                id: response?.data?.user.id
               }
             },
             replace: true

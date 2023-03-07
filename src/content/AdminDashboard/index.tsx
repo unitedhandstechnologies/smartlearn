@@ -32,7 +32,7 @@ function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const { t } = useTranslation();
   const [revenueChipFilter, setRevenueChipFilter] = useState([FILTER_CHIPS[0]]);
-  const [revenueCount, setRevenueCount] = useState(COUNT);
+  const [revenueCount, setRevenueCount] = useState();
   const [selectedTab, setSelectedTab] = useState<string | number>(0);
   const [studentCount, setStudentCount] = useState<string | number>();
   const [mentorCount, setMentorCount] = useState<number>();
@@ -44,6 +44,8 @@ function AdminDashboard() {
   const { searchValue } = useSearchVal();
   const debValue = useDebounce(searchValue, 1000);
   const { userDetails } = useContext(UserInfoContext);
+  const newDate = new Date();
+  const CurrentMonth = newDate.getMonth();
 
   const handleSetSelectedTab = (value) => {
     setSelectedTab(value);
@@ -97,72 +99,100 @@ function AdminDashboard() {
   };
 
   const fetchData = useCallback(async () => {
-    try {
-      //   const response: any = await Promise.all([
-      //     API_SERVICES.dashboardService.getRevenue(
-      //       GET_FILTER_VALUES['This Week']
-      //     ),
-      //     API_SERVICES.dashboardService.getRevenue(
-      //       GET_FILTER_VALUES['Month']
-      //     ),
-      //   ]);
-      //   if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
-      //     if (response[0]?.data) {
-      //       setRevenueCount(response[0]?.data);
-      //     }
-      //   }
-      //   if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
-      //     if (?.data) {
-      //       setRevenueCount(response[1]?.data);
-      //     }
-      //   }
-      setLoading(true);
-      let params: any = {};
-      if (debValue !== '') {
-        params.searchString = debValue;
-      }
-      const response: any = await API_SERVICES.adminUserService.getAllUsers(
-        params
-      );
-
-      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        if (response?.data?.users) {
-          const onlyStudentList = response.data.users.filter(
-            (item) => item.user_type === 4
-          );
-          setStudentCount(onlyStudentList.length);
+    if (userDetails.user_type === 1 || userDetails.user_type === 2) {
+      try {
+        //   const response: any = await Promise.all([
+        //     API_SERVICES.dashboardService.getRevenue(
+        //       GET_FILTER_VALUES['This Week']
+        //     ),
+        //     API_SERVICES.dashboardService.getRevenue(
+        //       GET_FILTER_VALUES['Month']
+        //     ),
+        //   ]);
+        //   if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        //     if (response[0]?.data) {
+        //       setRevenueCount(response[0]?.data);
+        //     }
+        //   }
+        //   if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        //     if (?.data) {
+        //       setRevenueCount(response[1]?.data);
+        //     }
+        //   }
+        setLoading(true);
+        let params: any = {};
+        if (debValue !== '') {
+          params.searchString = debValue;
         }
-      }
+        const response: any = await API_SERVICES.adminUserService.getAllUsers(
+          params
+        );
 
-      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        if (response?.data?.users) {
-          const onlyMentorList = response.data.users.filter(
-            (item) => item.user_type === 3
-          );
-          setMentorCount(onlyMentorList.length);
+        if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+          if (response?.data?.users) {
+            const onlyStudentList = response.data.users.filter(
+              (item) => item.user_type === 4
+            );
+            setStudentCount(onlyStudentList.length);
+          }
         }
-      }
 
-      const response1: any = await Promise.all([
-        API_SERVICES.courseManagementService.getStatistic()
-      ]);
-      if (response1[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
-        const totalCourse =
-          parseInt(response1[0]?.data?.courseStatus.enabledCount) +
-          parseInt(response1[0]?.data?.courseStatus.pendingCount);
-        setCourseCount(totalCourse);
-        setFreeCount(
-          parseInt(response1[0]?.data?.courseStatus.freeEnabled) +
-            parseInt(response1[0]?.data?.courseStatus.freePending)
-        );
-        setPaidCount(
-          parseInt(response1[0]?.data?.courseStatus.paidEnabled) +
-            parseInt(response1[0]?.data?.courseStatus.paidPending)
-        );
+        if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+          if (response?.data?.users) {
+            const onlyMentorList = response.data.users.filter(
+              (item) => item.user_type === 3
+            );
+            setMentorCount(onlyMentorList.length);
+          }
+        }
+
+        const response1: any = await Promise.all([
+          API_SERVICES.courseManagementService.getStatistic()
+        ]);
+        if (response1[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
+          const totalCourse =
+            parseInt(response1[0]?.data?.courseStatus.enabledCount) +
+            parseInt(response1[0]?.data?.courseStatus.pendingCount);
+          setCourseCount(totalCourse);
+          setFreeCount(
+            parseInt(response1[0]?.data?.courseStatus.freeEnabled) +
+              parseInt(response1[0]?.data?.courseStatus.freePending)
+          );
+          setPaidCount(
+            parseInt(response1[0]?.data?.courseStatus.paidEnabled) +
+              parseInt(response1[0]?.data?.courseStatus.paidPending)
+          );
+        }
+      } catch (err) {
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-    } finally {
-      setLoading(false);
+    } else {
+      try {
+        setLoading(true);
+
+        const response: any = await Promise.all([
+          API_SERVICES.instructorReportsService.getAmountEnrolled(
+            userDetails.id,
+            CurrentMonth
+          ),
+          API_SERVICES.instructorReportsService.getStudentEnrolled(
+            userDetails.id,
+            CurrentMonth
+          )
+        ]);
+        if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
+          setRevenueCount(response[0]?.data);
+        }
+        if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
+          if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
+            setCourseCount(response[1]?.data);
+          }
+        }
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
     }
   }, [revenueChipFilter]);
 
@@ -261,7 +291,10 @@ function AdminDashboard() {
               </Grid>
             </Grid>
             <Grid paddingTop={4}>
-              <MentorDashboard />
+              <MentorDashboard
+                revenueCount={revenueCount}
+                courseCount={courseCount}
+              />
             </Grid>
           </>
         )}

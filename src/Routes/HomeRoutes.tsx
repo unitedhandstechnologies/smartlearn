@@ -20,12 +20,14 @@ import CheckOut from 'src/content/StudentContent/CheckOut/CheckOut';
 import ThankyouEnrolling from 'src/content/StudentContent/CheckOut/ThankyouEnrolling';
 import WishListCourse from 'src/content/StudentContent/Profile/WishListCourse';
 import AfterRegMessage from 'src/content/StudentContent/RegistrationPage/AfterRegMessage';
+import MentorProfile from 'src/content/MentorDashboard/MentorProfile';
 
 export const HomeRoutes: RouteObject[] = [
   {
     path: '/',
     element: <Navigate to="home" replace />
   },
+  { path: 'mentorProfile', element: <MentorProfile /> },
   {
     path: 'home',
     element: <NavBar />,

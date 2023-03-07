@@ -23,6 +23,20 @@ export const instructorReportsService = {
     });
     return apiRequest(options);
   },
+  getAmountEnrolled: async (mentorId: number, month: number) => {
+    const options = await apiOptions({
+      url: `${Config.BASE_URL}/api/getAmountEnrolledMentorId/mentor/${mentorId}/request/${month}`,
+      method: 'get'
+    });
+    return apiRequest(options);
+  },
+  getStudentEnrolled: async (mentorId: number, month: number) => {
+    const options = await apiOptions({
+      url: `${Config.BASE_URL}/api/getStudentEnrolledMentorId/mentor/${mentorId}/request/${month}`,
+      method: 'get'
+    });
+    return apiRequest(options);
+  },
   update: async (id, { data, successMessage }: PayoutProps) => {
     const options = await apiOptions({
       url: `${Config.BASE_URL}/api/updateMentorPayouts/${id}`,
