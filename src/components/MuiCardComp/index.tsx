@@ -139,7 +139,7 @@ const MuiCardComp = ({
         height: '100%',
         ...cardStyle
       }}
-      onMouseOver={()=>{setIsVisible(true)}}
+      onMouseEnter={()=>{setIsVisible(true)}}
       onMouseLeave={()=>setIsVisible(false)}
     >
       <CardActionArea onClick={onClickCardImage} sx={{ background: 'black' }}>
