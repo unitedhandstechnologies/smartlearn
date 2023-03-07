@@ -163,7 +163,7 @@ function CategoryManagement() {
           rowData?.category_id,
           {
             successMessage: 'Category Deleted Successfully',
-            failureMessage: "Category already has been using can't delete"
+            failureMessage: "Category already has been using, can't delete"
           }
         );
       if (deleteUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -220,7 +220,7 @@ function CategoryManagement() {
           rowData?.sub_category_id,
           {
             successMessage: 'SubCategory Deleted Successfully',
-            failureMessage: 'Failure to Delete SubCategory'
+            failureMessage: "Sub-Category already has been using, can't delete"
           }
         );
       if (deleteUserRes?.status < HTTP_STATUSES.BAD_REQUEST) {

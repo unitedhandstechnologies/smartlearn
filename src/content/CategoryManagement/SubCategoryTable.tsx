@@ -111,7 +111,7 @@ const SubCategoryTable = ({
       renderCell: ({ row }) => <ListItemCell title={row?.category_name} />
     },
     {
-      field: 'status',
+      field: 'Status',
       flex: 1,
       sortable: false,
       disableColumnMenu: true,

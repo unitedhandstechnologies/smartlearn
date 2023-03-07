@@ -36,7 +36,7 @@ const ViewFaqModal = (props: Props) => {
       },
       {
         content: t('Page.answer'),
-        value: <RichTextInput value={(rowData?.answer)} readOnly={true} displayToolBar={"none"} borderSize={'0px'} labelName={'Page Content'} heightValue = {'auto'} paddingValue = { "0px 0px" } />
+        value: <RichTextInput value={(rowData?.answer)} readOnly={true} displayToolBar={"none"} borderSize={'0px'}  heightValue = {'auto'} paddingValue = { "0px 0px" } />
       }
       
     ];

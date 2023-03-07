@@ -123,7 +123,10 @@ function MultipleSelectComp(props: Props) {
         onChange={onChange}
         className={classes.selectStyle}
         MenuProps={MenuProps}
-        style={{ ...selectBoxStyle }}
+        style={{  fontWeight: theme.fontWeight.bold,
+          fontSize: theme.MetricsSizes.small_xx,
+          color: theme.Colors.greyPrimary,
+            ...selectBoxStyle }}
         {...rest}
       >
         {isPlaceholderNone && (

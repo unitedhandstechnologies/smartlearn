@@ -354,7 +354,7 @@ const CourseViewModal = (props: Props) => {
     let contentDetails = [
       { content: 'Title', value: rowData?.course_name },
       { content: 'Description', value: rowData?.course_description },
-      { content: 'Requirements', value: rowData?.requirements },
+      { content: 'Requirements', value: (rowData?.requirements)? (rowData?.requirements): " " },
       { content: 'Chapter', value: rowData?.chapter },
       {
         content: 'Mentor Name',

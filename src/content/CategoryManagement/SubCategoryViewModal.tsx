@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, makeStyles, Theme } from '@material-ui/core';
 import { DialogComp, DialogContentDetails } from 'src/components';
 import { useTranslation } from 'react-i18next';
 import { getDateFormat } from 'src/Utils';
 import { LANGUAGE_ID, LANGUAGE_NAME } from 'src/Config/constant';
+import { toast } from 'react-hot-toast';
+import { API_SERVICES } from 'src/Services';
 
 const useStyles = makeStyles((theme: Theme) => {
   return {
@@ -25,6 +27,26 @@ const SubCategoryViewModal = (props: Props) => {
   const { onClose, rowData } = props;
   const classes = useStyles();
   const { t } = useTranslation();
+  const [subCategoryData, setSubCategoryData] = useState([]);
+
+  const fetchData = async () => {
+    try {
+      const response: any = await (
+        API_SERVICES.categoryManagementService.getSubCategoryById(
+          rowData?.id,
+        )
+      );
+        if (response?.data?.sub_category_language) {
+          setSubCategoryData(response?.data?.sub_category_language);
+        }
+    } catch (err) {
+      toast.error(err?.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const renderDialogContent = () => {
     const { getMonth, getDate, getYear } = getDateFormat(rowData?.updated_at);
@@ -40,12 +62,9 @@ const SubCategoryViewModal = (props: Props) => {
       },
       {
         content: t('language'),
-        value:
-          rowData?.language_id === LANGUAGE_ID.english
-            ? LANGUAGE_NAME[1]
-            : rowData?.language_id === LANGUAGE_ID.hindi
-            ? LANGUAGE_NAME[2]
-            : LANGUAGE_NAME[3]
+        value:subCategoryData.map((item)=>{
+          return LANGUAGE_NAME[item.language_id]
+        }).join(',')
       },
       {
         content: t('Category.sortNo'),

@@ -68,11 +68,11 @@ const StudentTable = ({
   const statusFilter = [
     {
       id: 2,
-      name: 'enabled'
+      name: 'Enabled'
     },
     {
       id: 3,
-      name: 'disabled'
+      name: 'Disabled'
     }
   ];
 
