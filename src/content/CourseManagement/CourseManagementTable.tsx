@@ -17,7 +17,7 @@ type Props = {
   onClickActionButton?: (row: any) => void;
   // onClickCancelOrAccept?: (row: any, statusId: number) => void;
   tableRowData?: any[];
-  onClickAcceptCourse?: (row: any, course_status: string) => void;
+  onClickAcceptCourse?: (row: any, statusId: Number) => void;
   onDeleteCourse?: (row: any) => void;
   onEditCourseDetais?: (row: any) => void;
   updateData?: () => void;
@@ -149,12 +149,11 @@ const CourseManagementTable = ({
     }
   ];
 
-  const renderRowActions = (row: { course_status: string }) => {
+  const renderRowActions = (row: { status_id: Number }) => {
     return [
-      row.course_status !== 'enabled' && {
+      row?.status_id === 1 && {
         text: 'Approve',
-        onClick: (rowData: any) =>
-          onClickAcceptCourse(rowData, COURSE_STATUS_NAME[1]),
+        onClick: (rowData: any) => onClickAcceptCourse(rowData, 2),
         renderIcon: () => <AddCircleOutlineOutlinedIcon />
       },
       {

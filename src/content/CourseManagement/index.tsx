@@ -354,12 +354,12 @@ function CourseManagement() {
     []
   );
 
-  const onClickAcceptCourse = (rowData: any, courseStatus: string) => {
+  const onClickAcceptCourse = (rowData: any, statusId: Number) => {
     const onCancelClick = () => {
       setConfirmModal({ open: false });
     };
     let updateData = {
-      course_status: courseStatus
+      status_id: statusId
     };
     const onConfirmClick = async () => {
       const response: any = await API_SERVICES.courseManagementService.update(
