@@ -14,6 +14,7 @@ import {
 import { toast } from 'react-hot-toast';
 import RateYourExperience from '../HomePage/RateYourExperience/ExperienceRate';
 import { useTranslation } from 'react-i18next';
+import { Loader } from 'src/components';
 
 const PreRecordedDetails = () => {
   const theme = useTheme();
@@ -94,92 +95,95 @@ const PreRecordedDetails = () => {
     fetchData();
     window.scrollTo(0, 0);
   }, []);
-
-  return (
-    <Grid
-      container
-      sx={{
-        padding: 5,
-        [theme.breakpoints.down('sm')]: {
-          flexDirection: 'column'
-        }
-      }}
-    >
-      <Grid item xs={12}>
-        <PreRecordedCourses
-          course={course[0]}
-          data={data}
-          mentorDetails={mentorDetails}
-          totalDuration={totalDuration}
-        />
-      </Grid>
-      <Container>
-        <Grid
-          container
-          sx={{
-            [theme.breakpoints.down('md')]: {
-              paddingTop: 1
-            }
-          }}
-        >
-          <Grid item xs={12} md={9} paddingTop={5}>
-            <CourseDescription
-              courseDescription={course[0]}
-              courseId={data}
-              sectionData={sectionData}
-              lessonData={lessonData}
-            />
-          </Grid>
-          {courseRating?.length && (
-            <Grid container item xs={12} md={3} paddingTop={'9%'}>
-              <CourseRight
-                courseRating={courseRating}
-                averageRating={averageRating}
+  if (loading) {
+    return <Loader />;
+  } else {
+    return (
+      <Grid
+        container
+        sx={{
+          padding: 5,
+          [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column'
+          }
+        }}
+      >
+        <Grid item xs={12}>
+          <PreRecordedCourses
+            course={course[0]}
+            data={data}
+            mentorDetails={mentorDetails}
+            totalDuration={totalDuration}
+          />
+        </Grid>
+        <Container>
+          <Grid
+            container
+            sx={{
+              [theme.breakpoints.down('md')]: {
+                paddingTop: 1
+              }
+            }}
+          >
+            <Grid item xs={12} md={9} paddingTop={5}>
+              <CourseDescription
+                courseDescription={course[0]}
+                courseId={data}
+                sectionData={sectionData}
+                lessonData={lessonData}
               />
             </Grid>
-          )}
-        </Grid>
-        {data?.student_enrolled_course_id ? (
-          <Grid>
-            <RateYourExperience courseDetails={course[0]} />
+            {courseRating?.length && (
+              <Grid container item xs={12} md={3} paddingTop={'9%'}>
+                <CourseRight
+                  courseRating={courseRating}
+                  averageRating={averageRating}
+                />
+              </Grid>
+            )}
           </Grid>
-        ) : null}
-        {state.showZoomLink && course[0]?.course_mode === 'Online' ? (
-          <Grid sx={{ paddingTop: '20px' }}>
-            <Typography
-              style={{
-                color: '#3C414B',
-                fontWeight: 500,
-                fontSize: 32,
-
-                fontFamily: 'IBM Plex Serif'
-              }}
-            >
-              Zoom Link
+          {data?.student_enrolled_course_id ? (
+            <Grid>
+              <RateYourExperience courseDetails={course[0]} />
+            </Grid>
+          ) : null}
+          {state.showZoomLink && course[0]?.course_mode === 'Online' ? (
+            <Grid sx={{ paddingTop: '20px' }}>
               <Typography
-                variant="h5"
                 style={{
-                  fontWeight: 400,
-                  fontSize: theme.MetricsSizes.regular,
-                  color: '#78828C'
+                  color: '#3C414B',
+                  fontWeight: 500,
+                  fontSize: 32,
+
+                  fontFamily: 'IBM Plex Serif'
                 }}
               >
-                <a
-                  href={data?.meeting_link}
-                  rel="noopener noreferrer"
-                  target={'_blank'}
+                Zoom Link
+                <Typography
+                  variant="h5"
+                  style={{
+                    fontWeight: 400,
+                    fontSize: theme.MetricsSizes.regular,
+                    color: '#78828C'
+                  }}
                 >
-                  {data?.meeting_link}
-                </a>
+                  <a
+                    href={data?.meeting_link}
+                    rel="noopener noreferrer"
+                    target={'_blank'}
+                  >
+                    {data?.meeting_link}
+                  </a>
+                </Typography>
               </Typography>
-            </Typography>
-          </Grid>
-        ) : null}
-      </Container>
-      {/* <Grid>
+            </Grid>
+          ) : null}
+        </Container>
+        {/* <Grid>
           <UpComingSession />
         </Grid> */}
-    </Grid>
-  );
+      </Grid>
+    );
+  }
 };
 export default memo(PreRecordedDetails);
