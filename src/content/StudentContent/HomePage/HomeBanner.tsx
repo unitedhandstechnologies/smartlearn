@@ -107,10 +107,9 @@ const HomeBanner = ({ bannerManagement }) => {
           height: '100%'
         }}
       >
-        <Carousel>
+        <Carousel prevIcon={null} nextIcon={null}>
           {bannerManagement?.length
             ? bannerManagement.map((item, index) => {
-                console.log('it', item.banner_image);
                 return (
                   <Carousel.Item
                     interval={1500}
@@ -124,9 +123,9 @@ const HomeBanner = ({ bannerManagement }) => {
                       width="100%"
                       height="500px"
                     />
-                    <Carousel.Caption>
+                    {/* <Carousel.Caption>
                       <h3>{item.banner_name}</h3>
-                    </Carousel.Caption>
+                    </Carousel.Caption> */}
                   </Carousel.Item>
                 );
               })
