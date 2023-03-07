@@ -15,9 +15,12 @@ import {
 } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
 import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
-import { COURSE_TYPE_NAME } from 'src/Config/constant';
+import { COURSE_TYPE_NAME, DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
 import { useNavigate } from 'react-router';
 import SearchComponent from '../SearchComponent';
+import { getUserId } from 'src/Utils';
+import { API_SERVICES } from 'src/Services';
+import i18n from 'src/Translations/i18n';
 const courses = [
   {
     id: 1,
@@ -186,6 +189,8 @@ const UpComingWorkshop = ({
   const theme = useTheme();
   const classes = useStyles();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
+  const [whistList, setWishList] = useState([]);
+  const userId = getUserId();
 
   const navigateTo = useNavigate();
   const handleChangeChipValue = (selectedChipItem: string[]) => {
@@ -218,6 +223,50 @@ const UpComingWorkshop = ({
     if (rowData.course_type === COURSE_TYPE_NAME[4]) {
       navigateTo('/home/course-details', {
         state: { formData: { ...rowData } },
+        replace: true
+      });
+    }
+  };
+
+  const getAllWishList = async () => {
+    let response: any = await API_SERVICES.WishListService.getAllWishlist(
+      userId,
+      DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+    );
+    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        const getIds = response.data.wishList.map((i) => i.course_id);
+        setWishList(getIds);
+    }
+  };
+
+  useEffect(() => {
+    getAllWishList();
+  }, []);
+
+  const handleIconClick = async (item, isActive) => {
+    if (userId !== 0) {
+      let response: any;
+      if (isActive) {
+        response = await API_SERVICES.WishListService.delete(
+          userId,
+          item?.course_id
+        );
+      } else {
+        response = await API_SERVICES.WishListService.create(
+          userId,
+          item?.course_id,
+          { successMessage: 'Successfully Added In WishList' }
+        );
+      }
+      if (response.status < HTTP_STATUSES.BAD_REQUEST) {
+        await getAllWishList();
+      }
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          details: { formData: item },
+          route: '/home/course-details'
+        },
         replace: true
       });
     }
@@ -324,6 +373,9 @@ const UpComingWorkshop = ({
                     onClickCardImage={() => onClickCardImage(item)}
                     prize={item.amount}
                     discount={item.discount}
+                    item={item}
+                    isActive={whistList.includes(item.id)}
+                    handleOnClick={handleIconClick}
                   />
                 </Grid>
               );

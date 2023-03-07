@@ -26,6 +26,9 @@ import CourseBanner from '../Courses/CourseBanner';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import SearchComponent from '../SearchComponent';
+import { getUserId } from 'src/Utils';
+import { API_SERVICES } from 'src/Services';
+import { DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -131,11 +134,9 @@ const UpComingCourse = ({
   const [anchorEl, setAnchorEl] = useState(null);
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
-  const [searchValue, setSearchValue] = useState('');
   const navigateTo = useNavigate();
-  const getSearchValue = (searchValue) => {
-    setSearchValue(searchValue);
-  };
+  const [whistList, setWishList] = useState([]);
+  const userId = getUserId();
 
   const handleOpen = (event, item) => {
     setMenuItem({
@@ -210,11 +211,23 @@ const UpComingCourse = ({
       return i18n.changeLanguage('gu');
     }
   };
+
   const onClickCardImage = (rowData) => {
     navigateTo('/home/course-details', {
       state: { formData: { ...rowData } },
       replace: true
     });
+  };
+
+  const getAllWishList = async () => {
+    let response: any = await API_SERVICES.WishListService.getAllWishlist(
+      userId,
+      DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+    );
+    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        const getIds = response.data.wishList.map((i) => i.course_id);
+        setWishList(getIds);
+    }
   };
 
   useEffect(() => {
@@ -223,7 +236,37 @@ const UpComingCourse = ({
     } else {
       setCourses([]);
     }
+    getAllWishList();
   }, [courseDetails]);
+
+  const handleIconClick = async (item, isActive) => {
+    if (userId !== 0) {
+      let response: any;
+      if (isActive) {
+        response = await API_SERVICES.WishListService.delete(
+          userId,
+          item?.course_id
+        );
+      } else {
+        response = await API_SERVICES.WishListService.create(
+          userId,
+          item?.course_id,
+          { successMessage: 'Successfully Added In WishList' }
+        );
+      }
+      if (response.status < HTTP_STATUSES.BAD_REQUEST) {
+        await getAllWishList();
+      }
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          details: { formData: item },
+          route: '/home/course-details'
+        },
+        replace: true
+      });
+    }
+  };
 
   return (
     <Grid container sx={{ position: 'relative' }}>
@@ -334,6 +377,8 @@ const UpComingCourse = ({
                       prize={item.amount}
                       discount={item.discount}
                       item={item}
+                      isActive={whistList.includes(item.id)}
+                      handleOnClick={handleIconClick}
                     />
                   </Grid>
                 );

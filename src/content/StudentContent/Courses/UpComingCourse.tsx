@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core';
-import { Grid, InputBase, InputAdornment, IconButton } from '@mui/material';
+import { Grid } from '@mui/material';
 import {
   ArrowNext,
   BasicStockIcon,
@@ -10,18 +10,20 @@ import {
   LocationIcon,
   BeginnerIcon,
   IntermediateIcon,
-  SearchIconImg,
   Offline,
   Language
 } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
-import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
+import { ButtonComp, Heading } from 'src/components';
 import ChipIconcomp from './ChipIconcomp';
 import ChipMenu from './ChipMenu';
 import CourseBanner from './CourseBanner';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import SearchComponent from '../SearchComponent';
+import { getUserId } from 'src/Utils';
+import { API_SERVICES } from 'src/Services';
+import { DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -128,6 +130,8 @@ const UpComingCourse = ({
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
   const navigateTo = useNavigate();
+  const [whistList, setWishList] = useState([]);
+  const userId = getUserId();
 
   const handleOpen = (event, item) => {
     setMenuItem({
@@ -209,13 +213,54 @@ const UpComingCourse = ({
     });
   };
 
+  const getAllWishList = async () => {
+    let response: any = await API_SERVICES.WishListService.getAllWishlist(
+      userId,
+      DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+    );
+    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        const getIds = response.data.wishList.map((i) => i.course_id);
+        setWishList(getIds);
+    }
+  };
+
   useEffect(() => {
     if (courseDetails?.length) {
       setCourses(courseDetails);
     } else {
       setCourses([]);
     }
+    getAllWishList();
   }, [courseDetails]);
+
+  const handleIconClick = async (item, isActive) => {
+    if (userId !== 0) {
+      let response: any;
+      if (isActive) {
+        response = await API_SERVICES.WishListService.delete(
+          userId,
+          item?.course_id
+        );
+      } else {
+        response = await API_SERVICES.WishListService.create(
+          userId,
+          item?.course_id,
+          { successMessage: 'Successfully Added In WishList' }
+        );
+      }
+      if (response.status < HTTP_STATUSES.BAD_REQUEST) {
+        await getAllWishList();
+      }
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          details: { formData: item },
+          route: '/home/course-details'
+        },
+        replace: true
+      });
+    }
+  };
 
   return (
     <Grid container sx={{ position: 'relative' }}>
@@ -327,6 +372,8 @@ const UpComingCourse = ({
                       prize={item.amount}
                       discount={item.discount}
                       item={item}
+                      isActive={whistList.includes(item.id)}
+                      handleOnClick={handleIconClick}
                     />
                   </Grid>
                 );

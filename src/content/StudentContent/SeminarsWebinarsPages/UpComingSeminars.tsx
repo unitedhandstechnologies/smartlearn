@@ -29,10 +29,12 @@ import Language from '../../../Assets/Images/Language.svg';
 import SeminarWebinarBanner from './SeminarWebinarBanner';
 import ChipIconcomp from '../Courses/ChipIconcomp';
 import ChipMenu from '../Courses/ChipMenu';
-import { COURSE_TYPE_NAME } from 'src/Config/constant';
+import { COURSE_TYPE_NAME, DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import SearchComponent from '../SearchComponent';
+import { API_SERVICES } from 'src/Services';
+import { getUserId } from 'src/Utils';
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -117,6 +119,8 @@ const UpComingSeminars = ({
   const [courses, setCourses] = useState([]);
   const [view, setView] = useState(6);
   const navigateTo = useNavigate();
+  const [whistList, setWishList] = useState([]);
+  const userId = getUserId();
 
   const handleOpen = (event, item) => {
     setMenuItem({
@@ -186,13 +190,54 @@ const UpComingSeminars = ({
     });
   };
 
+  const getAllWishList = async () => {
+    let response: any = await API_SERVICES.WishListService.getAllWishlist(
+      userId,
+      DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+    );
+    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        const getIds = response.data.wishList.map((i) => i.course_id);
+        setWishList(getIds);
+    }
+  };
+
   useEffect(() => {
     if (courseDetails?.length) {
       setCourses(courseDetails);
     } else {
       setCourses([]);
     }
+    getAllWishList();
   }, [courseDetails]);
+
+  const handleIconClick = async (item, isActive) => {
+    if (userId !== 0) {
+      let response: any;
+      if (isActive) {
+        response = await API_SERVICES.WishListService.delete(
+          userId,
+          item?.course_id
+        );
+      } else {
+        response = await API_SERVICES.WishListService.create(
+          userId,
+          item?.course_id,
+          { successMessage: 'Successfully Added In WishList' }
+        );
+      }
+      if (response.status < HTTP_STATUSES.BAD_REQUEST) {
+        await getAllWishList();
+      }
+    } else {
+      navigateTo('/home/user-login', {
+        state: {
+          details: { formData: item },
+          route: '/home/course-details'
+        },
+        replace: true
+      });
+    }
+  };
 
   return (
     <Grid container sx={{ position: 'relative' }}>
@@ -303,6 +348,8 @@ const UpComingSeminars = ({
                       prize={item.amount}
                       discount={item.discount}
                       item={item}
+                      isActive={whistList.includes(item.id)}
+                      handleOnClick={handleIconClick}
                     />
                   </Grid>
                 );
