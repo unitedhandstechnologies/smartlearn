@@ -10,27 +10,16 @@ import {
 import { memo, useCallback, useState } from 'react';
 import { LineBarIcon, Google } from 'src/Assets';
 import { ButtonComp, TextInputComponent } from 'src/components';
-// import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-// import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
-// import IconButton from '@mui/material/IconButton';
+import logo from '../../../Assets/Images/Logo.svg';
+import Gmail from '../../../Assets/Images/Gmail.svg';
 
 import { useNavigate, useLocation } from 'react-router';
-import { API_SERVICES } from 'src/Services';
-import {
-  DETECT_LANGUAGE,
-  HTTP_STATUSES,
-  USER_TYPE_ID
-} from 'src/Config/constant';
-import { useTranslation } from 'react-i18next';
-import Divider from '@mui/material/Divider';
-import toast from 'react-hot-toast';
-import { useEdit } from 'src/hooks/useEdit';
-import { capitalizeFirstLetter, isPhoneNumber, isValidEmail } from 'src/Utils';
-import { t } from 'i18next';
-import CountryCode from 'src/components/CountryCode';
-const MentorAfterReg = () => {
+
+const AfterRegMessage = () => {
   const theme = useTheme();
   const navigateTo = useNavigate();
+  const { state }: any = useLocation();
+  const data = { ...state?.data };
 
   return (
     <Grid
@@ -45,6 +34,25 @@ const MentorAfterReg = () => {
       }}
     >
       <Grid item xs={12} md={6}>
+        <Grid
+          container
+          item
+          sx={{
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+          xs={12}
+          md={12}
+        >
+          <img
+            src={logo}
+            style={{
+              height: 60,
+              width: 200,
+              mixBlendMode: 'multiply'
+            }}
+          />
+        </Grid>
         <Grid>
           <Typography
             style={{
@@ -55,7 +63,7 @@ const MentorAfterReg = () => {
               margin: theme.spacing(2, 0)
             }}
           >
-            Thanks for signing up/ joining us
+            Thanks for signing up / joining us, Mr.{data.first_name}!
           </Typography>
           <Grid sx={{ paddingTop: 2 }}>
             <img src={LineBarIcon} height={40} />
@@ -69,9 +77,9 @@ const MentorAfterReg = () => {
                 color: '#78828C'
               }}
             >
-              Dear Instructor Thank you for registering! We look forward to
-              seeing you after admin approval until that please be patience.we
-              will inform you shortly.
+              We're happy signed up for smartLearn. To start with smartLearn
+              Please check your email address {data.email_id}. We sent an
+              account activation link.
             </Typography>
           </Grid>
           <Grid sx={{ paddingTop: 4 }}>
@@ -98,6 +106,22 @@ const MentorAfterReg = () => {
               -smartLearn Team
             </span>
           </Grid>
+          {/* <Grid style={{ paddingTop: 8 }}>
+            <ButtonComp
+              startIcon={<img src={Gmail} />}
+              buttonText={'Open Gmail'}
+              backgroundColor={theme.Colors.white}
+              buttonTextColor={'#3C414B'}
+              buttonFontSize={16}
+              buttonFontWeight={400}
+              btnWidth={'100%'}
+              buttonFontFamily="Switzer"
+              style={{
+                border: '1px solid',
+                borderColor: '#B4BEC8'
+              }}
+            />
+          </Grid> */}
         </Grid>
 
         <Grid
@@ -131,4 +155,4 @@ const MentorAfterReg = () => {
     </Grid>
   );
 };
-export default memo(MentorAfterReg);
+export default memo(AfterRegMessage);

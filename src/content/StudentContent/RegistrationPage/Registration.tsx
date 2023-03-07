@@ -34,7 +34,6 @@ const Registration = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(false);
   const [values, setValues] = useState('');
-
   const navigateTo = useNavigate();
   const [permission, setPermission] = useState([]);
   const [userType, setUserType] = useState(USER_TYPE_ID.student);
@@ -116,7 +115,15 @@ const Registration = () => {
           failureMessage: 'Error: Student Already Exist'
         });
         if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-          navigateTo('/home/user-login', { replace: true });
+          navigateTo('/home/afterRegMessage', {
+            state: {
+              data: {
+                email_id: edit.getValue('email_id'),
+                first_name: edit.getValue('first_name')
+              }
+            },
+            replace: true
+          });
         }
       } else if (userType === USER_TYPE_ID.mentors) {
         const response: any = await API_SERVICES.adminUserService.create({
@@ -125,7 +132,15 @@ const Registration = () => {
           failureMessage: 'Error: Instructor Already Exist'
         });
         if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-          navigateTo('/home/mentorAfterReg', { replace: true });
+          navigateTo('/home/afterRegMessage', {
+            state: {
+              data: {
+                email_id: edit.getValue('email_id'),
+                first_name: edit.getValue('first_name')
+              }
+            },
+            replace: true
+          });
         }
       }
     } catch (e) {

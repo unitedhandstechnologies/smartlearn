@@ -17,9 +17,9 @@ import ProfileHome from 'src/content/StudentContent/Profile/ProfileHome';
 import ForgetPassword from 'src/content/StudentContent/RegistrationPage/ForgetPassword';
 import PreRecordedDetails from 'src/content/StudentContent/Courses/PreRecordedDetails';
 import CheckOut from 'src/content/StudentContent/CheckOut/CheckOut';
-import MentorAfterReg from 'src/content/StudentContent/RegistrationPage/MentorAfterReg';
 import ThankyouEnrolling from 'src/content/StudentContent/CheckOut/ThankyouEnrolling';
 import WishListCourse from 'src/content/StudentContent/Profile/WishListCourse';
+import AfterRegMessage from 'src/content/StudentContent/RegistrationPage/AfterRegMessage';
 
 export const HomeRoutes: RouteObject[] = [
   {
@@ -49,9 +49,9 @@ export const HomeRoutes: RouteObject[] = [
       { path: 'forgetpassword', element: <ForgetPassword /> },
       { path: 'pre-recordedCourse-details', element: <CourseBegin /> },
       { path: 'checkout-page', element: <CheckOut /> },
-      { path: 'mentorAfterReg', element: <MentorAfterReg /> },
-      { path: 'thankyou-page', element: <ThankyouEnrolling/>},
-      {path: 'wish-list', element: <WishListCourse/>}
+      { path: 'afterRegMessage', element: <AfterRegMessage /> },
+      { path: 'thankyou-page', element: <ThankyouEnrolling /> },
+      { path: 'wish-list', element: <WishListCourse /> }
     ]
   }
 ];
