@@ -18,9 +18,11 @@ import QuizPreview from './QuizPreview';
 
 type Props = {
   quizDataDetails: any[];
+  updateQuizCompleted: any;
+  fetchLevelCompleted:any;
 }
 
-const QuizResult = ({quizDataDetails}:Props) => {
+const QuizResult = ({quizDataDetails,updateQuizCompleted, fetchLevelCompleted}:Props) => {
 
   const theme = useTheme();
   const [previewResult , setPreviewResult ] = useState(false);
@@ -43,7 +45,9 @@ const QuizResult = ({quizDataDetails}:Props) => {
  };
   
  useEffect(()=>{
+    updateQuizCompleted();
     getTotalCorrectAnswers();
+    fetchLevelCompleted();
  },[]);
 
    return (

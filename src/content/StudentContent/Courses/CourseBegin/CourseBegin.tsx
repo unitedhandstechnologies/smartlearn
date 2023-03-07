@@ -52,7 +52,6 @@ const CourseBegin = () => {
   const fetchData = useCallback(async () => {
     let id = state?.course_id;
     const userId = getUserId();
-
     try {
       const responseVideoDetails: any =
         await API_SERVICES.PreRecordedCourseVideoService.getVideoDetails(
@@ -107,8 +106,6 @@ const CourseBegin = () => {
                       )
                   );
 
-                //let tempElapsedTime = [0.07, 0.16, 0.2, 0.5, 0.0];
-                //let tempRemainingTime = [15.12, 4.33, 66.65, 7, 20.56];
                 if (sectionData1?.length) {
                   sectionData1?.map((item, index) => {
                     const sectionNumber = index + 1;
@@ -133,10 +130,6 @@ const CourseBegin = () => {
                           videoId: item.lesson_id,
                           videoDuration: item.duration,
                           videoPlayedFraction: tempPercentagePlayed[0].played
-                          //videoElapsedTime: tempElapsedTime[sectionNumber - 1],
-                          //videoPlayingTime: 0.0,
-                          //videoRemainingTime:
-                          //tempRemainingTime[sectionNumber - 1]
                         };
                       });
                     }
@@ -177,17 +170,18 @@ const CourseBegin = () => {
         );
         if(responseCourseCompleted?.status < HTTP_STATUSES.BAD_REQUEST){
           let islevelMax;
-          if(parseInt(responseCourseCompleted?.data?.enrolledCourse[0]?.level) === 100)
+          let responseData = responseCourseCompleted?.data?.enrolledCourse[0];
+          if(parseInt(responseData?.level) === 100)
           {
             islevelMax=true;
           }else{
             islevelMax=false;
           }
           setCompletedCourse(islevelMax);
-          setCompletedQuiz(false)//here goes value from db);
-          if(responseCourseCompleted.data.enrolledCourse[0].level===100 && 
-            //responseCourseCompleted.data.enrolledCourse[0].quiz-completed)
-              true){
+          setCompletedQuiz(responseData.quiz_completed);
+          if(responseData?.level===100  &&
+            responseData.quiz_completed===1)
+              {
                 setShowQuizUnlockedMsg(false);
               }
         }

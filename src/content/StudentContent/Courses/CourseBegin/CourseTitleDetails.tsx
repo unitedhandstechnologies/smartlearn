@@ -58,15 +58,7 @@ const CourseTitleDetails = ({
   setShowCertificate
 }) => {
   const classes = useStyles();
-  //const icon = completed ? <CheckCircleIcon /> : <ExpandMoreIcon />;
-
-  /*   const items = () => {
-    return list.map((item: CourseSubTitleDetailsProps, i) => (
-      <CourseSubTitleDetails key={i} {...item} />
-    ));
-  }; */
-
-  const theme = useTheme();
+   const theme = useTheme();
 
   const getSectionLessonValue = (sectionNumber, index) => {
     return (

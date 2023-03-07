@@ -277,7 +277,7 @@ const CourseMainPage = ({
         { completedCourse ? (
           !showCertificate && testTopic &&
           quizData.length ? (
-            <Quiz courseData={courseData} />
+            <Quiz courseData={courseData} data={data} fetchLevelCompleted={fetchLevelCompleted} />
           ) : (
             testTopic ? 
             'No Test topic Available' : null

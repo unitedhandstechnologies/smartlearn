@@ -16,9 +16,11 @@ import QuizResult from './QuizResult';
 
 type Props = {
   courseData: any;
+  data: any;
+  fetchLevelCompleted:any;
 }
 
-const Quiz = ({courseData}:Props) => {
+const Quiz = ({courseData, data, fetchLevelCompleted}:Props) => {
 
   const theme = useTheme();
   const [ questionToDisplayIndex , setQuestionToDisplayIndex ] = useState(0);
@@ -59,6 +61,26 @@ const fetchData = useCallback(async() => {
   setLoading(false);
 }
 },[] );
+
+const updateQuizCompleted = useCallback(async()=>{
+  try{
+    let updateData = {
+      quiz_completed: 1,
+    }
+     const responseCourseCompleted: any =
+        await API_SERVICES.enrollmentManagementService.replace(
+          data?.id,
+          {
+            data: updateData,
+          }          
+        );
+        
+  }catch(e){
+
+  }
+
+
+},[]);
   
 useEffect(() => {
   fetchData();
@@ -79,7 +101,11 @@ if (loading) {
             setQuizResult = {setQuizResult}
             /> 
         ) : (
-            <QuizResult  quizDataDetails={quizDataDetails} />
+            <QuizResult  
+              quizDataDetails={quizDataDetails}
+              updateQuizCompleted={updateQuizCompleted}
+              fetchLevelCompleted={fetchLevelCompleted}
+            />
         )}
       </Grid>
     );
