@@ -124,7 +124,7 @@ const AddNewCourseCategoryModal = ({
         response = await API_SERVICES.categoryManagementService.create({
           data: uData,
           successMessage: 'New Category Added successfully!',
-          failureMessage: 'Sort Number already Exist'
+          failureMessage: 'Sort Number or Category Name already Exist'
         });
       } else if (types[type].handleType === 2) {
         response = await API_SERVICES.categoryManagementService.updateCategory(
@@ -132,7 +132,7 @@ const AddNewCourseCategoryModal = ({
           {
             data: uData,
             successMessage: 'Category updated successfully!',
-            failureMessage: 'Sort Number already Exist'
+            failureMessage: 'Sort Number or Category Name already Exist'
           }
         );
       }
