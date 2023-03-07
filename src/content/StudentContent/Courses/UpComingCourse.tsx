@@ -23,7 +23,11 @@ import { useNavigate } from 'react-router';
 import SearchComponent from '../SearchComponent';
 import { getUserId } from 'src/Utils';
 import { API_SERVICES } from 'src/Services';
-import { DETECT_LANGUAGE, HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
+import {
+  DETECT_LANGUAGE,
+  HTTP_STATUSES,
+  LANGUAGE_ID
+} from 'src/Config/constant';
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -205,22 +209,23 @@ const UpComingCourse = ({
     }
     if (chipFilterItem[3] != 0) {
       filteredCourse = (
-        chipFilterItem[0] != 0 || chipFilterItem[1] != 0 || chipFilterItem[2] != 0
+        chipFilterItem[0] != 0 ||
+        chipFilterItem[1] != 0 ||
+        chipFilterItem[2] != 0
           ? filteredCourse
           : courseDetails
       ).filter((item) => {
         let tempValue;
-        if(item.cost_type==="PAID")
-          tempValue=2;
-          if(item.cost_type==="FREE")
-          tempValue=1;
-        return tempValue === chipFilterItem[3]});     
+        if (item.cost_type === 'PAID') tempValue = 2;
+        if (item.cost_type === 'FREE') tempValue = 1;
+        return tempValue === chipFilterItem[3];
+      });
     }
     if (
       chipFilterItem[0] === 0 &&
       chipFilterItem[1] === 0 &&
       chipFilterItem[2] === 0 &&
-      chipFilterItem[3] === 0 
+      chipFilterItem[3] === 0
     ) {
       setCourses([...courseDetails]);
     } else {
@@ -252,8 +257,8 @@ const UpComingCourse = ({
       DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
     );
     if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        const getIds = response.data.wishList.map((i) => i.course_id);
-        setWishList(getIds);
+      const getIds = response.data.wishList.map((i) => i.course_id);
+      setWishList(getIds);
     }
   };
 
@@ -332,12 +337,13 @@ const UpComingCourse = ({
               xs
               style={{ paddingBottom: '20px', gap: '10px' }}
             >
-              {headerChipItem.map((item, index) => (
+              {headerChipItem?.map((item, index) => (
                 <ChipIconcomp
                   key={index}
-                  chipText={item.name}
+                  chipText={item?.name}
                   checkboxText={
-                    headerChipItem[index].labelItems[chipIconText[index]].label
+                    headerChipItem[index]?.labelItems[chipIconText[index]]
+                      ?.label
                   }
                   onClick={(event) => handleOpen(event, item)}
                   img={item.img}
@@ -369,8 +375,8 @@ const UpComingCourse = ({
             }
           }}
         >
-          {courses.length
-            ? courses.slice(0, view).map((item, index) => {
+          {courses?.length
+            ? courses?.slice(0, view)?.map((item, index) => {
                 return (
                   <Grid
                     key={index}

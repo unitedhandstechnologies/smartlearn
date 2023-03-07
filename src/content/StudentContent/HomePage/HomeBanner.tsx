@@ -88,7 +88,7 @@ const HomeBanner = ({ bannerManagement }) => {
           clipPath: 'polygon(0% 0%, 100% 0%, 30% 100%, 0% 100%)',
           height: '100%',
           background: '#3C78F0',
-          width: '25%',
+          width: '28%',
           left: '40%',
           zIndex: 1,
           [theme.breakpoints.down('sm')]: {

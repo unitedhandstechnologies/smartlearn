@@ -15,6 +15,8 @@ import { toast } from 'react-hot-toast';
 import RateYourExperience from '../HomePage/RateYourExperience/ExperienceRate';
 import { useTranslation } from 'react-i18next';
 import { Loader } from 'src/components';
+import RelatedCourses from './RelatedCourses';
+import { BackgroundLine } from 'src/Assets';
 
 const PreRecordedDetails = () => {
   const theme = useTheme();
@@ -179,9 +181,17 @@ const PreRecordedDetails = () => {
             </Grid>
           ) : null}
         </Container>
-        {/* <Grid>
-          <UpComingSession />
-        </Grid> */}
+        <Grid
+          container
+          direction="column"
+          sx={{
+            padding: theme.spacing(7, 7),
+            backgroundImage: `url(${BackgroundLine})`,
+            [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
+          }}
+        >
+          <RelatedCourses courseDetails={data} />
+        </Grid>
       </Grid>
     );
   }
