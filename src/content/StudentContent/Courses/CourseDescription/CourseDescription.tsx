@@ -77,7 +77,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
   const [lessonData, setLessonData] = useState<any[]>([]);
   const [sectionData, setSectionData] = useState<any[]>([]);
   const [quizData, setQuizData] = useState<any[]>([]);
-  const [openVideo, setOpenVideo] = useState<any>({ open: false });
+  const [openVideoPreview, setOpenVideoPreview] = useState<any>({ open: false });
   const [openQuizModal, setOpenQuizModal] = useState<any>({
     open: false
   });
@@ -122,6 +122,29 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
     }
   };
 
+  const renderCont = (url) => {
+    return (
+      <Grid>
+        <video width="600" height="340" controls autoPlay={true}>
+          <source src={url} type="video/mp4" />
+        </video>
+      </Grid>
+    );
+  };
+
+  const handleClickPreview = (lessonName, videoUrl) => {
+    setOpenVideoPreview({
+      open: true,
+      dialogTitle: lessonName,
+      renderDialogContent: () =>
+        renderCont(videoUrl)
+    });
+  };
+
+  const handleClosePreviewDialog = () => {
+    setOpenVideoPreview({ open: false });
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -129,6 +152,7 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
   const getAccordionContents: any = React.useMemo(() => {
     return sectionData?.length
       ? sectionData?.map((item, index) => {
+        const sectionNumber = index;
           let getLessonData: any = lessonData?.length
             ? lessonData.filter(
                 (lessonItm) => lessonItm.section_id === item.section_id
@@ -182,7 +206,17 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
                             xs
                             justifyContent="flex-end"
                             style={{ display: 'flex' }}
-                          >
+                          >{ index===0 && sectionNumber===0 &&
+                            <ButtonComp
+                              style={{
+                                marginRight: '10px'
+                              }}
+                              buttonFontSize={12}
+                              height={"25px"}
+                              buttonTextColor={theme.Colors.whitePure}
+                              buttonText={'Preview'}
+                              onClickButton={()=>handleClickPreview(item.lesson_name, item.video_url)}                           
+                          ></ButtonComp>}
                             <Typography
                               variant="h5"
                               style={{
@@ -299,6 +333,17 @@ const CourseDescription = ({ courseDescription }: CourseDescriptionProps) => {
           </Grid>
         )}
       </Grid>
+      {openVideoPreview && (
+          <DialogComp
+            open={true}
+            dialogClasses={{ paper: classes.dialogPaper }}
+            dialogTitleStyle={{
+              color: theme.Colors.blackMedium
+            }}
+            onClose={handleClosePreviewDialog}
+            {...openVideoPreview}
+          />
+        )}
     </Grid>
   );
 };
