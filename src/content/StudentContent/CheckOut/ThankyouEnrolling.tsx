@@ -1,6 +1,6 @@
-import React from 'react';
 import { Divider, useTheme } from '@material-ui/core';
 import { Grid, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { SpeechBubble } from 'src/Assets';
 import { ButtonComp, Heading } from 'src/components';
@@ -16,6 +16,10 @@ const ThankyouEnrolling = () => {
       replace: true
     });
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <Grid
       container
@@ -61,7 +65,16 @@ const ThankyouEnrolling = () => {
             }
           }}
         >
-          Thank you for Enrolling this Course.
+          Thank you for Enrolling{' '}
+          <span
+            style={{
+              fontWeight: theme.fontWeight.bold,
+              fontFamily: 'IBM Plex Serif'
+            }}
+          >
+            {courseName}
+          </span>
+          .
         </Typography>
       </Grid>
       <Grid item>

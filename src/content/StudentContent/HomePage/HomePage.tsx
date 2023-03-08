@@ -118,7 +118,7 @@ const HomePage = () => {
           direction="column"
           style={{ padding: theme.spacing(7, 7) }}
         >
-          <USPs />
+          <USPs bannerManagement={bannerManagement}/>
         </Grid>
         <Grid
           container

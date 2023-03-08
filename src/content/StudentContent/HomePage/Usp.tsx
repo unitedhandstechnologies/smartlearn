@@ -5,13 +5,16 @@ import { LineBarIcon } from '../../../Assets/Images';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router';
+import Carousel from 'react-bootstrap/Carousel';
+import 'bootstrap/dist/css/bootstrap.css';
+
 const useStyles = makeStyles((theme) => ({
   button: {
     minWidth: 0,
     padding: theme.spacing(0, 1, 0, 0)
   }
 }));
-const USPs = () => {
+const USPs = ({ bannerManagement }) => {
   const theme = useTheme();
   const classes = useStyles();
   const navigateTo = useNavigate();
@@ -70,7 +73,7 @@ const USPs = () => {
               }
             }}
           >
-            <Grid item xs>
+            {/* <Grid item xs>
               <Box
                 sx={{
                   borderRadius: '5px',
@@ -114,8 +117,73 @@ const USPs = () => {
                   onClickButton={() => navigateTo('/home/user-login')}
                 />
               </Grid>
-            </Grid>
+            </Grid> */}
           </Grid>
+          <Carousel prevIcon={null} nextIcon={null}>
+            {bannerManagement.length
+              ? bannerManagement?.map((item, index) => {
+                  return (
+                    <Carousel.Item interval={1500} key={index}>
+                      <Grid
+                        container
+                        spacing={2}
+                        direction="row"
+                        sx={{
+                          [theme.breakpoints.down('xs')]: {
+                            flexDirection: 'column'
+                          }
+                        }}
+                      >
+                        <Grid item xs>
+                          <img
+                            className="d-block w-100"
+                            src={item.banner_image}
+                            alt="Image One"
+                            width="100%"
+                            height="100%"
+                          />
+                        </Grid>
+                        <Grid container item xs alignContent="center">
+                          <Grid item>
+                            <Heading
+                              headingText={item.banner_name}
+                              headerFontSize={'32px'}
+                              headerFontWeight={500}
+                              headingColor={'#3C414B'}
+                            />
+                            <Typography
+                              style={{
+                                color: '#78828C',
+                                fontSize: 18,
+                                fontWeight: 400,
+                                fontStyle: 'normal',
+                                fontFamily: 'Switzer'
+                              }}
+                            >
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit, sed do eiusmod tempor incididunt ut labore
+                              et dolore magna aliqua
+                            </Typography>
+                            <ButtonComp
+                              buttonText={'Start learning'}
+                              endIcon={<ArrowForwardIcon />}
+                              backgroundColor={'transparent'}
+                              buttonTextColor={'#3C78F0'}
+                              btnWidth={'fit-content'}
+                              height={'40px'}
+                              classes={{ root: classes.button }}
+                              onClickButton={() =>
+                                navigateTo('/home/user-login')
+                              }
+                            />
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                    </Carousel.Item>
+                  );
+                })
+              : null}
+          </Carousel>
         </Grid>
       </Grid>
     </Container>
