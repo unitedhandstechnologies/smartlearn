@@ -7,7 +7,7 @@ import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import { useEdit } from 'src/hooks/useEdit';
 import toast from 'react-hot-toast';
-import { capitalizeFirstLetter } from 'src/Utils';
+import { capitalizeFirstLetter, getUserId } from 'src/Utils';
 
 const typoGraphyStyle = {
   fontFamily: 'Switzer',
@@ -44,6 +44,7 @@ const RateYourExperience = ({ courseDetails }) => {
   };
 
   const handleRatingActionBtnClick = async () => {
+    let userId = getUserId();
     try {
       if (!edit.allFilled(...RequiredFields)) {
         setError(true);
@@ -51,7 +52,7 @@ const RateYourExperience = ({ courseDetails }) => {
       }
       let userData = { ...data, ...edit.edits };
       const response: any = await API_SERVICES.homeUserService.create(
-        courseDetails?.student_id,
+        userId,
         courseDetails?.course_id,
         {
           data: userData,
