@@ -36,7 +36,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => ({
         '-webkit-appearance': 'none'
       }
     },
-    '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+    '& .MuiOutlinedInput-root.MuiOutlinedInput-notchedOutline': {
       borderColor: (props) => props.borderColor || theme.Colors.lightGrey,
       borderWidth: '1px'
     },

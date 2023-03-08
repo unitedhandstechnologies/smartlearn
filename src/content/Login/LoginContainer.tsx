@@ -5,7 +5,7 @@ import { ButtonComp, TextInputComponent } from 'src/components';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 import { useNavigate } from 'react-router';
-import { HTTP_STATUSES } from 'src/Config/constant';
+import { HTTP_STATUSES, USER_TYPE_ID } from 'src/Config/constant';
 import toast from 'react-hot-toast';
 import { API_SERVICES } from 'src/Services';
 import useUserInfo from 'src/hooks/useUserInfo';
@@ -69,14 +69,18 @@ const LoginContainer = ({
         ...edit.edits
       };
       const response: any = await API_SERVICES.authService.userLogin({
-        data,
-        successMessage: 'User logged in successfully!'
+        data
       });
-      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+      if (response?.data.users[0].user_type !== USER_TYPE_ID.student) {
         if (
-          response?.data?.users?.length &&
-          response?.data?.users[0].user_type !== 4
+          (response?.data.users[0].is_verify === true &&
+            response?.data.users[0].user_type === USER_TYPE_ID.mentors) ||
+          (response?.data.users[0].is_verify === false &&
+            response?.data.users[0].user_type === USER_TYPE_ID.superAdmin) ||
+          (response?.data.users[0].is_verify === false &&
+            response?.data.users[0].user_type === USER_TYPE_ID.admin)
         ) {
+          toast.success('User logged in successfully!');
           i18n.changeLanguage('en');
           localStorage.setItem('token', JSON.stringify(response?.data?.token));
           localStorage.setItem(
@@ -93,10 +97,26 @@ const LoginContainer = ({
           }
           navigateTo('/admin', { replace: true });
         } else {
-          navigateTo('/', { replace: true });
-          localStorage.clear();
-          i18n.changeLanguage('en');
+          toast.error(
+            'you are not verified user,again resend verification link'
+          );
+          navigateTo('/home/afterRegMessage', {
+            state: {
+              data: {
+                email_id: response?.data.users[0].email_id,
+                first_name: response?.data.users[0].first_name,
+                id: response?.data.users[0].id,
+                is_verify: response?.data.users[0].is_verify
+              }
+            },
+            replace: true
+          });
         }
+      } else {
+        toast.error('You are not Admin and Instructor');
+        navigateTo('/', { replace: true });
+        localStorage.clear();
+        i18n.changeLanguage('en');
       }
     } catch (err) {
       toast.error(err?.message);
