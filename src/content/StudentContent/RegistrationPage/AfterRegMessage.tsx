@@ -1,18 +1,8 @@
 import { Typography, useTheme } from '@material-ui/core';
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Grid,
-  Radio,
-  RadioGroup
-} from '@mui/material';
-import { memo, useCallback, useState } from 'react';
-import { LineBarIcon, Google } from 'src/Assets';
-import { ButtonComp, TextInputComponent } from 'src/components';
+import { Grid } from '@mui/material';
+import { memo } from 'react';
+import { LineBarIcon } from 'src/Assets';
 import logo from '../../../Assets/Images/Logo.svg';
-import Gmail from '../../../Assets/Images/Gmail.svg';
-
 import { useNavigate, useLocation } from 'react-router';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES, USER_TYPE_ID } from 'src/Config/constant';
@@ -33,7 +23,7 @@ const AfterRegMessage = () => {
         toast.success('Verification link sent successfully');
       }
     } catch (e) {
-      console.log(e, '---login err-----');
+      toast.error(e);
     } finally {
       // setLoading(false);
     }

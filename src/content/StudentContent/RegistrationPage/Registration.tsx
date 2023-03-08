@@ -7,14 +7,10 @@ import {
   Radio,
   RadioGroup
 } from '@mui/material';
-import { memo, useCallback, useState } from 'react';
+import { memo, useState } from 'react';
 import { LineBarIcon, Google } from 'src/Assets';
 import { ButtonComp, TextInputComponent } from 'src/components';
-// import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-// import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
-// import IconButton from '@mui/material/IconButton';
-
-import { useNavigate, useLocation } from 'react-router';
+import { useNavigate } from 'react-router';
 import { API_SERVICES } from 'src/Services';
 import {
   DETECT_LANGUAGE,
@@ -28,7 +24,6 @@ import { useEdit } from 'src/hooks/useEdit';
 import { capitalizeFirstLetter, isPhoneNumber, isValidEmail } from 'src/Utils';
 import { t } from 'i18next';
 import CountryCode from 'src/components/CountryCode';
-import AfterRegMessage from './AfterRegMessage';
 
 const Registration = () => {
   const theme = useTheme();

@@ -1,12 +1,9 @@
 import { Typography, useTheme } from '@material-ui/core';
 import { memo, useCallback, useState } from 'react';
-import { LineBarIcon, Google } from 'src/Assets';
+import { LineBarIcon } from 'src/Assets';
 import { ButtonComp, TextInputComponent } from 'src/components';
 import { useNavigate } from 'react-router';
-import { API_SERVICES } from 'src/Services';
-import { HTTP_STATUSES } from 'src/Config/constant';
 import { useTranslation } from 'react-i18next';
-import Divider from '@mui/material/Divider';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import toast from 'react-hot-toast';
 import { useEdit } from 'src/hooks/useEdit';
@@ -18,8 +15,8 @@ const ForgetPassword = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const { state } = useLocation();
-//const forgetpassword = state;
   const [error, setError] = useState(false);
+  const { i18n } = useTranslation();
   const { updateStudentInfo } = useStudentInfo();
   const INITIAL_DATA = {
     email_id: ''
@@ -31,7 +28,6 @@ const ForgetPassword = () => {
     (error &&
       edit.allFilled('email_id') &&
       !isValidEmail(edit.getValue('email_id')));
-  const { i18n } = useTranslation();
   const onClick = useCallback(async () => {
     if (!edit.allFilled(...RequiredFields)) {
       setError(true);

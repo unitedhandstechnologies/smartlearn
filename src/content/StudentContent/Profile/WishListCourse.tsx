@@ -1,6 +1,6 @@
-import { Container, IconButton, makeStyles, useTheme } from '@material-ui/core';
+import { Container, makeStyles, useTheme } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { ButtonComp, Heading, ListItemCell, MuiCardComp } from 'src/components';
+import { Heading, Loader, MuiCardComp } from 'src/components';
 import { Grid } from '@mui/material';
 import { BasicStockIcon } from 'src/Assets';
 import { API_SERVICES } from 'src/Services';
@@ -30,6 +30,7 @@ const WishListCourse = () => {
   const { i18n } = useTranslation();
   const { wishlistDetails, updateWishlistInfo } = useWishlistInfo();
   const [likedCourses, setLikedCourses] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const navigateTo = useNavigate();
 
   let wishlistIds = [];
@@ -37,6 +38,7 @@ const WishListCourse = () => {
 
   const fetchData = async () => {
     try {
+      setLoading(true);
       setLikedCourses([]);
       const response: any = await API_SERVICES.WishListService.getAllWishlist(
         userId,
@@ -49,6 +51,8 @@ const WishListCourse = () => {
       }
     } catch (err) {
       toast.error(err?.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,77 +71,82 @@ const WishListCourse = () => {
       replace: true
     });
   };
-
-  return (
-    <Container
-      maxWidth="lg"
-      style={{
-        maxWidth: '1200px'
-      }}
-    >
-      <Grid>
-        <Heading
-          headingText={'Upgrade yourself with more courses'}
-          headerFontSize={'24px'}
-          headerFontWeight={theme.fontWeight.medium}
-          headingColor={theme.Colors.blackBerry}
-        />
-        <Grid
-          container
-          //justifyContent={'center'}
-          spacing={4}
-          sx={{
-            paddingBottom: '30px',
-            [theme.breakpoints.down('xs')]: {
-              justifyContent: 'center'
-            }
-          }}
-        >
-          {likedCourses?.length
-            ? likedCourses?.slice(0, 6)?.map((item, index) => {
-                return (
-                  <Grid
-                    key={index}
-                    item
-                    xs={12}
-                    sm={6}
-                    md={4}
-                    className={classes.eachItem}
-                  >
-                    <MuiCardComp
+  if (loading) {
+    return <Loader />;
+  } else {
+    return (
+      <Container
+        maxWidth="lg"
+        style={{
+          maxWidth: '1200px'
+        }}
+      >
+        <Grid>
+          <Heading
+            headingText={'Upgrade yourself with more courses'}
+            headerFontSize={'24px'}
+            headerFontWeight={theme.fontWeight.medium}
+            headingColor={theme.Colors.blackBerry}
+          />
+          <Grid
+            container
+            //justifyContent={'center'}
+            spacing={4}
+            sx={{
+              paddingBottom: '30px',
+              [theme.breakpoints.down('xs')]: {
+                justifyContent: 'center'
+              }
+            }}
+          >
+            {likedCourses?.length
+              ? likedCourses?.slice(0, 6)?.map((item, index) => {
+                  return (
+                    <Grid
                       key={index}
-                      imgUrl={item.image_url ? item.image_url : BasicStockIcon}
-                      rightText={item.course_type}
-                      heading={item.category_name}
-                      title={item.course_name}
-                      subText={item.course_description}
-                      courseLevel={item?.course_level_name?.trim()}
-                      courseLanguage={
-                        item.language_id === 1
-                          ? 'English'
-                          : item.language_id === 2
-                          ? 'Hindi'
-                          : 'Gujarati'
-                      }
-                      date={`${item.starting_date} - ${item.ending_date}`}
-                      zoomLink={item.meeting_link}
-                      locationName={item.meeting_location}
-                      subCategory={item.sub_category_name}
-                      courseType={item.course_type}
-                      prize={item.amount}
-                      onClickCardImage={() => onClickCardImage(item)}
-                      item={item}
-                      backBtnTxt={'All Courses'}
-                      backBtnRoute={'/home/profilehome'}
-                    />
-                  </Grid>
-                );
-              })
-            : null}
+                      item
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      className={classes.eachItem}
+                    >
+                      <MuiCardComp
+                        key={index}
+                        imgUrl={
+                          item.image_url ? item.image_url : BasicStockIcon
+                        }
+                        rightText={item.course_type}
+                        heading={item.category_name}
+                        title={item.course_name}
+                        subText={item.course_description}
+                        courseLevel={item?.course_level_name?.trim()}
+                        courseLanguage={
+                          item.language_id === 1
+                            ? 'English'
+                            : item.language_id === 2
+                            ? 'Hindi'
+                            : 'Gujarati'
+                        }
+                        date={`${item.starting_date} - ${item.ending_date}`}
+                        zoomLink={item.meeting_link}
+                        locationName={item.meeting_location}
+                        subCategory={item.sub_category_name}
+                        courseType={item.course_type}
+                        prize={item.amount}
+                        onClickCardImage={() => onClickCardImage(item)}
+                        item={item}
+                        backBtnTxt={'All Courses'}
+                        backBtnRoute={'/home/profilehome'}
+                      />
+                    </Grid>
+                  );
+                })
+              : null}
+          </Grid>
         </Grid>
-      </Grid>
-    </Container>
-  );
+      </Container>
+    );
+  }
 };
 
 export default WishListCourse;
