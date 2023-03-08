@@ -91,7 +91,14 @@ export default function Footer() {
           }}
         >
           <Grid item xs>
-            <img src={SmartLearnLogoFooter} alt="" />
+            <img
+              src={SmartLearnLogoFooter}
+              alt=""
+              onClick={() => {
+                navigateTo('/', { replace: true });
+              }}
+              style={{ cursor: 'pointer' }}
+            />
             <Text>
               Small description about SmartLearn goes here like this. Longer
               description goes here like this.

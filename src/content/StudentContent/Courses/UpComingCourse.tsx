@@ -182,7 +182,7 @@ const UpComingCourse = ({
     } else {
       setView(6);
     }
-  };
+  };  
 
   const handleApply = () => {
     let filteredCourse = [];
@@ -289,6 +289,7 @@ const UpComingCourse = ({
     } else {
       setCourses([]);
     }
+    window.scrollTo(0,0)
     getAllWishList();
   }, [courseDetails]);
 
@@ -418,7 +419,7 @@ const UpComingCourse = ({
                       heading={item.category_name}
                       title={item.course_name}
                       subText={item.course_description}
-                      courseLevel={item.course_level_name}
+                      courseLevel={item.course_level_name.trim()}
                       courseLanguage={
                         item.language_id === 1
                           ? 'English'

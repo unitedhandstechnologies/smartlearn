@@ -71,6 +71,7 @@ const Seminars = () => {
   }, [DETECT_LANGUAGE[i18n.language], debValue]);
 
   useEffect(() => {
+    window.scrollTo(0,0)
     fetchData();
   }, [fetchData]);
 

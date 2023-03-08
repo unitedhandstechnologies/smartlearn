@@ -140,7 +140,7 @@ const MyLibrary = ({ enrollCourse }) => {
                   heading={item.category_name}
                   title={item.course_name}
                   subText={item.course_description}
-                  courseLevel={item.course_level_name}
+                  courseLevel={item.course_level_name.trim()}
                   nextClass={item.starting_date}
                   zoomLink={item.meeting_link}
                   locationName={item.meeting_location}
