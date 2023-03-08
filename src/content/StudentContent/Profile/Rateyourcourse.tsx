@@ -1,26 +1,25 @@
 import { Divider, Rating } from '@mui/material';
 import { Grid, Typography } from '@mui/material';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import PopOver from 'src/components/PopOverComp';
 import TextField from '@mui/material/TextField';
 import { ButtonComp } from 'src/components';
 
-type notiPrpos = {
+type notificationProps = {
   title: string;
   content: string;
 };
 
 type Props = {
   anchorEl: null | HTMLElement;
-  notifications: notiPrpos[];
+  notifications: notificationProps[];
   handleClose: () => void;
   onClick?: () => void;
 };
 
-const Rateyourcourse = (props: Props) => {
+const RateYourCourse = (props: Props) => {
   const { notifications, anchorEl, handleClose, onClick } = props;
 
-  const renderComponenet = () => {
+  const renderComponent = () => {
     return (
       <>
         {notifications?.map((notification, index) => {
@@ -41,7 +40,7 @@ const Rateyourcourse = (props: Props) => {
                     color: '#3C414B'
                   }}
                 >
-                  {notification.title}
+                  {notification?.title}
                 </Typography>
                 <Typography
                   style={{
@@ -86,9 +85,9 @@ const Rateyourcourse = (props: Props) => {
       anchorEl={anchorEl}
       handleClose={handleClose}
       popOverTitle={'Rate your course'}
-      renderContent={renderComponenet}
+      renderContent={renderComponent}
     />
   );
 };
 
-export default Rateyourcourse;
+export default RateYourCourse;

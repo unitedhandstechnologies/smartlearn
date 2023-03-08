@@ -7,15 +7,9 @@ import {
   useTheme
 } from '@material-ui/core';
 import { EditOutlined } from '@material-ui/icons';
-import React, { useContext, useState } from 'react';
-import {
-  ButtonComp,
-  Heading,
-  ListItemCell,
-  TextInputComponent
-} from 'src/components';
+import React, { useState } from 'react';
+import { ButtonComp, Heading, TextInputComponent } from 'src/components';
 import { useEdit } from 'src/hooks/useEdit';
-//import { StudentInfoContext } from 'src/contexts/StudentContext';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import toast from 'react-hot-toast';
@@ -65,7 +59,7 @@ const ProfileDetails = () => {
   const theme = useTheme();
   const classes = useStyles();
   const { studentDetails, updateStudentInfo } = useStudentInfo();
-  const [profileImage, setProfileImage] = useState('No file choosen');
+  const [profileImage, setProfileImage] = useState('No file chosen');
   const navigateTo = useNavigate();
   //const { updateStudentInfo } = useStudentInfo();
   const initialValues = {
@@ -134,7 +128,7 @@ const ProfileDetails = () => {
         });
       }
     } catch (e) {
-      console.log(e, '---login err-----');
+      toast.error(e);
     } finally {
       // setLoading(false);
     }

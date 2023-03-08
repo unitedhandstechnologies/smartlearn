@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
-import { Grid, Typography, Container } from '@mui/material';
-import { ButtonComp, Loader } from 'src/components';
+import { Grid, Container } from '@mui/material';
+import { Loader } from 'src/components';
 import { useTheme } from '@material-ui/core';
 import { API_SERVICES } from 'src/Services';
 import {
@@ -22,7 +22,6 @@ import Reviews from '../HomePage/Reviews';
 import StartYourLearningBanner from '../HomePage/StartYourLearningBanner';
 import FAQs from '../HomePage/FAQs';
 import useStudentInfo from 'src/hooks/useStudentInfo';
-import { useEdit } from 'src/hooks/useEdit';
 
 const ProfileHome = () => {
   const theme = useTheme();
@@ -66,10 +65,10 @@ const ProfileHome = () => {
       }
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[1]?.data?.users?.length) {
-          let acteptedMentor = response[1]?.data?.users.filter((item) => {
+          let acceptedMentor = response[1]?.data?.users.filter((item) => {
             return item.user_type === USER_TYPES.mentor && item.status_id === 2;
           });
-          setMentorDetails(acteptedMentor);
+          setMentorDetails(acceptedMentor);
         }
       }
       if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -147,9 +146,7 @@ const ProfileHome = () => {
             [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
           }}
         >
-          <MoreUpcomingSession
-            courseDetails={courseDetails}
-          />
+          <MoreUpcomingSession courseDetails={courseDetails} />
         </Grid>
         <LearnTheWayBox />
         <Container>

@@ -47,12 +47,12 @@ const MoreUpcomingSession = ({ courseDetails = [] }: CourseProps) => {
     if (chipValue[0] === FILTER_CHIPS[0]) {
       return courses;
     } else if (chipValue[0] === FILTER_CHIPS[1]) {
-      const workShop = courseDetails.filter(
+      const workShop = courseDetails?.filter(
         (item) => item.course_type === COURSE_TYPE_NAME[4]
       );
       return workShop;
     } else if (chipValue[0] === FILTER_CHIPS[2]) {
-      const webinarSeminar = courseDetails.filter(
+      const webinarSeminar = courseDetails?.filter(
         (item) =>
           item.course_type === COURSE_TYPE_NAME[1] ||
           item.course_type === COURSE_TYPE_NAME[3]
@@ -173,8 +173,8 @@ const MoreUpcomingSession = ({ courseDetails = [] }: CourseProps) => {
             }
           }}
         >
-          {getCourses.length
-            ? getCourses.slice(0, view)?.map((item, index) => {
+          {getCourses?.length
+            ? getCourses?.slice(0, view)?.map((item, index) => {
                 return (
                   <Grid
                     key={index}
@@ -192,7 +192,7 @@ const MoreUpcomingSession = ({ courseDetails = [] }: CourseProps) => {
                       heading={item.category_name}
                       title={item.course_name}
                       subText={item.course_description}
-                      courseLevel={item.course_level_name.trim()}
+                      courseLevel={item?.course_level_name?.trim()}
                       courseLanguage={
                         item.language_id === 1
                           ? 'English'

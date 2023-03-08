@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
-import { ArrowNext, BasicStockIcon, LineBarIcon } from 'src/Assets';
+import { BasicStockIcon, LineBarIcon } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
-import { ButtonComp, Heading, MultiSelectChip } from 'src/components';
+import { Heading } from 'src/components';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
 import { useLocation, useNavigate } from 'react-router';
 
@@ -108,8 +108,8 @@ const CatchFrom = ({ courseDetails }: CourseProps) => {
           }
         }}
       >
-        {recordedCourse.length ? (
-          recordedCourse.slice(0, 6)?.map((item, index) => {
+        {recordedCourse?.length ? (
+          recordedCourse?.slice(0, 6)?.map((item, index) => {
             return (
               <Grid
                 key={index}
@@ -123,7 +123,7 @@ const CatchFrom = ({ courseDetails }: CourseProps) => {
                   key={index}
                   imgUrl={item.image_url ? item.image_url : BasicStockIcon}
                   rightText={item.course_type}
-                  leftText={`Completed  ${parseInt(item.level)}% `}
+                  leftText={`Completed  ${parseInt(item?.level)}% `}
                   heading={item.category_name}
                   title={item.course_name}
                   subText={item.course_description}

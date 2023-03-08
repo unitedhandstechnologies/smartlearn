@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router';
 import { MuiConfirmModal } from 'src/components';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import useCartInfo from 'src/hooks/useCartInfo';
-
 import { API_SERVICES } from 'src/Services';
 import CheckoutScreen from './CheckoutScreen';
 import Summary from './Summary';

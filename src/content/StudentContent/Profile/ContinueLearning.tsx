@@ -1,10 +1,10 @@
+import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
-import React from 'react';
 import { BasicStockIcon } from 'src/Assets';
 import { Heading, MuiCardComp } from 'src/components';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -22,16 +22,12 @@ const ContinueLearning = ({ enrollCourse }) => {
     return item.course_type === COURSE_TYPE_NAME[6];
   });
   const onClickCardImage = (rowData) => {
-    // if (rowData.course_type === COURSE_TYPE_NAME[6]) {
-    navigateTo(`/home/course-details/${rowData.course_name}`, {
-      state: {
-        formData: { ...rowData },
-        backBtnTxt: 'All Courses',
-        backBtnRoute: '/home/profilehome'
-      },
-      replace: true
-    });
-    // }
+    if (rowData.course_type === COURSE_TYPE_NAME[6]) {
+      navigateTo('/home/pre-recordedCourse-details', {
+        state: { ...rowData },
+        replace: true
+      });
+    }
   };
 
   return (

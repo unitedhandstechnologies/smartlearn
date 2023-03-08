@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import { Avatar, makeStyles, useTheme } from '@material-ui/core';
-import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { BlueLine } from 'src/Assets';
 import { Heading, MuiTabComponent } from 'src/components';
 import MyLibrary from './MyLibrary';
@@ -33,9 +33,9 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const { studentDetails, updateStudentInfo } = useStudentInfo();
+  const { studentDetails } = useStudentInfo();
   const [enrollCourse, setEnrollCourse] = useState<any>([]);
-  console.log(enrollCourse, 'test enrollCourse');
+
   const tabContent = [
     {
       label: 'Profile',
@@ -59,13 +59,15 @@ const Profile = () => {
     }
   ];
   const { state }: any = useLocation();
-  const [selectedTab, setSelectedTab] = useState(state?.tabVal ?? tabContent[0]?.id);
+  const [selectedTab, setSelectedTab] = useState(
+    state?.tabVal ?? tabContent[0]?.id
+  );
   const onTabChange = (value: number) => {
-    setSelectedTab(value);    
+    setSelectedTab(value);
   };
 
   const renderTabContent = (tabVal?: any) => {
-    const findActiveTab = tabContent.find(({ id }) => id === tabVal);
+    const findActiveTab = tabContent?.find(({ id }) => id === tabVal);
     return (
       <Grid className={classes.tabContentContainer}>
         {findActiveTab ? findActiveTab.component() : null}
@@ -77,12 +79,9 @@ const Profile = () => {
     let userId = getUserId();
     try {
       const response: any =
-        await API_SERVICES.enrollmentManagementService.getById(
-          userId,
-          {
-            failureMessage: 'No course enrolled with the Student'
-          }
-        );
+        await API_SERVICES.enrollmentManagementService.getById(userId, {
+          failureMessage: 'No course enrolled with the Student'
+        });
 
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         setEnrollCourse(response?.data?.enrolledCourse);
@@ -93,7 +92,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     fetchData();
   }, []);
 
@@ -115,7 +114,7 @@ const Profile = () => {
           />
         </Grid>
         <Heading
-          headingText={`${studentDetails.first_name} ${studentDetails.last_name}`}
+          headingText={`${studentDetails?.first_name} ${studentDetails?.last_name}`}
           headerFontSize={'32px'}
           headerFontWeight={500}
           headerFontFamily={'IBM Plex Serif'}

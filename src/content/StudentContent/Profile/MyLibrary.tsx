@@ -29,7 +29,7 @@ const MyLibrary = ({ enrollCourse }) => {
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
   const { wishlistDetails, updateWishlistInfo } = useWishlistInfo();
   let wishlistIds = [];
-  wishlistDetails.filter((item) => wishlistIds.push(item.id));
+  wishlistDetails?.filter((item) => wishlistIds.push(item.id));
 
   const handleChangeChipValue = (selectedChipItem: string[]) => {
     setChipValue(selectedChipItem);
@@ -42,7 +42,7 @@ const MyLibrary = ({ enrollCourse }) => {
   const getCourses: any[] = useMemo(() => {
     //const activecCourses = [...enrollCourse];
     if (chipValue[0] === FILTER_CHIPS[0]) {
-      const enrolledCourse = enrollCourse.filter(
+      const enrolledCourse = enrollCourse?.filter(
         (item) =>
           item.course_type === COURSE_TYPE_NAME[1] ||
           item.course_type === COURSE_TYPE_NAME[2] ||
@@ -52,7 +52,7 @@ const MyLibrary = ({ enrollCourse }) => {
       );
       return enrolledCourse;
     } else if (chipValue[0] === FILTER_CHIPS[1]) {
-      const completed = enrollCourse.filter((item) => item.status_id === 2);
+      const completed = enrollCourse?.filter((item) => item.status_id === 2);
       return completed;
     } else if (chipValue[0] === FILTER_CHIPS[2]) {
       // let wishlistData = enrollCourse.filter((item) =>
