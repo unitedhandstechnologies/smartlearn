@@ -111,7 +111,7 @@ const USPs = () => {
                   btnWidth={'fit-content'}
                   height={'40px'}
                   classes={{ root: classes.button }}
-                  onClickButton={() => navigateTo('/home/courses')}
+                  onClickButton={() => navigateTo('/home/user-login')}
                 />
               </Grid>
             </Grid>

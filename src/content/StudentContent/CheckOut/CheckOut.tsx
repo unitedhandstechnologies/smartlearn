@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTheme } from '@material-ui/core';
+import { Container, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -66,30 +66,35 @@ const CheckOut = () => {
   };
 
   return (
-    <Grid
-      container
-      spacing={4}
-      sx={{
-        backgroundColor: theme.Colors.white,
-        padding: 5,
-        [theme.breakpoints.down('sm')]: {
-          flexDirection: 'column'
-        }
-      }}
-    >
-      <Grid item xs>
-        <CheckoutScreen total={totalAmount} onClickCheckout={onClickCheckout} />
+    <Container maxWidth="lg">
+      <Grid
+        container
+        spacing={4}
+        sx={{
+          backgroundColor: theme.Colors.white,
+          padding: theme.spacing(4.5, 0),
+          [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column'
+          }
+        }}
+      >
+        <Grid item xs>
+          <CheckoutScreen
+            total={totalAmount}
+            onClickCheckout={onClickCheckout}
+          />
+        </Grid>
+        <Grid item xs={12} sm={8} md={6} lg={4}>
+          <Summary
+            coursePrice={total}
+            tax={tax}
+            totalAmount={totalAmount}
+            purchaseData={cartDetails}
+          />
+        </Grid>
+        {confirmModal.open && <MuiConfirmModal {...confirmModal} />}
       </Grid>
-      <Grid item>
-        <Summary
-          coursePrice={total}
-          tax={tax}
-          totalAmount={totalAmount}
-          purchaseData={cartDetails}
-        />
-      </Grid>
-      {confirmModal.open && <MuiConfirmModal {...confirmModal} />}
-    </Grid>
+    </Container>
   );
 };
 

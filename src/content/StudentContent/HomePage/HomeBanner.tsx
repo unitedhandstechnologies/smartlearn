@@ -107,7 +107,13 @@ const HomeBanner = ({ bannerManagement }) => {
           height: '100%'
         }}
       >
-        <Carousel prevIcon={null} nextIcon={null}>
+         <img
+          src={HomePageRight}
+          style={{
+            height: '100%'
+          }}
+        />
+        {/* <Carousel prevIcon={null} nextIcon={null}>
           {bannerManagement?.length
             ? bannerManagement.map((item, index) => {
                 return (
@@ -123,14 +129,14 @@ const HomeBanner = ({ bannerManagement }) => {
                       width="100%"
                       height="500px"
                     />
-                    {/* <Carousel.Caption>
+                    <Carousel.Caption>
                       <h3>{item.banner_name}</h3>
-                    </Carousel.Caption> */}
+                    </Carousel.Caption>
                   </Carousel.Item>
                 );
               })
             : null}
-        </Carousel>
+        </Carousel> */}
       </Grid>
     </Grid>
   );

@@ -37,6 +37,7 @@ import { useNavigate } from 'react-router';
 import { API_SERVICES } from 'src/Services';
 
 const TopBox = ({ leftText, rightText }) => {
+  const { studentDetails } = useContext(StudentInfoContext);
   return (
     <Grid container justifyContent={leftText ? 'space-between' : 'flex-end'}>
       {leftText ? (
@@ -51,19 +52,21 @@ const TopBox = ({ leftText, rightText }) => {
           />
         </Grid>
       ) : null}
-      {rightText === 'Live' ? (
-        <Grid item>
-          <ButtonComp
-            buttonText={rightText}
-            startIcon={<img src={WhiteDot} alt="Not found" />}
-            buttonFontSize={14}
-            backgroundColor="#FF783C"
-            buttonTextColor="#FFF"
-            btnBorderRadius={4}
-            height={29}
-          />
-        </Grid>
-      ) : null}
+      {studentDetails.id !== 0
+        ? rightText && (
+            <Grid item>
+              <ButtonComp
+                buttonText={'Live'}
+                startIcon={<img src={WhiteDot} alt="Not found" />}
+                buttonFontSize={14}
+                backgroundColor="#FF783C"
+                buttonTextColor="#FFF"
+                btnBorderRadius={4}
+                height={29}
+              />
+            </Grid>
+          )
+        : null}
     </Grid>
   );
 };
@@ -161,7 +164,7 @@ const MuiCardComp = ({
               }}
             />
             <ImageListItemBar
-              title={<TopBox rightText={rightText} leftText={leftText} />}
+              title={<TopBox rightText={zoomLink} leftText={leftText} />}
               position="top"
               sx={{ backgroundColor: 'transparent' }}
             />

@@ -70,7 +70,7 @@ const Summary = ({
       spacing={2}
       sx={{
         padding: theme.spacing(0.4),
-        border: '1px solid #3C78F0',
+        border: '1.5px solid #3C78F0',
         borderRadius: '8px'
       }}
     >
@@ -205,18 +205,29 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
       {purchaseData?.length
         ? purchaseData?.map((item, index) => {
             return (
-              <Grid item key={index}>
-                <Grid container item>
-                  <Grid item xs>
-                    <ChipComp
-                      label={item.course_type}
-                      style={{
-                        borderColor: '#3CC878',
-                        color: '#78828C',
-                        fontSize: theme.MetricsSizes.small_x,
-                        fontWeight: theme.fontWeight.regular
-                      }}
-                    />
+              <Grid container spacing={1} item key={index}>
+                <Grid
+                  item
+                  container
+                  justifyContent={'space-between'}
+                  alignItems={'center'}
+                >
+                  <Grid
+                    item
+                    style={{
+                      color: '#78828C',
+                      border: ' 1px solid #3CC878',
+                      fontSize: '12px',
+                      fontFamily: 'Switzer',
+                      fontWeight: 400,
+                      height: 25,
+                      paddingLeft: 6,
+                      paddingRight: 6,
+                      paddingTop: 3,
+                      borderRadius: 17
+                    }}
+                  >
+                    {item?.course_type}
                   </Grid>
                   <Grid item>
                     <ButtonComp

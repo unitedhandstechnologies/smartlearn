@@ -98,36 +98,36 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
   let totalPrice = course?.amount - (course?.discount / 100) * course?.amount;
 
   const handleClick = async () => {
-    if (course?.course_type !== 'Workshop') {
-      if (studentDetails.id !== 0) {
-        let data = {
-          course_id: course?.course_id,
-          language_id: course?.language_id,
-          user_id: studentDetails?.id,
-          tax: tax,
-          total: totalPrice
-        };
-        const createRes: any = await API_SERVICES.AddToCartService.create({
-          data: data,
-          failureMessage: 'Course already in the cart'
-        });
-        if (createRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-          if (createRes?.data?.AddToCart) {
-            updateCartInfo(createRes?.data?.AddToCart[0].user_id);
-          }
+    // if (course?.course_type !== 'Workshop') {
+    if (studentDetails.id !== 0) {
+      let data = {
+        course_id: course?.course_id,
+        language_id: course?.language_id,
+        user_id: studentDetails?.id,
+        tax: tax,
+        total: totalPrice
+      };
+      const createRes: any = await API_SERVICES.AddToCartService.create({
+        data: data,
+        failureMessage: 'Course already added in the cart'
+      });
+      if (createRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (createRes?.data?.AddToCart) {
+          updateCartInfo(createRes?.data?.AddToCart[0].user_id);
         }
-      } else {
-        navigateTo('/home/user-login', {
-          state: {
-            formData: { ...course },
-            route: `/home/course-details/${course.course_name}`
-          },
-          replace: true
-        });
       }
     } else {
-      return null;
+      navigateTo('/home/user-login', {
+        state: {
+          formData: { ...course },
+          route: `/home/course-details/${course.course_name}`
+        },
+        replace: true
+      });
     }
+    // } else {
+    //   return null;
+    // }
   };
 
   const handleNavigate = () => {

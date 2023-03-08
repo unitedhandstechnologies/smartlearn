@@ -178,8 +178,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const FILTER_CHIPS = ['All', 'Stock market', 'Options trading', 'Mutual funds'];
-
 type WorkshopProps = {
   workshopDetails?: any[];
   onSearchValChange?: (event) => void;
@@ -194,9 +192,13 @@ const UpComingWorkshop = ({
 }: WorkshopProps) => {
   const theme = useTheme();
   const classes = useStyles();
+  let FILTER_CHIPS = ['All'];
+  workshopDetails.filter((item) => FILTER_CHIPS.push(item.category_name));
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
   const [whistList, setWishList] = useState([]);
   const userId = getUserId();
+
+  // console.log('chipText', chipText);
 
   const navigateTo = useNavigate();
   const handleChangeChipValue = (selectedChipItem: string[]) => {
@@ -295,7 +297,7 @@ const UpComingWorkshop = ({
       //   },
       //   replace: true
       // });
-      toast.error('Please login')
+      toast.error('Please login');
     }
   };
 

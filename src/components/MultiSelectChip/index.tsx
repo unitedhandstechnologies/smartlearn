@@ -85,7 +85,7 @@ const MultiSelectChip = (props: Props) => {
         ...containerStyle
       }}
     >
-      {chipItems.map((item, index) => {
+      {chipItems.slice(0, 4).map((item, index) => {
         const findActiveChip: number = selectedItem.findIndex(
           (selItem) => selItem === item
         );
@@ -97,7 +97,9 @@ const MultiSelectChip = (props: Props) => {
             key={index}
             style={{
               marginRight: theme.spacing(1),
-              color: isActive ? theme.Colors.white : theme.Colors.darkGrayishBlue,
+              color: isActive
+                ? theme.Colors.white
+                : theme.Colors.darkGrayishBlue,
               backgroundColor: getChipBackgroundColor(isActive),
               fontSize: theme.MetricsSizes.tiny_xxx,
               fontWeight: isActive
