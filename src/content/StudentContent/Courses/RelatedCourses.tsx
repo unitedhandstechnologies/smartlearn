@@ -43,12 +43,13 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
       );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response?.data?.courses?.length) {
-          console.log(response?.data?.courses, 'response?.data?.courses');
           const allCourses = response?.data?.courses;
           const filteredCourse = allCourses?.filter(
-            (item) => item.category_id === courseDetails?.category_id
+            (item) =>
+              item.category_id === courseDetails?.category_id &&
+              item.id !== courseDetails?.id
           );
-          setCourses(filteredCourse);
+          setCourses([...filteredCourse]);
         }
       }
     } catch (err) {
@@ -56,7 +57,8 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
     } finally {
       // setLoading(false);
     }
-  }, [DETECT_LANGUAGE[i18n.language]]);
+  }, [DETECT_LANGUAGE[i18n.language],courseDetails]);
+
   const onClickCardImage = (rowData) => {
     navigateTo(`/home/course-details/${rowData.course_name}`, {
       state: { formData: { ...rowData } },

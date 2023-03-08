@@ -88,15 +88,18 @@ const PreRecordedDetails = () => {
       setLoading(false);
     }
   }, []);
- 
+
   lessonData.forEach((element) => (totalDuration += element.duration));
   if (totalDuration > 60) {
     totalDuration = totalDuration / 60;
   }
+
   useEffect(() => {
-    window.scrollTo(0, 0);
     fetchData();
   }, []);
+
+  window.scrollTo(0, 0);
+
   if (loading) {
     return <Loader />;
   } else {
