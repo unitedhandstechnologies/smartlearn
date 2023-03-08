@@ -250,7 +250,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           </Grid>
         )}
         {course?.student_enrolled_course_id ? (
-          <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
+          <Grid item xs={8} md={6} lg={9} justifyContent={'flex-start'}>
             <ButtonComp
               buttonText={'View Enrolled Courses'}
               buttonTextColor={'#FFFFFF'}
@@ -264,7 +264,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           </Grid>
         ) : (
           <>
-            <Grid item xs={6} md={6} lg={9} justifyContent={'flex-start'}>
+            <Grid item xs={8} md={6} lg={9} justifyContent={'flex-start'}>
               <ButtonComp
                 buttonText={
                   course?.course_type === 'Workshop'

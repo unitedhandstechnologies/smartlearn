@@ -96,7 +96,10 @@ const PreRecordedCourses = ({
               paddingTop: 5,
               justifyContent: 'center',
               position: 'relative',
-              width: '100%'
+              width: '100%',
+              top: 0,
+              alignItems: 'center',
+              right: '0px',
             },
             [theme.breakpoints.up(1400)]: {
               alignItems: 'flex-start'

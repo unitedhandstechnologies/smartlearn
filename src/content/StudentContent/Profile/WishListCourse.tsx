@@ -32,6 +32,7 @@ const WishListCourse = () => {
   const [likedCourses, setLikedCourses] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const navigateTo = useNavigate();
+  const [whistList, setWishList] = useState([]);
 
   let wishlistIds = [];
   wishlistDetails.filter((item) => wishlistIds.push(item.id));
@@ -56,10 +57,55 @@ const WishListCourse = () => {
     }
   };
 
+  const getAllWishList = async () => {
+    let response: any = await API_SERVICES.WishListService.getAllWishlist(
+      userId,
+      DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+    );
+    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+      const getIds = response.data.wishList.map((i) => i.course_id);
+      setWishList(getIds);
+    }
+  };
+
   useEffect(() => {
     updateWishlistInfo(userId, DETECT_LANGUAGE[i18n.language]);
     fetchData();
+    getAllWishList();
   }, []);
+
+  const handleIconClick = async (item, isActive) => {
+    if (userId !== null) {
+      let response: any;
+      if (isActive) {
+        response = await API_SERVICES.WishListService.delete(
+          userId,
+          item?.course_id
+        );
+      } else {
+        response = await API_SERVICES.WishListService.create(
+          userId,
+          item?.course_id,
+          { successMessage: 'Successfully Added In WishList' }
+        );
+      }
+      if (response.status < HTTP_STATUSES.BAD_REQUEST) {
+        await fetchData();
+        await getAllWishList();
+      }
+    } else {
+      // navigateTo('/home/user-login', {
+      //   state: {
+      //     formData: item,
+      //     route: `/home/course-details/${item.course_name}`,
+      //     backBtnTxt: 'All masterclasses',
+      //     backBtnRoute: '/home/masterclasses'
+      //   },
+      //   replace: true
+      // });
+      toast.error('Please login');
+    }
+  };
 
   const onClickCardImage = (rowData) => {
     navigateTo(`/home/course-details/${rowData.course_name}`, {
@@ -135,6 +181,8 @@ const WishListCourse = () => {
                         prize={item.amount}
                         onClickCardImage={() => onClickCardImage(item)}
                         item={item}
+                        isActive={whistList.includes(item.id)}
+                        handleOnClick={handleIconClick}
                         backBtnTxt={'All Courses'}
                         backBtnRoute={'/home/profilehome'}
                       />

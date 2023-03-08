@@ -1,5 +1,5 @@
-import { Typography, useTheme, Avatar, makeStyles } from '@material-ui/core';
-import { Grid, Box } from '@mui/material';
+import {  useTheme, Avatar, makeStyles } from '@material-ui/core';
+import { Grid, Typography, Box } from '@mui/material';
 import React from 'react';
 import { whiteLine } from 'src/Assets';
 import CourseRating from './CourseRating/Index';
@@ -77,12 +77,15 @@ const CourseBanner = ({
         <img src={whiteLine} style={{ margin: theme.spacing(2, 0) }} />
         {courseTitle && (
           <Typography
-            style={{
+            sx={{
               color: 'white',
               fontSize: '48px',
               fontWeight: 500,
               fontFamily: 'IBM Plex Serif',
-              lineHeight: '120%'
+              lineHeight: '120%',
+              [theme.breakpoints.down('xs')]:{
+                fontSize: '30px',
+              }
             }}
           >
             {courseTitle}

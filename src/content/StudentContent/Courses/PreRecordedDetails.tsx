@@ -190,7 +190,7 @@ const PreRecordedDetails = () => {
           container
           direction="column"
           sx={{
-            padding: theme.spacing(7, 7),
+            padding: theme.spacing(7, 0),
             backgroundImage: `url(${BackgroundLine})`,
             [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
           }}
