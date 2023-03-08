@@ -132,7 +132,8 @@ const Registration = () => {
               data: {
                 email_id: response?.data?.user.email_id,
                 first_name: response?.data?.user.first_name,
-                id: response?.data?.user.id
+                id: response?.data?.user.id,
+                user_type: response?.data?.user.user_type
               }
             },
             replace: true
@@ -150,7 +151,8 @@ const Registration = () => {
               data: {
                 email_id: response?.data?.user.email_id,
                 first_name: response?.data?.user.first_name,
-                id: response?.data?.user.id
+                id: response?.data?.user.id,
+                user_type: response?.data?.user.user_type
               }
             },
             replace: true

@@ -218,6 +218,33 @@ const LoginContainer = ({
           />
         </Grid>
       </Grid>
+      <Grid
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: 5,
+          [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
+            justifyContent: 'center'
+          }
+        }}
+      >
+        <Typography
+          style={{
+            padding: 10,
+
+            color: '#3C78F0',
+            fontSize: 16,
+            fontFamily: 'Switzer',
+            fontWeight: 700,
+            textAlign: 'center',
+            cursor: 'pointer'
+          }}
+          onClick={() => navigateTo('/home')}
+        >
+          Back to Home
+        </Typography>
+      </Grid>
     </Grid>
   );
 };

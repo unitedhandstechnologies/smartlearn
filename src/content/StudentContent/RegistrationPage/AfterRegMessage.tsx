@@ -15,7 +15,7 @@ import Gmail from '../../../Assets/Images/Gmail.svg';
 
 import { useNavigate, useLocation } from 'react-router';
 import { API_SERVICES } from 'src/Services';
-import { HTTP_STATUSES } from 'src/Config/constant';
+import { HTTP_STATUSES, USER_TYPE_ID } from 'src/Config/constant';
 import toast from 'react-hot-toast';
 
 const AfterRegMessage = () => {
@@ -134,7 +134,7 @@ const AfterRegMessage = () => {
                 >
                   Didn't receive verification link?
                 </span>
-                Resend
+                &nbsp;Resend
               </Typography>
             </Grid>
           </Grid>
@@ -202,9 +202,13 @@ const AfterRegMessage = () => {
               textAlign: 'center',
               cursor: 'pointer'
             }}
-            onClick={() => navigateTo('/home')}
+            onClick={
+              data.user_type === USER_TYPE_ID.student
+                ? () => navigateTo('/home/user-login')
+                : () => navigateTo('/admin/login')
+            }
           >
-            Back to Home
+            Go to Login
           </Typography>
         </Grid>
       </Grid>
