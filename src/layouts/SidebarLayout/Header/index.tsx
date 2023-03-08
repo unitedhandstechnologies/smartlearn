@@ -183,7 +183,8 @@ const Header = (props: Props) => {
           ) : (
             <Grid item container alignItems="center">
               <Typography className={styles.headerText}>
-                Welcome back, {userDetails.first_name}{' '}
+                Welcome back,{' '}
+                {userDetails?.first_name + ' ' + userDetails?.last_name}
               </Typography>
             </Grid>
           )}
@@ -292,9 +293,11 @@ const Header = (props: Props) => {
               </>
             ) : (
               <UserCart
-                userName={userDetails.user_name}
-                image={userDetails.image_url}
-                userType={userDetails.user_type}
+                userName={
+                  userDetails?.first_name + ' ' + userDetails?.last_name
+                }
+                image={userDetails?.image_url}
+                userType={userDetails?.user_type}
               />
             )}
           </Grid>

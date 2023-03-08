@@ -107,7 +107,18 @@ const Registration = () => {
         setError(true);
         return toast.error('Please fill all the required fields');
       }
-
+      if (!isPhoneNumber(edit.getValue('phone_number'))) {
+        setError(true);
+        return toast.error('Please enter your valid 10 digit mobile number');
+      } else {
+        setError(false);
+      }
+      if (
+        edit.getValue('confirmPassword') !== edit.getValue('password') ||
+        edit.getValue('password').length < 7
+      ) {
+        return setError(true);
+      }
       let userData = { ...STUDENT_INITIAL_DATA, ...edit.edits };
       if (userType === USER_TYPE_ID.student) {
         const response: any = await API_SERVICES.adminUserService.create({
@@ -422,15 +433,15 @@ const Registration = () => {
                 labelColor={'#78828C'}
                 required
                 value={edit.getValue('confirmPassword')}
+                onChange={(e) =>
+                  edit.update({ confirmPassword: e.target.value })
+                }
                 type={'password'}
                 helperText={
                   confirmPasswordError &&
                   'Both password and confirm password should be same!'
                 }
                 isError={confirmPasswordError}
-                onChange={(e) =>
-                  edit.update({ confirmPassword: e.target.value })
-                }
               />
             </Grid>
           </Grid>
