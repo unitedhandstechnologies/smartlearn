@@ -16,6 +16,7 @@ import { toast } from 'react-hot-toast';
 import UpcomingMasterClass from './UpcomingMasterClass';
 import Mentors from '../HomePage/Mentors';
 import { useDebounce } from 'src/hooks/useDebounce';
+import { useLocation } from 'react-router';
 
 const Masterclasses = () => {
   const theme = useTheme();
@@ -26,7 +27,6 @@ const Masterclasses = () => {
   const { i18n } = useTranslation();
   const [searchval, setSearchVal] = useState('');
   const debValue = useDebounce(searchval, 1000);
-
   const handleSearchValue = (value) => {
     setSearchVal(value);
   };
@@ -44,9 +44,11 @@ const Masterclasses = () => {
       }
       const response: any = await Promise.all([
         API_SERVICES.courseManagementService.getAll(
-          DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english, params
+          DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english,
+          params
         ),
-        API_SERVICES.homeUserService.getAll()
+        API_SERVICES.homeUserService.getAll(),
+        API_SERVICES.homeUserService.getAllRatingsMentor(1)
       ]);
 
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -74,7 +76,7 @@ const Masterclasses = () => {
   }, [DETECT_LANGUAGE[i18n.language], debValue]);
 
   useEffect(() => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     fetchData();
   }, [fetchData]);
 
@@ -97,36 +99,36 @@ const Masterclasses = () => {
   // if (loading) {
   //   return <Loader />;
   // } else {
-    return (
-      <Box sx={{ py: 5 }}>
-        <Container>
-          <Grid>
-            <UpcomingMasterClass
-              courseDetails={courseDetails.filter(
-                (course) => course.course_type === COURSE_TYPE_NAME[2]
-              )}
-              chipIconText={chipIconText}
-              setChipIconText={setChipIconText}
-              onSearchValChange={handleSearchValue}
-              handleClearSearchValue={handleClearSearchValue}
-              searchval={searchval}  
-            />
-            <Mentors
-              mentorDetails={mentorDetails}
-              courseDetails={courseDetails.filter(
-                (course) =>
-                  course.course_type === COURSE_TYPE_NAME[2] ||
-                  course.course_type === COURSE_TYPE_NAME[4]
-              )}
-              headingText={title}
-              viewButtonPosition={'bottom'}
-              sliceValue={12}
-            />
-          </Grid>
-        </Container>
-      </Box>
-    );
-  }
+  return (
+    <Box sx={{ py: 5 }}>
+      <Container>
+        <Grid>
+          <UpcomingMasterClass
+            courseDetails={courseDetails.filter(
+              (course) => course.course_type === COURSE_TYPE_NAME[2]
+            )}
+            chipIconText={chipIconText}
+            setChipIconText={setChipIconText}
+            onSearchValChange={handleSearchValue}
+            handleClearSearchValue={handleClearSearchValue}
+            searchval={searchval}
+          />
+          <Mentors
+            mentorDetails={mentorDetails}
+            courseDetails={courseDetails?.filter(
+              (course) =>
+                course.course_type === COURSE_TYPE_NAME[2] ||
+                course.course_type === COURSE_TYPE_NAME[4]
+            )}
+            headingText={title}
+            viewButtonPosition={'bottom'}
+            sliceValue={12}
+          />
+        </Grid>
+      </Container>
+    </Box>
+  );
+};
 // };
 
 export default memo(Masterclasses);

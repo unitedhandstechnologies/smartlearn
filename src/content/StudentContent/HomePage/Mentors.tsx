@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import { Grid, useTheme } from '@mui/material';
-import {
-  LineBarIcon,
-  ArrowNext
-} from '../../../Assets/Images';
+import { LineBarIcon, ArrowNext } from '../../../Assets/Images';
 import { ButtonComp, Heading } from 'src/components';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { useNavigate } from 'react-router';
 import { makeStyles } from '@material-ui/core';
+
 const useStyles = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -56,12 +54,12 @@ const Mentors = ({
   }, [mentorDetails]);
 
   const handleBackbtn = (value) => {
-    if(view === value){
+    if (view === value) {
       setView(mentorDetails?.length);
-    }else{
+    } else {
       setView(value);
     }
-  }
+  };
 
   return (
     <Grid
@@ -97,7 +95,7 @@ const Mentors = ({
             }
           }}
         >
-          {viewButtonPosition === 'top' && mentors.length > 4 ? (
+          {viewButtonPosition === 'top' && mentors?.length > 4 ? (
             <ButtonComp
               variant="outlined"
               backgroundColor={'transparent'}
@@ -130,8 +128,8 @@ const Mentors = ({
           }
         }}
       >
-        {mentors.length
-          ? mentors.slice(0, view)?.map((item, index) => {
+        {mentors?.length
+          ? mentors?.slice(0, view)?.map((item, index) => {
               return (
                 <Grid
                   key={index}
@@ -149,10 +147,10 @@ const Mentors = ({
                     key={index}
                     onClick={() => handleMentorClick(item)}
                   >
-                    <img src={item.image_url} alt="" />
+                    <img src={item?.image_url} alt="" />
                     <ImageListItemBar
-                      title={`${item.first_name} ${item.last_name}`}
-                      subtitle={item.qualification}
+                      title={`${item?.first_name} ${item?.last_name}`}
+                      subtitle={item?.qualification}
                       sx={{ backgroundColor: 'transparent' }}
                     />
                   </ImageListItem>
@@ -161,8 +159,8 @@ const Mentors = ({
             })
           : null}
       </Grid>
-      {viewButtonPosition === 'bottom' && mentors.length > 12 ? (
-        <Grid item paddingTop={4} width={"100%"}>
+      {viewButtonPosition === 'bottom' && mentors?.length > 12 ? (
+        <Grid item paddingTop={4} width={'100%'}>
           <ButtonComp
             style={{ border: '1.5px solid #3C78F0' }}
             variant="outlined"
@@ -171,14 +169,14 @@ const Mentors = ({
             backgroundColor={'#FFFFFF'}
             buttonTextColor={'#3C78F0'}
             btnBorderRadius={'4px'}
-            buttonText={sliceValue === 12 ? 'View All' : "Back"}
+            buttonText={sliceValue === 12 ? 'View All' : 'Back'}
             btnWidth="100%"
             iconImage={
               sliceValue === 12 ? (
                 <img src={ArrowNext} style={{ marginLeft: '8px' }} />
               ) : null
             }
-          onClick={() => handleBackbtn(12)}
+            onClick={() => handleBackbtn(12)}
           />
         </Grid>
       ) : null}

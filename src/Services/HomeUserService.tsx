@@ -1,4 +1,3 @@
-import { async } from 'q';
 import { Config } from 'src/Config';
 import { apiOptions } from 'src/Utils/apiOptions';
 import { apiRequest } from 'src/Utils/apiRequest';
@@ -21,6 +20,14 @@ export const homeUserService = {
   getAllRatings: async (params: any = {}) => {
     const options = await apiOptions({
       url: `${Config.BASE_URL}/api/getAllRatings`,
+      method: 'get',
+      params: params
+    });
+    return apiRequest(options);
+  },
+  getAllRatingsMentor: async (mentorId: Number, params: any = {}) => {
+    const options = await apiOptions({
+      url: `${Config.BASE_URL}/api/getAllRatingsMentor/mentor/${mentorId}`,
       method: 'get',
       params: params
     });
@@ -59,6 +66,6 @@ export const homeUserService = {
       url: `${Config.BASE_URL}/api/getAllStudentBannerManagement/${languageId}`,
       method: 'get'
     });
-    return apiRequest(options)
+    return apiRequest(options);
   }
 };

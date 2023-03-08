@@ -1,7 +1,11 @@
 import { Avatar } from '@material-ui/core';
 import { Grid, Typography, Rating, IconButton } from '@mui/material';
+import { useCallback, useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { BlueLine, InstaImg, LinkIdImg, TwitterImg } from 'src/Assets';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
+import { HTTP_STATUSES } from 'src/Config/constant';
+import { API_SERVICES } from 'src/Services';
 
 const socialIcons = [LinkIdImg, InstaImg, TwitterImg];
 
@@ -11,10 +15,33 @@ type Props = {
 };
 
 const MentorProfile = ({ mentorDetails, category }: Props) => {
+  const [mentorTotalRatings, setMentorTotalRatings] = useState<number | null>(
+    0
+  );
   const socialUrls = [];
   socialUrls.push(mentorDetails.social_information_url);
   socialUrls.push(mentorDetails.social_information_url_2);
   socialUrls.push(mentorDetails.social_information_url_3);
+  const fetchData = useCallback(async () => {
+    try {
+      const response: any =
+        await API_SERVICES.homeUserService.getAllRatingsMentor(
+          mentorDetails.id
+        );
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        console.log(response.data.total_ratings);
+        setMentorTotalRatings(response?.data?.total_ratings);
+      }
+    } catch (err) {
+      toast.error(err?.message);
+    } finally {
+      // setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   return (
     <>
@@ -55,7 +82,11 @@ const MentorProfile = ({ mentorDetails, category }: Props) => {
         >
           {mentorDetails?.qualification}
         </Typography>
-        <Rating readOnly={true} sx={{ color: '#3C78F0' }} />
+        <Rating
+          readOnly={true}
+          sx={{ color: '#3C78F0' }}
+          value={mentorTotalRatings}
+        />
         <Grid paddingTop={2}>
           <img src={BlueLine} />
         </Grid>

@@ -58,6 +58,7 @@ const LearnTheWayBox = () => {
       });
     } else {
       navigateTo('/home/masterclasses', {
+        state: { mentorData: rowData },
         replace: true
       });
     }
