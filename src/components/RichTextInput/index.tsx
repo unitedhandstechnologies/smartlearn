@@ -13,6 +13,7 @@ export interface StyleProps {
   borderSize: string;
   heightValue: string;
   paddingValue: string;
+  textColor:string;
 }
 
 const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
@@ -30,7 +31,8 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
       border: ({ borderSize }) => borderSize
     },
     '& .ql-editor': {
-      padding: ({ paddingValue }) => paddingValue
+      padding: ({ paddingValue }) => paddingValue,
+      color: ({textColor}) => textColor? textColor : "black"
     }
   },
   editorView: {
@@ -50,7 +52,8 @@ export const RichTextInput = ({
   heightValue,
   paddingValue,
   labelName,
-  label
+  label,
+  textColor
 }: {
   onChange?: any;
   value: any;
@@ -62,12 +65,14 @@ export const RichTextInput = ({
   paddingValue?: string;
   label?: string;
   labelName?:string;
+  textColor?:string;
 }) => {
   const props = {
     displayValue: displayToolBar,
     borderSize: borderSize,
     heightValue: heightValue,
-    paddingValue: paddingValue
+    paddingValue: paddingValue,
+    textColor: textColor,
   };
 
   const theme = useTheme();

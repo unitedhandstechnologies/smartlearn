@@ -16,13 +16,15 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: 'Switzer',
     fontWeight: 500,
     fontSize: '20px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    width:"85%"
   },
   activeQuestion: {
     color: '#3C414B',
     fontWeight: 500,
     fontSize: '20px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    width:"85%"
   },
   answerStyle: {
     color: '#78828C',
@@ -54,7 +56,10 @@ const Faq = ({ question, answer, borderTop }) => {
         }}
       >
         <Grid container item onClick={() => setActive(!active)}>
-          <Grid item xs>
+          <Grid 
+            item 
+            xs            
+            >
             <Typography
               className={
                 !active ? classes.questionStyle : classes.activeQuestion
@@ -72,7 +77,9 @@ const Faq = ({ question, answer, borderTop }) => {
           </Grid>
         </Grid>
         {active ? (
-          <Grid item>
+          <Grid 
+            item 
+            style={{width:"80%"}}>
             {/* <Typography className={classes.answerStyle}>{answer}</Typography> */}
             <RichTextInput
               value={answer}
@@ -80,6 +87,8 @@ const Faq = ({ question, answer, borderTop }) => {
               displayToolBar={'none'}
               heightValue={'auto'}
               borderSize={'0px'}
+              textColor={theme.Colors.darkGrayishBlue}
+              paddingValue={"0px"}
             />
           </Grid>
         ) : null}

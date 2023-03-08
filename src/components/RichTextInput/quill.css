@@ -1,3 +1,4 @@
+
 /*!
  * Quill Editor v1.3.7
  * https://quilljs.com/
@@ -46,7 +47,7 @@
     -moz-tab-size: 4;
     text-align: left;
     white-space: pre-wrap;
-    word-wrap: break-word;
+    word-wrap: break-word;    
 }
 
 .ql-editor>* {
