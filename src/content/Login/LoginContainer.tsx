@@ -73,12 +73,10 @@ const LoginContainer = ({
       });
       if (response?.data.users[0].user_type !== USER_TYPE_ID.student) {
         if (
-          (response?.data.users[0].is_verify === true &&
-            response?.data.users[0].user_type === USER_TYPE_ID.mentors) ||
-          (response?.data.users[0].is_verify === false &&
-            response?.data.users[0].user_type === USER_TYPE_ID.superAdmin) ||
-          (response?.data.users[0].is_verify === false &&
-            response?.data.users[0].user_type === USER_TYPE_ID.admin)
+          response?.data.users[0].is_verify === true &&
+          (response?.data.users[0].user_type === USER_TYPE_ID.mentors ||
+            USER_TYPE_ID.admin ||
+            USER_TYPE_ID.superAdmin)
         ) {
           toast.success('User logged in successfully!');
           i18n.changeLanguage('en');

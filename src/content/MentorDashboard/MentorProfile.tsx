@@ -268,7 +268,9 @@ const MentorProfile = () => {
           />
         </Grid>
         <Heading
-          headingText={`Welcome back Mr/Ms ${userDetails.first_name}`}
+          headingText={`Welcome back Mr/Ms ${
+            userDetails.first_name + ' ' + userDetails.last_name
+          }`}
           headerFontSize={'32px'}
           headerFontWeight={500}
           headerFontFamily={'IBM Plex Serif'}
