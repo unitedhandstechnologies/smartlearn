@@ -119,7 +119,7 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
         navigateTo('/home/user-login', {
           state: {
             formData: { ...course },
-            route: '/home/course-details'
+            route: `/home/course-details/${course.course_name}`
           },
           replace: true
         });

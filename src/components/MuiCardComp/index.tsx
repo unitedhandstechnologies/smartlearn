@@ -329,7 +329,7 @@ const MuiCardComp = ({
                 }}
               />
             ) : (
-              <h1 style={{ color: '#3cc878', textAlign: 'center' }}>Free</h1>
+              <h4 style={{ color: '#3cc878', textAlign: 'center' }}>Free</h4>
             )}
           </Grid>
           <Grid item xs>
@@ -348,7 +348,7 @@ const MuiCardComp = ({
               }}
               onClickButton={() => {
                 if (studentDetails.id !== 0) {
-                  navigateTo('/home/course-details', {
+                  navigateTo(`/home/course-details/${item.course_name}`, {
                     state: {
                       formData: item,
                       backBtnTxt: backBtnTxt,
@@ -360,7 +360,7 @@ const MuiCardComp = ({
                   navigateTo('/home/user-login', {
                     state: {
                       formData: item,
-                      route: '/home/course-details',
+                      route: `/home/course-details/${item.course_name}`,
                       backBtnTxt: backBtnTxt,
                       backBtnRoute: backBtnRoute
                     },

@@ -28,9 +28,7 @@ const FILTER_CHIPS = ['Courses', 'Workshops', 'Seminars/Webinars'];
 type CourseProps = {
   courseDetails?: any[];
 };
-const MoreUpcomingSession = ({
-  courseDetails = [],
-}: CourseProps) => {
+const MoreUpcomingSession = ({ courseDetails = [] }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyles();
   const { state }: any = useLocation();
@@ -64,7 +62,7 @@ const MoreUpcomingSession = ({
   }, [chipValue, courseDetails]);
 
   const onClickCardImage = (rowData) => {
-    navigateTo('/home/course-details', {
+    navigateTo(`/home/course-details/${rowData.course_name}`, {
       state: {
         formData: { ...rowData },
         backBtnTxt: 'All Courses',
@@ -88,8 +86,8 @@ const MoreUpcomingSession = ({
       DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
     );
     if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        const getIds = response.data.wishList.map((i) => i.course_id);
-        setWishList(getIds);
+      const getIds = response.data.wishList.map((i) => i.course_id);
+      setWishList(getIds);
     }
   };
 
@@ -119,10 +117,10 @@ const MoreUpcomingSession = ({
       navigateTo('/home/user-login', {
         state: {
           formData: item,
-          route: '/home/course-details',
+          route: `/home/course-details/${item.course_name}`,
           backBtnTxt: 'All Courses',
           backBtnRoute: '/home/profilehome'
-          },
+        },
         replace: true
       });
     }
@@ -214,8 +212,8 @@ const MoreUpcomingSession = ({
                       item={item}
                       isActive={whistList.includes(item.id)}
                       handleOnClick={handleIconClick}
-                      backBtnTxt={"All Courses"}
-                      backBtnRoute={"/home/profilehome"}
+                      backBtnTxt={'All Courses'}
+                      backBtnRoute={'/home/profilehome'}
                     />
                   </Grid>
                 );

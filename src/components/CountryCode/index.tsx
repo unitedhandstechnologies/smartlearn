@@ -30,8 +30,7 @@ const useStyles = makeStyles((theme) => ({
   customSelect: {
     width: 75,
     height: 46,
-    border: '1px solid #3C78F0',
-    //borderColor: '#3C78F0',
+    borderColor: '#3C78F0',
     '& .code': {
       borderRight: 'none',
       paddingRight: 0,
@@ -73,7 +72,8 @@ export default function CountryCode(props: Props) {
               (isError && theme.Colors.redPrimary) ||
               labelColor ||
               theme.Colors.primary,
-            fontWeight: theme.fontWeight.medium
+            fontWeight: theme.fontWeight.medium,
+            marginBottom: 10
           }}
         >
           {inputLabel}

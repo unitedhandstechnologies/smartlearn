@@ -51,7 +51,7 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
   // }, [chipValue, courseDetails]);
 
   const onClickCardImage = (rowData) => {
-    navigateTo('/home/course-details', {
+    navigateTo(`/home/course-details/${rowData.course_name}`, {
       state: {
         formData: { ...rowData },
         backBtnTxt: 'All Courses',
@@ -60,7 +60,7 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
       replace: true
     });
   };
-  
+
   const enrolledCourse = courseDetails.filter(
     (item) =>
       item.course_type === COURSE_TYPE_NAME[1] ||
@@ -147,8 +147,8 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
                   onClickCardImage={() => onClickCardImage(item)}
                   startLearning={false}
                   item={item}
-                  backBtnTxt={"All Courses"}
-                  backBtnRoute={"/home/profilehome"}      
+                  backBtnTxt={'All Courses'}
+                  backBtnRoute={'/home/profilehome'}
                 />
               </Grid>
             );

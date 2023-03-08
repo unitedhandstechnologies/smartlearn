@@ -246,7 +246,7 @@ const UpComingCourse = ({
 
   const onClickCardImage = (rowData) => {
     if (userId !== null) {
-      navigateTo('/home/course-details', {
+      navigateTo(`/home/course-details/${rowData.course_name}`, {
         state: {
           formData: { ...rowData },
           backBtnTxt: 'All Courses',
@@ -258,7 +258,7 @@ const UpComingCourse = ({
       navigateTo('/home/user-login', {
         state: {
           formData: { ...rowData },
-          route: '/home/course-details',
+          route: `/home/course-details/${rowData.course_name}`,
           backBtnTxt: 'All Courses',
           backBtnRoute: '/home/courses'
         },
@@ -309,7 +309,7 @@ const UpComingCourse = ({
       navigateTo('/home/user-login', {
         state: {
           formData: item,
-          route: '/home/course-details',
+          route: `/home/course-details/${item.course_name}`,
           backBtnTxt: 'All Courses',
           backBtnRoute: '/home/courses'
         },

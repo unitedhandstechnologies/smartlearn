@@ -223,7 +223,7 @@ const UpComingWebinars = ({
 
   const onClickCardImage = (rowData) => {
     if (userId !== null) {
-      navigateTo('/home/course-details', {
+      navigateTo(`/home/course-details/${rowData.course_name}`, {
         state: {
           formData: { ...rowData },
           backBtnTxt: 'All Webinars',
@@ -235,7 +235,7 @@ const UpComingWebinars = ({
       navigateTo('/home/user-login', {
         state: {
           formData: { ...rowData },
-          route: '/home/course-details',
+          route: `/home/course-details/${rowData.course_name}`,
           backBtnTxt: 'All Webinars',
           backBtnRoute: '/home/seminars-webinars'
         },
@@ -286,7 +286,7 @@ const UpComingWebinars = ({
       navigateTo('/home/user-login', {
         state: {
           formData: item,
-          route: '/home/course-details',
+          route: `/home/course-details/${item.course_name}`,
           backBtnTxt: 'All Webinars',
           backBtnRoute: '/home/seminars-webinars'
         },

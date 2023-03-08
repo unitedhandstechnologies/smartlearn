@@ -58,7 +58,7 @@ const WishListCourse = () => {
   }, []);
 
   const onClickCardImage = (rowData) => {
-    navigateTo('/home/course-details', {
+    navigateTo(`/home/course-details/${rowData.course_name}`, {
       state: {
         formData: { ...rowData },
         backBtnTxt: 'All Courses',
@@ -127,8 +127,8 @@ const WishListCourse = () => {
                       prize={item.amount}
                       onClickCardImage={() => onClickCardImage(item)}
                       item={item}
-                      backBtnTxt={"All Courses"}
-                      backBtnRoute={"/home/profilehome"}          
+                      backBtnTxt={'All Courses'}
+                      backBtnRoute={'/home/profilehome'}
                     />
                   </Grid>
                 );

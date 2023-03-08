@@ -110,7 +110,8 @@ const TextInputComponent = (props: Props) => {
               (isError && theme.Colors.redPrimary) ||
               labelColor ||
               theme.Colors.primary,
-            fontWeight: theme.fontWeight.medium
+            fontWeight: theme.fontWeight.medium,
+            marginBottom: 10
           }}
         >
           {inputLabel}

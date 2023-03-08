@@ -63,7 +63,7 @@ const MyLibrary = ({ enrollCourse }) => {
   }, [chipValue, enrollCourse]);
 
   const onClickCardImage = (rowData) => {
-    navigateTo('/home/course-details', {
+    navigateTo(`/home/course-details/${rowData.course_name}`, {
       state: {
         formData: { ...rowData },
         backBtnTxt: 'All Courses',
@@ -149,8 +149,8 @@ const MyLibrary = ({ enrollCourse }) => {
                   onClickCardImage={() => onClickCardImage(item)}
                   startLearning={false}
                   item={item}
-                  backBtnTxt={"All Courses"}
-                  backBtnRoute={"/home/profilehome"}      
+                  backBtnTxt={'All Courses'}
+                  backBtnRoute={'/home/profilehome'}
                 />
               </Grid>
             );

@@ -1,6 +1,7 @@
 import { InputBase, InputAdornment, IconButton } from '@mui/material';
 import { CloseIcon, SearchIconImg } from 'src/Assets';
 import { makeStyles, useTheme } from '@material-ui/core';
+import { capitalizeFirstLetter } from 'src/Utils';
 
 const useStyles = makeStyles((theme) => ({
   emptySearchStyle: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 50,
       fontSize: 20,
       fontWeight: 400,
-      padding: theme.spacing(0.3, 0.5),
+      padding: theme.spacing(0.3, 0.5)
     },
     [theme.breakpoints.down('xs')]: {
       width: '100%',
@@ -53,7 +54,7 @@ const SearchComponent = ({
 
   return (
     <InputBase
-      onChange={(e) => onSearchValChange(e.target.value)}
+      onChange={(e) => onSearchValChange(capitalizeFirstLetter(e.target.value))}
       value={searchval}
       placeholder={'Search'}
       className={

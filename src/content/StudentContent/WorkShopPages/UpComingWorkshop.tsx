@@ -226,7 +226,7 @@ const UpComingWorkshop = ({
 
   const onClickCardImage = (rowData) => {
     if (userId !== null) {
-      navigateTo('/home/course-details', {
+      navigateTo(`/home/course-details/${rowData.course_name}`, {
         state: {
           formData: { ...rowData },
           backBtnTxt: 'All WorkShops',
@@ -238,7 +238,7 @@ const UpComingWorkshop = ({
       navigateTo('/home/user-login', {
         state: {
           formData: { ...rowData },
-          route: '/home/course-details',
+          route: `/home/course-details/${rowData.course_name}`,
           backBtnTxt: 'All WorkShops',
           backBtnRoute: '/home/workshops'
         },
@@ -284,7 +284,7 @@ const UpComingWorkshop = ({
       navigateTo('/home/user-login', {
         state: {
           formData: item,
-          route: '/home/course-details',
+          route: `/home/course-details/${item.course_name}`,
           backBtnTxt: 'All WorkShops',
           backBtnRoute: '/home/workshops'
         },

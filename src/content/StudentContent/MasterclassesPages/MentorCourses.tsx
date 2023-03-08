@@ -53,7 +53,7 @@ const MentorCreatedCourses = () => {
 
   const onClickCardImage = (rowData) => {
     if (userId !== null) {
-      navigateTo('/home/course-details', {
+      navigateTo(`/home/course-details/${rowData.course_name}`, {
         state: {
           formData: { ...rowData },
           backBtnTxt: 'All masterclasses',
@@ -65,7 +65,7 @@ const MentorCreatedCourses = () => {
       navigateTo('/home/user-login', {
         state: {
           formData: { ...rowData },
-          route: '/home/course-details',
+          route: `/home/course-details/${rowData.course_name}`,
           backBtnTxt: 'All masterclasses',
           backBtnRoute: '/home/masterclasses'
         },

@@ -58,7 +58,7 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
     }
   }, [DETECT_LANGUAGE[i18n.language]]);
   const onClickCardImage = (rowData) => {
-    navigateTo('/home/course-details', {
+    navigateTo(`/home/course-details/${rowData.course_name}`, {
       state: { formData: { ...rowData } },
       replace: true
     });
@@ -102,7 +102,7 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
       navigateTo('/home/user-login', {
         state: {
           details: { formData: item },
-          route: '/home/course-details'
+          route: `/home/course-details/${item.course_name}`
         },
         replace: true
       });

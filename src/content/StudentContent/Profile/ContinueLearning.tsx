@@ -23,15 +23,15 @@ const ContinueLearning = ({ enrollCourse }) => {
   });
   const onClickCardImage = (rowData) => {
     // if (rowData.course_type === COURSE_TYPE_NAME[6]) {
-      navigateTo('/home/course-details', {
-        state: {
-          formData: { ...rowData },
-          backBtnTxt: 'All Courses',
-          backBtnRoute: '/home/profilehome'
-        },
-        replace: true
-      });
-      // }
+    navigateTo(`/home/course-details/${rowData.course_name}`, {
+      state: {
+        formData: { ...rowData },
+        backBtnTxt: 'All Courses',
+        backBtnRoute: '/home/profilehome'
+      },
+      replace: true
+    });
+    // }
   };
 
   return (
@@ -90,8 +90,8 @@ const ContinueLearning = ({ enrollCourse }) => {
                   startLearning={false}
                   item={item}
                   progressValue={parseInt(item.level)}
-                  backBtnTxt={"All Courses"}
-                  backBtnRoute={"/home/profilehome"}      
+                  backBtnTxt={'All Courses'}
+                  backBtnRoute={'/home/profilehome'}
                 />
               </Grid>
             );
