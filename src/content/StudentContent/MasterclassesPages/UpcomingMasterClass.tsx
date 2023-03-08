@@ -33,6 +33,7 @@ import {
   HTTP_STATUSES,
   LANGUAGE_ID
 } from 'src/Config/constant';
+import { toast } from 'react-hot-toast';
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -217,26 +218,30 @@ const UpComingCourse = ({
   };
 
   const onClickCardImage = (rowData) => {
-    if (userId !== null) {
-      navigateTo(`/home/course-details/${rowData.course_name}`, {
-        state: {
-          formData: { ...rowData },
-          backBtnTxt: 'All masterclasses',
-          backBtnRoute: '/home/masterclasses'
-        },
-        replace: true
-      });
-    } else {
-      navigateTo('/home/user-login', {
-        state: {
-          formData: { ...rowData },
-          route: `/home/course-details/${rowData.course_name}`,
-          backBtnTxt: 'All masterclasses',
-          backBtnRoute: '/home/masterclasses'
-        },
-        replace: true
-      });
-    }
+    // if (userId !== null) {
+    //   navigateTo(`/home/course-details/${rowData.course_name}`, {
+    //     state: {
+    //       formData: { ...rowData },
+    //       backBtnTxt: 'All masterclasses',
+    //       backBtnRoute: '/home/masterclasses'
+    //     },
+    //     replace: true
+    //   });
+    // } else {
+    //   navigateTo('/home/user-login', {
+    //     state: {
+    //       formData: { ...rowData },
+    //       route: `/home/course-details/${rowData.course_name}`,
+    //       backBtnTxt: 'All masterclasses',
+    //       backBtnRoute: '/home/masterclasses'
+    //     },
+    //     replace: true
+    //   });
+    // }
+    navigateTo(`/home/course-details/${rowData.course_name}`, {
+      state: { formData: { ...rowData } },
+      replace: true
+    });
   };
 
   const getAllWishList = async () => {
@@ -278,15 +283,16 @@ const UpComingCourse = ({
         await getAllWishList();
       }
     } else {
-      navigateTo('/home/user-login', {
-        state: {
-          formData: item,
-          route: `/home/course-details/${item.course_name}`,
-          backBtnTxt: 'All masterclasses',
-          backBtnRoute: '/home/masterclasses'
-        },
-        replace: true
-      });
+      // navigateTo('/home/user-login', {
+      //   state: {
+      //     formData: item,
+      //     route: `/home/course-details/${item.course_name}`,
+      //     backBtnTxt: 'All masterclasses',
+      //     backBtnRoute: '/home/masterclasses'
+      //   },
+      //   replace: true
+      // });
+      toast.error('Please login')
     }
   };
 

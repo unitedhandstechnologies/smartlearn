@@ -39,6 +39,7 @@ import { useNavigate } from 'react-router';
 import SearchComponent from '../SearchComponent';
 import { getUserId } from 'src/Utils';
 import { API_SERVICES } from 'src/Services';
+import { toast } from 'react-hot-toast';
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -222,26 +223,30 @@ const UpComingWebinars = ({
   };
 
   const onClickCardImage = (rowData) => {
-    if (userId !== null) {
-      navigateTo(`/home/course-details/${rowData.course_name}`, {
-        state: {
-          formData: { ...rowData },
-          backBtnTxt: 'All Webinars',
-          backBtnRoute: '/home/seminars-webinars'
-        },
-        replace: true
-      });
-    } else {
-      navigateTo('/home/user-login', {
-        state: {
-          formData: { ...rowData },
-          route: `/home/course-details/${rowData.course_name}`,
-          backBtnTxt: 'All Webinars',
-          backBtnRoute: '/home/seminars-webinars'
-        },
-        replace: true
-      });
-    }
+    // if (userId !== null) {
+    //   navigateTo(`/home/course-details/${rowData.course_name}`, {
+    //     state: {
+    //       formData: { ...rowData },
+    //       backBtnTxt: 'All Webinars',
+    //       backBtnRoute: '/home/seminars-webinars'
+    //     },
+    //     replace: true
+    //   });
+    // } else {
+    //   navigateTo('/home/user-login', {
+    //     state: {
+    //       formData: { ...rowData },
+    //       route: `/home/course-details/${rowData.course_name}`,
+    //       backBtnTxt: 'All Webinars',
+    //       backBtnRoute: '/home/seminars-webinars'
+    //     },
+    //     replace: true
+    //   });
+    // }
+    navigateTo(`/home/course-details/${rowData.course_name}`, {
+      state: { formData: { ...rowData } },
+      replace: true
+    });
   };
 
   const getAllWishList = async () => {
@@ -283,15 +288,16 @@ const UpComingWebinars = ({
         await getAllWishList();
       }
     } else {
-      navigateTo('/home/user-login', {
-        state: {
-          formData: item,
-          route: `/home/course-details/${item.course_name}`,
-          backBtnTxt: 'All Webinars',
-          backBtnRoute: '/home/seminars-webinars'
-        },
-        replace: true
-      });
+      // navigateTo('/home/user-login', {
+      //   state: {
+      //     formData: item,
+      //     route: `/home/course-details/${item.course_name}`,
+      //     backBtnTxt: 'All Webinars',
+      //     backBtnRoute: '/home/seminars-webinars'
+      //   },
+      //   replace: true
+      // });
+      toast.error('Please login')
     }
   };
 

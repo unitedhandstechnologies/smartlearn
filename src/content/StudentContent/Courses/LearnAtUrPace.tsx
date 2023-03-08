@@ -173,26 +173,30 @@ const LearnAtUrPace = ({
   };
 
   const onClickCardImage = (rowData) => {
-    if (userId !== null) {
-      navigateTo(`/home/course-details/${rowData.course_name}`, {
-        state: {
-          formData: { ...rowData },
-          backBtnTxt: 'All Courses',
-          backBtnRoute: '/home/courses'
-        },
-        replace: true
-      });
-    } else {
-      navigateTo('/home/user-login', {
-        state: {
-          formData: { ...rowData },
-          route: `/home/course-details/${rowData.course_name}`,
-          backBtnTxt: 'All Courses',
-          backBtnRoute: '/home/courses'
-        },
-        replace: true
-      });
-    }
+    // if (userId !== null) {
+    //   navigateTo(`/home/course-details/${rowData.course_name}`, {
+    //     state: {
+    //       formData: { ...rowData },
+    //       backBtnTxt: 'All Courses',
+    //       backBtnRoute: '/home/courses'
+    //     },
+    //     replace: true
+    //   });
+    // } else {
+    //   navigateTo('/home/user-login', {
+    //     state: {
+    //       formData: { ...rowData },
+    //       route: `/home/course-details/${rowData.course_name}`,
+    //       backBtnTxt: 'All Courses',
+    //       backBtnRoute: '/home/courses'
+    //     },
+    //     replace: true
+    //   });
+    // }
+    navigateTo(`/home/course-details/${rowData.course_name}`, {
+      state: { formData: { ...rowData } },
+      replace: true
+    });
   };
 
   const getFilterCourse = useMemo(() => {

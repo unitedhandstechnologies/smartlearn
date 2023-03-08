@@ -108,7 +108,8 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
           total: totalPrice
         };
         const createRes: any = await API_SERVICES.AddToCartService.create({
-          data: data
+          data: data,
+          failureMessage: 'Course already in the cart'
         });
         if (createRes?.status < HTTP_STATUSES.BAD_REQUEST) {
           if (createRes?.data?.AddToCart) {

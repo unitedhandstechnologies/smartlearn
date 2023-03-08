@@ -26,6 +26,7 @@ import SearchComponent from '../SearchComponent';
 import { getUserId } from 'src/Utils';
 import { API_SERVICES } from 'src/Services';
 import i18n from 'src/Translations/i18n';
+import { toast } from 'react-hot-toast';
 const courses = [
   {
     id: 1,
@@ -225,26 +226,30 @@ const UpComingWorkshop = ({
   }, [chipValue, workshopDetails]);
 
   const onClickCardImage = (rowData) => {
-    if (userId !== null) {
-      navigateTo(`/home/course-details/${rowData.course_name}`, {
-        state: {
-          formData: { ...rowData },
-          backBtnTxt: 'All WorkShops',
-          backBtnRoute: '/home/workshops'
-        },
-        replace: true
-      });
-    } else {
-      navigateTo('/home/user-login', {
-        state: {
-          formData: { ...rowData },
-          route: `/home/course-details/${rowData.course_name}`,
-          backBtnTxt: 'All WorkShops',
-          backBtnRoute: '/home/workshops'
-        },
-        replace: true
-      });
-    }
+    // if (userId !== null) {
+    //   navigateTo(`/home/course-details/${rowData.course_name}`, {
+    //     state: {
+    //       formData: { ...rowData },
+    //       backBtnTxt: 'All WorkShops',
+    //       backBtnRoute: '/home/workshops'
+    //     },
+    //     replace: true
+    //   });
+    // } else {
+    //   navigateTo('/home/user-login', {
+    //     state: {
+    //       formData: { ...rowData },
+    //       route: `/home/course-details/${rowData.course_name}`,
+    //       backBtnTxt: 'All WorkShops',
+    //       backBtnRoute: '/home/workshops'
+    //     },
+    //     replace: true
+    //   });
+    // }
+    navigateTo(`/home/course-details/${rowData.course_name}`, {
+      state: { formData: { ...rowData } },
+      replace: true
+    });
   };
 
   const getAllWishList = async () => {
@@ -281,15 +286,16 @@ const UpComingWorkshop = ({
         await getAllWishList();
       }
     } else {
-      navigateTo('/home/user-login', {
-        state: {
-          formData: item,
-          route: `/home/course-details/${item.course_name}`,
-          backBtnTxt: 'All WorkShops',
-          backBtnRoute: '/home/workshops'
-        },
-        replace: true
-      });
+      // navigateTo('/home/user-login', {
+      //   state: {
+      //     formData: item,
+      //     route: `/home/course-details/${item.course_name}`,
+      //     backBtnTxt: 'All WorkShops',
+      //     backBtnRoute: '/home/workshops'
+      //   },
+      //   replace: true
+      // });
+      toast.error('Please login')
     }
   };
 

@@ -18,6 +18,7 @@ import { StudentInfoContext } from 'src/contexts/StudentContext';
 import useWishlistInfo from 'src/hooks/useWishlistInfo';
 import { getUserId } from 'src/Utils';
 import i18n from 'src/Translations/i18n';
+import { toast } from 'react-hot-toast';
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -74,26 +75,30 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
   };
 
   const onClickCardImage = (rowData) => {
-    if (userId !== null) {
-      navigateTo(`/home/course-details/${rowData.course_name}`, {
-        state: {
-          formData: { ...rowData },
-          backBtnTxt: 'All Courses',
-          backBtnRoute: '/home/profilehome'
-        },
-        replace: true
-      });
-    } else {
-      navigateTo('/home/user-login', {
-        state: {
-          formData: { ...rowData },
-          route: `/home/course-details/${rowData.course_name}`,
-          backBtnTxt: 'All Courses',
-          backBtnRoute: '/home/profilehome'
-        },
-        replace: true
-      });
-    }
+    // if (userId !== null) {
+    //   navigateTo(`/home/course-details/${rowData.course_name}`, {
+    //     state: {
+    //       formData: { ...rowData },
+    //       backBtnTxt: 'All Courses',
+    //       backBtnRoute: '/home/profilehome'
+    //     },
+    //     replace: true
+    //   });
+    // } else {
+    //   navigateTo('/home/user-login', {
+    //     state: {
+    //       formData: { ...rowData },
+    //       route: `/home/course-details/${rowData.course_name}`,
+    //       backBtnTxt: 'All Courses',
+    //       backBtnRoute: '/home/profilehome'
+    //     },
+    //     replace: true
+    //   });
+    // }
+    navigateTo(`/home/course-details/${rowData.course_name}`, {
+      state: { formData: { ...rowData } },
+      replace: true
+    });
   };
 
   const getAllWishList = async () => {
@@ -130,15 +135,16 @@ const UpComingSession = ({ courseDetails = [] }: CourseProps) => {
         await getAllWishList();
       }
     } else {
-      navigateTo('/home/user-login', {
-        state: {
-          formData: item,
-          route: `/home/course-details/${item.course_name}`,
-          backBtnTxt: 'All Courses',
-          backBtnRoute: '/home/profilehome'
-        },
-        replace: true
-      });
+      // navigateTo('/home/user-login', {
+      //   state: {
+      //     formData: item,
+      //     route: `/home/course-details/${item.course_name}`,
+      //     backBtnTxt: 'All Courses',
+      //     backBtnRoute: '/home/profilehome'
+      //   },
+      //   replace: true
+      // });
+      toast.error('Please login')
     }
   };
 

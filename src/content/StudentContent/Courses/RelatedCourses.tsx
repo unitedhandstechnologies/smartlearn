@@ -5,7 +5,7 @@ import { BasicStockIcon, LineBarIcon } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
 import { Heading } from 'src/components';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { getUserId } from 'src/Utils';
 import { API_SERVICES } from 'src/Services';
 import {
@@ -34,7 +34,7 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
   const [courses, setCourses] = useState([]);
   const navigateTo = useNavigate();
   const [whistList, setWishList] = useState([]);
-  const userId = getUserId();
+  const userId = getUserId();  
 
   const fetchData = useCallback(async () => {
     try {
