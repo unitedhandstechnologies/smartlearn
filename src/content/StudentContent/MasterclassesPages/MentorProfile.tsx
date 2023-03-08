@@ -3,8 +3,7 @@ import { Grid, Typography, Rating, IconButton } from '@mui/material';
 import { BlueLine, InstaImg, LinkIdImg, TwitterImg } from 'src/Assets';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
 
-// const chipItems = ['Stocks investing', 'Options trading', 'Strategies'];
-const socialIcons = [InstaImg, LinkIdImg, TwitterImg];
+const socialIcons = [LinkIdImg, InstaImg, TwitterImg];
 
 type Props = {
   mentorDetails?: any;
@@ -42,7 +41,7 @@ const MentorProfile = ({ mentorDetails, category }: Props) => {
             textOverflow: 'ellipsis'
           }}
         >
-          {mentorDetails.first_name + ' ' + mentorDetails.last_name}
+          {mentorDetails?.first_name + ' ' + mentorDetails?.last_name}
         </Typography>
         <Typography
           style={{
@@ -54,9 +53,9 @@ const MentorProfile = ({ mentorDetails, category }: Props) => {
             textOverflow: 'ellipsis'
           }}
         >
-          {mentorDetails.about}
+          {mentorDetails?.qualification}
         </Typography>
-        <Rating sx={{ color: '#3C78F0' }} />
+        <Rating readOnly={true} sx={{ color: '#3C78F0' }} />
         <Grid paddingTop={2}>
           <img src={BlueLine} />
         </Grid>
@@ -69,7 +68,7 @@ const MentorProfile = ({ mentorDetails, category }: Props) => {
             paddingTop: 3
           }}
         >
-          {mentorDetails.qualification}
+          {mentorDetails?.about}
         </Typography>
         <Typography
           style={{

@@ -11,6 +11,7 @@ const headingProps = {
   headerFontSize: 32,
   headerFontFamily: 'IBM Plex Serif'
 };
+
 const typographyStyleProps = {
   fontSize: 18,
   fontWeight: 400,
@@ -28,7 +29,7 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
 
   const handleView = () => {
     if (view === 3) {
-      setView(courseRating.length);
+      setView(courseRating?.length);
     } else {
       setView(3);
     }
@@ -87,16 +88,17 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
                     fontWeight: 600
                   }}
                 >
-                  {item.user_name}
+                  {item?.user_name}
                 </Typography>
                 <Rating
+                  readOnly={true}
                   defaultValue={item.course_rating}
                   sx={{ color: '#F2C94C' }}
                 />
               </Grid>
 
               <Typography style={typographyStyleProps}>
-                {item.command}
+                {item?.command}
                 <Divider
                   style={{ height: 2, paddingTop: 20, color: '#B4BEC8' }}
                 />

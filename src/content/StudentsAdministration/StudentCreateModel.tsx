@@ -25,13 +25,7 @@ import {
 import { API_SERVICES } from 'src/Services';
 import { useEdit } from 'src/hooks/useEdit';
 import { useTranslation } from 'react-i18next';
-import {
-  capitalizeFirstLetter,
-  isPhoneNumber,
-  isValidEmail,
-  isWebsiteName
-} from 'src/Utils';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import { capitalizeFirstLetter, isPhoneNumber, isValidEmail } from 'src/Utils';
 import { HighlightOff } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -437,7 +431,7 @@ const StudentCreateModal = (props: Props) => {
         </Grid>
         <Grid item xs={12}>
           <TextInputComponent
-            inputLabel={t('adminManagement.socialMediaLinkFaceBook')}
+            inputLabel={t('adminManagement.socialMediaLinkLinkedIn')}
             labelColor={theme.Colors.primary}
             value={edit.getValue('social_information_url')}
             onChange={(e) =>

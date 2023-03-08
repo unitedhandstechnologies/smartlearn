@@ -43,7 +43,7 @@ const InstructorModal = (props: Props) => {
         value: `${getMonth} ${getDate}, ${getYear}`
       },
       {
-        content: t('adminManagement.socialMediaLinkFaceBook'),
+        content: t('adminManagement.socialMediaLinkLinkedIn'),
         value: (
           <a
             href={rowData?.social_information_url}

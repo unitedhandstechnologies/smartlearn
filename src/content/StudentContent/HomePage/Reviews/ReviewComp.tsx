@@ -3,7 +3,6 @@ import {
   makeStyles,
   useTheme,
   Theme,
-  IconButton,
   Avatar,
   Container
 } from '@material-ui/core';
@@ -157,6 +156,7 @@ export const ReviewBox = ({
               {name}
               {rating && (
                 <Rating
+                  readOnly={true}
                   defaultValue={ratingValue}
                   sx={{ color: '#F2C94C', paddingLeft: '25px' }}
                 />

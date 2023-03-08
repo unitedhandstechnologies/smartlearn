@@ -7,15 +7,9 @@ import {
   useTheme
 } from '@material-ui/core';
 import { EditOutlined } from '@material-ui/icons';
-import React, { memo, useContext, useState } from 'react';
-import {
-  ButtonComp,
-  Heading,
-  ListItemCell,
-  TextInputComponent
-} from 'src/components';
+import React, { memo, useState } from 'react';
+import { ButtonComp, Heading, TextInputComponent } from 'src/components';
 import { useEdit } from 'src/hooks/useEdit';
-//import { StudentInfoContext } from 'src/contexts/StudentContext';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import toast from 'react-hot-toast';
@@ -448,7 +442,7 @@ const MentorProfile = () => {
             </Grid>
             <Grid item xs={12} md={6}>
               <TextInputComponent
-                inputLabel="FaceBook Link"
+                inputLabel="LinkedIn Link"
                 labelColor={'#78828C'}
                 borderColor={'#3C78F0'}
                 value={edit.getValue('social_information_url')}

@@ -458,7 +458,7 @@ const InstructorManagementCreateModal = (props: Props) => {
           </Grid>
           <Grid item xs={12}>
             <TextInputComponent
-              inputLabel={t('adminManagement.socialMediaLinkFaceBook')}
+              inputLabel={t('adminManagement.socialMediaLinkLinkedIn')}
               labelColor={theme.Colors.primary}
               value={edit.getValue('social_information_url')}
               onChange={(e) =>
