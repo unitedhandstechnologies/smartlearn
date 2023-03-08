@@ -132,7 +132,7 @@ const PreRecordedDetails = () => {
               }
             }}
           >
-            <Grid item xs={12} md={9} paddingTop={5}>
+            <Grid item xs={12} md={8} paddingTop={5}>
               <CourseDescription
                 courseDescription={course[0]}
                 courseId={data}
@@ -141,7 +141,7 @@ const PreRecordedDetails = () => {
               />
             </Grid>
             {courseRating?.length && (
-              <Grid container item xs={12} md={3} paddingTop={'9%'}>
+              <Grid container item xs={12} md={4} paddingTop={'9%'}>
                 <CourseRight
                   courseRating={courseRating}
                   averageRating={averageRating}

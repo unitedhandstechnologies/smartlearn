@@ -6,7 +6,12 @@ import {
   Heading,
   MuiAccordionComp
 } from 'src/components';
-import { PdfImg, VideoImg } from 'src/Assets';
+import {
+  CalenderIconImg,
+  PdfImg,
+  TimeImg,
+  VideoImg
+} from 'src/Assets';
 import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { makeStyles, useTheme } from '@material-ui/core';
@@ -40,6 +45,11 @@ const useStyles = makeStyles((theme) => {
       fontWeight: theme.fontWeight.bold,
       fontSize: theme.MetricsSizes.regular_xxx,
       color: theme.Colors.blueDark
+    },
+    scheduleHeading: {
+      fontWeight: 700,
+      fontSize: '18px',
+      color: '#3C414B'
     }
   };
 });
@@ -256,21 +266,27 @@ const CourseDescription = ({
       : [];
   }, [sectionData, lessonData]);
 
+  const courseShudule = [
+    {
+      start_date: courseDescription?.starting_date,
+      end_data: courseDescription?.ending_date
+    },
+    {
+      start_date: courseDescription?.starting_time,
+      end_data: courseDescription?.ending_time
+    }
+  ];
+
   return (
     <Grid
       container
       paddingRight={'13px'}
-      // justifyContent={'space-between'}
       sx={{
         [theme.breakpoints.down('xs')]: {
           flexDirection: 'column'
         }
       }}
     >
-      {/* <Grid item xs={12}>
-        <CourseRating />
-      </Grid> */}
-
       <Grid item xs={12}>
         <Grid paddingTop={0}>
           <Heading headingText={'Course description'} {...headingProps} />
@@ -278,6 +294,83 @@ const CourseDescription = ({
             {courseDescription?.course_description}
           </Typography>
         </Grid>
+        {courseDescription?.course_type !== 'Recorded Course' && (
+          <Grid paddingTop={4} xs={12}>
+            <Heading headingText={'Course schedule'} {...headingProps} />
+            <Grid container gap={40}>
+              <Grid>
+                <Typography
+                  style={{
+                    color: '#3C414B',
+                    fontSize: '18px',
+                    fontWeight: 700
+                  }}
+                >
+                  Start Date
+                </Typography>
+              </Grid>
+              <Grid>
+                <Typography
+                  style={{
+                    color: '#3C414B',
+                    fontSize: '18px',
+                    fontWeight: 700
+                  }}
+                >
+                  End Date
+                </Typography>
+              </Grid>
+            </Grid>
+            {courseShudule?.map((item, index) => {
+              return (
+                <Grid container key={index} gap={index > 0 ? 40 : 34}>
+                  <Grid>
+                    <Grid
+                      container
+                      justifyContent={'center'}
+                      alignItems={'center'}
+                    >
+                      <Grid>
+                        <img
+                          src={index > 0 ? TimeImg : CalenderIconImg}
+                          width={'16.67px'}
+                          height={'16.67px'}
+                          style={{ color: '#3C78F0' }}
+                        />
+                      </Grid>
+                      <Grid>
+                        <Typography style={typographyStyleProps}>
+                          {item.start_date}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid>
+                    <Grid
+                      container
+                      justifyContent={'center'}
+                      alignItems={'center'}
+                    >
+                      <Grid>
+                        <img
+                          src={index > 0 ? TimeImg : CalenderIconImg}
+                          width={'16.67px'}
+                          height={'16.67px'}
+                        />
+                      </Grid>
+                      <Grid>
+                        <Typography style={typographyStyleProps}>
+                          {item.end_data}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              );
+            })}
+          </Grid>
+        )}
+
         <Grid paddingTop={4}>
           <Heading headingText={'Skills covered'} {...headingProps} />
           <Grid item container spacing={1}>

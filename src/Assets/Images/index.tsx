@@ -123,6 +123,8 @@ import Persons from './Persons.svg';
 import Rupee from './Rupee.svg';
 import CertificateImage from './Certificate.svg';
 import CloseIcon from './CloseIcon.svg';
+import CalenderIconImg from './CalenderIconImg.svg';
+import TimeImg from './TimeImg.svg';
 
 export {
   EnrollmentManagementIcon,
@@ -249,5 +251,7 @@ export {
   Persons, 
   Rupee,
   CertificateImage,
-  CloseIcon
+  CloseIcon,
+  CalenderIconImg,
+  TimeImg
 };
