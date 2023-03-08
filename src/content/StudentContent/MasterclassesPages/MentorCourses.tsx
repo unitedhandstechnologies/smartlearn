@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import {
   IconButton,
   Typography,
@@ -9,7 +10,6 @@ import { BasicStockIcon, LineBarIcon } from 'src/Assets';
 import { ButtonComp, MuiCardComp } from 'src/components';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { useEffect, useState } from 'react';
 import MentorProfile from './MentorProfile';
 import { useLocation, useNavigate } from 'react-router';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
@@ -35,7 +35,7 @@ const MentorCreatedCourses = () => {
   state?.courses
     ?.filter((crs) => crs?.mentor_id === state?.id)
     .map((crs) => {
-      if (!mentorCategory.includes(crs?.category_name)) {
+      if (!mentorCategory?.includes(crs?.category_name)) {
         mentorCategory.push(crs?.category_name);
       }
     });
@@ -53,7 +53,7 @@ const MentorCreatedCourses = () => {
 
   const onClickCardImage = (rowData) => {
     if (userId !== null) {
-      navigateTo(`/home/course-details/${rowData.course_name}`, {
+      navigateTo(`/home/course-details/${rowData?.course_name}`, {
         state: {
           formData: { ...rowData },
           backBtnTxt: 'All masterclasses',
@@ -65,7 +65,7 @@ const MentorCreatedCourses = () => {
       navigateTo('/home/user-login', {
         state: {
           formData: { ...rowData },
-          route: `/home/course-details/${rowData.course_name}`,
+          route: `/home/course-details/${rowData?.course_name}`,
           backBtnTxt: 'All masterclasses',
           backBtnRoute: '/home/masterclasses'
         },
@@ -74,9 +74,9 @@ const MentorCreatedCourses = () => {
     }
   };
 
-  useEffect(()=>{
-    window.scrollTo(0,0)
-  },[])
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>

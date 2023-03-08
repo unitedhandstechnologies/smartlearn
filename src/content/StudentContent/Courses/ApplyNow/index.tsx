@@ -1,5 +1,5 @@
-import { Grid, styled, Typography } from '@mui/material';
 import React, { useContext } from 'react';
+import { Grid, styled, Typography } from '@mui/material';
 import {
   ClockIcon,
   VideoTutor,
@@ -10,7 +10,6 @@ import {
   Online
 } from '../../../../Assets/Images';
 import { ButtonComp } from 'src/components';
-// import FavIcon from '../../../../Assets/Images/FavIcon.svg';
 import { useNavigate } from 'react-router';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
 import { IconButton, useTheme } from '@material-ui/core';

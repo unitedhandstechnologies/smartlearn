@@ -1,12 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core';
-import {
-  Grid,
-  Typography,
-  InputBase,
-  InputAdornment,
-  IconButton
-} from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import {
   BasicStockIcon,
   LineBarIcon,
@@ -14,8 +8,7 @@ import {
   BeginnerIcon,
   BarChartFillIcon,
   LocationIcon,
-  IntermediateIcon,
-  SearchIconImg
+  IntermediateIcon
 } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
 import Offline from '../../../Assets/Images/Offline.svg';
@@ -34,6 +27,7 @@ import {
   LANGUAGE_ID
 } from 'src/Config/constant';
 import { toast } from 'react-hot-toast';
+
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -173,8 +167,8 @@ const UpComingCourse = ({
   const handleApply = () => {
     let filteredCourse = [];
     if (chipFilterItem[0] != 0) {
-      filteredCourse = courseDetails.filter(
-        (item) => item.course_level_id == chipFilterItem[0]
+      filteredCourse = courseDetails?.filter(
+        (item) => item?.course_level_id == chipFilterItem[0]
       );
     }
     if (chipFilterItem[1] != 0) {
@@ -183,7 +177,7 @@ const UpComingCourse = ({
       ).filter(
         (item) =>
           item.course_mode ==
-          headerChipItem[1].labelItems[chipFilterItem[1]].label
+          headerChipItem[1]?.labelItems[chipFilterItem[1]].label
       );
     }
     if (chipFilterItem[2] != 0) {
@@ -191,7 +185,7 @@ const UpComingCourse = ({
         chipFilterItem[0] != 0 || chipFilterItem[1] != 0
           ? filteredCourse
           : courseDetails
-      ).filter((item) => item.language_id == chipFilterItem[2]);
+      ).filter((item) => item?.language_id == chipFilterItem[2]);
       changeLanguage(chipFilterItem[2]);
     }
     if (
@@ -238,7 +232,7 @@ const UpComingCourse = ({
     //     replace: true
     //   });
     // }
-    navigateTo(`/home/course-details/${rowData.course_name}`, {
+    navigateTo(`/home/course-details/${rowData?.course_name}`, {
       state: { formData: { ...rowData } },
       replace: true
     });
@@ -292,7 +286,7 @@ const UpComingCourse = ({
       //   },
       //   replace: true
       // });
-      toast.error('Please login')
+      toast.error('Please login');
     }
   };
 
@@ -318,7 +312,7 @@ const UpComingCourse = ({
               }
             }}
           >
-            Upcoming{' '}
+            Upcoming
             <span style={{ color: theme.Colors.secondary }}>masterclasses</span>
           </Typography>
           <Grid
@@ -333,7 +327,7 @@ const UpComingCourse = ({
                 alignItems={'center'}
                 style={{ paddingBottom: '20px', gap: '10px' }}
               >
-                {headerChipItem.map((item, index) => (
+                {headerChipItem?.map((item, index) => (
                   <ChipIconcomp
                     key={index}
                     chipText={item.name}
@@ -369,8 +363,8 @@ const UpComingCourse = ({
             }
           }}
         >
-          {courses.length
-            ? courses.map((item, index) => {
+          {courses?.length
+            ? courses?.map((item, index) => {
                 return (
                   <Grid
                     key={index}
@@ -405,7 +399,7 @@ const UpComingCourse = ({
                       prize={item.amount}
                       discount={item.discount}
                       item={item}
-                      isActive={whistList.includes(item.id)}
+                      isActive={whistList?.includes(item?.id)}
                       handleOnClick={handleIconClick}
                       backBtnTxt={'All masterclasses'}
                       backBtnRoute={'/home/masterclasses'}

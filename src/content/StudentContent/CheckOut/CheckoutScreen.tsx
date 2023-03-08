@@ -1,9 +1,8 @@
+import React, { useState } from 'react';
 import { Radio, useTheme } from '@material-ui/core';
 import { FormControlLabel, Grid, Typography } from '@mui/material';
-import React, { useState } from 'react';
 import { LineBarIcon, PayTMIcom } from 'src/Assets';
 import { ButtonComp, Heading, TextInputComponent } from 'src/components';
-import MultipleSelectComp from 'src/components/MultipleSelectComp';
 import { useEdit } from 'src/hooks/useEdit';
 import { capitalizeFirstLetter } from 'src/Utils';
 
@@ -29,7 +28,7 @@ const city = [
     name: 'Rajapalayam'
   }
 ];
-const CheckoutScreen = ({total, onClickCheckout}) => {
+const CheckoutScreen = ({ total, onClickCheckout }) => {
   const theme = useTheme();
   const [isChecked, setIsChecked] = useState(false);
   const initialValues = {
@@ -47,7 +46,7 @@ const CheckoutScreen = ({total, onClickCheckout}) => {
   };
 
   // const onClickCheckout = (val)=>{
-  //   console.log('val',val);   
+  //   console.log('val',val);
   // }
   return (
     <Grid container spacing={2} direction={'column'}>
@@ -207,12 +206,12 @@ const CheckoutScreen = ({total, onClickCheckout}) => {
       <Grid item>
         {isChecked ? (
           <ButtonComp
-            buttonText={`Pay ₹${total.toFixed(2)} and complete checkout`}
+            buttonText={`Pay ₹${total?.toFixed(2)} and complete checkout`}
             btnWidth={'100%'}
             btnBorderRadius={4}
             buttonFontSize={16}
             buttonFontWeight={theme.fontWeight.regular}
-            onClickButton={()=>onClickCheckout(total)}
+            onClickButton={() => onClickCheckout(total)}
           />
         ) : null}
       </Grid>

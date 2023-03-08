@@ -6,6 +6,7 @@ import CourseBanner from '../Courses/CourseBanner';
 import CourseDescription from '../Courses/CourseDescription/CourseDescription';
 import { useLocation, useNavigate } from 'react-router';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
 const useStyles = makeStyles((theme) => ({
   button: {
     minWidth: 0,
@@ -23,7 +24,7 @@ const MentorCourseDescription = () => {
   const classes = useStyles();
   const navigateTo = useNavigate();
   const { state }: any = useLocation();
-  
+
   return (
     <Grid sx={{ padding: 4 }}>
       <ButtonComp
@@ -52,9 +53,9 @@ const MentorCourseDescription = () => {
       >
         <CourseBanner
           courseDetails={state}
-          courseTitle={state.course_name}
-          mentorName={state.mentor_name}
-          mentorProfile={state.mentor_profile}
+          courseTitle={state?.course_name}
+          mentorName={state?.mentor_name}
+          mentorProfile={state?.mentor_profile}
           bannerOuterContainerStyle={{
             minHeight: 360
           }}
@@ -78,16 +79,14 @@ const MentorCourseDescription = () => {
           }
         }}
       >
-        <ApplyNow
-          course={state}
-        />
+        <ApplyNow course={state} />
       </Grid>
       <Grid
         item
         xs={12}
         md={9}
         paddingTop={5}
-        sx={{ [theme.breakpoints.down('md')]: { paddingTop:1 } }}
+        sx={{ [theme.breakpoints.down('md')]: { paddingTop: 1 } }}
       >
         <CourseDescription courseDescription={state} />
       </Grid>

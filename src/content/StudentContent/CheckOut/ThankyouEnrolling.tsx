@@ -1,6 +1,6 @@
+import React from 'react';
 import { Divider, useTheme } from '@material-ui/core';
 import { Grid, Typography } from '@mui/material';
-import React from 'react';
 import { useLocation, useNavigate } from 'react-router';
 import { SpeechBubble } from 'src/Assets';
 import { ButtonComp, Heading } from 'src/components';
@@ -11,9 +11,10 @@ const ThankyouEnrolling = () => {
   const { state } = useLocation();
   let courseName = state;
   const handleNavigate = () => {
-    navigateTo('/home/profile', { 
-        state: {tabVal: 2},
-        replace: true });
+    navigateTo('/home/profile', {
+      state: { tabVal: 2 },
+      replace: true
+    });
   };
   return (
     <Grid
@@ -51,7 +52,7 @@ const ThankyouEnrolling = () => {
         <Typography
           sx={{
             fontSize: '32px',
-            fontWenghit: theme.fontWeight.medium,
+            fontWeight: theme.fontWeight.medium,
             color: theme.Colors.blackBerry,
             lineHeight: '48px',
             fontFamily: 'IBM Plex Serif',

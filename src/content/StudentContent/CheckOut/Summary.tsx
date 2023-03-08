@@ -1,16 +1,14 @@
+import React, { useState } from 'react';
 import { makeStyles, Typography, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
-import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ButtonComp, Heading, MuiConfirmModal } from 'src/components';
-import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
 import {
   CONFIRM_MODAL,
   COURSE_TYPE_NAME,
   HTTP_STATUSES
 } from 'src/Config/constant';
 import useCartInfo from 'src/hooks/useCartInfo';
-import useStudentInfo from 'src/hooks/useStudentInfo';
 import { API_SERVICES } from 'src/Services';
 
 const useStyles = makeStyles((theme) => ({
@@ -135,7 +133,7 @@ const Summary = ({
               color: '#3C414B'
             }}
           >
-            ₹ {coursePrice.toFixed(2)}
+            ₹ {coursePrice?.toFixed(2)}
           </Typography>
         </Grid>
       </Grid>
@@ -161,7 +159,7 @@ const Summary = ({
               color: '#3C414B'
             }}
           >
-            ₹ {tax.toFixed(2)}
+            ₹ {tax?.toFixed(2)}
           </Typography>
         </Grid>
       </Grid>
@@ -187,7 +185,7 @@ const Summary = ({
               color: '#3C414B'
             }}
           >
-            ₹ {totalAmount.toFixed(2)}
+            ₹ {totalAmount?.toFixed(2)}
           </Typography>
         </Grid>
       </Grid>
@@ -254,7 +252,7 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
                         color: '#3C414B'
                       }}
                     >
-                      {item.course_name}
+                      {item?.course_name}
                     </Typography>
                   </Grid>
                   <Grid item>
@@ -266,11 +264,11 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
                         color: '#3C414B'
                       }}
                     >
-                      ₹ {item.total}
+                      ₹ {item?.total}
                     </Typography>
                   </Grid>
                 </Grid>
-                {item.course_type != COURSE_TYPE_NAME[6] ? (
+                {item?.course_type != COURSE_TYPE_NAME[6] ? (
                   <Grid container item xs>
                     <Grid item xs>
                       <Typography
@@ -303,7 +301,7 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
                           color: '#3C414B'
                         }}
                       >
-                        {item.available_student_count}
+                        {item?.available_student_count}
                       </Typography>
                     </Grid>
                   </Grid>

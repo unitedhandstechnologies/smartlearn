@@ -54,7 +54,7 @@ const MentorProfile = ({ mentorDetails, category }: Props) => {
       >
         <Grid>
           <Avatar
-            src={mentorDetails.image_url}
+            src={mentorDetails?.image_url}
             style={{ width: '100px', height: '100px' }}
           />
         </Grid>

@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { Grid, Typography, Box } from '@mui/material';
 import { useTheme, Container } from '@material-ui/core';
-import { Loader } from 'src/components';
 import { API_SERVICES } from 'src/Services';
 import {
   COURSE_STATUS_NAME,
@@ -16,7 +15,6 @@ import { toast } from 'react-hot-toast';
 import UpcomingMasterClass from './UpcomingMasterClass';
 import Mentors from '../HomePage/Mentors';
 import { useDebounce } from 'src/hooks/useDebounce';
-import { useLocation } from 'react-router';
 
 const Masterclasses = () => {
   const theme = useTheme();
@@ -104,8 +102,8 @@ const Masterclasses = () => {
       <Container>
         <Grid>
           <UpcomingMasterClass
-            courseDetails={courseDetails.filter(
-              (course) => course.course_type === COURSE_TYPE_NAME[2]
+            courseDetails={courseDetails?.filter(
+              (course) => course?.course_type === COURSE_TYPE_NAME[2]
             )}
             chipIconText={chipIconText}
             setChipIconText={setChipIconText}
@@ -117,8 +115,8 @@ const Masterclasses = () => {
             mentorDetails={mentorDetails}
             courseDetails={courseDetails?.filter(
               (course) =>
-                course.course_type === COURSE_TYPE_NAME[2] ||
-                course.course_type === COURSE_TYPE_NAME[4]
+                course?.course_type === COURSE_TYPE_NAME[2] ||
+                course?.course_type === COURSE_TYPE_NAME[4]
             )}
             headingText={title}
             viewButtonPosition={'bottom'}
