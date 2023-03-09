@@ -151,8 +151,8 @@ const ProfileHome = () => {
         >
           <MoreUpcomingSession courseDetails={courseDetails} />
         </Grid>
-        <LearnTheWayBox />
         <Container>
+          <LearnTheWayBox />
           <Mentors
             mentorDetails={mentorDetails}
             courseDetails={courseDetails}
@@ -161,7 +161,6 @@ const ProfileHome = () => {
             sliceValue={4}
           />
         </Container>
-        {/* </Grid> */}
         <Grid
           container
           direction="column"

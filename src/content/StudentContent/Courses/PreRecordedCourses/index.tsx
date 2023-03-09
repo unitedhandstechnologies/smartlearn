@@ -5,6 +5,16 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import ApplyNow from '../ApplyNow';
 import { useNavigate } from 'react-router';
 import CourseBanner from '../CourseBanner';
+import { getUserId } from 'src/Utils';
+import { API_SERVICES } from 'src/Services';
+import {
+  DETECT_LANGUAGE,
+  HTTP_STATUSES,
+  LANGUAGE_ID
+} from 'src/Config/constant';
+import { toast } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
 // import useStudentInfo from 'src/hooks/useStudentInfo';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,12 +48,57 @@ const PreRecordedCourses = ({
 }: PreRecordedCourseProps) => {
   const theme = useTheme();
   const classes = useStyles();
+  const { i18n } = useTranslation();
   const navigateTo = useNavigate();
+  let userId = getUserId();
+  const [wishList, setWishList] = useState<number[]>([])
+
+  const getAllWishList = async () => {
+    if (userId !== null) {
+      let response: any = await API_SERVICES.WishListService.getAllWishlist(
+        userId,
+        DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+      );
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        const getIds = response.data.wishList.map((i) => i.course_id);
+        setWishList(getIds);
+      }
+    }
+  };
+
+  const handleOnClick = async (item, isActive) => {
+    if (userId !== null) {
+      let response: any;
+      if (isActive) {
+        response = await API_SERVICES.WishListService.delete(
+          userId,
+          item?.course_id,{
+            successMessage: 'Successfully Removed From WishList'
+          }
+        );
+      } else {
+        response = await API_SERVICES.WishListService.create(
+          userId,
+          item?.course_id,
+          { successMessage: 'Successfully Added In WishList' }
+        );
+      }
+      if (response.status < HTTP_STATUSES.BAD_REQUEST) {
+        await getAllWishList();
+      }
+    } else {
+      toast.error('Please login');
+    }
+  };
+
+  useEffect(()=>{
+    getAllWishList()
+  },[])
 
   return (
     <Container>
       <ButtonComp
-        buttonText={backBtnTxt || "All Courses"}
+        buttonText={backBtnTxt || 'All Courses'}
         startIcon={
           <span style={{ color: theme.Colors.secondary }}>
             <ArrowBackIcon />
@@ -57,7 +112,7 @@ const PreRecordedCourses = ({
         height={'40px'}
         classes={{ root: classes.button }}
         onClickButton={() =>
-          navigateTo(backBtnRoute || "/home", {
+          navigateTo(backBtnRoute || '/home', {
             replace: true
           })
         }
@@ -99,7 +154,7 @@ const PreRecordedCourses = ({
               width: '100%',
               top: 0,
               alignItems: 'center',
-              right: '0px',
+              right: '0px'
             },
             [theme.breakpoints.up(1400)]: {
               alignItems: 'flex-start'
@@ -114,6 +169,8 @@ const PreRecordedCourses = ({
                 ? (totalDuration / 60).toFixed()
                 : totalDuration.toFixed(2)
             }
+            handleOnClick={handleOnClick}
+            isActive={wishList.includes(data.id)}
           />
         </Grid>
       </Grid>

@@ -17,6 +17,7 @@ import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import useCartInfo from 'src/hooks/useCartInfo';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
 const classes = {
   containerStyle: {
@@ -86,9 +87,11 @@ type Props = {
   course?: any;
   duration?: number | string;
   timeType?: string;
+  handleOnClick?: (item: any, isActive) => void;
+  isActive?: boolean;
 };
 
-const ApplyNow = ({ course, timeType, duration }: Props) => {
+const ApplyNow = ({ course, timeType, duration, handleOnClick, isActive }: Props) => {
   const { studentDetails } = useContext(StudentInfoContext);
   const { updateCartInfo } = useCartInfo();
   const navigateTo = useNavigate();
@@ -289,19 +292,19 @@ const ApplyNow = ({ course, timeType, duration }: Props) => {
                 height: '41px'
               }}
             >
-              <IconButton
-                style={{
-                  color: '#3C78F0', //: theme.Colors.darkGrayishBlue,
-                  background: 'transparent',
-                  [theme.breakpoints.down('md')]: {
-                    display: 'none'
-                  }
-                }}
-                // onClick={() => handleOnClick(item,isActive)}
-                disableRipple
-              >
-                {<FavoriteBorderIcon />}
-              </IconButton>
+             <IconButton
+              style={{
+                color: isActive ? '#3C78F0' : theme.Colors.darkGrayishBlue,
+                background: 'transparent',
+                [theme.breakpoints.down('md')]: {
+                  display: 'none'
+                }
+              }}
+              onClick={() => handleOnClick(course, isActive)}
+              disableRipple
+            >
+              {isActive ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            </IconButton>
             </Grid>
           </>
         )}

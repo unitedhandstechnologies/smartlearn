@@ -301,7 +301,10 @@ const UpComingCourse = ({
       if (isActive) {
         response = await API_SERVICES.WishListService.delete(
           userId,
-          item?.course_id
+          item?.course_id,
+          {
+            successMessage: 'Successfully Removed From WishList'
+          }
         );
       } else {
         response = await API_SERVICES.WishListService.create(
