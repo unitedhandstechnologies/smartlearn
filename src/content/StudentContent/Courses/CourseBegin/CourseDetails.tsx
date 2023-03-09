@@ -39,7 +39,10 @@ const CourseDetails = ({
   setTestTopic,
   videoDetails,
   setIsReady,
-  setShowCertificate
+  setShowCertificate,
+  setShowNotes,
+  completedQuiz,
+  completedCourse
 }) => {
   const theme = useTheme();
   const navigateTo = useNavigate();
@@ -78,6 +81,9 @@ const CourseDetails = ({
         videoDetails={videoDetails}
         setIsReady={setIsReady}
         setShowCertificate={setShowCertificate}
+        setShowNotes={setShowNotes}
+        completedQuiz={completedQuiz}
+        completedCourse={completedCourse}
       />
     );
   };

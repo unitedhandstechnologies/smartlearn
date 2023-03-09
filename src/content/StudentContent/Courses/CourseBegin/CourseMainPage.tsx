@@ -12,7 +12,7 @@ import CourseDetails from 'src/content/StudentContent/Courses/CourseBegin/Course
 import toast from 'react-hot-toast';
 import { HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
-import { Loader } from 'src/components';
+import { ButtonComp, Loader } from 'src/components';
 import ReactPlayer from 'react-player';
 import React from 'react';
 import { number } from 'prop-types';
@@ -20,6 +20,7 @@ import Quiz from 'src/content/StudentContent/Courses/QASection/Quiz';
 import { getUserId } from 'src/Utils';
 import Certificate from 'src/content/StudentContent/Courses/Certificate';
 import QuizUnlockedMessage from './QuizUnlockedMessage';
+import PdfViewer from './PdfViewer';
 
 const useStyles = makeStyles((theme) => ({
   outerContainer: {
@@ -44,7 +45,8 @@ const useStyles = makeStyles((theme) => ({
       flexWrap: ' wrap-reverse',
       paddingLeft: "0px",
       }
-  }
+  },
+  
 }));
 
 const MainGrid = styled(Grid)(({ theme }) => ({
@@ -78,7 +80,9 @@ const CourseMainPage = ({
   showQuizUnlockedMsg,
   fetchLevelCompleted,
   completedQuiz,
-  setCompletedQuiz
+  setCompletedQuiz,
+  showNotes,
+  setShowNotes,
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -209,7 +213,11 @@ const CourseMainPage = ({
     setVideoDetails(tempVideoDetails);
   }, []);
 
-  useEffect(() => {}, []);
+  
+
+  useEffect(() => {
+   
+  }, []);
 
   return (
     <Grid container className={classes.mainContainer}>
@@ -226,10 +234,14 @@ const CourseMainPage = ({
           videoDetails={videoDetails}
           setIsReady={setIsReady}
           setShowCertificate={setShowCertificate}
+          setShowNotes={setShowNotes}
+          completedQuiz={completedQuiz}
+          completedCourse={completedCourse}
         />
       </Grid>
       <Grid item xs={12} sm={9}>
         {!testTopic && !showCertificate && (
+          !showNotes ?
           <>
             <Typography
               style={{
@@ -259,7 +271,11 @@ const CourseMainPage = ({
                 onProgress={handleVideoProgress}
               />
             </Grid>
-          </>
+          </> : (   
+            <PdfViewer pdfFile= {videoDetails[videoToPlayIndex.current.sectionNumber][
+              videoToPlayIndex.current.lessonNumber
+            ].pdfUrl} />
+          )
         ) 
         }
         {

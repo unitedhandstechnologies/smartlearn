@@ -28,6 +28,7 @@ import CircularProgressWithLabel from './CircularProgressWithLable';
 import { LockIcon, TestTopic, TrophyLine, videoLine } from 'src/Assets/Images';
 import { greenTick } from 'src/Assets/Images';
 import { string } from 'prop-types';
+import { stickyNoteLine, timeLine } from 'src/Assets/Images';
 
 const useStyles = makeStyles((theme) => ({
   accordianTitleStyle: {
@@ -55,7 +56,10 @@ const CourseTitleDetails = ({
   setTestTopic,
   videoDetails,
   setIsReady,
-  setShowCertificate
+  setShowCertificate,
+  setShowNotes,
+  completedQuiz,
+  completedCourse
 }) => {
   const classes = useStyles();
    const theme = useTheme();
@@ -110,7 +114,8 @@ const CourseTitleDetails = ({
             alignItems="center"
             style={{ gap: '10px' }}
             onClick={() => {
-              handleClickTestTopic();      
+              if(completedCourse)
+                handleClickTestTopic();      
 
             }}
           >
@@ -124,7 +129,7 @@ const CourseTitleDetails = ({
               style={{
                 color: theme.Colors.blackPrimary,
                 fontWeight: 400,
-                fontSize: '18px'
+                fontSize: '18px',
               }}
             >
               Test Topic
@@ -145,8 +150,10 @@ const CourseTitleDetails = ({
             alignItems="center"
             style={{ gap: '10px' }}
             onClick={() => {
+              if(completedQuiz){
               setTestTopic(false);
               setShowCertificate(true);
+            }
             }}
           >
             <img src={TrophyLine} />
@@ -226,75 +233,7 @@ const CourseTitleDetails = ({
                       let duration = String(item.duration);
                       let minSec = duration.split('.');
                       return (
-                        <>
-                       {/*  <Grid
-                          item
-                          key={index}
-                          container
-                          xs={12}
-                          style={{ gap: 10 }}
-                          alignItems="center"
-                          direction={'row'}
-                          onClick={() => {
-                            setTestTopic(false);
-                            setVideoToPlay(item.video_url);
-                            videoToPlayIndex.current = {
-                              sectionNumber: sectionNumber - 1,
-                              lessonNumber: index
-                            };
-                            setIsReady(false);
-                          }}
-                        >
-                          <Grid
-                            item
-                            display={'flex'}
-                            alignItems={'center'}
-                            justifyContent={'center'}
-                          >
-                            <CircularProgressWithLabel
-                              title={getSectionLessonValue(
-                                sectionNumber,
-                                index
-                              )}
-                              value={
-                                videoDetails[sectionNumber - 1][index]
-                                  .videoPlayedFraction * 100
-                              }
-                            />
-                          </Grid>
-                          <Grid item>
-                            <Grid container direction={'column'}>
-                              <Grid item xs={6}>
-                                <Typography
-                                  style={{
-                                    color: theme.Colors.blackPrimary,
-                                    fontWeight: 400,
-                                    fontSize: '16px'
-                                  }}
-                                >
-                                  {' '}
-                                  {`${item.lesson_name}`}
-                                </Typography>
-                              </Grid>
-                              <Grid item xs={6}>
-                                <img src={videoLine}></img>
-                                <Typography
-                                  component={'span'}
-                                  style={{
-                                    color: theme.Colors.blackPrimary,
-                                    fontWeight: 400,
-                                    fontSize: '12px'
-                                  }}
-                                >
-                                  {`  ${minSec[0]}m  ${minSec[1]}s`}
-                                </Typography>
-                              </Grid>
-                              
-                            </Grid>
-                            
-                          </Grid>
-                        </Grid>
- */}
+                        <>                         
                         <Grid container direction="row">
                             <Grid 
                               item 
@@ -314,6 +253,7 @@ const CourseTitleDetails = ({
                           onClick={() => {
                             setTestTopic(false);
                             setShowCertificate(false);
+                            setShowNotes(false);
                             setVideoToPlay(item.video_url);
                             videoToPlayIndex.current = {
                               sectionNumber: sectionNumber - 1,
@@ -385,6 +325,95 @@ const CourseTitleDetails = ({
                             </Grid>
 
                           </Grid>
+
+                          {/* For PDF */}
+                          {
+                            item.pdf_url ? 
+                            <Grid container direction="row">
+                            <Grid 
+                              item 
+                              xs={10} 
+                              style={{
+                              padding: "10px 0px 16px 10px"}}
+                              
+                              >
+                            <Grid
+                          item
+                          key={index}
+                          container
+                          xs={12}
+                          style={{ gap: 10 }}
+                          alignItems="center"
+                          direction={'row'}
+                          onClick={() => {
+                            setTestTopic(false);
+                            setShowCertificate(false);
+                            setShowNotes(true);
+                            videoToPlayIndex.current = {
+                              sectionNumber: sectionNumber - 1,
+                              lessonNumber: index
+                            };
+                          }}
+                        >
+                          <Grid
+                            item
+                            display={'flex'}
+                            alignItems={'center'}
+                            justifyContent={'center'}
+                          >
+                            <CircularProgressWithLabel
+                              title={""}
+                              value={0}
+                            />
+                          </Grid>
+                          <Grid item>
+                            <Grid container direction={'column'}>
+                              <Grid item xs={6}>
+                                <Typography
+                                  style={{
+                                    color: theme.Colors.blackPrimary,
+                                    fontWeight: 400,
+                                    fontSize: '16px'
+                                  }}
+                                >
+                                  {' '}
+                                  {`${item.lesson_name}`}
+                                </Typography>
+                              </Grid>
+                              <Grid item xs={6}>
+                                <img src={stickyNoteLine}></img>
+                                <Typography
+                                  component={'span'}
+                                  style={{
+                                    color: theme.Colors.blackPrimary,
+                                    fontWeight: 400,
+                                    fontSize: '12px'
+                                  }}
+                                >
+                                  {"  Notes"/* {`  ${minSec[0]}m  ${minSec[1]}s`} */}
+                                </Typography>
+                              </Grid>
+                              
+                            </Grid>
+                            
+                          </Grid>
+                        </Grid>
+                            </Grid>
+                            <Grid 
+                              item xs={2} 
+                              display={'flex'}
+                              alignItems={'center'}
+                              justifyContent={'center'}
+                              //style={{border:"1px solid blue"}}
+                              
+                              >
+                              {/* {`${(videoDetails[sectionNumber - 1][index]
+                                  .videoPlayedFraction * 100).toFixed()}%`} */}
+                            </Grid>
+
+                          </Grid>
+                          : null
+                          }
 
                         </>
                       );

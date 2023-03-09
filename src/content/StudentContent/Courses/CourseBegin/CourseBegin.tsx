@@ -41,6 +41,7 @@ const CourseBegin = () => {
   const [completedCourse, setCompletedCourse] = useState(false);
   const [showQuizUnlockedMsg,setShowQuizUnlockedMsg]=useState(true);
   const [completedQuiz,setCompletedQuiz]=useState(false);
+  const [showNotes, setShowNotes]=useState(false);
 
   const [autoPlay, setAutoPlay] = useState(true);
   const { state }: any = useLocation();
@@ -123,8 +124,9 @@ const CourseBegin = () => {
                             itemVideo.user_id === userId &&
                             itemVideo.lesson_id === item.lesson_id
                         );
-
+                        console.log("PDF url",item.pdf_url)
                         tempVideoDetails[sectionNumber - 1][index] = {
+                          pdfUrl: item.pdf_url,
                           videoUrl: item.video_url,
                           videoName: item.lesson_name,
                           videoId: item.lesson_id,
@@ -226,6 +228,8 @@ const CourseBegin = () => {
         fetchLevelCompleted={fetchLevelCompleted}
         completedQuiz={completedQuiz}
         setCompletedQuiz={setCompletedQuiz}
+        setShowNotes={setShowNotes}
+        showNotes={showNotes}
       />
     );
   }
