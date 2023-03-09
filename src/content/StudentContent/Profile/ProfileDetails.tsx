@@ -79,7 +79,7 @@ const ProfileDetails = () => {
     social_information_url_3:
       studentDetails.social_information_url_3 === 'undefined'
         ? ''
-        : 'studentDetails.social_information_url_3' || ''
+        : studentDetails.social_information_url_3 || ''
   };
   const edit = useEdit(initialValues);
   const [isEdit, setIsEdit] = useState<number>(0);
