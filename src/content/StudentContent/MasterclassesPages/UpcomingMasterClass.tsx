@@ -239,13 +239,15 @@ const UpComingCourse = ({
   };
 
   const getAllWishList = async () => {
-    let response: any = await API_SERVICES.WishListService.getAllWishlist(
-      userId,
-      DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
-    );
-    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-      const getIds = response.data.wishList.map((i) => i.course_id);
-      setWishList(getIds);
+    if (userId !== null) {
+      let response: any = await API_SERVICES.WishListService.getAllWishlist(
+        userId,
+        DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
+      );
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        const getIds = response.data.wishList.map((i) => i.course_id);
+        setWishList(getIds);
+      }
     }
   };
 

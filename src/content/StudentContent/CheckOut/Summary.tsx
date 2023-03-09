@@ -268,7 +268,7 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
                     </Typography>
                   </Grid>
                 </Grid>
-                {item?.course_type != COURSE_TYPE_NAME[6] ? (
+                {item?.course_type === 'Seminar' ? (
                   <Grid container item xs>
                     <Grid item xs>
                       <Typography

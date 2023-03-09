@@ -54,14 +54,15 @@ export const WishlistInfoProvider = ({ children }: Props) => {
       return;
     }
     setWishlistDetails([]);
-    const response: any = await API_SERVICES.WishListService.getAllWishlist(
-      user_id,
-      language_id
-    );
-    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-      if (response?.data?.wishList?.length) {
-        console.log('updateWiahlistInfo', response?.data?.wishList);
-        setWishlistDetails(response?.data?.wishList);
+    if (user_id !== null) {
+      const response: any = await API_SERVICES.WishListService.getAllWishlist(
+        user_id,
+        language_id
+      );
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (response?.data?.wishList?.length) {
+          setWishlistDetails(response?.data?.wishList);
+        }
       }
     }
   };

@@ -34,12 +34,15 @@ export const CartInfoProvider = ({ children }: Props) => {
       return;
     }
     setCartDetails([]);
-    const response: any = await API_SERVICES.AddToCartService.getAllAddToCart(
-      user_id
-    );
-    if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-      if (response?.data?.AddToCart?.length) {
-        setCartDetails(response?.data?.AddToCart);
+    if (user_id !== null) {
+      const response: any = await API_SERVICES.AddToCartService.getAllAddToCart(
+        user_id
+      );
+
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (response?.data?.AddToCart?.length) {
+          setCartDetails(response?.data?.AddToCart);
+        }
       }
     }
   };
