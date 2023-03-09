@@ -14,7 +14,7 @@ import {
   Drawer,
   Grid
 } from '@mui/material';
-import { useTheme } from '@material-ui/core/styles';
+import { useTheme, Badge } from '@material-ui/core';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../../Assets/Images/Logo.svg';
 import { ButtonComp } from 'src/components';
@@ -33,6 +33,7 @@ import useCartInfo from 'src/hooks/useCartInfo';
 import { USER_TYPE_ID } from 'src/Config/constant';
 import toast from 'react-hot-toast';
 import { INITIAL_STATE } from 'src/contexts/StudentContext';
+import avatar3 from '../../../src/Assets/Images/avatar3.svg';
 
 const pages = [
   { label: 'Courses', path: 'courses' },
@@ -53,6 +54,7 @@ function NavBar() {
 
   const handleCartClick = (event) => {
     setCartOpen(event.currentTarget);
+    setOpen(false);
   };
   const handleCartClose = () => {
     setCartOpen(null);
@@ -60,6 +62,7 @@ function NavBar() {
 
   const handleBellClick = (event) => {
     setBellOpen(event.currentTarget);
+    setOpen(false);
   };
   const handleBellClose = () => {
     setBellOpen(null);
@@ -88,6 +91,11 @@ function NavBar() {
     setOpen(false);
     toast.success('Profile Logout successfully');
   };
+  const viewNotifications = () => {
+    navigateTo('/home/view-notifications');
+    setOpen(false);
+  };
+
   return (
     <>
       <AppBar
@@ -217,6 +225,21 @@ function NavBar() {
           {studentDetails?.id !== 0 &&
           studentDetails?.user_type === USER_TYPE_ID.student ? (
             <>
+              <Grid
+                sx={{
+                  [theme.breakpoints.down('sm')]: { display: 'flex' },
+                  [theme.breakpoints.between('lg', 'xl')]: { display: 'none' },
+                  [theme.breakpoints.between('md', 'lg')]: { display: 'none' }
+                }}
+              >
+                {studentDetails?.user_type === USER_TYPE_ID.student ? (
+                  <IconButton aria-label="cart" onClick={handleCartClick}>
+                    <Badge badgeContent={cartDetails?.length} color="secondary">
+                      <img src={CartImg} width={25} height={25} />
+                    </Badge>
+                  </IconButton>
+                ) : null}
+              </Grid>
               <Box
                 sx={{
                   [theme.breakpoints.down('sm')]: { display: 'none' }
@@ -321,8 +344,33 @@ function NavBar() {
             <>
               <Divider
                 variant="middle"
-                sx={{ margin: 2, backgroundColor: '#3C78F0' }}
+                sx={{ margin: 2, backgroundColor: '#3C78F0', width: 200 }}
               />
+              <Button
+                //onClick={profileNavigation}
+                style={{
+                  display: 'block',
+                  textTransform: 'none',
+                  fontFamily: 'Switzer',
+                  fontWeight: 500,
+                  fontSize: 16,
+                  paddingLeft: 35,
+                  color: '#3C414B'
+                }}
+              >
+                <img
+                  src={
+                    studentDetails?.image_url
+                      ? studentDetails?.image_url
+                      : avatar3
+                  }
+                  width={30}
+                  height={30}
+                  style={{ marginRight: 10 }}
+                />
+                {`${studentDetails?.first_name} ${studentDetails?.last_name}`}
+              </Button>
+
               <Button
                 onClick={profileNavigation}
                 style={{
@@ -332,11 +380,43 @@ function NavBar() {
                   fontFamily: 'Switzer',
                   fontWeight: 500,
                   fontSize: 16,
+                  paddingTop: 10,
                   paddingLeft: 35
                 }}
               >
-                {`Profile - ${studentDetails?.first_name} ${studentDetails?.last_name}`}
+                {`Profile`}
               </Button>
+              <Button
+                style={{
+                  display: 'block',
+                  textTransform: 'none',
+                  fontFamily: 'Switzer',
+                  fontWeight: 500,
+                  fontSize: 16,
+                  paddingLeft: 35
+                }}
+                onClick={handleCartClick}
+              >
+                {'Cart'}
+              </Button>
+
+              <Button
+                style={{
+                  display: 'block',
+                  textTransform: 'none',
+                  fontFamily: 'Switzer',
+                  fontWeight: 500,
+                  fontSize: 16,
+                  paddingLeft: 35
+                }}
+                onClick={viewNotifications}
+              >
+                {'Notification'}
+              </Button>
+              <Divider
+                variant="middle"
+                sx={{ margin: 1, backgroundColor: '#3C78F0', width: 200 }}
+              />
               <Button
                 onClick={logoutProfile}
                 style={{
@@ -346,33 +426,17 @@ function NavBar() {
                   fontFamily: 'Switzer',
                   fontWeight: 500,
                   fontSize: 16,
-                  paddingLeft: 35
+                  paddingLeft: 35,
+                  color: 'red'
                 }}
               >
                 {'Logout'}
               </Button>
-              {/* <ListItemButton>
-                <ButtonComp
-                  variant="outlined"
-                  btnWidth={240}
-                  height={40}
-                  buttonFontFamily="Switzer"
-                  buttonFontSize={theme.MetricsSizes.small_xxx}
-                  buttonTextColor={'#3C78F0'}
-                  style={{ background: 'none' }}
-                  btnBorderRadius={4}
-                  buttonText={'Carts'}
-                  onClick={handleCartClick}
-                  iconImage={
-                    <img src={CartImg} width={'17.92px'} height={'17.24px'} />
-                  }
-                />
-              </ListItemButton>
-              <CartPopover
-                carts={cartDetails}
-                anchorEl={cartOpen}
-                handleClose={handleCartClose}
-              /> */}
+              <NotificationPopover
+                notifications={notifications}
+                anchorEl={bellOpen}
+                handleClose={handleBellClose}
+              />
             </>
           ) : (
             <Box
@@ -437,7 +501,7 @@ function NavBar() {
                   iconImage={<NotificationsNoneIcon />}
                 />
               </ListItemButton> */}
-              <CartPopover
+              {/* <CartPopover
                 carts={cartDetails}
                 anchorEl={cartOpen}
                 handleClose={handleCartClose}
@@ -446,11 +510,18 @@ function NavBar() {
                 notifications={notifications}
                 anchorEl={bellOpen}
                 handleClose={handleBellClose}
-              />
+              /> */}
             </Box>
           )}
         </List>
       </Drawer>
+      {studentDetails?.user_type === USER_TYPE_ID.student ? (
+        <CartPopover
+          carts={cartDetails}
+          anchorEl={cartOpen}
+          handleClose={handleCartClose}
+        />
+      ) : null}
       <Box>
         <Outlet />
       </Box>
