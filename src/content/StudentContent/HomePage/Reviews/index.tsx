@@ -1,32 +1,11 @@
 import React, { useState } from 'react';
 import { Grid, IconButton, Container } from '@mui/material';
-import { Avatar1, LineBarIcon } from 'src/Assets';
-import ReviewComp, { ReviewBox } from './ReviewComp';
+import { LineBarIcon } from 'src/Assets';
+import { ReviewBox } from './ReviewComp';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useTheme } from '@material-ui/core';
 import { Heading } from 'src/components';
-
-const review = [
-  {
-    mentor_name: 'John Doe',
-    subText: 'ABC Company',
-    command:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore',
-    user_image: Avatar1,
-    mentor_rating: 4,
-    course_name: ''
-  },
-  {
-    mentor_name: 'Kathryn Murphy',
-    subText: 'BC Company',
-    user_image: Avatar1,
-    command:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore ',
-    mentor_rating: 4,
-    course_name: ''
-  }
-];
 
 const Reviews = ({ ratingData }) => {
   const theme = useTheme();
@@ -86,7 +65,7 @@ const Reviews = ({ ratingData }) => {
             <IconButton
               sx={{ color: '#3C78F0' }}
               onClick={handleNextClick}
-              disabled={view[1] >= review.length}
+              disabled={view[1] >= ratingData?.length}
             >
               <Grid
                 item
@@ -103,24 +82,21 @@ const Reviews = ({ ratingData }) => {
           </Grid>
         </Grid>
         <Grid container spacing={3}>
-          {ratingData.slice(view[0], view[1])?.map((item, index) => {
+          {ratingData?.slice(view[0], view[1])?.map((item, index) => {
             return (
               <Grid item xs={12} sm={6} key={index}>
                 <ReviewBox
-                  name={item.mentor_name}
-                  subText={item.course_name}
-                  review={item.command}
-                  imgUrl={item.user_image}
+                  name={item?.mentor_name}
+                  subText={item?.course_name}
+                  review={item?.command}
+                  imgUrl={item?.user_image}
                   rating={true}
-                  ratingValue={item.mentor_rating}
+                  ratingValue={item?.mentor_rating}
                 />
               </Grid>
             );
           })}
         </Grid>
-        {/* <Grid container spacing={3}>
-        <ReviewComp review={review} show={show} currentIndex={currentIndex} />
-      </Grid> */}
       </Grid>
     </Container>
   );

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Grid, InputAdornment, useTheme } from '@material-ui/core';
+import { Grid, useTheme } from '@material-ui/core';
 import {
   Card,
   CardActionArea,
@@ -12,19 +12,16 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import {
   BarChartFillIcon,
-  BarIcon,
   BeginnerIcon,
   CommendIcon,
   DateSvg,
   IntermediateIcon,
   LocationIcon,
-  RupeeSign,
   WhiteDot,
   ZoomIcon
 } from 'src/Assets';
-import { COURSE_TYPE_NAME, HTTP_STATUSES } from 'src/Config/constant';
+import { COURSE_TYPE_NAME } from 'src/Config/constant';
 import ButtonComp from '../ButtonComp';
-import Heading from '../Heading';
 import IconTextComp from '../IconTextComp';
 import ListItemCell from '../ListItemCell';
 import { ChipComp } from '../MultiSelectChip/ChipComp';
@@ -34,13 +31,12 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { StudentInfoContext } from 'src/contexts/StudentContext';
 import { useNavigate } from 'react-router';
-import { API_SERVICES } from 'src/Services';
 
 const TopBox = ({ leftText, rightText }) => {
   const { studentDetails } = useContext(StudentInfoContext);
   return (
     <Grid container justifyContent={leftText ? 'space-between' : 'flex-end'}>
-      {leftText ? (
+      {leftText === 'FREE' ? (
         <Grid item>
           <ButtonComp
             buttonText={leftText}
