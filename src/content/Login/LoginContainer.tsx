@@ -104,7 +104,7 @@ const LoginContainer = ({
                 email_id: response?.data.users[0].email_id,
                 first_name: response?.data.users[0].first_name,
                 id: response?.data.users[0].id,
-                is_verify: response?.data.users[0].is_verify
+                user_type: response?.data?.users[0].user_type
               }
             },
             replace: true
