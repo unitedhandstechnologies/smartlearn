@@ -157,6 +157,12 @@ const MoreUpcomingSession = ({ courseDetails = [] }: CourseProps) => {
                 height: theme.MetricsSizes.large,
                 fontSize: theme.MetricsSizes.regular
               }}
+              containerStyle={{
+                [theme.breakpoints.down('xs')]: {
+                  flexDirection: 'column',
+                  gap: 5
+                }
+              }}
             />
           </Grid>
           <Grid>

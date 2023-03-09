@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { Grid, useTheme } from '@material-ui/core';
+import {  useTheme } from '@material-ui/core';
 import {
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   IconButton,
-  Typography
+  Typography,
+  Grid
 } from '@mui/material';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -35,8 +36,8 @@ import { useNavigate } from 'react-router';
 const TopBox = ({ leftText, rightText }) => {
   const { studentDetails } = useContext(StudentInfoContext);
   return (
-    <Grid container justifyContent={leftText ? 'space-between' : 'flex-end'}>
-      {leftText === 'FREE' ? (
+    <Grid container justifyContent={leftText !== 'PAID' ? 'space-between' : 'flex-end'}>
+      {leftText !== 'PAID' ? (
         <Grid item>
           <ButtonComp
             buttonText={leftText}
@@ -165,24 +166,29 @@ const MuiCardComp = ({
               sx={{ backgroundColor: 'transparent' }}
             />
             <Grid
-              style={{
+              sx={{
                 backgroundColor: 'transparent',
                 position: 'absolute',
                 overflow: 'visible',
                 bottom: title.length > 23 ? 30 : 50,
-                paddingLeft: 20,
+                paddingLeft: 5,
                 paddingRight: 5,
                 [theme.breakpoints.down('xs')]: {
-                  bottom: 50
+                  bottom: 55,
+                  paddingLeft: 2,
+                  paddingRight: 2
                 },
                 ...titleStyle
               }}
             >
               <Typography
-                style={{
+                sx={{
                   fontSize: '32px',
                   fontFamily: 'Switzer',
-                  fontWeight: 700
+                  fontWeight: 700,
+                  [theme.breakpoints.down('xs')]: {
+                    fontSize: '25px'
+                  }
                 }}
               >
                 {title}

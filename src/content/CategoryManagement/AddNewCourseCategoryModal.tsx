@@ -10,10 +10,6 @@ import { DialogComp, MuiTabComponent } from 'src/components';
 import { t } from 'i18next';
 
 const useStyles = makeStyles((theme) => ({
-  title: {
-    fontWeight: theme.fontWeight.bold,
-    alignItems: 'center'
-  },
   selectedTab: {
     fontWeight: theme.fontWeight.bold,
     color: theme.Colors.secondary

@@ -51,7 +51,12 @@ const TextInput = ({
     let img = new Image();
     img.src = window.URL.createObjectURL(event.target.files[0]);
     img.onload = async () => {
-      if (img.width <= 350 && img.width >=300 && img.height <= 250 && img.height >=200) {
+      if (
+        img.width <= 350 &&
+        img.width >= 300 &&
+        img.height <= 250 &&
+        img.height >= 200
+      ) {
         const uploadImageRes: any =
           await API_SERVICES.imageUploadService.uploadImage(formData);
         if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -85,7 +90,7 @@ const TextInput = ({
     <Grid container direction="row" spacing={2} style={{ marginTop: '25px' }}>
       {!categories ? (
         <Grid item xs={6}>
-           <TextInputComponent
+          <TextInputComponent
             inputLabel={'Category Image'}
             value={edit.getValue('image_url').split('/')[3] || profileImage}
             disabled
@@ -116,7 +121,11 @@ const TextInput = ({
             }}
             required
             isError={imageError}
-            helperText={imageError ? 'Please upload the profile image' : "Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 350 X 250 resolution" }
+            helperText={
+              imageError
+                ? 'Please upload the profile image'
+                : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 350 X 250 resolution'
+            }
           />
         </Grid>
       ) : null}
