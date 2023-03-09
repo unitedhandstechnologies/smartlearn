@@ -36,8 +36,8 @@ import { useNavigate } from 'react-router';
 const TopBox = ({ leftText, rightText }) => {
   const { studentDetails } = useContext(StudentInfoContext);
   return (
-    <Grid container justifyContent={leftText !== 'PAID' ? 'space-between' : 'flex-end'}>
-      {leftText !== 'PAID' ? (
+    <Grid container justifyContent={leftText ? 'space-between' : 'flex-end'}>
+      {leftText ? (
         <Grid item>
           <ButtonComp
             buttonText={leftText}

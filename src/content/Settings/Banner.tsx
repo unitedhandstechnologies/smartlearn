@@ -1,7 +1,7 @@
 import { useTheme } from '@material-ui/core';
 import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ButtonComp, Heading, Loader } from 'src/components';
+import { ButtonComp, Loader } from 'src/components';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 import BannerTable from './BannerTable';
 import { toast } from 'react-hot-toast';
@@ -9,7 +9,6 @@ import { API_SERVICES } from 'src/Services';
 import {
   CONFIRM_MODAL,
   DETECT_LANGUAGE,
-  HANDLE_SUBMIT,
   HTTP_STATUSES,
   LANGUAGE_ID
 } from 'src/Config/constant';
@@ -28,23 +27,33 @@ function Banner() {
   const [isMissingImageEntry, setIsMissingImageEntry] = useState(true);
   const [isMissingNameEntry, setIsMissingNameEntry] = useState(true);
 
-  function TabPanel(props) {
-    const { children, value, index } = props;
-
-    return value === index && <>{children}</>;
-  }
-
-  const onCreateOrEditButtonClick = (rowData?: any, type?: string) => {
-    if (type === CONFIRM_MODAL.edit) {
-      setModalOpen({
-        open: true,
-        rowData: rowData,
-        type: type
-      });
-      return;
-    }
-    setModalOpen({ open: true, type: type });
-  };
+  const onCreateOrEditButtonClick = useCallback(
+    async (rowData?: any, type?: string) => {
+      try {
+        if (type === CONFIRM_MODAL.edit) {
+          const response: any =
+            await API_SERVICES.bannerManagementService.getBannerManagementById(
+              rowData?.id,
+              {}
+            );
+          if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+            if (response?.data?.banner && response?.data?.banner_language) {
+              setModalOpen({
+                open: true,
+                rowData: response?.data,
+                type: type
+              });
+              return;
+            }
+          }
+        }
+        setModalOpen({ open: true, type: type });
+      } catch (err) {
+        toast.error(err?.message);
+      }
+    },
+    []
+  );
 
   const fetchData = useCallback(async () => {
     try {
@@ -107,7 +116,6 @@ function Banner() {
             isMissingImageEntry={isMissingImageEntry}
             setIsMissingNameEntry={setIsMissingNameEntry}
             isMissingNameEntry={isMissingNameEntry}
-          
           />
         )}
       </>

@@ -1,20 +1,12 @@
-import {
-  Grid,
-  InputAdornment,
-  makeStyles,
-  Theme,
-  useTheme
-} from '@material-ui/core';
+import { Grid, makeStyles, useTheme } from '@material-ui/core';
 import React, { useState, memo } from 'react';
-import { ButtonComp, DialogComp, MuiTabComponent, TextInputComponent } from 'src/components';
+import { DialogComp, MuiTabComponent } from 'src/components';
 import DualActionButton from 'src/components/DualActionButton';
 import { useEdit } from 'src/hooks/useEdit';
-import { capitalizeFirstLetter } from 'src/Utils';
 import { t } from 'i18next';
 import { API_SERVICES } from 'src/Services';
 import toast from 'react-hot-toast';
 import { HTTP_STATUSES, CONFIRM_MODAL, LANGUAGE_ID } from 'src/Config/constant';
-import MuiTab from 'src/components/MuiTab';
 import { TextInput } from './TextInput';
 
 const useStyles = makeStyles((theme) => ({
@@ -43,26 +35,27 @@ const AddBannerModel = ({
   const theme = useTheme();
   const [step, setStep] = useState(1);
   const [error, setError] = useState(false);
-  console.log('rowData',rowData);
-  
+  console.log('rowData', rowData);
+
   const getLanguageData = (lanID: number) => {
     let data =
       rowData?.banner_language?.length &&
-      rowData?.banner_language.filter((item) => item.language_id === lanID);
+      rowData?.banner_language?.filter((item) => item?.language_id === lanID);
     let name = data?.length && data[0].banner_name;
     let description = data?.length && data[0].banner_description;
     return { name, description };
   };
   const initialValues = {
     banner_type: 1,
-    banner_status: rowData?.banner_status || 1,
-    banner_image: rowData?.banner_image || '',
+    banner_status: rowData?.banner?.banner_status ?? 1,
+    banner_image: rowData?.banner?.banner_image ?? '',
     engBannerName: getLanguageData(LANGUAGE_ID.english).name || '',
     hinBannerName: getLanguageData(LANGUAGE_ID.hindi).name || '',
     gujBannerName: getLanguageData(LANGUAGE_ID.gujarati).name || '',
-    engBannerDes: getLanguageData(LANGUAGE_ID.english).description || '',
-    hinBannerDes: getLanguageData(LANGUAGE_ID.hindi).description || '',
-    gujBannerDec: getLanguageData(LANGUAGE_ID.english).description || ''
+    engBannerDescription:
+      getLanguageData(LANGUAGE_ID.english).description || '',
+    hinBannerDescription: getLanguageData(LANGUAGE_ID.hindi).description || '',
+    gujBannerDescription: getLanguageData(LANGUAGE_ID.english).description || ''
   };
   const edit = useEdit(initialValues);
   const RequiredFields = [
@@ -97,14 +90,10 @@ const AddBannerModel = ({
   };
 
   const handleChangeTab = (value) => {
-    console.log('val',value);
-    
     setStep(value);
   };
 
   const renderTab = (tabValue) => {
-    console.log('tabValue',tabValue);
-    
     return (
       <Grid>
         <TextInput
@@ -121,42 +110,22 @@ const AddBannerModel = ({
   const renderDialogContent = () => {
     return (
       <Grid container>
-          <MuiTabComponent
-            currentTabVal={step}
-            renderTabContent={renderTab}
-            tabContent={tabs}
-            tabIndicatorColor={theme.Colors.secondary}
-            onTabChange={handleChangeTab}
-            tabClasses={{
-              selected: classes.selectedTab
-            }}
-          />
+        <MuiTabComponent
+          currentTabVal={step}
+          renderTabContent={renderTab}
+          tabContent={tabs}
+          tabIndicatorColor={theme.Colors.secondary}
+          onTabChange={handleChangeTab}
+          tabClasses={{
+            selected: classes.selectedTab
+          }}
+        />
       </Grid>
     );
   };
 
   const handleCreate = async () => {
     try {
-      // let banner_details = [
-      //   {
-      //     language_id: 1,
-      //     banner_name: edit.getValue('engBannerName'),
-      //   },
-      //   {
-      //     language_id: 2,
-      //     banner_name: edit.getValue('hinBannerName')
-      //   },
-      //   {
-      //     language_id: 3,
-      //     banner_name: edit.getValue('gujBannerName')
-      //   }
-      // ];
-      // let data = {
-      //   banner_image: edit.getValue('banner_image'),
-      //   banner_details,
-      //   banner_type: 1,
-      //   banner_status: 1
-      // };
       let uData = {
         banner_status: edit.getValue('banner_status'),
         banner_type: edit.getValue('banner_type'),
@@ -164,15 +133,18 @@ const AddBannerModel = ({
         banner_details: [
           {
             language_id: 1,
-            banner_name: edit.getValue('engBannerName'),
+            banner_name: edit.getValue('engBannerName')
+            // banner_description: edit.getValue('engBannerDescription')
           },
           {
             language_id: 2,
             banner_name: edit.getValue('hinBannerName')
+            // banner_description: edit.getValue('hinBannerDescription')
           },
           {
             language_id: 3,
             banner_name: edit.getValue('gujBannerName')
+            // banner_description: edit.getValue('gujBannerDescription')
           }
         ]
       };
@@ -188,28 +160,8 @@ const AddBannerModel = ({
           failureMessage: t('Toast.failedtoUpdate')
         });
       } else if (types[type].handleType === 2) {
-        // let banner_details = [
-        //   {
-        //     language_id: 1,
-        //     banner_name: edit.getValue('banner_name')
-        //   },
-        //   {
-        //     language_id: 2,
-        //     banner_name: edit.getValue('banner_name_hindi')
-        //   },
-        //   {
-        //     language_id: 3,
-        //     banner_name: edit.getValue('banner_name_gujarati')
-        //   }
-        // ];
-        // let data = {
-        //   banner_image: edit.getValue('banner_image'),
-        //   banner_details,
-        //   banner_type: 1,
-        //   banner_status: 1
-        // };
         response = await API_SERVICES.bannerManagementService.update(
-          rowData?.banner_id,
+          rowData?.banner?.id,
           {
             data: uData,
             successMessage: t('Toast.bannerEditedSuccessfully'),

@@ -126,7 +126,7 @@ const YourUpComingSession = ({ courseDetails = [] }: CourseProps) => {
                   key={index}
                   imgUrl={item.image_url ? item.image_url : BasicStockIcon}
                   rightText={item.course_type}
-                  leftText={item.cost_type}
+                  leftText={item.cost_type === 'FREE' ? 'FREE' : null}
                   heading={item.category_name}
                   title={item.course_name}
                   subText={item.course_description}

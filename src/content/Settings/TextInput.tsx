@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Grid, InputAdornment, useTheme } from '@material-ui/core';
+import { Grid, InputAdornment, Typography, useTheme } from '@material-ui/core';
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
-import { ButtonComp, TextInputComponent } from 'src/components';
+import { ButtonComp, CheckStatus, TextInputComponent } from 'src/components';
 import { HTTP_STATUSES } from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
 import { capitalizeFirstLetter } from 'src/Utils';
@@ -28,10 +28,10 @@ export const TextInput = ({
 
   const getBannerDescription =
     tabValue === 1
-      ? edit.getValue('engBannerDes')
+      ? edit.getValue('engBannerDescription')
       : tabValue === 2
-      ? edit.getValue('hinBannerDes')
-      : edit.getValue('gujBannerDec');
+      ? edit.getValue('hinBannerDescription')
+      : edit.getValue('gujBannerDescription');
 
   const imageError = error && !edit.allFilled('banner_image');
 
@@ -143,33 +143,55 @@ export const TextInput = ({
           required
         />
       </Grid>
-      <Grid item xs={12}>
-        <TextInputComponent
-          multiline={true}
-          maxRows={4}
-          inputHeight={100}
-          inputLabel="Description"
-          placeholderText="Describe the Course"
-          variant="outlined"
-          containerStyle={{
-            marginTop: 10
-          }}
-          labelColor={theme.Colors.primary}
-          value={getBannerDescription}
-          onChange={(e) => {
-            let value = capitalizeFirstLetter(e.target.value);
-            if (tabValue === 1) {
-              edit.update({ engBannerDes: value });
-            } else if (tabValue === 2) {
-              edit.update({ hinBannerDes: value });
-            } else {
-              edit.update({ gujBannerDec: value });
-            }
-          }}
-          isError={descriptionError}
-          helperText={descriptionError && 'Please enter the description'}
-          required
-        />
+      <Grid container item>
+        <Grid item xs>
+          <TextInputComponent
+            multiline={true}
+            maxRows={4}
+            inputHeight={100}
+            inputLabel="Description"
+            placeholderText="Describe the Course"
+            variant="outlined"
+            containerStyle={{
+              marginTop: 10
+            }}
+            labelColor={theme.Colors.primary}
+            value={getBannerDescription}
+            onChange={(e) => {
+              let value = capitalizeFirstLetter(e.target.value);
+              if (tabValue === 1) {
+                edit.update({ engBannerDes: value });
+              } else if (tabValue === 2) {
+                edit.update({ hinBannerDes: value });
+              } else {
+                edit.update({ gujBannerDec: value });
+              }
+            }}
+            isError={descriptionError}
+            helperText={descriptionError && 'Please enter the description'}
+            required
+          />
+        </Grid>
+
+        <Grid item xs>
+          <Typography
+            style={{
+              color: theme.Colors.primary,
+              fontWeight: theme.fontWeight.medium,
+              paddingBottom: theme.spacing(1),
+              paddingTop: theme.spacing(0.5)
+            }}
+          >
+            Banner Status
+          </Typography>
+          <CheckStatus
+            Value={edit.getValue('banner_status') === 1 ? true : false}
+            onClick={(e) => {
+              let value = !!e ? 2 : 1;
+              edit.update({ banner_status: value });
+            }}
+          />
+        </Grid>
       </Grid>
     </Grid>
   );
