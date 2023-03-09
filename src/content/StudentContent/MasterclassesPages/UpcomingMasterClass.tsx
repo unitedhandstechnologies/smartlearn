@@ -114,7 +114,7 @@ type CourseProps = {
   chipIconText?: number[];
   onSearchValChange?: (event) => void;
   handleClearSearchValue?: () => void;
-  searchval?: string;
+  searchVal?: string;
 };
 
 const UpComingCourse = ({
@@ -123,7 +123,7 @@ const UpComingCourse = ({
   setChipIconText,
   onSearchValChange,
   handleClearSearchValue,
-  searchval
+  searchVal
 }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
@@ -344,7 +344,7 @@ const UpComingCourse = ({
             <Grid paddingBottom={2}>
               <SearchComponent
                 onSearchValChange={onSearchValChange}
-                searchval={searchval}
+                searchval={searchVal}
                 handleClearSearchValue={handleClearSearchValue}
               />
             </Grid>

@@ -23,8 +23,8 @@ const Masterclasses = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [chipIconText, setChipIconText] = useState([0, 0, 1]);
   const { i18n } = useTranslation();
-  const [searchval, setSearchVal] = useState('');
-  const debValue = useDebounce(searchval, 1000);
+  const [searchVal, setSearchVal] = useState('');
+  const debValue = useDebounce(searchVal, 1000);
   const handleSearchValue = (value) => {
     setSearchVal(value);
   };
@@ -54,6 +54,7 @@ const Masterclasses = () => {
           let enabledCourse = response[0]?.data?.courses.filter((item) => {
             return item.course_status === COURSE_STATUS_NAME[1];
           });
+
           setCourseDetails(enabledCourse);
         }
       }
@@ -109,15 +110,11 @@ const Masterclasses = () => {
             setChipIconText={setChipIconText}
             onSearchValChange={handleSearchValue}
             handleClearSearchValue={handleClearSearchValue}
-            searchval={searchval}
+            searchVal={searchVal}
           />
           <Mentors
             mentorDetails={mentorDetails}
-            courseDetails={courseDetails?.filter(
-              (course) =>
-                course?.course_type === COURSE_TYPE_NAME[2] ||
-                course?.course_type === COURSE_TYPE_NAME[4]
-            )}
+            courseDetails={courseDetails}
             headingText={title}
             viewButtonPosition={'bottom'}
             sliceValue={12}

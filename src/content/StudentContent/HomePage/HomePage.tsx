@@ -8,8 +8,6 @@ import UpComingSession from './UpComingSession';
 import Reviews from './Reviews';
 import FAQs from './FAQs';
 import USPs from './Usp';
-import { useSearchVal } from 'src/hooks/useSearchVal';
-import { useDebounce } from 'src/hooks/useDebounce';
 import { API_SERVICES } from 'src/Services';
 import {
   COURSE_STATUS_NAME,
@@ -71,10 +69,10 @@ const HomePage = () => {
       }
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[1]?.data?.users?.length) {
-          let acteptedMentor = response[1]?.data?.users.filter((item) => {
+          let acceptedMentor = response[1]?.data?.users.filter((item) => {
             return item.user_type === USER_TYPES.mentor && item.status_id === 2;
           });
-          setMentorDetails(acteptedMentor);
+          setMentorDetails(acceptedMentor);
         }
       }
       if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -87,9 +85,9 @@ const HomePage = () => {
           setRatingData(response[3]?.data?.ratings);
         }
       }
-      if(response[4]?.status < HTTP_STATUSES.BAD_REQUEST) {
-        if(response[4]?.data?.bannerManagement?.length){
-          setBannerManagement(response[4]?.data?.bannerManagement) 
+      if (response[4]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        if (response[4]?.data?.bannerManagement?.length) {
+          setBannerManagement(response[4]?.data?.bannerManagement);
         }
       }
     } catch (err) {
@@ -100,10 +98,9 @@ const HomePage = () => {
   }, []);
 
   useEffect(() => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     fetchData();
   }, []);
-
 
   if (loading) {
     return <Loader />;
@@ -111,14 +108,14 @@ const HomePage = () => {
     return (
       <Grid container sx={{ position: 'relative' }}>
         <Grid container direction="column">
-          <HomeBanner bannerManagement={bannerManagement}/>
+          <HomeBanner bannerManagement={bannerManagement} />
         </Grid>
         <Grid
           container
           direction="column"
           style={{ padding: theme.spacing(7, 7) }}
         >
-          <USPs bannerManagement={bannerManagement}/>
+          <USPs bannerManagement={bannerManagement} />
         </Grid>
         <Grid
           container
@@ -129,9 +126,7 @@ const HomePage = () => {
             [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
           }}
         >
-          <UpComingSession
-            courseDetails={courseDetails}
-          />
+          <UpComingSession courseDetails={courseDetails} />
         </Grid>
         <Grid
           container
@@ -145,6 +140,7 @@ const HomePage = () => {
           <Container style={{ maxWidth: '1200px' }}>
             <Mentors
               mentorDetails={mentorDetails}
+              courseDetails={courseDetails}
               headingText={'Learn from industry leading mentors'}
               viewButtonPosition={'top'}
               sliceValue={4}

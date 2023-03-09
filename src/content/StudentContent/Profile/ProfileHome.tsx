@@ -4,6 +4,7 @@ import { Loader } from 'src/components';
 import { useTheme } from '@material-ui/core';
 import { API_SERVICES } from 'src/Services';
 import {
+  COURSE_STATUS_NAME,
   DETECT_LANGUAGE,
   HTTP_STATUSES,
   LANGUAGE_ID,
@@ -33,7 +34,6 @@ const ProfileHome = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { studentDetails, updateStudentInfo } = useStudentInfo();
   const [enrollCourse, setEnrollCourse] = useState<any>([]);
-  const [rating, setRating] = useState<boolean>(false);
   // const { searchValue } = useSearchVal();
   // const debValue = useDebounce(searchValue, 2000)
   const fetchData = useCallback(async () => {
@@ -60,7 +60,10 @@ const ProfileHome = () => {
       ]);
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.courses?.length) {
-          setCourseDetails(response[0]?.data?.courses);
+          let enabledCourse = response[0]?.data?.courses.filter((item) => {
+            return item.course_status === COURSE_STATUS_NAME[1];
+          });
+          setCourseDetails(enabledCourse);
         }
       }
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -152,6 +155,7 @@ const ProfileHome = () => {
         <Container>
           <Mentors
             mentorDetails={mentorDetails}
+            courseDetails={courseDetails}
             headingText={'Learn from industry leading mentors'}
             viewButtonPosition={'top'}
             sliceValue={4}

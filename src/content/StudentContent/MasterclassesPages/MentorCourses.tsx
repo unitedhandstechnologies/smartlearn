@@ -179,7 +179,7 @@ const MentorCreatedCourses = () => {
                         heading={item.category_name}
                         title={item.course_name}
                         subText={item.course_description}
-                        courseLevel={item.course_level_name.trim()}
+                        courseLevel={item?.course_level_name?.trim()}
                         courseLanguage={
                           item.language_id === 1
                             ? 'English'
