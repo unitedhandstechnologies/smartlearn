@@ -34,7 +34,7 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
   const [courses, setCourses] = useState([]);
   const navigateTo = useNavigate();
   const [whistList, setWishList] = useState([]);
-  const userId = getUserId();  
+  const userId = getUserId();
 
   const fetchData = useCallback(async () => {
     try {
@@ -46,8 +46,8 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
           const allCourses = response?.data?.courses;
           const filteredCourse = allCourses?.filter(
             (item) =>
-              item.category_id === courseDetails?.category_id &&
-              item.id !== courseDetails?.id
+              item?.category_id === courseDetails?.category_id &&
+              item?.id !== courseDetails?.id
           );
           setCourses([...filteredCourse]);
         }
@@ -57,10 +57,10 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
     } finally {
       // setLoading(false);
     }
-  }, [DETECT_LANGUAGE[i18n.language],courseDetails]);
+  }, [DETECT_LANGUAGE[i18n.language], courseDetails]);
 
   const onClickCardImage = (rowData) => {
-    navigateTo(`/home/course-details/${rowData.course_name}`, {
+    navigateTo(`/home/course-details/${rowData?.course_name}`, {
       state: { formData: { ...rowData } },
       replace: true
     });
@@ -72,7 +72,7 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
       DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english
     );
     if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-      const getIds = response.data.wishList.map((i) => i.course_id);
+      const getIds = response?.data?.wishList?.map((i) => i?.course_id);
       setWishList(getIds);
     }
   };
@@ -104,7 +104,7 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
       navigateTo('/home/user-login', {
         state: {
           details: { formData: item },
-          route: `/home/course-details/${item.course_name}`
+          route: `/home/course-details/${item?.course_name}`
         },
         replace: true
       });

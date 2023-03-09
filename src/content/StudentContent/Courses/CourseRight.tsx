@@ -92,7 +92,7 @@ const CourseRight = ({ courseRating, averageRating }: CourseRatingProps) => {
                 </Typography>
                 <Rating
                   readOnly={true}
-                  defaultValue={item.course_rating}
+                  defaultValue={item?.course_rating}
                   sx={{ color: '#F2C94C' }}
                 />
               </Grid>

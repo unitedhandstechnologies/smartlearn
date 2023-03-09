@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import {
@@ -182,7 +182,7 @@ const UpComingCourse = ({
     } else {
       setView(6);
     }
-  };  
+  };
 
   const handleApply = () => {
     let filteredCourse = [];
@@ -289,7 +289,7 @@ const UpComingCourse = ({
     } else {
       setCourses([]);
     }
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     getAllWishList();
   }, [courseDetails]);
 
@@ -321,7 +321,7 @@ const UpComingCourse = ({
       //   },
       //   replace: true
       // });
-      toast.error('Please login')
+      toast.error('Please login');
     }
   };
 

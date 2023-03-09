@@ -89,7 +89,7 @@ const PreRecordedDetails = () => {
     }
   }, []);
 
-  lessonData.forEach((element) => (totalDuration += element.duration));
+  lessonData?.forEach((element) => (totalDuration += element.duration));
   if (totalDuration > 60) {
     totalDuration = totalDuration / 60;
   }
@@ -140,21 +140,21 @@ const PreRecordedDetails = () => {
                 lessonData={lessonData}
               />
             </Grid>
-            {courseRating?.length && (
+            {courseRating?.length ? (
               <Grid container item xs={12} md={4} paddingTop={'9%'}>
                 <CourseRight
                   courseRating={courseRating}
                   averageRating={averageRating}
                 />
               </Grid>
-            )}
+            ) : null}
           </Grid>
           {data?.student_enrolled_course_id ? (
             <Grid>
               <RateYourExperience courseDetails={course[0]} />
             </Grid>
           ) : null}
-          {state.showZoomLink && course[0]?.course_mode === 'Online' ? (
+          {state?.showZoomLink && course[0]?.course_mode === 'Online' ? (
             <Grid sx={{ paddingTop: '20px' }}>
               <Typography
                 style={{

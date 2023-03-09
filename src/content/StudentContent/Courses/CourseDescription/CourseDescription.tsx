@@ -65,7 +65,7 @@ const headingProps = {
   headerFontFamily: 'IBM Plex Serif'
 };
 
-const sheduleHeading = {
+const scheduleHeading = {
   color: '#3C414B',
   fontSize: '18px',
   fontWeight: 700
@@ -272,18 +272,18 @@ const CourseDescription = ({
       : [];
   }, [sectionData, lessonData]);
 
-  const courseShudule = [
+  const courseSchedule = [
     {
-      start_title: "Start Date",
+      start_title: 'Start Date',
       start_date: courseDescription?.starting_date,
       end_data: courseDescription?.ending_date,
-      end_title: "End Date"
+      end_title: 'End Date'
     },
     {
-      start_title: "Start Time",
+      start_title: 'Start Time',
       start_date: courseDescription?.starting_time,
       end_data: courseDescription?.ending_time,
-      end_title: "End Time"
+      end_title: 'End Time'
     }
   ];
 
@@ -307,15 +307,19 @@ const CourseDescription = ({
         {courseDescription?.course_type !== 'Recorded Course' && (
           <Grid paddingTop={4} xs={12} md={10}>
             <Heading headingText={'Course schedule'} {...headingProps} />
-            {courseShudule?.map((item, index) => {
+            {courseSchedule?.map((item, index) => {
               return (
                 <Grid container key={index} paddingTop={2}>
                   <Grid container>
                     <Grid item xs={6} md={7}>
-                      <Typography style={sheduleHeading}>{item.start_title}</Typography>
+                      <Typography style={scheduleHeading}>
+                        {item?.start_title}
+                      </Typography>
                     </Grid>
                     <Grid item md={5}>
-                      <Typography style={sheduleHeading}>{item.end_title}</Typography>
+                      <Typography style={scheduleHeading}>
+                        {item?.end_title}
+                      </Typography>
                     </Grid>
                   </Grid>
                   <Grid item xs={6} md={7}>
@@ -324,10 +328,8 @@ const CourseDescription = ({
                         <img src={index > 0 ? TimeImg : CalenderIconImg} />
                       </Grid>
                       <Grid>
-                        <Typography
-                          sx={typographyStyleProps}
-                        >
-                          {item.start_date}
+                        <Typography sx={typographyStyleProps}>
+                          {item?.start_date}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -338,9 +340,8 @@ const CourseDescription = ({
                         <img src={index > 0 ? TimeImg : CalenderIconImg} />
                       </Grid>
                       <Grid>
-                        <Typography
-                          sx={typographyStyleProps}>
-                          {item.end_data}
+                        <Typography sx={typographyStyleProps}>
+                          {item?.end_data}
                         </Typography>
                       </Grid>
                     </Grid>
