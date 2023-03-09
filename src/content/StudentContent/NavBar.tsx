@@ -11,7 +11,8 @@ import {
   ListItemText,
   Divider,
   List,
-  Drawer
+  Drawer,
+  Grid
 } from '@mui/material';
 import { useTheme } from '@material-ui/core/styles';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -20,7 +21,6 @@ import { ButtonComp } from 'src/components';
 import { Outlet, useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import Footer from './Footer';
-import { Grid } from '@material-ui/core';
 import { NavLink as RouterLink } from 'react-router-dom';
 import CloseIcon from '@material-ui/icons/Close';
 import UserCart from './HomePage/userNavBarBox/UserCart';
@@ -31,6 +31,8 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import useStudentInfo from 'src/hooks/useStudentInfo';
 import useCartInfo from 'src/hooks/useCartInfo';
 import { USER_TYPE_ID } from 'src/Config/constant';
+import toast from 'react-hot-toast';
+import { INITIAL_STATE } from 'src/contexts/StudentContext';
 
 const pages = [
   { label: 'Courses', path: 'courses' },
@@ -44,7 +46,7 @@ function NavBar() {
   const [open, setOpen] = React.useState(false);
   const [cartOpen, setCartOpen] = useState(null);
   const [bellOpen, setBellOpen] = useState(null);
-  const { studentDetails } = useStudentInfo();
+  const { studentDetails, updateStudentInfo } = useStudentInfo();
   const { cartDetails } = useCartInfo();
   const [buttonValue, setButtonValue] = useState(-1);
   const theme = useTheme();
@@ -71,7 +73,21 @@ function NavBar() {
     setButtonValue(index);
     setOpen(false);
   };
-
+  const loginNavigation = () => {
+    navigateTo('/home/user-login');
+    setOpen(false);
+  };
+  const profileNavigation = () => {
+    navigateTo('/home/profile');
+    setOpen(false);
+  };
+  const logoutProfile = () => {
+    updateStudentInfo(INITIAL_STATE.studentDetails);
+    localStorage.clear();
+    navigateTo('/home');
+    setOpen(false);
+    toast.success('Profile Logout successfully');
+  };
   return (
     <>
       <AppBar
@@ -200,13 +216,21 @@ function NavBar() {
           )} */}
           {studentDetails?.id !== 0 &&
           studentDetails?.user_type === USER_TYPE_ID.student ? (
-            <UserCart
-              userName={
-                studentDetails?.first_name + ' ' + studentDetails?.last_name
-              }
-              image={studentDetails?.image_url}
-              addToCart={cartDetails}
-            />
+            <>
+              <Box
+                sx={{
+                  [theme.breakpoints.down('sm')]: { display: 'none' }
+                }}
+              >
+                <UserCart
+                  userName={
+                    studentDetails?.first_name + ' ' + studentDetails?.last_name
+                  }
+                  image={studentDetails?.image_url}
+                  addToCart={cartDetails}
+                />
+              </Box>
+            </>
           ) : (
             <Box
               sx={{
@@ -292,79 +316,139 @@ function NavBar() {
               </ListItemButton>
             </ListItem>
           ))}
-          <Box
-            sx={{
-              padding: theme.spacing(0, 1.5)
-            }}
-          >
-            <ListItemButton>
-              <ButtonComp
-                variant="outlined"
-                btnWidth={78}
-                height={40}
-                buttonFontFamily="Switzer"
-                buttonFontSize={theme.MetricsSizes.regular}
-                backgroundColor={theme.Colors.white}
-                buttonTextColor={'#3C78F0'}
-                buttonText={'Login'}
-                onClickButton={() => navigateTo('/home/user-login')}
+          {studentDetails?.id !== 0 &&
+          studentDetails?.user_type === USER_TYPE_ID.student ? (
+            <>
+              <Divider
+                variant="middle"
+                sx={{ margin: 2, backgroundColor: '#3C78F0' }}
               />
-            </ListItemButton>
-            <ListItemButton>
-              <ButtonComp
-                btnWidth={240}
-                height={40}
-                buttonFontFamily="Switzer"
-                buttonFontSize={theme.MetricsSizes.small_xxx}
-                backgroundColor={'#3C78F0'}
-                buttonTextColor={theme.Colors.white}
-                buttonText={'Start learning for free'}
-                onClickButton={() => navigateTo('/home/user-login')}
+              <Button
+                onClick={profileNavigation}
+                style={{
+                  //color: index === buttonValue ? '#78828C' : '#3C414B',
+                  display: 'block',
+                  textTransform: 'none',
+                  fontFamily: 'Switzer',
+                  fontWeight: 500,
+                  fontSize: 16,
+                  paddingLeft: 35
+                }}
+              >
+                {`Profile - ${studentDetails?.first_name} ${studentDetails?.last_name}`}
+              </Button>
+              <Button
+                onClick={logoutProfile}
+                style={{
+                  //color: index === buttonValue ? '#78828C' : '#3C414B',
+                  display: 'block',
+                  textTransform: 'none',
+                  fontFamily: 'Switzer',
+                  fontWeight: 500,
+                  fontSize: 16,
+                  paddingLeft: 35
+                }}
+              >
+                {'Logout'}
+              </Button>
+              {/* <ListItemButton>
+                <ButtonComp
+                  variant="outlined"
+                  btnWidth={240}
+                  height={40}
+                  buttonFontFamily="Switzer"
+                  buttonFontSize={theme.MetricsSizes.small_xxx}
+                  buttonTextColor={'#3C78F0'}
+                  style={{ background: 'none' }}
+                  btnBorderRadius={4}
+                  buttonText={'Carts'}
+                  onClick={handleCartClick}
+                  iconImage={
+                    <img src={CartImg} width={'17.92px'} height={'17.24px'} />
+                  }
+                />
+              </ListItemButton>
+              <CartPopover
+                carts={cartDetails}
+                anchorEl={cartOpen}
+                handleClose={handleCartClose}
+              /> */}
+            </>
+          ) : (
+            <Box
+              sx={{
+                padding: theme.spacing(0, 1.5)
+              }}
+            >
+              <ListItemButton>
+                <ButtonComp
+                  variant="outlined"
+                  btnWidth={78}
+                  height={40}
+                  buttonFontFamily="Switzer"
+                  buttonFontSize={theme.MetricsSizes.regular}
+                  backgroundColor={theme.Colors.white}
+                  buttonTextColor={'#3C78F0'}
+                  buttonText={'Login'}
+                  onClickButton={loginNavigation}
+                />
+              </ListItemButton>
+              <ListItemButton>
+                <ButtonComp
+                  btnWidth={240}
+                  height={40}
+                  buttonFontFamily="Switzer"
+                  buttonFontSize={theme.MetricsSizes.small_xxx}
+                  backgroundColor={'#3C78F0'}
+                  buttonTextColor={theme.Colors.white}
+                  buttonText={'Start learning for free'}
+                  onClickButton={loginNavigation}
+                />
+              </ListItemButton>
+              {/* <ListItemButton>
+                <ButtonComp
+                  variant="outlined"
+                  btnWidth={240}
+                  height={40}
+                  buttonFontFamily="Switzer"
+                  buttonFontSize={theme.MetricsSizes.small_xxx}
+                  buttonTextColor={'#3C78F0'}
+                  style={{ background: 'none' }}
+                  btnBorderRadius={4}
+                  buttonText={'Carts'}
+                  onClick={handleCartClick}
+                  iconImage={
+                    <img src={CartImg} width={'17.92px'} height={'17.24px'} />
+                  }
+                />
+              </ListItemButton>
+              <ListItemButton>
+                <ButtonComp
+                  variant="outlined"
+                  btnWidth={240}
+                  height={40}
+                  buttonFontFamily="Switzer"
+                  buttonFontSize={theme.MetricsSizes.small_xxx}
+                  buttonTextColor={'#3C78F0'}
+                  buttonText={'Notification'}
+                  btnBorderRadius={4}
+                  onClick={handleBellClick}
+                  style={{ background: 'none' }}
+                  iconImage={<NotificationsNoneIcon />}
+                />
+              </ListItemButton> */}
+              <CartPopover
+                carts={cartDetails}
+                anchorEl={cartOpen}
+                handleClose={handleCartClose}
               />
-            </ListItemButton>
-            <ListItemButton>
-              <ButtonComp
-                variant="outlined"
-                btnWidth={240}
-                height={40}
-                buttonFontFamily="Switzer"
-                buttonFontSize={theme.MetricsSizes.small_xxx}
-                buttonTextColor={'#3C78F0'}
-                style={{ background: 'none' }}
-                btnBorderRadius={4}
-                buttonText={'Carts'}
-                onClick={handleCartClick}
-                iconImage={
-                  <img src={CartImg} width={'17.92px'} height={'17.24px'} />
-                }
+              <NotificationPopover
+                notifications={notifications}
+                anchorEl={bellOpen}
+                handleClose={handleBellClose}
               />
-            </ListItemButton>
-            <ListItemButton>
-              <ButtonComp
-                variant="outlined"
-                btnWidth={240}
-                height={40}
-                buttonFontFamily="Switzer"
-                buttonFontSize={theme.MetricsSizes.small_xxx}
-                buttonTextColor={'#3C78F0'}
-                buttonText={'Notification'}
-                btnBorderRadius={4}
-                onClick={handleBellClick}
-                style={{ background: 'none' }}
-                iconImage={<NotificationsNoneIcon />}
-              />
-            </ListItemButton>
-            <CartPopover
-              carts={cartDetails}
-              anchorEl={cartOpen}
-              handleClose={handleCartClose}
-            />
-            <NotificationPopover
-              notifications={notifications}
-              anchorEl={bellOpen}
-              handleClose={handleBellClose}
-            />
-          </Box>
+            </Box>
+          )}
         </List>
       </Drawer>
       <Box>

@@ -292,13 +292,16 @@ const Header = (props: Props) => {
                 </Typography>
               </>
             ) : (
-              <UserCart
-                userName={
-                  userDetails?.first_name + ' ' + userDetails?.last_name
-                }
-                image={userDetails?.image_url}
-                userType={userDetails?.user_type}
-              />
+              <>
+                {/* <LanguageSelection /> */}
+                <UserCart
+                  userName={
+                    userDetails?.first_name + ' ' + userDetails?.last_name
+                  }
+                  image={userDetails?.image_url}
+                  userType={userDetails?.user_type}
+                />
+              </>
             )}
           </Grid>
         </Grid>

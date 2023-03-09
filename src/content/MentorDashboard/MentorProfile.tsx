@@ -74,10 +74,16 @@ const MentorProfile = () => {
     confirmPassword: '',
     code: '91',
     social_information_url: userDetails?.social_information_url || '',
-    social_information_url_2: userDetails?.social_information_url_2 || '',
-    social_information_url_3: userDetails?.social_information_url_3 || '',
+    social_information_url_2:
+      userDetails?.social_information_url_2 === 'undefined'
+        ? ''
+        : userDetails?.social_information_url_2 || '',
+    social_information_url_3:
+      userDetails?.social_information_url_3 === 'undefined'
+        ? ''
+        : userDetails?.social_information_url_3 || '',
     qualification: userDetails?.qualification || '',
-    about: userDetails?.about || ''
+    about: userDetails?.about === 'undefined' ? '' : userDetails?.about || ''
   };
   const edit = useEdit(initialValues);
   const [isEdit, setIsEdit] = useState<number>(0);
