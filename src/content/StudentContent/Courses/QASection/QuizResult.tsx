@@ -1,17 +1,6 @@
-import { Grid, makeStyles, Typography} from '@mui/material';
-import React, { useCallback, useEffect, useState } from 'react';
-import { ButtonComp, Loader } from 'src/components';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import {
-  COURSE_STATUS_ID,
-  DETECT_LANGUAGE,
-  HTTP_STATUSES,
-  LANGUAGE_ID
-} from 'src/Config/constant';
-import toast from 'react-hot-toast';
-import { API_SERVICES } from 'src/Services';
-import { useTranslation } from 'react-i18next';
-import QuestionAndAnswer from './QuestionAndAnswer';
+import { Grid, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { ButtonComp } from 'src/components';
 import CircularProgressWithLabel from 'src/components/CircularProgressWithLabel';
 import { useTheme } from '@material-ui/core';
 import QuizPreview from './QuizPreview';
@@ -19,115 +8,115 @@ import QuizPreview from './QuizPreview';
 type Props = {
   quizDataDetails: any[];
   updateQuizCompleted: any;
-  fetchLevelCompleted:any;
-  onClose:any;
-}
+  fetchLevelCompleted: any;
+  onClose: any;
+};
 
-const QuizResult = ({quizDataDetails,updateQuizCompleted, fetchLevelCompleted, onClose}:Props) => {
-
+const QuizResult = ({
+  quizDataDetails,
+  updateQuizCompleted,
+  fetchLevelCompleted,
+  onClose
+}: Props) => {
   const theme = useTheme();
-  const [previewResult , setPreviewResult ] = useState(false);
+  const [previewResult, setPreviewResult] = useState(false);
 
   const getTotalCorrectAnswers = () => {
     let answerCount = 0;
-        quizDataDetails?.map((item,index)=>{
-            answerCount = answerCount + item.correctCount;
-        });
+    quizDataDetails?.map((item, index) => {
+      answerCount = answerCount + item.correctCount;
+    });
 
-        return answerCount;
- };
+    return answerCount;
+  };
 
- const handleClickPreview = () => {
+  const handleClickPreview = () => {
     setPreviewResult(true);
- };
+  };
 
- const handleClickContinue = () => {
+  const handleClickContinue = () => {
     onClose();
- };
-  
- useEffect(()=>{
-    if(onClose)
-        updateQuizCompleted();
+  };
+
+  useEffect(() => {
+    if (onClose) updateQuizCompleted();
     getTotalCorrectAnswers();
-    fetchLevelCompleted?.fetchLevelCompleted();
- },[]);
+    fetchLevelCompleted();
+  }, []);
 
-   return (
-
-      <Grid container>
-        { !previewResult ? (
-            <>
-        <Grid item xs={12}
+  return (
+    <Grid container>
+      {!previewResult ? (
+        <>
+          <Grid
+            item
+            xs={12}
             sx={{
-                display : 'flex',
-                alignItems : 'center',
-                justifyContent : 'center',
-                paddingTop : '60px'
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingTop: '60px'
             }}
-        >
+          >
             <Typography
-                sx={{
-                    color : theme.Colors.mediumGreenShade,
-                    fontSize : theme.MetricsSizes.regular_xxx,
-                    fontWeight : theme.fontWeight.mediumBold
-                }}
+              sx={{
+                color: theme.Colors.mediumGreenShade,
+                fontSize: theme.MetricsSizes.regular_xxx,
+                fontWeight: theme.fontWeight.mediumBold
+              }}
             >
-                Congratulation !
+              Congratulation !
             </Typography>
-        </Grid>
-        <Grid item xs={12}
+          </Grid>
+          <Grid
+            item
+            xs={12}
             sx={{
-                paddingTop : '40px',
-                display : 'flex',
-                alignItems : 'center',
-                justifyContent : 'center',
+              paddingTop: '40px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
-        >
-        <CircularProgressWithLabel  
-            marks = {getTotalCorrectAnswers()}
-            outOf = {quizDataDetails.length}
-            value = {getTotalCorrectAnswers()/quizDataDetails.length*100}
-        />
-        </Grid>
-        <Grid item xs={12} 
+          >
+            <CircularProgressWithLabel
+              marks={getTotalCorrectAnswers()}
+              outOf={quizDataDetails.length}
+              value={(getTotalCorrectAnswers() / quizDataDetails?.length) * 100}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={12}
             gap={'32px'}
             sx={{
-                display : 'flex',
-                alignItems : 'center',
-                justifyContent : 'center',
-                paddingTop : '40px'
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingTop: '40px'
             }}
-        >
+          >
             <ButtonComp
-                variant = {'outlined'}                
-                backgroundColor = {theme.Colors.whitePure}
-                buttonTextColor= {theme.Colors.primary}
-                buttonText={'Preview quiz results '}
-                onClickButton = {handleClickPreview}
-            >
-            </ButtonComp>
+              variant={'outlined'}
+              backgroundColor={theme.Colors.whitePure}
+              buttonTextColor={theme.Colors.primary}
+              buttonText={'Preview quiz results '}
+              onClickButton={handleClickPreview}
+            ></ButtonComp>
             <ButtonComp
-                 buttonTextColor= {theme.Colors.whitePure}
-                 buttonText={'Continue learning'}
-                 onClickButton = {handleClickContinue}
-            >
-            </ButtonComp>
-            
-        </Grid>
-        </>) : (
-            <QuizPreview 
-            quizDataDetails = {quizDataDetails}
-            setPreviewResult = {setPreviewResult}
-        
-            />)
-}
-        
-      </Grid>
-    );
+              buttonTextColor={theme.Colors.whitePure}
+              buttonText={'Continue learning'}
+              onClickButton={handleClickContinue}
+            ></ButtonComp>
+          </Grid>
+        </>
+      ) : (
+        <QuizPreview
+          quizDataDetails={quizDataDetails}
+          setPreviewResult={setPreviewResult}
+        />
+      )}
+    </Grid>
+  );
 };
 
-
-
-
 export default QuizResult;
- 

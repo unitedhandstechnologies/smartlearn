@@ -1,5 +1,5 @@
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { Grid, makeStyles, styled, Typography, useTheme } from '@material-ui/core';
+import { useEffect, useState } from 'react';
+import { Grid, makeStyles, Typography, useTheme } from '@material-ui/core';
 import { ButtonComp, Loader } from 'src/components';
 import { Document, Page, pdfjs } from 'react-pdf';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -54,7 +54,7 @@ const PdfViewer = ({ pdfFile }) => {
             padding: '0px 48px 0px 32px'
           }}
         >
-         {/*  <Document
+          {/*  <Document
             file={pdfFile}
             onLoadSuccess={onDocumentLoadSuccess}
             onLoadError={console.error}
@@ -102,9 +102,9 @@ const PdfViewer = ({ pdfFile }) => {
               </Grid>
             </Grid>
           </Grid> */}
-          <Grid 
+          <Grid
             style={{
-              margin: "40px 0px",
+              margin: '40px 0px'
             }}
           >
             <Typography
@@ -116,35 +116,37 @@ const PdfViewer = ({ pdfFile }) => {
               Downloadable Resourses:
             </Typography>
             <a
-                href={pdfFile}
-                download
-              >
-            <Grid 
-              container
-              direction='row'
-               style={{
-                marginTop: "16px",
-                padding: "16px",
-                backgroundColor: theme.Colors.whiteLightGrey,
-                justifyContent: 'space-between'
-              }}
+              href={pdfFile}
+              download
+              rel="noopener noreferrer"
+              target={'_blank'}
             >
-             <Grid item>
-                <Typography
+              <Grid
+                container
+                direction="row"
                 style={{
-                  fontSize: theme.MetricsSizes.regular,
-                  color: theme.Colors.blackBerry,
-                  textDecoration: "none",
+                  marginTop: '16px',
+                  padding: '16px',
+                  backgroundColor: theme.Colors.whiteLightGrey,
+                  justifyContent: 'space-between'
                 }}
               >
-               { pdfFile?.split('/')[3] }
-              </Typography>
+                <Grid item>
+                  <Typography
+                    style={{
+                      fontSize: theme.MetricsSizes.regular,
+                      color: theme.Colors.blackBerry,
+                      textDecoration: 'none'
+                    }}
+                  >
+                    {pdfFile?.split('/')[3]}
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <img src={FileDownload} />
+                </Grid>
               </Grid>
-              <Grid item>
-                <img src={FileDownload} />
-              </Grid>
-              
-            </Grid></a>
+            </a>
           </Grid>
         </Grid>
       </>

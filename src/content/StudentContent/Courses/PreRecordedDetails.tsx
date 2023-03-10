@@ -14,11 +14,9 @@ import {
 import { toast } from 'react-hot-toast';
 import RateYourExperience from '../HomePage/RateYourExperience/ExperienceRate';
 import { useTranslation } from 'react-i18next';
-import { ButtonComp, Loader } from 'src/components';
+import { Loader } from 'src/components';
 import RelatedCourses from './RelatedCourses';
 import { BackgroundLine } from 'src/Assets';
-import Quiz from './QASection/Quiz';
-import TakeQuizModal from './TakeQuizModal';
 import LinkIcon from '@mui/icons-material/Link';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
@@ -164,59 +162,59 @@ const PreRecordedDetails = () => {
               <RateYourExperience courseDetails={course[0]} />
             </Grid>
           ) : null}
-          {/* {state?.showZoomLink && course[0]?.course_mode === 'Online' ? ( */}
-          <Grid item sx={{ paddingTop: '20px' }}>
-            <Typography
-              style={{
-                color: '#3C414B',
-                fontWeight: 500,
-                fontSize: 32,
+          {state?.showZoomLink && course[0]?.course_mode === 'Online' ? (
+            <Grid item sx={{ paddingTop: '20px' }}>
+              <Typography
+                style={{
+                  color: '#3C414B',
+                  fontWeight: 500,
+                  fontSize: 32,
 
-                fontFamily: 'IBM Plex Serif'
-              }}
-            >
-              Zoom Link
-            </Typography>
-            <Grid
-              container
-              item
-              xs={12}
-              md={8}
-              sx={{ border: '1px solid lightGrey' }}
-            >
-              <Grid item xs sx={{ alignSelf: 'center', paddingLeft: 1 }}>
-                <Typography
-                  variant="h5"
-                  style={{
-                    fontWeight: 400,
-                    fontSize: theme.MetricsSizes.regular,
-                    color: '#78828C'
-                  }}
-                >
-                  <a
-                    href={data?.meeting_link}
-                    rel="noopener noreferrer"
-                    target={'_blank'}
+                  fontFamily: 'IBM Plex Serif'
+                }}
+              >
+                Zoom Link
+              </Typography>
+              <Grid
+                container
+                item
+                xs={12}
+                md={8}
+                sx={{ border: '1px solid lightGrey' }}
+              >
+                <Grid item xs sx={{ alignSelf: 'center', paddingLeft: 1 }}>
+                  <Typography
+                    variant="h5"
+                    style={{
+                      fontWeight: 400,
+                      fontSize: theme.MetricsSizes.regular,
+                      color: '#78828C'
+                    }}
                   >
-                    {data?.meeting_link}
-                  </a>
-                </Typography>
-              </Grid>
-              <Grid item sx={{ borderLeft: '1px solid lightGrey' }}>
-                <IconButton
-                  style={{
-                    color: isCopied
-                      ? theme.Colors.lightGreen
-                      : theme.Colors.darkGrayishBlue
-                  }}
-                  onClick={() => onClickCopyLink(data?.meeting_link)}
-                >
-                  {isCopied ? <CheckCircleIcon /> : <LinkIcon />}
-                </IconButton>
+                    <a
+                      href={data?.meeting_link}
+                      rel="noopener noreferrer"
+                      target={'_blank'}
+                    >
+                      {data?.meeting_link}
+                    </a>
+                  </Typography>
+                </Grid>
+                <Grid item sx={{ borderLeft: '1px solid lightGrey' }}>
+                  <IconButton
+                    style={{
+                      color: isCopied
+                        ? theme.Colors.lightGreen
+                        : theme.Colors.darkGrayishBlue
+                    }}
+                    onClick={() => onClickCopyLink(data?.meeting_link)}
+                  >
+                    {isCopied ? <CheckCircleIcon /> : <LinkIcon />}
+                  </IconButton>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-          {/* // ) : null} */}
+          ) : null}
         </Container>
         <Grid
           container

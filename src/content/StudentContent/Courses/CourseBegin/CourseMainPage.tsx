@@ -1,26 +1,21 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import {
-  Box,
   Grid,
   makeStyles,
   styled,
   Typography,
   useTheme
 } from '@material-ui/core';
-
 import CourseDetails from 'src/content/StudentContent/Courses/CourseBegin/CourseDetails';
-import toast from 'react-hot-toast';
-import { HTTP_STATUSES, LANGUAGE_ID } from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
-import { ButtonComp, Loader } from 'src/components';
 import ReactPlayer from 'react-player';
 import React from 'react';
-import { number } from 'prop-types';
 import Quiz from 'src/content/StudentContent/Courses/QASection/Quiz';
 import { getUserId } from 'src/Utils';
 import Certificate from 'src/content/StudentContent/Courses/Certificate';
 import QuizUnlockedMessage from './QuizUnlockedMessage';
 import PdfViewer from './PdfViewer';
+import useStudentInfo from 'src/hooks/useStudentInfo';
 
 const useStyles = makeStyles((theme) => ({
   outerContainer: {
@@ -33,20 +28,19 @@ const useStyles = makeStyles((theme) => ({
   },
   playerContainer: {
     padding: '32px',
-    [theme.breakpoints.down('sm')]: { 
-      padding: '10px',
-      }
+    [theme.breakpoints.down('sm')]: {
+      padding: '10px'
+    }
   },
   mainContainer: {
-    paddingLeft: "30px",
+    paddingLeft: '30px',
     paddingTop: '30px',
     paddingBottom: '10px',
-    [theme.breakpoints.down('sm')]: { 
+    [theme.breakpoints.down('sm')]: {
       flexWrap: ' wrap-reverse',
-      paddingLeft: "0px",
-      }
-  },
-  
+      paddingLeft: '0px'
+    }
+  }
 }));
 
 const MainGrid = styled(Grid)(({ theme }) => ({
@@ -82,7 +76,7 @@ const CourseMainPage = ({
   completedQuiz,
   setCompletedQuiz,
   showNotes,
-  setShowNotes,
+  setShowNotes
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -91,7 +85,7 @@ const CourseMainPage = ({
   const [isReady, setIsReady] = React.useState(false);
   const timePaused = useRef(0);
   const userId = getUserId();
-
+  const { studentDetails } = useStudentInfo();
   const handlePlayNext = useCallback(async () => {
     let updateData = {
       played: 1
@@ -108,7 +102,7 @@ const CourseMainPage = ({
           data: updateData
         }
       );
-      fetchLevelCompleted();
+    fetchLevelCompleted();
     let tempVideoDetails = videoDetails;
     tempVideoDetails[videoToPlayIndex.current.sectionNumber][
       videoToPlayIndex.current.lessonNumber
@@ -161,19 +155,21 @@ const CourseMainPage = ({
   const handleOnReady = useCallback(
     (player) => {
       if (!isReady) {
-        if(videoDetails[videoToPlayIndex.current.sectionNumber][
-          videoToPlayIndex.current.lessonNumber
-        ].videoPlayedFraction===1){
-          player.seekTo(0.0);
-        }else{
-          player.seekTo(
+        if (
           videoDetails[videoToPlayIndex.current.sectionNumber][
             videoToPlayIndex.current.lessonNumber
-          ].videoPlayedFraction,
-          'fraction'
-        );
+          ].videoPlayedFraction === 1
+        ) {
+          player.seekTo(0.0);
+        } else {
+          player.seekTo(
+            videoDetails[videoToPlayIndex.current.sectionNumber][
+              videoToPlayIndex.current.lessonNumber
+            ].videoPlayedFraction,
+            'fraction'
+          );
         }
-        
+
         setIsReady(true);
       }
     },
@@ -213,11 +209,7 @@ const CourseMainPage = ({
     setVideoDetails(tempVideoDetails);
   }, []);
 
-  
-
-  useEffect(() => {
-   
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Grid container className={classes.mainContainer}>
@@ -240,68 +232,80 @@ const CourseMainPage = ({
         />
       </Grid>
       <Grid item xs={12} sm={9}>
-        {!testTopic && !showCertificate && (
-          !showNotes ?
-          <>
-            <Typography
-              style={{
-                padding: '0px 32px',
-                fontSize: theme.MetricsSizes.medium
-              }}
-            >
-              {videoToPlayIndex.current.sectionNumber + 1} .{' '}
-              {videoToPlayIndex.current.lessonNumber + 1}{' '}
-              {
+        {!testTopic &&
+          !showCertificate &&
+          (!showNotes ? (
+            <>
+              <Typography
+                style={{
+                  padding: '0px 32px',
+                  fontSize: theme.MetricsSizes.medium
+                }}
+              >
+                {videoToPlayIndex.current.sectionNumber + 1} .{' '}
+                {videoToPlayIndex.current.lessonNumber + 1}{' '}
+                {
+                  videoDetails[videoToPlayIndex.current.sectionNumber][
+                    videoToPlayIndex.current.lessonNumber
+                  ].videoName
+                }
+              </Typography>
+              <Grid className={classes.playerContainer}>
+                <ReactPlayer
+                  ref={(player) => setPlayerRef(player)}
+                  url={videoToPlay}
+                  playing={true}
+                  controls={true}
+                  width={'100%'}
+                  height={'100%'}
+                  onEnded={handlePlayNext}
+                  onReady={handleOnReady}
+                  onPause={handleOnPause}
+                  onProgress={handleVideoProgress}
+                  config={{
+                    file: { attributes: { controlsList: 'nodownload' } }
+                  }}
+                  onContextMenu={(e) => e.preventDefault()}
+                />
+              </Grid>
+            </>
+          ) : (
+            <PdfViewer
+              pdfFile={
                 videoDetails[videoToPlayIndex.current.sectionNumber][
                   videoToPlayIndex.current.lessonNumber
-                ].videoName
+                ].pdfUrl
               }
-            </Typography>
-            <Grid className={classes.playerContainer}>
-              <ReactPlayer
-                ref={(player) => setPlayerRef(player)}
-                url={videoToPlay}
-                playing={true}
-                controls={true}
-                width={'100%'}
-                height={'100%'}
-                onEnded={handlePlayNext}
-                onReady={handleOnReady}
-                onPause={handleOnPause}
-                onProgress={handleVideoProgress}
-                config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-                onContextMenu={e => e.preventDefault()}
-              />
-            </Grid>
-          </> : (   
-            <PdfViewer pdfFile= {videoDetails[videoToPlayIndex.current.sectionNumber][
-              videoToPlayIndex.current.lessonNumber
-            ].pdfUrl} />
-          )
-        ) 
-        }
-        {
-          showQuizUnlockedMsg && completedCourse && !completedQuiz && 
-            <QuizUnlockedMessage 
-              setTestTopic={setTestTopic}
-              setShowQuizUnlockedMsg={setShowQuizUnlockedMsg}
             />
-        }
-        { completedCourse ? (
-          !showCertificate && testTopic &&
-          quizData.length ? (
-            <Quiz courseData={courseData} data={data} fetchLevelCompleted={fetchLevelCompleted} />
-          ) : (
-            testTopic ? 
-            'No Test topic Available' : null
-        )) : testTopic ?
-            'Complete the Course to Unlock Quiz' : null
-        }
-        { showCertificate && !testTopic && completedQuiz ?
-          <Certificate nameOnCertificate="Pranav Shardul"/> 
-          : showCertificate ? 
-            "Complete Course and Quiz to getyour Certificate" : null
-        }
+          ))}
+        {showQuizUnlockedMsg && completedCourse && !completedQuiz && (
+          <QuizUnlockedMessage
+            setTestTopic={setTestTopic}
+            setShowQuizUnlockedMsg={setShowQuizUnlockedMsg}
+          />
+        )}
+        {completedCourse ? (
+          !showCertificate && testTopic && quizData.length ? (
+            <Quiz
+              courseData={courseData}
+              data={data}
+              fetchLevelCompleted={fetchLevelCompleted}
+            />
+          ) : testTopic ? (
+            'No Test topic Available'
+          ) : null
+        ) : testTopic ? (
+          'Complete the Course to Unlock Quiz'
+        ) : null}
+        {showCertificate && !testTopic && completedQuiz ? (
+          <Certificate
+            nameOnCertificate={
+              studentDetails.first_name + ' ' + studentDetails.last_name
+            }
+          />
+        ) : showCertificate ? (
+          'Complete Course and Quiz to get your Certificate'
+        ) : null}
       </Grid>
     </Grid>
   );
