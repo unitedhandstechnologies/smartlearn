@@ -43,13 +43,13 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) =>
       borderBottomLeftRadius: theme.spacing(1)
     },
     contentContainer: {
-      display: 'flex',
+     // display: 'flex',
       borderRadius: theme.spacing(1),
       textTransform: 'capitalize',
       padding: theme.spacing(0.5, 0.25, 0.5, 0.25),
       margin: theme.spacing(0.25),
       width: '100%',
-      [theme.breakpoints.down('xs')]:{ flexDirection: 'column' }
+      //[theme.breakpoints.down('xs')]:{ flexDirection: 'column' }
     },
     title: {
       fontSize: theme.MetricsSizes.regular_x,
@@ -88,7 +88,6 @@ const useStyles = makeStyles<Theme, Props>((theme: Theme) =>
     },
     root: {
       width: '100%',
-     // [theme.breakpoints.down('md')]:{backgroundColor:'red'}
     },
     labelContainer: {
       width: 'auto',
@@ -186,14 +185,14 @@ export const ContentDisplayTiles = React.memo(
                     />
                   }
                   label={
-                    <Grid className={classes.contentContainer}>
+                    <div className={classes.contentContainer}>
                       <Typography className={classes.textStyle}>
                         {item.heading}
                       </Typography>
                       <Typography className={classes.numberStyle}>
                         {`${item.subText}`}
                       </Typography>
-                    </Grid>
+                    </div>
                   }
                   className={classes.tabItemContainer}
                   classes={{

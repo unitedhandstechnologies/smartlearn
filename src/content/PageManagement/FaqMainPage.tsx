@@ -108,8 +108,12 @@ const FaqMainPage = ({
         disableColumnSeparator: true,
         renderCell: ({ row }) => <RichTextInput value={(row?.answer)}
         readOnly={true}
+        valueStyle={{
+          lineHeight: 0,
+        }}
         displayToolBar={"none"} 
-        heightValue = {'auto'} borderSize={'0px'}
+        heightValue = {'auto'}
+        borderSize={'0px'}
          />
       },
     {

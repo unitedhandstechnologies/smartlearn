@@ -31,7 +31,7 @@ const InstructorSettingsTable = ({
 
   const columns = [
     {
-      field: 'name',
+      field: 'user_name',
       headerName: 'Instructor Name',
       flex: 1.5,
       sortable: true,
