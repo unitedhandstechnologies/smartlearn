@@ -229,7 +229,7 @@ export const CourseDetails = ({ purchaseData, onClickRemoveCourse }) => {
                   </Grid>
                   <Grid item>
                     <ButtonComp
-                      buttonText="remove"
+                      buttonText="Remove"
                       backgroundColor={'transparent'}
                       buttonTextColor={'#78828C'}
                       height={theme.MetricsSizes.regular_xx}

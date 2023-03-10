@@ -75,11 +75,11 @@ function StudentsAdministration() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <>
-      <Heading headingText={t('createNewUser')}/>
+      <Heading headingText={t('createNewUser')} />
       <ButtonComp
         btnWidth={84}
         backgroundColor={theme.Colors.primary}

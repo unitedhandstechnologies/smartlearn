@@ -3,7 +3,7 @@ import { NewOrder, Published } from 'src/Assets/Images';
 import { Heading, MuiConfirmModal, MultiSelectChip } from 'src/components';
 import { ContentDisplayTiles } from 'src/components/ContentDisplayTiles';
 import { Loader } from 'src/components';
-import { Box, Divider, makeStyles, Theme, useTheme } from '@material-ui/core';
+import { Box, Divider, useTheme } from '@material-ui/core';
 import EnrollmentTable from './EnrollmentTable';
 import { API_SERVICES } from 'src/Services';
 import {
@@ -80,7 +80,7 @@ const EnrollmentManagement = () => {
     } finally {
       setLoading(false);
     }
-  }, [selectedTab, enrollmentChipFilter]);
+  }, [debValue, selectedTab, enrollmentChipFilter]);
 
   useEffect(() => {
     fetchData();
