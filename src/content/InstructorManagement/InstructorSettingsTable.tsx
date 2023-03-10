@@ -35,9 +35,12 @@ const InstructorSettingsTable = ({
       headerName: 'Instructor Name',
       flex: 1.5,
       sortable: true,
-      disableColumnMenu: true,
-      disableColumnSeparator: true,
-      renderCell: ({ row }) => <ListItemCell title={row?.user_name} />
+      disableColumnMenu: false,
+      renderCell: ({ row }) => (
+        <ListItemCell
+          title={row?.user_name}
+        />
+      )
     },
     {
       field: 'commission',

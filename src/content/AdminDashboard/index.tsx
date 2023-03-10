@@ -21,7 +21,7 @@ import { Grid } from '@mui/material';
 import { UserInfoContext } from 'src/contexts/UserContext';
 import MentorDashboard from '../MentorDashboard';
 
-const COUNT = {
+let COUNT = {
   revenueCountYear: 235000,
   revenueCountMonth: 35000,
   revenueCountWeek: 45000
@@ -101,26 +101,17 @@ function AdminDashboard() {
   const fetchData = useCallback(async () => {
     if (userDetails.user_type === 1 || userDetails.user_type === 2) {
       try {
-        //   const response: any = await Promise.all([
-        //     API_SERVICES.dashboardService.getRevenue(
-        //       GET_FILTER_VALUES['This Week']
-        //     ),
-        //     API_SERVICES.dashboardService.getRevenue(
-        //       GET_FILTER_VALUES['Month']
-        //     ),
-        //   ]);
-        //   if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
-        //     if (response[0]?.data) {
-        //       setRevenueCount(response[0]?.data);
-        //     }
-        //   }
-        //   if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
-        //     if (?.data) {
-        //       setRevenueCount(response[1]?.data);
-        //     }
-        //   }
-        setLoading(true);
         let params: any = {};
+
+        const revenueResponse: any =
+        await API_SERVICES.enrollmentManagementService.getAllBy(
+          params
+        );
+        console.log(revenueResponse, "revenueResponserevenueResponserevenueResponse")
+        console.log(revenueResponse?.data?.TotalAmount, "totalAmount")
+        COUNT.revenueCountMonth = revenueResponse?.data?.TotalAmount
+      
+        setLoading(true);
         if (debValue !== '') {
           params.searchString = debValue;
         }

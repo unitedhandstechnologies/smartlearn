@@ -76,7 +76,7 @@ const FaqMainPage = ({
      {
       field: 'id',
       headerName: t('Page.faqNumber'),
-      flex: 1,
+      flex: 0.5,
       sortable: false,
       disableColumnMenu: true,
       disableColumnSeparator: true,
@@ -87,22 +87,28 @@ const FaqMainPage = ({
     {
       field: 'faq_question',
       headerName: t('Page.faqQuestion'),
-      flex: 2,
+      flex: 1.5,
       sortable: false,
       disableColumnMenu: true,
       disableColumnSeparator: true,
       renderCell: ({ row }) => 
-        <ListItemCell title={row?.question} />
+        <ListItemCell title={row?.question}
+         titleStyle={{
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          width: '100%'
+        }} />
     },
     {
         field: 'faq_answer',
         headerName: t('Page.faqAnswer'),
-        flex: 2,
+        flex: 3,
         sortable: false,
         disableColumnMenu: true,
         disableColumnSeparator: true,
         renderCell: ({ row }) => <RichTextInput value={(row?.answer)}
-        readOnly={true} displayToolBar={"none"} 
+        readOnly={true}
+        displayToolBar={"none"} 
         heightValue = {'auto'} borderSize={'0px'}
          />
       },

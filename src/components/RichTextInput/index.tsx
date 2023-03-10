@@ -22,7 +22,7 @@ const useStyles = makeStyles<Theme, StyleProps>((theme) => ({
       fontSize: '18px',
       fontWeight: 400,
       fontFamily: 'Switzer',
-      minHeight: ({ heightValue }) => (heightValue ? heightValue : null)
+      height: ({ heightValue }) => (heightValue ? heightValue : null),
     },
     '& .ql-toolbar.ql-snow': {
       display: ({ displayValue }) => (displayValue ? displayValue : '')
@@ -53,7 +53,8 @@ export const RichTextInput = ({
   paddingValue,
   labelName,
   label,
-  textColor
+  textColor,
+  valueStyle
 }: {
   onChange?: any;
   value: any;
@@ -66,6 +67,7 @@ export const RichTextInput = ({
   label?: string;
   labelName?:string;
   textColor?:string;
+  valueStyle?: React.CSSProperties;
 }) => {
   const props = {
     displayValue: displayToolBar,
@@ -80,7 +82,7 @@ export const RichTextInput = ({
 
   const icons = Quill.import('ui/icons');
   return (
-    <div className={classes.editorRoot}>
+    <div className={classes.editorRoot} style={{...valueStyle}}>
       <label style={{ color: theme.Colors.primary, fontSize: 14 }}>
         {labelName}
       </label>
