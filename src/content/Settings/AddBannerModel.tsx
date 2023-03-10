@@ -46,7 +46,7 @@ const AddBannerModel = ({
     return { name, description };
   };
   const initialValues = {
-    banner_type: 1,
+    description: rowData?.banner?.description ?? '',
     banner_status: rowData?.banner?.banner_status ?? 1,
     banner_image: rowData?.banner?.banner_image ?? '',
     engBannerName: getLanguageData(LANGUAGE_ID.english).name || '',
@@ -128,7 +128,7 @@ const AddBannerModel = ({
     try {
       let uData = {
         banner_status: edit.getValue('banner_status'),
-        banner_type: edit.getValue('banner_type'),
+        description: edit.getValue('description'),
         banner_image: edit.getValue('banner_image'),
         banner_details: [
           {

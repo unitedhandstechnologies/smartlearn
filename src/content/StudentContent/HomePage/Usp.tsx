@@ -127,9 +127,7 @@ const USPs = ({ bannerManagement }) => {
                               }
                             }}
                           >
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua
+                           {item.description}
                           </Typography>
                           <ButtonComp
                             buttonText={'Start learning'}

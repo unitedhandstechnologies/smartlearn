@@ -4,6 +4,7 @@ import { Loader } from 'src/components';
 import { useTheme } from '@material-ui/core';
 import { API_SERVICES } from 'src/Services';
 import {
+  COURSE_STATUS_ID,
   COURSE_STATUS_NAME,
   DETECT_LANGUAGE,
   HTTP_STATUSES,
@@ -76,7 +77,10 @@ const ProfileHome = () => {
       }
       if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[2]?.data?.faq?.length) {
-          setFaqDetails(response[2]?.data?.faq);
+          let enabledFaq = response[2]?.data?.faq.filter((item) => {
+            return item.status === COURSE_STATUS_ID.enabled;
+          });
+          setFaqDetails(enabledFaq);
         }
       }
       if (response[3]?.status < HTTP_STATUSES.BAD_REQUEST) {

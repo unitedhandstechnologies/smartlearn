@@ -88,6 +88,24 @@ const BannerTable = ({
       renderCell: ({ row }) => <ListItemCell title={row?.banner_name} />
     },
     {
+      field: 'description',
+      headerName: t('Page.bannerName'),
+      flex: 2,
+      sortable: true,
+      disableColumnMenu: true,
+      disableColumnSeparator: true,
+      renderCell: ({ row }) => (
+        <ListItemCell
+          title={row?.description}
+          titleStyle={{
+            overflow: 'hidden',
+            width: '100%',
+            textOverflow: 'ellipsis'
+          }}
+        />
+      )
+    },
+    {
       field: 'status_id',
       headerName: t('course.status'),
       flex: 1,

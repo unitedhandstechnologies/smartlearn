@@ -10,6 +10,7 @@ import FAQs from './FAQs';
 import USPs from './Usp';
 import { API_SERVICES } from 'src/Services';
 import {
+  COURSE_STATUS_ID,
   COURSE_STATUS_NAME,
   DETECT_LANGUAGE,
   HTTP_STATUSES,
@@ -77,7 +78,10 @@ const HomePage = () => {
       }
       if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[2]?.data?.faq?.length) {
-          setFaqDetails(response[2]?.data?.faq);
+          let enabledFaq = response[2]?.data?.faq.filter((item) => {
+            return item.status === COURSE_STATUS_ID.enabled;
+          });
+          setFaqDetails(enabledFaq);
         }
       }
       if (response[3]?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -87,7 +91,10 @@ const HomePage = () => {
       }
       if (response[4]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[4]?.data?.bannerManagement?.length) {
-          setBannerManagement(response[4]?.data?.bannerManagement);
+          let enabledBannerManagement = response[4]?.data?.bannerManagement.filter((item) => {
+            return item.banner_status === COURSE_STATUS_ID.enabled
+          })
+          setBannerManagement(enabledBannerManagement);
         }
       }
     } catch (err) {

@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { Grid, Container } from '@mui/material';
-import { useTheme, Typography } from '@material-ui/core';
+import { useTheme, Typography, IconButton } from '@material-ui/core';
 import CourseDescription from './CourseDescription/CourseDescription';
 import PreRecordedCourses from './PreRecordedCourses';
 import CourseRight from './CourseRight';
@@ -19,6 +19,8 @@ import RelatedCourses from './RelatedCourses';
 import { BackgroundLine } from 'src/Assets';
 import Quiz from './QASection/Quiz';
 import TakeQuizModal from './TakeQuizModal';
+import LinkIcon from '@mui/icons-material/Link';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const PreRecordedDetails = () => {
   const theme = useTheme();
@@ -31,7 +33,7 @@ const PreRecordedDetails = () => {
   const [lessonData, setLessonData] = useState<any>([]);
   const [sectionData, setSectionData] = useState<any[]>([]);
   const [course, setCourse] = useState<any>([]);
-
+  const [isCopied, setIsCopied] = useState<boolean>(false);
   let data = { ...state?.formData };
   let totalDuration = 0;
   const fetchData = useCallback(async () => {
@@ -103,6 +105,11 @@ const PreRecordedDetails = () => {
 
   window.scrollTo(0, 0);
 
+  const onClickCopyLink = (link) => {
+    navigator.clipboard.writeText(link);
+    setIsCopied(!isCopied);
+  };
+
   if (loading) {
     return <Loader />;
   } else {
@@ -157,18 +164,27 @@ const PreRecordedDetails = () => {
               <RateYourExperience courseDetails={course[0]} />
             </Grid>
           ) : null}
-          {state?.showZoomLink && course[0]?.course_mode === 'Online' ? (
-            <Grid sx={{ paddingTop: '20px' }}>
-              <Typography
-                style={{
-                  color: '#3C414B',
-                  fontWeight: 500,
-                  fontSize: 32,
+          {/* {state?.showZoomLink && course[0]?.course_mode === 'Online' ? ( */}
+          <Grid item sx={{ paddingTop: '20px' }}>
+            <Typography
+              style={{
+                color: '#3C414B',
+                fontWeight: 500,
+                fontSize: 32,
 
-                  fontFamily: 'IBM Plex Serif'
-                }}
-              >
-                Zoom Link
+                fontFamily: 'IBM Plex Serif'
+              }}
+            >
+              Zoom Link
+            </Typography>
+            <Grid
+              container
+              item
+              xs={12}
+              md={8}
+              sx={{ border: '1px solid lightGrey' }}
+            >
+              <Grid item xs sx={{ alignSelf: 'center', paddingLeft: 1 }}>
                 <Typography
                   variant="h5"
                   style={{
@@ -185,9 +201,22 @@ const PreRecordedDetails = () => {
                     {data?.meeting_link}
                   </a>
                 </Typography>
-              </Typography>
+              </Grid>
+              <Grid item sx={{ borderLeft: '1px solid lightGrey' }}>
+                <IconButton
+                  style={{
+                    color: isCopied
+                      ? theme.Colors.lightGreen
+                      : theme.Colors.darkGrayishBlue
+                  }}
+                  onClick={() => onClickCopyLink(data?.meeting_link)}
+                >
+                  {isCopied ? <CheckCircleIcon /> : <LinkIcon />}
+                </IconButton>
+              </Grid>
             </Grid>
-          ) : null}          
+          </Grid>
+          {/* // ) : null} */}
         </Container>
         <Grid
           container
@@ -199,7 +228,7 @@ const PreRecordedDetails = () => {
           }}
         >
           <RelatedCourses courseDetails={data} />
-        </Grid>        
+        </Grid>
       </Grid>
     );
   }

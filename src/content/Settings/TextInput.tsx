@@ -36,7 +36,7 @@ export const TextInput = ({
   const imageError = error && !edit.allFilled('banner_image');
 
   const nameError = error && !getBannerName;
-  const descriptionError = error && !getBannerDescription;
+  const descriptionError = error && !edit.allFilled('description');
 
   const removeBanner = () => {
     setIsMissingImageEntry(true);
@@ -156,17 +156,21 @@ export const TextInput = ({
               marginTop: 10
             }}
             labelColor={theme.Colors.primary}
-            value={getBannerDescription}
+            value = {edit.getValue('description')}
             onChange={(e) => {
-              let value = capitalizeFirstLetter(e.target.value);
-              if (tabValue === 1) {
-                edit.update({ engBannerDes: value });
-              } else if (tabValue === 2) {
-                edit.update({ hinBannerDes: value });
-              } else {
-                edit.update({ gujBannerDec: value });
-              }
+              edit.update({description: capitalizeFirstLetter(e.target.value)})
             }}
+            // value={getBannerDescription}
+            // onChange={(e) => {
+            //   let value = capitalizeFirstLetter(e.target.value);
+            //   if (tabValue === 1) {
+            //     edit.update({ engBannerDes: value });
+            //   } else if (tabValue === 2) {
+            //     edit.update({ hinBannerDes: value });
+            //   } else {
+            //     edit.update({ gujBannerDec: value });
+            //   }
+            // }}
             isError={descriptionError}
             helperText={descriptionError && 'Please enter the description'}
             required
