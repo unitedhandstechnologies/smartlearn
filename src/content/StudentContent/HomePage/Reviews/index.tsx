@@ -82,7 +82,7 @@ const Reviews = ({ ratingData }) => {
             return (
               <Grid item xs={12} sm={6} key={index}>
                 <ReviewBox
-                  name={item?.mentor_name}
+                  name={item?.user_name}
                   subText={item?.course_name}
                   review={item?.command}
                   imgUrl={item?.user_image}

@@ -29,6 +29,7 @@ import {
   LANGUAGE_ID
 } from 'src/Config/constant';
 import { toast } from 'react-hot-toast';
+
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -451,7 +452,7 @@ const UpComingCourse = ({
               })
             : null}
         </Grid>
-        {courses.length > 6 && (
+        {courses?.length > 6 && (
           <Grid item>
             <ButtonComp
               style={{ border: '1.5px solid #3C78F0' }}

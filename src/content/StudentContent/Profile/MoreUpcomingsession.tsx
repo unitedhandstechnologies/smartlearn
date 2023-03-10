@@ -230,7 +230,7 @@ const MoreUpcomingSession = ({ courseDetails = [] }: CourseProps) => {
             : null}
         </Grid>
         <Grid item>
-          {getCourses.length > 6 && (
+          {getCourses?.length > 6 && (
             <ButtonComp
               style={{ border: '1.5px solid #3C78F0' }}
               variant="outlined"

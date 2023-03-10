@@ -42,15 +42,11 @@ const ReviewComp = ({ review, show, currentIndex }) => {
                     }}
                   >
                     <ReviewBox
-                      imgUrl={item.img}
-                      name={item.name}
-                      subText={item.subText}
+                      imgUrl={item?.img}
+                      name={item?.name}
+                      subText={item?.subText}
                       rating={true}
-                      review={item.review}
-                      sx={undefined}
-                      courseIcon={undefined}
-                      subTextStyle={undefined}
-                      nameStyle={undefined}
+                      review={item?.review}
                       spacingRating={3}
                     />
                   </Grid>

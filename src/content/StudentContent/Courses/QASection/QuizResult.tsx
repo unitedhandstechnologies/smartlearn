@@ -10,7 +10,7 @@ type Props = {
   updateQuizCompleted: any;
   fetchLevelCompleted: any;
   onClose: any;
-  fromLibrary:boolean;
+  fromLibrary: boolean;
 };
 
 const QuizResult = ({
@@ -38,15 +38,15 @@ const QuizResult = ({
 
   const handleClickContinue = () => {
     onClose();
- };
-  
- useEffect(()=>{
-    if(!fromLibrary){
-        updateQuizCompleted();    
-        fetchLevelCompleted();
-    };
+  };
+
+  useEffect(() => {
+    if (!fromLibrary) {
+      updateQuizCompleted();
+      fetchLevelCompleted();
+    }
     getTotalCorrectAnswers();
- },[]);
+  }, []);
 
   return (
     <Grid container>
@@ -84,7 +84,7 @@ const QuizResult = ({
           >
             <CircularProgressWithLabel
               marks={getTotalCorrectAnswers()}
-              outOf={quizDataDetails.length}
+              outOf={quizDataDetails?.length}
               value={(getTotalCorrectAnswers() / quizDataDetails?.length) * 100}
             />
           </Grid>

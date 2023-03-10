@@ -1,26 +1,17 @@
 import { makeStyles, useTheme } from '@material-ui/core';
-import {
-  Grid,
-  Typography,
-  InputBase,
-  InputAdornment,
-  IconButton
-} from '@mui/material';
-import React, { useEffect, useMemo, useState } from 'react';
+import { Grid, Typography } from '@mui/material';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   ArrowNext,
   BarChartFillIcon,
-  BarIcon,
   BasicStockIcon,
   BeginnerIcon,
   IntermediateIcon,
   Language,
-  LineBarIcon,
-  SearchIconImg
+  LineBarIcon
 } from 'src/Assets';
-import { ButtonComp, Heading, MuiCardComp } from 'src/components';
-import { ChipComp } from 'src/components/MultiSelectChip/ChipComp';
+import { ButtonComp, MuiCardComp } from 'src/components';
 import { COURSE_TYPE_NAME } from 'src/Config/constant';
 import ChipIconcomp from './ChipIconcomp';
 import ChipMenu from './ChipMenu';
@@ -220,7 +211,7 @@ const LearnAtUrPace = ({
         <Typography
           sx={{
             fontSize: '40px',
-            fontWenghit: theme.fontWeight.medium,
+            fontWeight: theme.fontWeight.medium,
             color: theme.Colors.blackBerry,
             lineHeight: '48px',
             fontFamily: 'IBM Plex Serif',
@@ -234,7 +225,7 @@ const LearnAtUrPace = ({
         <Typography
           sx={{
             fontSize: '40px',
-            fontWenghit: theme.fontWeight.medium,
+            fontWeight: theme.fontWeight.medium,
             color: theme.Colors.blackBerry,
             lineHeight: '48px',
             padding: '0px 0px 20px 0px',
@@ -295,8 +286,8 @@ const LearnAtUrPace = ({
           }
         }}
       >
-        {getFilterCourse.length
-          ? getFilterCourse.slice(0, view).map((item, index) => {
+        {getFilterCourse?.length
+          ? getFilterCourse?.slice(0, view)?.map((item, index) => {
               return (
                 <Grid
                   key={index}
@@ -314,7 +305,7 @@ const LearnAtUrPace = ({
                     heading={item.category_name}
                     title={item.course_name}
                     subText={item.course_description}
-                    courseLevel={item.course_level_name.trim()}
+                    courseLevel={item?.course_level_name?.trim()}
                     courseLanguage={
                       item.language_id === 1
                         ? 'English'
@@ -340,7 +331,7 @@ const LearnAtUrPace = ({
             })
           : null}
       </Grid>
-      {getFilterCourse.length > 6 && (
+      {getFilterCourse?.length > 6 && (
         <Grid item>
           <ButtonComp
             style={{ border: '1.5px solid #3C78F0' }}

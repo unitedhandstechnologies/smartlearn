@@ -1,7 +1,6 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import { Grid, Box } from '@mui/material';
 import { Container } from '@material-ui/core';
-import { Loader } from 'src/components';
 import UpComingCourse from './UpComingCourse';
 import LearnAtUrPace from './LearnAtUrPace';
 import { API_SERVICES } from 'src/Services';
@@ -13,7 +12,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-hot-toast';
 import { useDebounce } from 'src/hooks/useDebounce';
-import CourseBanner from './CourseBanner';
 
 const Courses = () => {
   const [courseDetails, setCourseDetails] = useState([]);
@@ -58,7 +56,7 @@ const Courses = () => {
   }, [DETECT_LANGUAGE[i18n.language], debValue]);
 
   useEffect(() => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     fetchData();
   }, [fetchData]);
 
