@@ -14,9 +14,11 @@ import {
 import { toast } from 'react-hot-toast';
 import RateYourExperience from '../HomePage/RateYourExperience/ExperienceRate';
 import { useTranslation } from 'react-i18next';
-import { Loader } from 'src/components';
+import { ButtonComp, Loader } from 'src/components';
 import RelatedCourses from './RelatedCourses';
 import { BackgroundLine } from 'src/Assets';
+import Quiz from './QASection/Quiz';
+import TakeQuizModal from './TakeQuizModal';
 
 const PreRecordedDetails = () => {
   const theme = useTheme();
@@ -29,6 +31,7 @@ const PreRecordedDetails = () => {
   const [lessonData, setLessonData] = useState<any>([]);
   const [sectionData, setSectionData] = useState<any[]>([]);
   const [course, setCourse] = useState<any>([]);
+
   let data = { ...state?.formData };
   let totalDuration = 0;
   const fetchData = useCallback(async () => {
@@ -184,7 +187,7 @@ const PreRecordedDetails = () => {
                 </Typography>
               </Typography>
             </Grid>
-          ) : null}
+          ) : null}          
         </Container>
         <Grid
           container
@@ -196,7 +199,7 @@ const PreRecordedDetails = () => {
           }}
         >
           <RelatedCourses courseDetails={data} />
-        </Grid>
+        </Grid>        
       </Grid>
     );
   }

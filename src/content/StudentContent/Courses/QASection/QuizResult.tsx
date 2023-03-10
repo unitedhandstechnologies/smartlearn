@@ -20,9 +20,10 @@ type Props = {
   quizDataDetails: any[];
   updateQuizCompleted: any;
   fetchLevelCompleted:any;
+  onClose:any;
 }
 
-const QuizResult = ({quizDataDetails,updateQuizCompleted, fetchLevelCompleted}:Props) => {
+const QuizResult = ({quizDataDetails,updateQuizCompleted, fetchLevelCompleted, onClose}:Props) => {
 
   const theme = useTheme();
   const [previewResult , setPreviewResult ] = useState(false);
@@ -41,13 +42,14 @@ const QuizResult = ({quizDataDetails,updateQuizCompleted, fetchLevelCompleted}:P
  };
 
  const handleClickContinue = () => {
-   
+    onClose();
  };
   
  useEffect(()=>{
-    updateQuizCompleted();
+    if(onClose)
+        updateQuizCompleted();
     getTotalCorrectAnswers();
-    fetchLevelCompleted();
+    fetchLevelCompleted?.fetchLevelCompleted();
  },[]);
 
    return (

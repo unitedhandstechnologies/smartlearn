@@ -15,12 +15,14 @@ import QuestionAndAnswer from './QuestionAndAnswer';
 import QuizResult from './QuizResult';
 
 type Props = {
-  courseData: any;
-  data: any;
-  fetchLevelCompleted:any;
+  courseData?: any;
+  data?: any;
+  fetchLevelCompleted?:any;  
+  courseDataFromLib?:any;
+  onClose?:any;
 }
 
-const Quiz = ({courseData, data, fetchLevelCompleted}:Props) => {
+const Quiz = ({courseData, data, fetchLevelCompleted, courseDataFromLib,onClose}:Props) => {
 
   const theme = useTheme();
   const [ questionToDisplayIndex , setQuestionToDisplayIndex ] = useState(0);
@@ -29,9 +31,17 @@ const Quiz = ({courseData, data, fetchLevelCompleted}:Props) => {
   const [ quizResult , setQuizResult ] = useState(false)
   const { i18n } = useTranslation();
 
-const fetchData = useCallback(async() => {
-  let id = courseData.course_language[0].course_id;
-  let courseName = courseData.course_language[0].course_name;
+  const fetchData = useCallback(async() => {
+    console.log("courseData inside Quiz",courseDataFromLib);
+    let id,courseName;
+    if(courseData){
+      id = courseData?.course_language[0]?.course_id;
+      courseName = courseData?.course_language[0]?.course_name;
+    }else{
+      id = courseDataFromLib?.course_id;
+      courseName = courseDataFromLib?.course_name;
+    };
+    
   try {      
     const response: any = await Promise.all([
       API_SERVICES.quizService.getAllQuiz(LANGUAGE_ID.english,id)    
@@ -63,7 +73,7 @@ const fetchData = useCallback(async() => {
 },[] );
 
 const updateQuizCompleted = useCallback(async()=>{
-  try{
+  if(courseData){try{
     let updateData = {
       quiz_completed: 1,
     }
@@ -77,7 +87,7 @@ const updateQuizCompleted = useCallback(async()=>{
         
   }catch(e){
 
-  }
+  }}
 
 
 },[]);
@@ -105,6 +115,7 @@ if (loading) {
               quizDataDetails={quizDataDetails}
               updateQuizCompleted={updateQuizCompleted}
               fetchLevelCompleted={fetchLevelCompleted}
+              onClose={onClose}
             />
         )}
       </Grid>
