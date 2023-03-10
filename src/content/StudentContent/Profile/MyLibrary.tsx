@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router';
 import useWishlistInfo from 'src/hooks/useWishlistInfo';
 import { getUserId } from 'src/Utils';
 import { useTranslation } from 'react-i18next';
+import TakeQuizModal from '../Courses/TakeQuizModal';
 
 const useStyles = makeStyles((theme) => ({
   eachItem: {
@@ -28,6 +29,7 @@ const MyLibrary = ({ enrollCourse }) => {
   const navigateTo = useNavigate();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
   const { wishlistDetails, updateWishlistInfo } = useWishlistInfo();
+  const [quizOpen,setQuizOpen]=useState<any>({open:false})
   let wishlistIds = [];
   wishlistDetails?.filter((item) => wishlistIds.push(item.id));
 
@@ -72,6 +74,13 @@ const MyLibrary = ({ enrollCourse }) => {
       },
       replace: true
     });
+  };
+
+  const handleClickTakeQuiz = (course)=>{
+    setQuizOpen({
+      open: true,
+      courseDataFromLib: course,
+    })
   };
 
   return (
@@ -152,6 +161,8 @@ const MyLibrary = ({ enrollCourse }) => {
                   item={item}
                   backBtnTxt={'All Courses'}
                   backBtnRoute={'/home/profilehome'}
+                  neededQuiz={true}
+                  handleTakeQuiz={() =>handleClickTakeQuiz(item)}
                 />
               </Grid>
             );
@@ -175,8 +186,13 @@ const MyLibrary = ({ enrollCourse }) => {
       {chipValue[0] === FILTER_CHIPS[0] ? (
         <ContinueLearning enrollCourse={enrollCourse} />
       ) : null}
-      {/* <CompletedCourse /> */}
-      {/* <WishListCourse /> */}
+
+      {quizOpen.open && (
+            <TakeQuizModal
+                onClose={() => setQuizOpen({ open: false })}
+                {...quizOpen}
+            />
+      )}
     </Grid>
   );
 };
