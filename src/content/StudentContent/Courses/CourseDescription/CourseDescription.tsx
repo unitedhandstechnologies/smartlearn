@@ -83,7 +83,6 @@ const CourseDescription = ({
   sectionData,
   lessonData
 }: CourseDescriptionProps) => {
-  console.log(courseDescription, 'courseDescription');
   const days = [
     'Sunday',
     'Monday',
@@ -294,6 +293,21 @@ const CourseDescription = ({
       : [];
   }, [sectionData, lessonData]);
 
+  const getTime = (time) => {
+    let hours = time?.split(':')[0];
+    let min = time?.split(':')[1];
+    let currentTime;
+    if (hours >= 0 && hours <= 24) {
+      let AMorPM = 'AM';
+      if (hours > 12) {
+        AMorPM = 'PM';
+      }
+      hours = hours % 12;
+      currentTime = hours + ':' + min + ' ' + AMorPM;
+    }
+    return currentTime;
+  };
+
   const courseSchedule = [
     {
       start_title: 'Start Date',
@@ -303,8 +317,8 @@ const CourseDescription = ({
     },
     {
       start_title: 'Start Time',
-      start_date: courseDescription?.starting_time,
-      end_data: courseDescription?.ending_time,
+      start_date: getTime(courseDescription?.starting_time),
+      end_data: getTime(courseDescription?.ending_time),
       end_title: 'End Time'
     }
   ];
