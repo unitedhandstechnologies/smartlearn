@@ -54,7 +54,7 @@ const PdfViewer = ({ pdfFile }) => {
             padding: '0px 48px 0px 32px'
           }}
         >
-          <Document
+         {/*  <Document
             file={pdfFile}
             onLoadSuccess={onDocumentLoadSuccess}
             onLoadError={console.error}
@@ -101,7 +101,7 @@ const PdfViewer = ({ pdfFile }) => {
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
+          </Grid> */}
           <Grid 
             style={{
               margin: "40px 0px",
