@@ -10,13 +10,15 @@ type Props = {
   updateQuizCompleted: any;
   fetchLevelCompleted: any;
   onClose: any;
+  fromLibrary:boolean;
 };
 
 const QuizResult = ({
   quizDataDetails,
   updateQuizCompleted,
   fetchLevelCompleted,
-  onClose
+  onClose,
+  fromLibrary
 }: Props) => {
   const theme = useTheme();
   const [previewResult, setPreviewResult] = useState(false);
@@ -36,13 +38,15 @@ const QuizResult = ({
 
   const handleClickContinue = () => {
     onClose();
-  };
-
-  useEffect(() => {
-    if (onClose) updateQuizCompleted();
+ };
+  
+ useEffect(()=>{
+    if(!fromLibrary){
+        updateQuizCompleted();    
+        fetchLevelCompleted();
+    };
     getTotalCorrectAnswers();
-    fetchLevelCompleted();
-  }, []);
+ },[]);
 
   return (
     <Grid container>

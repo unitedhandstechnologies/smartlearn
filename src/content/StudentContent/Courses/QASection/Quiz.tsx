@@ -20,9 +20,10 @@ type Props = {
   fetchLevelCompleted?:any;  
   courseDataFromLib?:any;
   onClose?:any;
+  fromLibrary?:boolean;
 }
 
-const Quiz = ({courseData, data, fetchLevelCompleted, courseDataFromLib,onClose}:Props) => {
+const Quiz = ({courseData, data, fetchLevelCompleted, courseDataFromLib,onClose, fromLibrary}:Props) => {
 
   const theme = useTheme();
   const [ questionToDisplayIndex , setQuestionToDisplayIndex ] = useState(0);
@@ -34,7 +35,7 @@ const Quiz = ({courseData, data, fetchLevelCompleted, courseDataFromLib,onClose}
   const fetchData = useCallback(async() => {
     console.log("courseData inside Quiz",courseDataFromLib);
     let id,courseName;
-    if(courseData){
+    if(!fromLibrary){
       id = courseData?.course_language[0]?.course_id;
       courseName = courseData?.course_language[0]?.course_name;
     }else{
@@ -116,6 +117,7 @@ if (loading) {
               updateQuizCompleted={updateQuizCompleted}
               fetchLevelCompleted={fetchLevelCompleted}
               onClose={onClose}
+              fromLibrary={fromLibrary}
             />
         )}
       </Grid>

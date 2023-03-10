@@ -30,7 +30,7 @@ const TakeQuizModal = (props: Props) => {
   const renderDialogContent = () => {    
     return (
       <Grid>
-        <Quiz  courseDataFromLib={courseDataFromLib} onClose={onClose} />
+        <Quiz  courseDataFromLib={courseDataFromLib} onClose={onClose} fromLibrary={true} />
       </Grid>
     );
   };
