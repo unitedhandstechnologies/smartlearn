@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Grid, Typography } from '@material-ui/core';
 import { CheckStatus } from 'src/components';
 import MuiTable from 'src/components/MuiTable';
@@ -6,9 +6,15 @@ import { ListItemCell } from 'src/components';
 import { getDateFormat } from 'src/Utils';
 import { useTranslation } from 'react-i18next';
 import { DeleteOutlineSharp, EditOutlined, ListAlt } from '@material-ui/icons';
-import { HTTP_STATUSES, LANGUAGE_ID, LANGUAGE_NAME } from 'src/Config/constant';
+import {
+  HTTP_STATUSES,
+  LANGUAGE_ID,
+  LANGUAGE_NAME,
+  USER_TYPE_ID
+} from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
 import { toast } from 'react-hot-toast';
+import { UserInfoContext } from 'src/contexts/UserContext';
 
 type Props = {
   onClickActionButton?: (row?: any, selIds?: number[]) => void;
@@ -28,6 +34,7 @@ const InstructorReportsTable = ({
 }: Props) => {
   const { t } = useTranslation();
   const [rowItems, setRowItems] = useState([]);
+  const { userDetails } = useContext(UserInfoContext);
 
   const columns = [
     {
@@ -86,7 +93,7 @@ const InstructorReportsTable = ({
           </Grid>
         );
       }
-     }
+    }
   ];
 
   const renderRowActions = () => {
@@ -124,6 +131,9 @@ const InstructorReportsTable = ({
       rows={rowItems}
       autoHeight={true}
       getRowActions={renderRowActions}
+      // getRowActions={
+      //   userDetails.user_type === USER_TYPE_ID.mentors ? null : renderRowActions
+      // }
     />
   );
 };
