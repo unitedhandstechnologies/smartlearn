@@ -143,7 +143,7 @@ export const TextInput = ({
           required
         />
       </Grid>
-      <Grid container item>
+      <Grid container item >
         <Grid item xs>
           <TextInputComponent
             multiline={true}
@@ -177,7 +177,9 @@ export const TextInput = ({
           />
         </Grid>
 
-        <Grid item xs>
+        <Grid item xs 
+        style={{paddingLeft: 15, paddingTop:10}}
+        >
           <Typography
             style={{
               color: theme.Colors.primary,
