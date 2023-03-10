@@ -57,13 +57,14 @@ const RateYourExperience = ({ courseDetails }) => {
         {
           data: userData,
           successMessage: 'Ratings submitted successfully!',
-          failureMessage: 'Error:Already Exist Value'
+          failureMessage: 'Ratings already Given'
         }
       );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         setOpen([false]);
         setCourseRating(0);
         setMentorRating(0);
+        edit.reset();
       }
     } catch (e) {
       toast.error(e);
