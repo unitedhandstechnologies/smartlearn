@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import MuiTable from 'src/components/MuiTable';
 import ButtonComp from '../../components/ButtonComp/index';
 import { CheckStatus, ListItemCell } from 'src/components';
@@ -9,9 +9,11 @@ import { DeleteOutlineSharp, EditOutlined } from '@material-ui/icons';
 import {
   COURSE_STATUS_NAME,
   DETECT_LANGUAGE,
-  HTTP_STATUSES
+  HTTP_STATUSES,
+  USER_TYPE_ID
 } from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
+import { UserInfoContext } from 'src/contexts/UserContext';
 
 type Props = {
   onClickActionButton?: (row: any) => void;
@@ -35,7 +37,7 @@ const CourseManagementTable = ({
   const theme = useTheme();
   const { t, i18n } = useTranslation();
   const [rowItems, setRowItems] = useState([]);
-
+  const { userDetails } = useContext(UserInfoContext);
   const onChangeActive = async (row: any) => {
     const courseStatus =
       row?.course_status === COURSE_STATUS_NAME[1]
@@ -168,6 +170,20 @@ const CourseManagementTable = ({
       }
     ];
   };
+  const renderRowActionsMentor = (row: { status_id: Number }) => {
+    return [
+      {
+        text: t('edit'),
+        onClick: (rowData) => onEditCourseDetais(rowData),
+        renderIcon: () => <EditOutlined />
+      },
+      {
+        text: 'Delete',
+        onClick: (rowData: any) => onDeleteCourse(rowData),
+        renderIcon: () => <DeleteOutlineSharp />
+      }
+    ];
+  };
 
   useEffect(() => {
     if (tableRowData?.length) {
@@ -183,7 +199,11 @@ const CourseManagementTable = ({
       disableSelectionOnClick={true}
       autoHeight={true}
       hideFooterPagination={true}
-      getRowActions={renderRowActions}
+      getRowActions={
+        userDetails.user_type === USER_TYPE_ID.mentors
+          ? renderRowActionsMentor
+          : renderRowActions
+      }
     />
   );
 };

@@ -111,7 +111,9 @@ const MyLibrary = ({ enrollCourse }) => {
             headingText={
               chipValue[0] === FILTER_CHIPS[0]
                 ? 'Upcoming'
-                : 'Courses you completed'
+                : chipValue[0] === FILTER_CHIPS[1]
+                ? 'Courses you completed'
+                : 'Wishlist Courses'
             }
             headerFontSize={'24px'}
             headerFontWeight={theme.fontWeight.medium}
