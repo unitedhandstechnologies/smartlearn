@@ -125,6 +125,7 @@ import CertificateImage from './Certificate.svg';
 import CloseIcon from './CloseIcon.svg';
 import CalenderIconImg from './CalenderIconImg.svg';
 import TimeImg from './TimeImg.svg';
+import FileDownload from './FileDownload.svg';
 
 export {
   EnrollmentManagementIcon,
@@ -253,5 +254,6 @@ export {
   CertificateImage,
   CloseIcon,
   CalenderIconImg,
-  TimeImg
+  TimeImg,
+  FileDownload
 };

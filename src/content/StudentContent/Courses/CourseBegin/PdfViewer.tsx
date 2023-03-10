@@ -1,9 +1,11 @@
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { Grid, makeStyles, styled, useTheme } from '@material-ui/core';
+import { Grid, makeStyles, styled, Typography, useTheme } from '@material-ui/core';
 import { ButtonComp, Loader } from 'src/components';
 import { Document, Page, pdfjs } from 'react-pdf';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { MicNone } from '@material-ui/icons';
+import { FileDownload } from 'src/Assets/Images';
 
 const useStyles = makeStyles((theme) => ({
   pagePdf: {
@@ -99,6 +101,50 @@ const PdfViewer = ({ pdfFile }) => {
                 </Grid>
               </Grid>
             </Grid>
+          </Grid>
+          <Grid 
+            style={{
+              margin: "40px 0px",
+            }}
+          >
+            <Typography
+              style={{
+                fontWeight: theme.fontWeight.bold,
+                fontSize: theme.MetricsSizes.regular_x
+              }}
+            >
+              Downloadable Resourses:
+            </Typography>
+            <a
+                href={pdfFile}
+                download
+              >
+            <Grid 
+              container
+              direction='row'
+               style={{
+                marginTop: "16px",
+                padding: "16px",
+                backgroundColor: theme.Colors.whiteLightGrey,
+                justifyContent: 'space-between'
+              }}
+            >
+             <Grid item>
+                <Typography
+                style={{
+                  fontSize: theme.MetricsSizes.regular,
+                  color: theme.Colors.blackBerry,
+                  textDecoration: "none",
+                }}
+              >
+               { pdfFile?.split('/')[3] }
+              </Typography>
+              </Grid>
+              <Grid item>
+                <img src={FileDownload} />
+              </Grid>
+              
+            </Grid></a>
           </Grid>
         </Grid>
       </>

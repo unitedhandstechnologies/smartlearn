@@ -269,6 +269,8 @@ const CourseMainPage = ({
                 onReady={handleOnReady}
                 onPause={handleOnPause}
                 onProgress={handleVideoProgress}
+                config={{ file: { attributes: { controlsList: 'nodownload' } } }}
+                onContextMenu={e => e.preventDefault()}
               />
             </Grid>
           </> : (   
