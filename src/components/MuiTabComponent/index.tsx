@@ -43,16 +43,19 @@ const useStyles = makeStyles<Theme, StyleProps>((theme: Theme) => {
       color: theme.Colors.mediumBlack,
       fontWeight: theme.fontWeight.regular,
       minWidth: 150,
-      minHeight: 48,
+      minHeight: 55,
       textTransform: 'none',
+      '&.MuiTab-root':{
+        maxWidth: '100%'
+      },
       opacity: 1,
       '& > span > div': {
         '& > svg , path': {
           fill: theme.Colors.secondary,
-         // background: theme.Colors.whiteLightGrey
+        //  background: theme.Colors.whiteLightGrey,
         },
         color: theme.Colors.secondary,
-       // background: theme.Colors.whiteLightGrey
+      //  background: theme.Colors.whiteLightGrey,
       },
       '&.Mui-selected': {
         '& > span > div': {

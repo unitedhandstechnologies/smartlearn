@@ -17,16 +17,31 @@ const useStyles = makeStyles((theme) => ({
   gridStyle: {
     border: '1px solid',
     borderColor: theme.Colors.secondary,
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
+    display: 'flex',
+    flexDirection: 'column',
+    width: '25%',
+    height: '50%',
+    [theme.breakpoints.down('sm')]: {
+      width: '50%'
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '100%'
+    }
   },
   selectedTabStyle: {
     color: theme.Colors.white,
     background: theme.Colors.secondary,
     fontWeight: theme.fontWeight.bold,
-    borderRadius: theme.MetricsSizes.tiny
+    borderRadius: theme.MetricsSizes.tiny,
+    padding: 0
   },
   tabContentContainer: {
     margin: theme.spacing(0, 3)
+  },
+  tabStyle: {
+    height: 100,
+    border: '1px solid red'
   }
 }));
 
@@ -98,11 +113,11 @@ const Profile = () => {
 
   const renderHeader = () => {
     return (
-      <>
+      <Grid container direction={'column'} sx={{ rowGap: 2 }}>
         <Grid
           xs={12}
           sx={{
-            [theme.breakpoints.down('xs')]: {
+            [theme.breakpoints.down('sm')]: {
               flexDirection: 'column'
             }
           }}
@@ -123,15 +138,15 @@ const Profile = () => {
         <Grid style={{ padding: '0px 0px 20px 0px' }}>
           <img src={BlueLine} />
         </Grid>
-      </>
+      </Grid>
     );
   };
 
   return (
     <Grid
       container
-      item
-      xs={12}
+      // item
+      // xs={12}
       sx={{
         padding: 4,
         [theme.breakpoints.down('sm')]: {
