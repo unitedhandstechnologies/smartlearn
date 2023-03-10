@@ -146,8 +146,8 @@ const PreRecordedCourses = ({
             bottom: 0,
             top: '130px',
             position: 'absolute',
-            right: '40px',
-            [theme.breakpoints.down('md')]: {
+            right: '-10px',
+            [theme.breakpoints.down(1240)]: {
               paddingTop: 5,
               justifyContent: 'center',
               position: 'relative',

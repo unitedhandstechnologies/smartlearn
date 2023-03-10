@@ -111,6 +111,7 @@ const ApplyNow = ({ course, timeType, duration, handleOnClick, isActive }: Props
       };
       const createRes: any = await API_SERVICES.AddToCartService.create({
         data: data,
+        successMessage: 'Course successfully added in the Cart',
         failureMessage: 'Course already added in the cart'
       });
       if (createRes?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -165,8 +166,8 @@ const ApplyNow = ({ course, timeType, duration, handleOnClick, isActive }: Props
       xs={12}
       sm={12}
       md={12}
-      xl={12}
-      lg={12}
+      xl={11}
+      lg={10}
       justifyContent={'center'}
       sx={{
         background: '#FFFFFF',
