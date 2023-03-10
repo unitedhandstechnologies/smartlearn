@@ -78,7 +78,7 @@ const StudentTable = ({
 
   const columns = [
     {
-      field: 'user_name',
+      field: 'first_name',
       headerName: t('name'),
       flex: 2,
       sortable: false,
@@ -87,7 +87,7 @@ const StudentTable = ({
       renderCell: ({ row }) => (
         <ListItemCell
           avatarImg={row?.image_url}
-          title={row?.user_name}
+          title={row?.first_name}
           titleStyle={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',

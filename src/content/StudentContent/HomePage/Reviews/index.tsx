@@ -50,34 +50,30 @@ const Reviews = ({ ratingData }) => {
               onClick={handlePrevClick}
               disabled={view[0] <= 0}
             >
-              <Grid
-                item
-                sx={{
+              <ChevronLeftIcon
+                style={{
                   border: '1px solid #3C78F0',
                   paddingTop: 1,
                   width: 37,
-                  borderRadius: 1
+                  height: 50,
+                  borderRadius: 4
                 }}
-              >
-                <ChevronLeftIcon />
-              </Grid>
+              />
             </IconButton>
             <IconButton
               sx={{ color: '#3C78F0' }}
               onClick={handleNextClick}
               disabled={view[1] >= ratingData?.length}
             >
-              <Grid
-                item
-                sx={{
+              <ChevronRightIcon
+                style={{
                   border: '1px solid #3C78F0',
                   paddingTop: 1,
                   width: 37,
-                  borderRadius: 1
+                  height: 50,
+                  borderRadius: 4
                 }}
-              >
-                <ChevronRightIcon />
-              </Grid>
+              />
             </IconButton>
           </Grid>
         </Grid>
