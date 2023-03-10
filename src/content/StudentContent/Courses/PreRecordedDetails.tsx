@@ -33,6 +33,7 @@ const PreRecordedDetails = () => {
   const [course, setCourse] = useState<any>([]);
   const [isCopied, setIsCopied] = useState<boolean>(false);
   let data = { ...state?.formData };
+  console.log(data, 'rowdATA');
   let totalDuration = 0;
   const fetchData = useCallback(async () => {
     try {

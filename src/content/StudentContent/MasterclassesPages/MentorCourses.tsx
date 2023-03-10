@@ -127,30 +127,26 @@ const MentorCreatedCourses = () => {
                 </Grid>
                 <Grid>
                   <IconButton style={{ color: '#3C78F0' }}>
-                    <Grid
-                      item
-                      sx={{
+                    <ChevronLeftIcon
+                      style={{
                         border: '1px solid #3C78F0',
                         paddingTop: 1,
                         width: 37,
-                        borderRadius: 1
+                        height: 50,
+                        borderRadius: 4
                       }}
-                    >
-                      <ChevronLeftIcon />
-                    </Grid>
+                    />
                   </IconButton>
                   <IconButton style={{ color: '#3C78F0' }}>
-                    <Grid
-                      item
-                      sx={{
+                    <ChevronRightIcon
+                      style={{
                         border: '1px solid #3C78F0',
                         paddingTop: 1,
                         width: 37,
-                        borderRadius: 1
+                        height: 50,
+                        borderRadius: 4
                       }}
-                    >
-                      <ChevronRightIcon />
-                    </Grid>
+                    />
                   </IconButton>
                 </Grid>
               </Grid>

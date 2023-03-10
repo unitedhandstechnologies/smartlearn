@@ -199,14 +199,15 @@ const CompletedCourse = () => {
                   ? 'Hindi'
                   : 'Gujarati'
               }
-              date={`${item.starting_date} - ${item.ending_date}`}
+              date={item.starting_date}
+              endingDate={item.ending_date}
               zoomLink={item.meeting_link}
               locationName={item.meeting_location}
               subCategory={item.sub_category_name}
               courseType={item.course_type}
               item={item}
-              backBtnTxt={"All Courses"}
-              backBtnRoute={"/home/profilehome"}  
+              backBtnTxt={'All Courses'}
+              backBtnRoute={'/home/profilehome'}
             />
           );
         })}

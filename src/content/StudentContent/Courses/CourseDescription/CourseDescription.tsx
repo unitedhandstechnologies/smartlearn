@@ -84,6 +84,28 @@ const CourseDescription = ({
   lessonData
 }: CourseDescriptionProps) => {
   console.log(courseDescription, 'courseDescription');
+  const days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ];
+  const start = new Date(courseDescription?.starting_date);
+  const date = start.getDate();
+  const month = start.toLocaleString('default', { month: 'short' });
+  const year = start.getFullYear();
+  const day = days[start.getDay()];
+  const startingDate = date + ' ' + month + ' ' + year + ', ' + day;
+  const end = new Date(courseDescription?.ending_date);
+  const dateEnd = end.getDate();
+  const monthEnd = end.toLocaleString('default', { month: 'short' });
+  const yearEnd = end.getFullYear();
+  const dayEnd = days[end.getDay()];
+  const endingDate = dateEnd + ' ' + monthEnd + ' ' + yearEnd + ', ' + dayEnd;
+
   const theme = useTheme();
   const classes = useStyles();
   const { t, i18n } = useTranslation();
@@ -275,8 +297,8 @@ const CourseDescription = ({
   const courseSchedule = [
     {
       start_title: 'Start Date',
-      start_date: courseDescription?.starting_date,
-      end_data: courseDescription?.ending_date,
+      start_date: startingDate,
+      end_data: endingDate,
       end_title: 'End Date'
     },
     {

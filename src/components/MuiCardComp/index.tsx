@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import {  useTheme } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
 import {
   Card,
   CardActionArea,
@@ -80,6 +80,7 @@ type Props = {
   cardStyle?: any;
   titleStyle?: any;
   date?: any;
+  endingDate?: any;
   zoomLink?: any;
   courseLevel?: string;
   courseLanguage?: string;
@@ -98,8 +99,8 @@ type Props = {
   handleOnClick?: (item, isActive) => void;
   backBtnTxt?: string;
   backBtnRoute?: string;
-  neededQuiz?:boolean;
-  handleTakeQuiz?:any;
+  neededQuiz?: boolean;
+  handleTakeQuiz?: any;
 };
 const MuiCardComp = ({
   imgUrl,
@@ -117,6 +118,7 @@ const MuiCardComp = ({
   zoomLink,
   locationName,
   date,
+  endingDate,
   subCategory,
   courseType,
   progressValue,
@@ -137,6 +139,18 @@ const MuiCardComp = ({
   const navigateTo = useNavigate();
   const { studentDetails } = useContext(StudentInfoContext);
   const [isVisible, setIsVisible] = useState(false);
+
+  const start = new Date(date || nextClass);
+  const dates = start.getDate();
+  const month = start.toLocaleString('default', { month: 'short' });
+  const year = start.getFullYear();
+  const startingDate = dates + ' ' + month + ' ' + year;
+  const end = new Date(endingDate);
+  const dateEnd = end.getDate();
+  const monthEnd = end.toLocaleString('default', { month: 'short' });
+  const yearEnd = end.getFullYear();
+  const endingDates = dateEnd + ' ' + monthEnd + ' ' + yearEnd;
+  const sessionDate = dates + '-' + endingDates;
 
   return (
     <Card
@@ -233,12 +247,15 @@ const MuiCardComp = ({
         ) : null}
         {date ? (
           <Grid style={{ padding: '5px 0px' }}>
-            <IconTextComp icon={DateSvg} value={date} />
+            <IconTextComp
+              icon={DateSvg}
+              value={date === endingDate ? startingDate : sessionDate}
+            />
           </Grid>
         ) : null}
         {nextClass ? (
           <Grid style={{ padding: '5px 0px' }}>
-            <IconTextComp icon={DateSvg} nextvalue={nextClass} />
+            <IconTextComp icon={DateSvg} nextvalue={startingDate} />
           </Grid>
         ) : null}
         {zoomLink ? (
@@ -403,18 +420,17 @@ const MuiCardComp = ({
           )
         </Grid>
       ) : null}
-      {
-        neededQuiz &&
-          <Grid>
-              <ButtonComp
-                buttonTextColor={theme.Colors.whitePure}
-                buttonText={'Take Quiz'}
-                onClickButton={handleTakeQuiz}  
-                height={40}      
-                btnWidth={'100%'}      
-              />
-          </Grid>
-      }
+      {neededQuiz && (
+        <Grid>
+          <ButtonComp
+            buttonTextColor={theme.Colors.whitePure}
+            buttonText={'Take Quiz'}
+            onClickButton={handleTakeQuiz}
+            height={40}
+            btnWidth={'100%'}
+          />
+        </Grid>
+      )}
       {renderCardActions ? renderCardActions() : null}
     </Card>
   );
