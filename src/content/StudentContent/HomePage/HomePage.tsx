@@ -22,6 +22,7 @@ import { toast } from 'react-hot-toast';
 import StartYourLearningBanner from './StartYourLearningBanner';
 import HomeBanner from './HomeBanner';
 import { BackgroundLine } from 'src/Assets';
+import PaytmCheckouts from './PaytmCheckOut';
 
 const HomePage = () => {
   const theme = useTheme();
@@ -171,6 +172,7 @@ const HomePage = () => {
           }}
         >
           <FAQs faqDetails={faqDetails} />
+          <PaytmCheckouts/>
         </Grid>
       </Grid>
     );

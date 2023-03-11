@@ -19,6 +19,7 @@ import {  instructorReportsService } from './InstructorReportsService';
 import { PreRecordedCourseVideoService } from './preRecordedCourseVideoService';
 import { AddToCartService } from './addToCartService';
 import {WishListService} from './wishListService'
+import { paymentService } from './paymentService'
 
 export const API_SERVICES = {
   authService,
@@ -41,5 +42,6 @@ export const API_SERVICES = {
   instructorReportsService,
   PreRecordedCourseVideoService,
   AddToCartService,
-  WishListService
+  WishListService,
+  paymentService
 };
