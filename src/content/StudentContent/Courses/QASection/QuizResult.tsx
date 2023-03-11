@@ -10,7 +10,9 @@ type Props = {
   updateQuizCompleted: any;
   fetchLevelCompleted: any;
   onClose: any;
-  fromLibrary: boolean;
+  fromLibrary:boolean;
+  setTestTopic: any;
+  setShowQuizUnlockedMsg:any;
 };
 
 const QuizResult = ({
@@ -18,7 +20,9 @@ const QuizResult = ({
   updateQuizCompleted,
   fetchLevelCompleted,
   onClose,
-  fromLibrary
+  fromLibrary,
+  setTestTopic,
+  setShowQuizUnlockedMsg 
 }: Props) => {
   const theme = useTheme();
   const [previewResult, setPreviewResult] = useState(false);
@@ -37,14 +41,20 @@ const QuizResult = ({
   };
 
   const handleClickContinue = () => {
-    onClose();
-  };
-
-  useEffect(() => {
-    if (!fromLibrary) {
-      updateQuizCompleted();
-      fetchLevelCompleted();
+    if(fromLibrary){
+      onClose();
     }
+    else{   
+        setTestTopic(false);
+        setShowQuizUnlockedMsg(false);  
+    }
+ };
+  
+ useEffect(()=>{
+    if(!fromLibrary){
+        updateQuizCompleted();    
+        fetchLevelCompleted();
+    };
     getTotalCorrectAnswers();
   }, []);
 

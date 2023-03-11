@@ -15,6 +15,8 @@ type Props = {
   courseDataFromLib?: any;
   onClose?: any;
   fromLibrary?: boolean;
+  setShowQuizUnlockedMsg?:any;
+  setTestTopic?:any;
 };
 
 const Quiz = ({
@@ -23,7 +25,9 @@ const Quiz = ({
   fetchLevelCompleted,
   courseDataFromLib,
   onClose,
-  fromLibrary
+  fromLibrary,
+  setTestTopic, 
+  setShowQuizUnlockedMsg
 }: Props) => {
   const theme = useTheme();
   const [questionToDisplayIndex, setQuestionToDisplayIndex] = useState(0);
@@ -109,6 +113,8 @@ const Quiz = ({
             fetchLevelCompleted={fetchLevelCompleted}
             onClose={onClose}
             fromLibrary={fromLibrary}
+            setTestTopic={setTestTopic}
+            setShowQuizUnlockedMsg={setShowQuizUnlockedMsg}
           />
         )}
       </Grid>

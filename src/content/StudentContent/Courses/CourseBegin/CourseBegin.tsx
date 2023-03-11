@@ -42,6 +42,7 @@ const CourseBegin = () => {
   const [showQuizUnlockedMsg,setShowQuizUnlockedMsg]=useState(true);
   const [completedQuiz,setCompletedQuiz]=useState(false);
   const [showNotes, setShowNotes]=useState(false);
+  const [lessonPlaying, setLessonPlaying]=useState(true);
 
   const [autoPlay, setAutoPlay] = useState(true);
   const { state }: any = useLocation();
@@ -131,7 +132,8 @@ const CourseBegin = () => {
                           videoName: item.lesson_name,
                           videoId: item.lesson_id,
                           videoDuration: item.duration,
-                          videoPlayedFraction: tempPercentagePlayed[0].played
+                          videoPlayedFraction: tempPercentagePlayed[0].played,
+                          videoPlayedFractionFromDB:tempPercentagePlayed[0].played
                         };
                       });
                     }
@@ -230,6 +232,8 @@ const CourseBegin = () => {
         setCompletedQuiz={setCompletedQuiz}
         setShowNotes={setShowNotes}
         showNotes={showNotes}
+        lessonPlaying={lessonPlaying}
+        setLessonPlaying={setLessonPlaying}
       />
     );
   }

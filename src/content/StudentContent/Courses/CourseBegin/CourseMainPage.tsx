@@ -76,7 +76,9 @@ const CourseMainPage = ({
   completedQuiz,
   setCompletedQuiz,
   showNotes,
-  setShowNotes
+  setShowNotes,
+  setLessonPlaying,
+  lessonPlaying
 }) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -86,8 +88,12 @@ const CourseMainPage = ({
   const timePaused = useRef(0);
   const userId = getUserId();
   const { studentDetails } = useStudentInfo();
+
   const handlePlayNext = useCallback(async () => {
-    let updateData = {
+    if(videoDetails[videoToPlayIndex.current.sectionNumber][
+      videoToPlayIndex.current.lessonNumber
+    ].videoPlayedFractionFromDB<1){
+       let updateData = {
       played: 1
     };
     let id = data.course_id;
@@ -102,14 +108,19 @@ const CourseMainPage = ({
           data: updateData
         }
       );
-    fetchLevelCompleted();
+   
     let tempVideoDetails = videoDetails;
     tempVideoDetails[videoToPlayIndex.current.sectionNumber][
       videoToPlayIndex.current.lessonNumber
     ].videoPlayedFraction = 1;
+    tempVideoDetails[videoToPlayIndex.current.sectionNumber][
+      videoToPlayIndex.current.lessonNumber
+    ].videoPlayedFractionFromDB = 1;
 
     setVideoDetails(tempVideoDetails);
-
+  }
+    fetchLevelCompleted();
+    setLessonPlaying(!lessonPlaying);
     let nextLessonIndex: number = videoToPlayIndex.current.lessonNumber;
     let nextSectionIndex: number = videoToPlayIndex.current.sectionNumber;
     if (nextLessonIndex < videoDetails[nextSectionIndex].length - 1) {
@@ -177,7 +188,11 @@ const CourseMainPage = ({
   );
 
   const handleOnPause = useCallback(async () => {
+    if(videoDetails[videoToPlayIndex.current.sectionNumber][
+      videoToPlayIndex.current.lessonNumber
+    ].videoPlayedFractionFromDB<1){
     let id = data.course_id;
+    setLessonPlaying(!lessonPlaying);
     if (
       timePaused.current >
       videoDetails[videoToPlayIndex.current.sectionNumber][
@@ -206,7 +221,7 @@ const CourseMainPage = ({
       videoToPlayIndex.current.lessonNumber
     ].videoPlayedFraction = timePaused.current;
 
-    setVideoDetails(tempVideoDetails);
+    setVideoDetails(tempVideoDetails);}
   }, []);
 
   useEffect(() => {}, []);
@@ -229,11 +244,13 @@ const CourseMainPage = ({
           setShowNotes={setShowNotes}
           completedQuiz={completedQuiz}
           completedCourse={completedCourse}
+          setLessonPlaying={setLessonPlaying}
+          lessonPlaying={lessonPlaying}
         />
       </Grid>
       <Grid item xs={12} sm={9}>
         {!testTopic &&
-          !showCertificate &&
+          !showCertificate &&  
           (!showNotes ? (
             <>
               <Typography
@@ -290,6 +307,8 @@ const CourseMainPage = ({
               courseData={courseData}
               data={data}
               fetchLevelCompleted={fetchLevelCompleted}
+              setShowQuizUnlockedMsg={setShowQuizUnlockedMsg}
+              setTestTopic={setTestTopic}
             />
           ) : testTopic ? (
             'No Test topic Available'

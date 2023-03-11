@@ -42,7 +42,9 @@ const CourseDetails = ({
   setShowCertificate,
   setShowNotes,
   completedQuiz,
-  completedCourse
+  completedCourse,
+  lessonPlaying,
+  setLessonPlaying
 }) => {
   const theme = useTheme();
   const navigateTo = useNavigate();
@@ -84,6 +86,8 @@ const CourseDetails = ({
         setShowNotes={setShowNotes}
         completedQuiz={completedQuiz}
         completedCourse={completedCourse}
+        lessonPlaying={lessonPlaying}
+        setLessonPlaying={setLessonPlaying}
       />
     );
   };

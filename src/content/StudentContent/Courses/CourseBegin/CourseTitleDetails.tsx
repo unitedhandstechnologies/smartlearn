@@ -29,6 +29,7 @@ import { LockIcon, TestTopic, TrophyLine, videoLine } from 'src/Assets/Images';
 import { greenTick } from 'src/Assets/Images';
 import { string } from 'prop-types';
 import { stickyNoteLine, timeLine } from 'src/Assets/Images';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 
 const useStyles = makeStyles((theme) => ({
   accordianTitleStyle: {
@@ -59,7 +60,9 @@ const CourseTitleDetails = ({
   setShowCertificate,
   setShowNotes,
   completedQuiz,
-  completedCourse
+  completedCourse,
+  setLessonPlaying,
+  lessonPlaying
 }) => {
   const classes = useStyles();
    const theme = useTheme();
@@ -101,7 +104,7 @@ const CourseTitleDetails = ({
     });
     return completedSection;
     
-  }, [videoDetails,videoToPlayIndex]);
+  }, [videoDetails,videoToPlayIndex,lessonPlaying]);
 
   const getAccordionQuizCertificateContents: any = React.useMemo(() => {
     return [
@@ -136,7 +139,7 @@ const CourseTitleDetails = ({
             </Typography>
           </Grid>
           <Grid item >
-            <img src={LockIcon} />
+          {completedCourse ?  <LockOpenIcon sx={{color:theme.Colors.primary}} />:<img src={LockIcon} />}
           </Grid>
           </>
         )
@@ -173,13 +176,13 @@ const CourseTitleDetails = ({
             </Typography>
           </Grid>
           <Grid item >
-          <img src={LockIcon} />
+          {completedQuiz ? <LockOpenIcon sx={{color:theme.Colors.primary}} /> :<img src={LockIcon} />}
           </Grid>
         </>
         )
       }
     ];
-  }, [quizData]);
+  }, [completedCourse, completedQuiz]);
 
   const getAccordionContents: any = React.useMemo(() => {
     return sectionData?.length
@@ -273,7 +276,7 @@ const CourseTitleDetails = ({
                                 sectionNumber,
                                 index
                               )}
-                              value={
+                              value={ videoDetails[sectionNumber - 1][index].videoPlayedFractionFromDB === 1 ? 100 : 
                                 videoDetails[sectionNumber - 1][index]
                                   .videoPlayedFraction * 100
                               }
@@ -320,7 +323,8 @@ const CourseTitleDetails = ({
                               //style={{border:"1px solid blue"}}
                               
                               >
-                              {`${(videoDetails[sectionNumber - 1][index]
+                              {`${(videoDetails[sectionNumber - 1][index].videoPlayedFractionFromDB === 1 ? 100 : 
+                                videoDetails[sectionNumber - 1][index]
                                   .videoPlayedFraction * 100).toFixed()}%`}
                             </Grid>
 
@@ -425,7 +429,7 @@ const CourseTitleDetails = ({
           };
         })
       : [];
-  }, [videoToPlayIndex]);
+  }, [videoToPlayIndex, videoDetails,lessonPlaying]);
 
   useEffect(() => {}, [videoDetails,videoToPlayIndex]);
 
