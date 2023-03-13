@@ -177,7 +177,7 @@ const UpComingSeminars = ({
     if (chipFilterItem[0] != 0) {
       let indexValue = chipFilterItem[0];  
       filteredCourse = courseDetails.filter(
-        (item) => item.course_level_id == headerChipItem[0].labelItems[indexValue].id
+        (item) => item.course_level_id === headerChipItem[0].labelItems[indexValue].id
       );
     }
     

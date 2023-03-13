@@ -169,8 +169,9 @@ const UpComingWebinars = ({
   const handleApply = () => {
     let filteredCourse = [];
     if (chipFilterItem[0] != 0) {
+      let indexValue = chipFilterItem[0];  
       filteredCourse = courseDetails.filter(
-        (item) => item.course_level_id == chipFilterItem[0]
+        (item) => item.course_level_id ===headerChipItem[0].labelItems[indexValue].id
       );
     }
     
@@ -179,7 +180,7 @@ const UpComingWebinars = ({
         chipFilterItem[0] != 0 
           ? filteredCourse
           : courseDetails
-      ).filter((item) => item.language_id == chipFilterItem[1]);
+      ).filter((item) => item.language_id === chipFilterItem[1]);
       changeLanguage(chipFilterItem[1]);
     }
     if (
