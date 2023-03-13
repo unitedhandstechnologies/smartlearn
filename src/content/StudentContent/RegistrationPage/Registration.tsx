@@ -1,4 +1,9 @@
-import { Typography, useTheme } from '@material-ui/core';
+import {
+  Avatar,
+  InputAdornment,
+  Typography,
+  useTheme
+} from '@material-ui/core';
 import {
   FormControl,
   FormControlLabel,
@@ -24,20 +29,29 @@ import { useEdit } from 'src/hooks/useEdit';
 import { capitalizeFirstLetter, isPhoneNumber, isValidEmail } from 'src/Utils';
 import { t } from 'i18next';
 import CountryCode from 'src/components/CountryCode';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
+import IconButton from '@mui/material/IconButton';
+import { HighlightOff } from '@material-ui/icons';
 
 const Registration = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const [error, setError] = useState(false);
   const [values, setValues] = useState('');
   const navigateTo = useNavigate();
   const [permission, setPermission] = useState([]);
   const [userType, setUserType] = useState(USER_TYPE_ID.student);
   const [instructorSignUp, setInstructorSignUp] = useState<boolean>(true);
+  const [profileImage, setProfileImage] = useState('No file choosen');
 
-  // const onClickEyeIcon = () => {
-  //   setShowPassword(!showPassword);
-  // };
+  const onClickEyeIcon = () => {
+    setShowPassword(!showPassword);
+  };
+  const onClickEyeIconConfirm = () => {
+    setShowPasswordConfirm(!showPasswordConfirm);
+  };
   const { i18n } = useTranslation();
   const STUDENT_INITIAL_DATA = {
     first_name: '',
@@ -95,6 +109,7 @@ const Registration = () => {
       edit.allFilled('phone_number') &&
       !isPhoneNumber(edit.getValue('phone_number')));
   const codeError = error && !edit.allFilled('code');
+  const imageError = error && !edit.allFilled('image_url');
 
   const onClickRegister = async () => {
     try {
@@ -160,7 +175,45 @@ const Registration = () => {
       // setLoading(false);
     }
   };
-
+  const onUploadFiles = async (event: any) => {
+    let formData = new FormData();
+    formData.append('file', event.target.files[0]);
+    let img = new Image();
+    img.src = window.URL.createObjectURL(event.target.files[0]);
+    img.onload = async () => {
+      if (
+        img.width <= 270 &&
+        img.width >= 200 &&
+        img.height <= 350 &&
+        img.height >= 250
+      ) {
+        const uploadImageRes: any =
+          await API_SERVICES.imageUploadService.uploadImage(formData);
+        if (uploadImageRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+          toast.success(`${'Image Upload Successfully'}`);
+          if (uploadImageRes?.data?.images) {
+            edit.update({
+              image_url: uploadImageRes?.data?.images[0].Location
+            });
+          }
+        }
+      } else {
+        alert(`Sorry, this image doesn't look like the size we wanted. It's 
+        ${img.width} x ${img.height} but we require size image between 270 x 350 to 200 x 250.`);
+      }
+    };
+  };
+  const removeProfile = () => {
+    edit.update({
+      image_url: ''
+    });
+    setProfileImage('No file chosen');
+    if (!edit.allFilled('image_url')) {
+      return;
+    } else {
+      toast.success(`${t('Toast.imageRemovedSuccessfully')}`);
+    }
+  };
   const handleChange = (event) => {
     setValues(event.target.value);
     edit.update({ code: event.target.value });
@@ -389,6 +442,50 @@ const Registration = () => {
                 />
               </Grid>
             </Grid>
+            <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
+              <TextInputComponent
+                inputLabel={'Profile Image'}
+                labelColor={'#78828C'}
+                value={edit.getValue('image_url').split('/')[3] || profileImage}
+                disabled
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <ButtonComp
+                        backgroundColor={theme.Colors.primary}
+                        buttonText={'Browse'}
+                        buttonFontSize={theme.MetricsSizes.small_xxx}
+                        buttonTextColor="white"
+                        buttonFontWeight={theme.fontWeight.medium}
+                        disableElevation={true}
+                        onBrowseButtonClick={onUploadFiles}
+                        isBrowseButton
+                        height={'30px'}
+                      />
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <HighlightOff
+                        style={{ cursor: 'pointer' }}
+                        onClick={removeProfile}
+                      />
+                    </InputAdornment>
+                  )
+                }}
+                //required
+                //isError={imageError}
+                helperText={
+                  imageError
+                    ? 'Please upload the profile image'
+                    : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 270 X 350 resolution'
+                }
+              />
+            </Grid>
+            <Grid item xs={12} md={6} sx={{ marginTop: 5 }}>
+              <Avatar alt="SmartLearn" src={edit.getValue('image_url')} />
+            </Grid>
+
             <Grid item xs={12} md={12} sx={{ marginTop: '10px' }}>
               <TextInputComponent
                 inputLabel={'User Name'}
@@ -406,14 +503,28 @@ const Registration = () => {
               <TextInputComponent
                 inputLabel={'Password'}
                 variant="outlined"
-                borderColor={'#3C78F0'}
                 labelColor={'#78828C'}
-                required
+                borderColor={'#3C78F0'}
                 value={edit.getValue('password')}
+                size="medium"
+                type={showPassword ? 'text' : 'password'}
                 onChange={(e) => edit.update({ password: e.target.value })}
-                type={'password'}
-                inputProps={{
-                  maxLength: 12
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      //   className={styles.eyeIcon}
+                      onClick={onClickEyeIcon}
+                      disableFocusRipple
+                      disableRipple
+                      edge="end"
+                    >
+                      {showPassword ? (
+                        <VisibilityOutlinedIcon />
+                      ) : (
+                        <VisibilityOffOutlinedIcon />
+                      )}
+                    </IconButton>
+                  )
                 }}
                 helperText={
                   passwordError &&
@@ -426,14 +537,31 @@ const Registration = () => {
               <TextInputComponent
                 inputLabel={'Confirm Password'}
                 variant="outlined"
-                borderColor={'#3C78F0'}
                 labelColor={'#78828C'}
-                required
+                borderColor={'#3C78F0'}
                 value={edit.getValue('confirmPassword')}
+                size="medium"
+                type={showPasswordConfirm ? 'text' : 'password'}
                 onChange={(e) =>
                   edit.update({ confirmPassword: e.target.value })
                 }
-                type={'password'}
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      //   className={styles.eyeIcon}
+                      onClick={onClickEyeIconConfirm}
+                      disableFocusRipple
+                      disableRipple
+                      edge="end"
+                    >
+                      {showPasswordConfirm ? (
+                        <VisibilityOutlinedIcon />
+                      ) : (
+                        <VisibilityOffOutlinedIcon />
+                      )}
+                    </IconButton>
+                  )
+                }}
                 helperText={
                   confirmPasswordError &&
                   'Both password and confirm password should be same!'

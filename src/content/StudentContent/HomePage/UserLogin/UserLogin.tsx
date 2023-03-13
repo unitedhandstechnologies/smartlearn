@@ -90,9 +90,7 @@ const UserLogin = () => {
             }
           }
         } else {
-          toast.error(
-            'you are not verified user,again resend verification link'
-          );
+          toast.error('you are not verified user, resend verification link');
           navigateTo('/home/afterRegMessage', {
             state: {
               data: {
