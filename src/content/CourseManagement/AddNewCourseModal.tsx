@@ -311,20 +311,25 @@ const AddNewCourseModal = ({
     const dateTo = new Date(edit.getValue('ending_date'));
 
     try {
-      if (dateFrom < date){
+      if (dateFrom < date) {
         setError(true);
         setDateError(true);
         return toast.error('Please select a valid Date');
-            }
-   if (edit.getValue('course_type') !== 'Webinar') {
-      if (dateFrom >= dateTo) {
+      }
+      if (dateFrom > dateTo) {
         setError(true);
         setDateError(true);
         return toast.error(
           'Starting Date should be a Date previous to Ending Date'
         );
-      }}
-      
+      }
+      if (edit.getValue('course_type') !== 'Webinar' && dateFrom == dateTo) {
+        setError(true);
+        setDateError(true);
+        return toast.error(
+          'Starting Date should be a Date previous to Ending Date'
+        );
+      }
 
       if (edit.getValue('starting_time') > edit.getValue('ending_time')) {
         setError(true);

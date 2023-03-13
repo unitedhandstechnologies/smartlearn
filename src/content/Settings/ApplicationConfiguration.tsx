@@ -109,10 +109,10 @@ const ApplicationConfiguration = () => {
         setError(true);
         return toast.error('Please fill all the required fields');
       }
-      if (!isPhoneNumber(edit.getValue('phone_number'))) {
+      if (!isPhoneNumber(edit.getValue('app_contact_no'))) {
         setError(true);
         return toast.error('Please enter your valid 10 digit mobile number');
-      }else{
+      } else {
         setError(false);
       }
       let response: any =

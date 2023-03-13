@@ -95,15 +95,13 @@ const Notification = () => {
       let updateAppConfig = { ...notificationConfiguration, ...edit.edits };
       let response: any =
         await API_SERVICES.settingsPageService.updateNotificationConfiguration(
-          id,
-          {
+          id,{
             data: updateAppConfig,
-            successMessage: t(
-              'Toast.notificationConfigurationUpdateSuccessfully'
-            ),
+            successMessage: t('Toast.notificationConfigurationUpdateSuccessfully'),
             failureMessage: t('Toast.failedtoUpdate')
           }
         );
+        console.log(response,'reponse notification configuration');
 
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         fetchData();

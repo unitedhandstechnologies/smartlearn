@@ -62,7 +62,7 @@ const CourseManagementTable = ({
     {
       field: 'course_name',
       headerName: t('course.courseName'),
-      flex: 2,
+      flex: 3,
       sortable: true,
       disableColumnMenu: true,
       renderCell: ({ row }) => (
@@ -72,7 +72,7 @@ const CourseManagementTable = ({
           titleStyle={{
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-            width: '100%'
+            width: '60%',
           }}
         />
       )
@@ -80,10 +80,19 @@ const CourseManagementTable = ({
     {
       field: 'category_name',
       headerName: t('course.category'),
-      flex: 2,
+      flex: 1.8,
       sortable: true,
       disableColumnMenu: true,
-      renderCell: ({ row }) => <ListItemCell title={row?.category_name} />
+      renderCell: ({ row }) => (
+        <ListItemCell
+          title={row?.category_name}
+          titleStyle={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            width: '100%'
+          }}
+        />
+      )
     },
     {
       field: 'id',

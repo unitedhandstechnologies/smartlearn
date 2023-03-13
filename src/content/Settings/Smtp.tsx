@@ -19,6 +19,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import { toast } from 'react-hot-toast';
 import { t } from 'i18next';
+import { isValidEmail } from 'src/Utils';
 
 const useStyles = makeStyles((theme: Theme) => {
   return {
@@ -61,6 +62,13 @@ const useStyles = makeStyles((theme: Theme) => {
   };
 });
 
+const RequiredFields = [
+  'host',
+  'port',
+  'user_name',
+  'password'
+];
+
 const Smtp = () => {
   const defaultValues = {
     id: 0,
@@ -77,10 +85,26 @@ const Smtp = () => {
   const [smtpConfiguration, setSmtpConfiguration] = useState(defaultValues);
   const [loading, setLoading] = useState(true);
   const edit = useEdit(smtpConfiguration);
+  const [error, setError] = useState(false);
 
   const onClickEyeIcon = () => {
     setShowPassword(!showPassword);
   };
+
+  const userNameError = error && !edit.allFilled('user_name');
+  const portNumberError = error && !edit.allFilled('port');
+
+  const passwordError =
+  (error && !edit.getValue('password')) ||
+  (error &&
+    edit.getValue('password') &&
+    edit.getValue('password').length < 7);
+
+  const emailError =
+  (error && !edit.allFilled('host')) ||
+  (error &&
+    edit.allFilled('host') &&
+    !isValidEmail(edit.getValue('host')));
 
   const fetchData = async () => {
     const response: any =
@@ -94,6 +118,16 @@ const Smtp = () => {
     let id = smtpConfiguration.id;
     try {
       let updateAppConfig = { ...smtpConfiguration, ...edit.edits };
+      if (!edit.allFilled(...RequiredFields)) {
+        setError(true);
+        return toast.error('Please fill all the required fields');
+      }
+      if (!isValidEmail(edit.getValue('host'))) {
+        setError(true);
+        return toast.error('Please enter valid SMTP Host');
+      } else {
+        setError(false);
+      }
       let response: any =
         await API_SERVICES.settingsPageService.updateSmtpConfiguration(id, {
           data: updateAppConfig,
@@ -126,6 +160,8 @@ const Smtp = () => {
                 edit.update({ host: e.target.value });
               }}
               required
+              isError={emailError}
+              helperText={emailError && 'Please enter valid SMTP host'}
             />
           </Grid>
 
@@ -140,6 +176,8 @@ const Smtp = () => {
                 })
               }
               required
+              isError={userNameError}
+              helperText={userNameError && 'Please enter your user name'}
             />
           </Grid>
           <Grid item xs={6}>
@@ -152,6 +190,9 @@ const Smtp = () => {
               size="medium"
               type={showPassword ? 'text' : 'password'}
               onChange={(e) => edit.update({ password: e.target.value })}
+              isError={passwordError}
+              helperText={passwordError && 'The password must contain minimum 7 and maximum 12 characters!'
+            }
               iconEnd={
                 <IconButton
                   className={classes.eyeIcon}
@@ -176,6 +217,8 @@ const Smtp = () => {
               value={edit.getValue('port')}
               onChange={(e) => edit.update({ port: e.target.value })}
               required
+              isError={portNumberError}
+              helperText={portNumberError && 'Please enter valid Port Number'}
             />
           </Grid>
           <Grid item xs={6}></Grid>

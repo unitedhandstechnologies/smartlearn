@@ -94,7 +94,9 @@ export const TextInput = ({
           }
           disabled
           isError={imageError}
-          helperText={imageError}
+          helperText={imageError  ? 'Please upload the profile image'
+          : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 550 X 350 resolution'
+   }
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">

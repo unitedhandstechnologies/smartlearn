@@ -54,6 +54,8 @@ const ListItemCell = (props: Props) => {
       container
       alignItems="center"
       style={{
+        display: 'flex',
+        flexWrap: 'nowrap',
         ...listStyle
       }}
     >
@@ -71,9 +73,7 @@ const ListItemCell = (props: Props) => {
             display: 'flex'
           }}
         >
-          {isSymbol ? (
-            <img src={RupeeSign} />
-          ) : null}
+          {isSymbol ? <img src={RupeeSign} /> : null}
           <Typography
             style={{
               fontWeight: theme.fontWeight.medium,

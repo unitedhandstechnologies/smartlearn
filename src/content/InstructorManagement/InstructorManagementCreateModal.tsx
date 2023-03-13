@@ -119,6 +119,7 @@ const InstructorManagementCreateModal = (props: Props) => {
     (error && !edit.getValue('confirmPassword')) ||
     (error &&
       edit.getValue('confirmPassword') &&
+      edit.getValue('confirmPassword').length < 7 &&
       edit.getValue('password') &&
       edit.getValue('confirmPassword') !== edit.getValue('password'));
 
@@ -450,7 +451,7 @@ const InstructorManagementCreateModal = (props: Props) => {
               type={'password'}
               helperText={
                 confirmPasswordError &&
-                'Both password and confirm password should be same!'
+                'Both password and confirm password should be same! and The Confirm Password must contain minimum 7 and maximum 12 characters!'
               }
               isError={confirmPasswordError}
               onChange={(e) => edit.update({ confirmPassword: e.target.value })}

@@ -119,7 +119,7 @@ const AdminManagementTable = ({
     {
       field: 'name',
       headerName: t('name'),
-      flex: 2,
+      flex: 2.5,
       sortable: true,
       disableColumnMenu: true,
       disableColumnSeparator: true,
@@ -127,6 +127,11 @@ const AdminManagementTable = ({
         <ListItemCell
           avatarImg={row?.image_url}
           title={`${row?.first_name} ${row?.last_name}`}
+          titleStyle={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            width: '80%'
+          }}
           subTitle={
             row?.user_type === USER_TYPE_ID.superAdmin ? 'SuperAdmin' : 'Admin'
           }
@@ -140,12 +145,19 @@ const AdminManagementTable = ({
       sortable: true,
       disableColumnMenu: true,
       disableColumnSeparator: true,
-      renderCell: ({ row }) => <ListItemCell title={row?.email_id} />
+      renderCell: ({ row }) => 
+      <ListItemCell 
+      title={row?.email_id}  
+      titleStyle={{
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        width: '80%'
+      }} />
     },
     {
       field: 'password',
       headerName: t('password'),
-      flex: 2,
+      flex: 1.5,
       sortable: true,
       disableColumnMenu: true,
       disableColumnSeparator: true,
@@ -162,7 +174,7 @@ const AdminManagementTable = ({
     {
       field: 'updated_at',
       headerName: t('date'),
-      flex: 2,
+      flex: 1.5,
       sortable: true,
       disableColumnMenu: true,
       disableColumnSeparator: true,
@@ -199,7 +211,7 @@ const AdminManagementTable = ({
     {
       field: 'status_id',
       headerName: t('course.status'),
-      flex: 2,
+      flex: 1.5,
       sortable: false,
       disableColumnMenu: true,
       disableColumnSeparator: true,
