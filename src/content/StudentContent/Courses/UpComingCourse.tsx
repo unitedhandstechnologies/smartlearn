@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core';
 import { Grid } from '@mui/material';
 import {
@@ -38,96 +38,7 @@ const useStyle = makeStyles((theme) => ({
   }
 }));
 
-const headerChipItem = [
-  {
-    name: 'Difficulty',
-    id: 0,
-    labelItems: [
-      {
-        id: 0,
-        label: 'All'
-      },
-      {
-        id: 1,
-        label: 'Beginner',
-        icon: BeginnerIcon
-      },
-      {
-        id: 2,
-        label: 'Intermediate',
-        icon: IntermediateIcon
-      },
-      {
-        id: 3,
-        label: 'Advanced',
-        icon: BarChartFillIcon
-      }
-    ]
-  },
-  {
-    name: 'Mode',
-    img: Offline,
-    id: 1,
-    labelItems: [
-      {
-        id: 0,
-        label: 'All'
-      },
-      {
-        id: 1,
-        label: 'Online',
-        icon: ZoomIcon
-      },
-      {
-        id: 2,
-        label: 'Offline',
-        icon: LocationIcon
-      }
-    ]
-  },
-  {
-    name: 'Language',
-    img: Language,
-    id: 2,
-    labelItems: [
-      {
-        id: 0,
-        label: 'All'
-      },
-      {
-        id: 1,
-        label: 'English'
-      },
-      {
-        id: 2,
-        label: 'Hindi'
-      },
-      {
-        id: 3,
-        label: 'Gujarati'
-      }
-    ]
-  },
-  {
-    name: 'Cost',
-    img: Language,
-    id: 3,
-    labelItems: [
-      {
-        id: 0,
-        label: 'All'
-      },
-      {
-        id: 1,
-        label: 'FREE'
-      },
-      {
-        id: 2,
-        label: 'PAID'
-      }
-    ]
-  }
-];
+
 
 type CourseProps = {
   courseDetails?: any[];
@@ -151,14 +62,138 @@ const UpComingCourse = ({
   const theme = useTheme();
   const classes = useStyle();
   const { i18n } = useTranslation();
-  const [chipFilterItem, setChipFilterItem] = useState([0, 0, 1]);
+  const [chipFilterItem, setChipFilterItem] = useState([0, 0, 1, 0]);
   const [menuItem, setMenuItem] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState(null);
   const [courses, setCourses] = useState([]);
+  const [courseLevelData, setCourseLevelData] = useState([]);
   const [view, setView] = useState(6);
   const navigateTo = useNavigate();
   const [whistList, setWishList] = useState([]);
   const userId = getUserId();
+
+
+  const getCourseLevels =useMemo (async()=>{
+    try{
+      const response : any =
+        await API_SERVICES.courseLevelManagementService.getAllCourseLevels(DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english);
+        let tempCourseLevel=response?.data?.courseLevel;
+        const courseLevelArray = Array(tempCourseLevel.length+1).fill(0);
+        courseLevelArray[0] = {
+          id: 0,
+          label: 'All',
+        }
+        tempCourseLevel.map((item,index)=>{
+          
+          courseLevelArray[index+1] = {
+            id: item.course_level_id,
+            label: item.course_level_name,
+          }
+        
+        });
+        setCourseLevelData(courseLevelArray);
+
+        
+        /* return ([
+          {
+            id: 0,
+            label: 'All'
+          },
+          {
+            id: 1,
+            label: 'Beginner',
+            icon: BeginnerIcon
+          },
+          {
+            id: 2,
+            label: 'Intermediate',
+            icon: IntermediateIcon
+          },
+          {
+            id: 3,
+            label: 'Advanced',
+            icon: BarChartFillIcon
+          }
+        ]); */
+    }catch(e){
+  
+    }
+    
+   
+  },[]);
+  
+
+  const headerChipItem = [
+    {
+      name: 'Difficulty',
+      id: 0,
+      labelItems: courseLevelData,
+    }, 
+    {
+      name: 'Mode',
+      img: Offline,
+      id: 1,
+      labelItems: [
+        {
+          id: 0,
+          label: 'All'
+        },
+        {
+          id: 1,
+          label: 'Online',
+          icon: ZoomIcon
+        },
+        {
+          id: 2,
+          label: 'Offline',
+          icon: LocationIcon
+        }
+      ]
+    },
+    {
+      name: 'Language',
+      img: Language,
+      id: 2,
+      labelItems: [
+        {
+          id: 0,
+          label: 'All'
+        },
+        {
+          id: 1,
+          label: 'English'
+        },
+        {
+          id: 2,
+          label: 'Hindi'
+        },
+        {
+          id: 3,
+          label: 'Gujarati'
+        }
+      ]
+    },
+    {
+      name: 'Cost',
+      img: Language,
+      id: 3,
+      labelItems: [
+        {
+          id: 0,
+          label: 'All'
+        },
+        {
+          id: 1,
+          label: 'FREE'
+        },
+        {
+          id: 2,
+          label: 'PAID'
+        }
+      ]
+    }
+  ];
+
 
   const handleOpen = (event, item) => {
     setMenuItem({
@@ -190,8 +225,13 @@ const UpComingCourse = ({
   const handleApply = () => {
     let filteredCourse = [];
     if (chipFilterItem[0] != 0) {
+    //labelItems[chipFilterItem[0]]   
+      let indexValue = chipFilterItem[0];  
       filteredCourse = courseDetails.filter(
-        (item) => item.course_level_id == chipFilterItem[0]
+        (item) =>         
+        {
+          return item.course_level_id === headerChipItem[0].labelItems[indexValue].id
+        }
       );
     }
     if (chipFilterItem[1] != 0) {
@@ -288,7 +328,7 @@ const UpComingCourse = ({
     }
   };
 
-  useEffect(() => {
+  useEffect(() => {    
     if (courseDetails?.length) {
       setCourses(courseDetails);
     } else {
