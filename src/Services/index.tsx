@@ -18,7 +18,7 @@ import { PreRecordedCourseVideoService } from './preRecordedCourseVideoService';
 import { AddToCartService } from './addToCartService';
 import {WishListService} from './wishListService'
 import { paymentService } from './paymentService'
-import {courseLevelManagementService} from './CourseLevelManagementService'
+import {courseLevelManagementService} from './courseLevelManagementService'
 
 export const API_SERVICES = {
   authService,
