@@ -71,6 +71,7 @@ const ProfileDetails = () => {
     first_name: studentDetails.first_name || '',
     last_name: studentDetails.last_name || '',
     phone_number: studentDetails.phone_number || '',
+    qualification: studentDetails.qualification || '',
     email_id: studentDetails.email_id || '',
     password: '',
     confirmPassword: '',
@@ -379,6 +380,24 @@ const ProfileDetails = () => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
+          <TextInputComponent
+            inputLabel="Qualification"
+            labelColor={'#78828C'}
+            borderColor={'#3C78F0'}
+            value={edit.getValue('qualification')}
+            inputRef={(ele) => {
+                if (ele) {
+                  ele.focus();
+                }
+              }}
+              onChange={handleChange}
+              name="qualification"
+              disabled={isEdit !== 4}
+              iconEnd={<EditComp btnId={4} />}
+          />
+        </Grid>
+
+          <Grid item xs={12} md={6}>
             <TextInputComponent
               inputLabel="Email Id"
               labelColor={'#78828C'}
@@ -391,8 +410,8 @@ const ProfileDetails = () => {
               }}
               onChange={handleChange}
               name="email_id"
-              disabled={isEdit !== 4}
-              iconEnd={<EditComp btnId={4} />}
+              disabled={isEdit !== 5}
+              iconEnd={<EditComp btnId={5} />}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -409,8 +428,8 @@ const ProfileDetails = () => {
               }}
               onChange={handleChange}
               name="social_information_url"
-              disabled={isEdit !== 5}
-              iconEnd={<EditComp btnId={5} />}
+              disabled={isEdit !== 6}
+              iconEnd={<EditComp btnId={6} />}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -427,8 +446,8 @@ const ProfileDetails = () => {
               }}
               onChange={handleChange}
               name="social_information_url_2"
-              disabled={isEdit !== 6}
-              iconEnd={<EditComp btnId={6} />}
+              disabled={isEdit !== 7}
+              iconEnd={<EditComp btnId={7} />}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -445,8 +464,8 @@ const ProfileDetails = () => {
               }}
               onChange={handleChange}
               name="social_information_url_3"
-              disabled={isEdit !== 7}
-              iconEnd={<EditComp btnId={7} />}
+              disabled={isEdit !== 8}
+              iconEnd={<EditComp btnId={8} />}
             />
           </Grid>
         </Grid>
