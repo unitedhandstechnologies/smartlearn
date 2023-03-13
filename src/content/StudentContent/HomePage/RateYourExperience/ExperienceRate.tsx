@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Grid, Typography, Rating, useTheme } from '@mui/material';
+import {
+  Grid,
+  Typography,
+  Rating,
+  useTheme,
+  FormControl,
+  FormControlLabel
+} from '@mui/material';
 import { ButtonComp, TextInputComponent } from 'src/components';
 import ReUseableDialogBox from './RatingDialog';
 import { RectangleBox } from 'src/Assets';
@@ -20,17 +27,18 @@ const typoGraphyStyle = {
 const RateYourExperience = ({ courseDetails }) => {
   const theme = useTheme();
   const [open, setOpen] = useState([]);
-  const [courseRating, setCourseRating] = useState<number | null>(0);
-  const [mentorRating, setMentorRating] = useState<number | null>(0);
+  const [courseRating, setCourseRating] = useState<number | null>();
+  const [mentorRating, setMentorRating] = useState<number | null>();
   const [error, setError] = useState(false);
   const data = {
     course_rating: courseRating,
     mentor_rating: mentorRating,
     command: ''
   };
-  const RequiredFields = ['command'];
+  const RequiredFields = ['command', 'course_rating', 'mentor_rating'];
   const edit = useEdit(data);
-  const commandError = error && !edit.getValue('command');
+  const commandError = error && !edit.allFilled('command');
+
   const handleClickOpen = () => {
     setOpen([true]);
   };
@@ -184,14 +192,31 @@ const RateYourExperience = ({ courseDetails }) => {
           1. How was your experience with the course?
         </Typography>
         <Grid style={{ padding: 10 }}>
-          <Rating
+          {/* <Rating
             sx={{ color: '#3C78F0' }}
             size="large"
             value={courseRating}
             onChange={(event, newValue) => {
               setCourseRating(newValue);
             }}
-          />
+          /> */}
+          <FormControl error={true}>
+            <FormControlLabel
+              labelPlacement="top"
+              label="Hi"
+              control={
+                <Rating
+                  sx={{ color: '#3C78F0' }}
+                  size="large"
+                  value={courseRating}
+                  onChange={(event, newValue) => {
+                    setCourseRating(newValue);
+                  }}
+                />
+              }
+              
+            />
+          </FormControl>
         </Grid>
         <Typography style={typoGraphyStyle}>
           2. How was your experience with your instructor?

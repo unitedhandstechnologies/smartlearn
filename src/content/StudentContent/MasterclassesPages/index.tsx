@@ -91,8 +91,8 @@ const Masterclasses = () => {
         }
       }}
     >
-      Best in the industry{' '}
-      <span style={{ color: theme.Colors.secondary }}>mentors</span>
+      Best in the industry{" "}
+      <span style={{ color: theme.Colors.secondary }}>Mentors</span>
     </Typography>
   );
   // if (loading) {

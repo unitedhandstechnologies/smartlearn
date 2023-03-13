@@ -391,7 +391,7 @@ const CourseDescription = ({
         <Grid paddingTop={4}>
           <Heading headingText={'Skills covered'} {...headingProps} />
           <Grid item container spacing={1}>
-            {courseDescription?.requirements ? (
+            {courseDescription?.category_name ? (
               <Grid item>
                 <ChipComp
                   label={courseDescription?.category_name}
@@ -419,10 +419,23 @@ const CourseDescription = ({
         </Grid>
         <Grid paddingTop={4}>
           <Heading headingText={'Requirements'} {...headingProps} />
-          <Grid item>
+          {/* <Grid item>
             <Typography style={typographyStyleProps}>
               {courseDescription?.requirements}
             </Typography>
+          </Grid> */}
+          <Grid container alignItems={'center'}>
+            <Grid item>
+              <FiberManualRecordIcon
+                fontSize="small"
+                style={{ color: '#78828C', padding: 5 }}
+              />
+            </Grid>
+            <Grid item xs>
+              <Typography style={typographyStyleProps}>
+                {courseDescription?.requirements}
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
         <Grid paddingTop={4}>

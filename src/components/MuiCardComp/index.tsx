@@ -159,14 +159,16 @@ const MuiCardComp = ({
         padding: '16px',
         width: '100%',
         height: '100%',
+        cursor: 'pointer',
         ...cardStyle
       }}
       onMouseEnter={() => {
         setIsVisible(true);
       }}
       onMouseLeave={() => setIsVisible(false)}
+      onClick={onClickCardImage}
     >
-      <CardActionArea onClick={onClickCardImage} sx={{ background: 'black' }}>
+      <CardActionArea sx={{ background: 'black' }}>
         {imgUrl ? (
           <ImageListItem>
             <img
@@ -179,7 +181,7 @@ const MuiCardComp = ({
               }}
             />
             <ImageListItemBar
-              title={<TopBox rightText={zoomLink} leftText={leftText} />}
+              title={<TopBox rightText={zoomLink} leftText={leftText !== 'PAID' ? leftText : null} />}
               position="top"
               sx={{ backgroundColor: 'transparent' }}
             />
