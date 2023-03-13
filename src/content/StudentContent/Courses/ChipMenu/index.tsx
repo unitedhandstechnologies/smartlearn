@@ -28,7 +28,7 @@ const ChipMenu = ({
       ? menuItem?.map((item, index) => {
           return (
             <MenuItem key={index}>
-              <Grid container style={{ gap: 10, alignItems: 'center' }}>
+              <Grid container style={{ /* gap: 10, */ alignItems: 'center' }}>
                 <Grid item>
                   <Checkbox
                     checked={
@@ -45,6 +45,7 @@ const ChipMenu = ({
                     icon={item.icon || null}
                     value={item.label}
                     valueColor={'#3C414B'}
+                    textContentStyle={{marginLeft: '0px'}}
                   />
                 </Grid>
               </Grid>

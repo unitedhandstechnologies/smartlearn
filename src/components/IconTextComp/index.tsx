@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme: Theme) => {
     imageAlign: {
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center'
+      alignItems: 'center',
+      paddingRight: '4px'
     }
   };
 });
@@ -56,14 +57,14 @@ const IconTextComp = (props: UHIconTextProps) => {
   return (
     <Grid container {...rest}>
       {icon ? (
-        <Grid item xs={1} className={classes.imageAlign}>
+        <Grid item className={classes.imageAlign}>
           <img src={icon} />
         </Grid>
       ) : null}
       <Grid
         item
         xs
-        style={{ marginLeft: theme.spacing(2.4), ...textContentStyle }}
+        style={{ marginLeft: theme.spacing(0), ...textContentStyle }}
       >
         {renderComponent && renderComponent()}
         {value ? (
