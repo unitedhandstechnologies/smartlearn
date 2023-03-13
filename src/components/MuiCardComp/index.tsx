@@ -166,7 +166,6 @@ const MuiCardComp = ({
         setIsVisible(true);
       }}
       onMouseLeave={() => setIsVisible(false)}
-      onClick={onClickCardImage}
     >
       <CardActionArea sx={{ background: 'black' }}>
         {imgUrl ? (
@@ -181,7 +180,12 @@ const MuiCardComp = ({
               }}
             />
             <ImageListItemBar
-              title={<TopBox rightText={zoomLink} leftText={leftText !== 'PAID' ? leftText : null} />}
+              title={
+                <TopBox
+                  rightText={zoomLink}
+                  leftText={leftText !== 'PAID' ? leftText : null}
+                />
+              }
               position="top"
               sx={{ backgroundColor: 'transparent' }}
             />
@@ -193,6 +197,7 @@ const MuiCardComp = ({
                 bottom: title.length > 23 ? 30 : 50,
                 paddingLeft: 5,
                 paddingRight: 5,
+
                 [theme.breakpoints.down('xs')]: {
                   bottom: 55,
                   paddingLeft: 2,
@@ -211,7 +216,7 @@ const MuiCardComp = ({
                   }
                 }}
               >
-                {title}
+                <LinesEllipsis text={title} maxLine={2} ellipsis="....." />
               </Typography>
             </Grid>
           </ImageListItem>
@@ -221,8 +226,10 @@ const MuiCardComp = ({
         <ProgressBar style={{ width: '100%' }} value={progressValue} />
       ) : null}
       <CardContent
+        onClick={onClickCardImage}
         sx={{
-          padding: '15px 16px 5px 0px'
+          padding: '15px 16px 5px 0px',
+          cursor: 'pointer'
         }}
       >
         {heading ? (
@@ -295,7 +302,10 @@ const MuiCardComp = ({
           </Grid>
         ) : null}
       </CardContent>
-      <CardActions sx={{ padding: '8px 0px' }}>
+      <CardActions
+        onClick={onClickCardImage}
+        sx={{ padding: '8px 0px', cursor: 'pointer' }}
+      >
         <Grid item container spacing={1}>
           {subCategory ? (
             <Grid item>
@@ -334,32 +344,34 @@ const MuiCardComp = ({
           }}
         >
           <Grid item style={{ marginRight: 10 }}>
-            {leftText === 'PAID' ? (
-              <ListItemCell
-                title={
-                  <Grid container style={{ gap: 5 }}>
-                    <Grid>₹{(prize - (discount / 100) * prize).toFixed()}</Grid>
-                    <Grid
-                      style={{
-                        textDecoration: 'line-through',
-                        color: '#78828C'
-                      }}
-                    >
-                      ₹{prize}
-                    </Grid>{' '}
-                    <Grid style={{ color: '#3CC878' }}>{discount}% off</Grid>
-                  </Grid>
-                }
-                subTitle={'including GST'}
-                titleStyle={{
-                  fontSize: theme.MetricsSizes.small_xx,
-                  fontWeight: theme.fontWeight.bold
-                }}
-              />
-            ) : (
-              null
+            {
+              leftText === 'PAID' ? (
+                <ListItemCell
+                  title={
+                    <Grid container style={{ gap: 5 }}>
+                      <Grid>
+                        ₹{(prize - (discount / 100) * prize).toFixed()}
+                      </Grid>
+                      <Grid
+                        style={{
+                          textDecoration: 'line-through',
+                          color: '#78828C'
+                        }}
+                      >
+                        ₹{prize}
+                      </Grid>{' '}
+                      <Grid style={{ color: '#3CC878' }}>{discount}% off</Grid>
+                    </Grid>
+                  }
+                  subTitle={'including GST'}
+                  titleStyle={{
+                    fontSize: theme.MetricsSizes.small_xx,
+                    fontWeight: theme.fontWeight.bold
+                  }}
+                />
+              ) : null
               // <h4 style={{ color: '#3cc878', textAlign: 'center' }}>Free</h4>
-            )}
+            }
           </Grid>
           <Grid item xs>
             <ButtonComp

@@ -7,6 +7,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.css';
+import { IconButton } from '@material-ui/core';
+import { ChevronLeft } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -66,7 +68,7 @@ const USPs = ({ bannerManagement }) => {
             }
           }}
         ></Grid>
-        <Carousel prevIcon={null} nextIcon={null} indicators={false}>
+        <Carousel indicators={false}>
           {bannerManagement.length
             ? bannerManagement?.map((item, index) => {
                 return (
@@ -127,7 +129,7 @@ const USPs = ({ bannerManagement }) => {
                               }
                             }}
                           >
-                           {item.description}
+                            {item.description}
                           </Typography>
                           <ButtonComp
                             buttonText={'Start learning'}
