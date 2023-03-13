@@ -398,6 +398,7 @@ const ProfileDetails = () => {
           <Grid item xs={12} md={6}>
             <TextInputComponent
               inputLabel="FaceBook Link"
+              placeholder={'Enter FaceBook Link'}
               labelColor={'#78828C'}
               borderColor={'#3C78F0'}
               value={edit.getValue('social_information_url')}
@@ -415,6 +416,7 @@ const ProfileDetails = () => {
           <Grid item xs={12} md={6}>
             <TextInputComponent
               inputLabel="Instagram Link"
+              placeholder={'Enter Instagram Link'}
               labelColor={'#78828C'}
               borderColor={'#3C78F0'}
               value={edit.getValue('social_information_url_2')}
@@ -432,6 +434,7 @@ const ProfileDetails = () => {
           <Grid item xs={12} md={6}>
             <TextInputComponent
               inputLabel="Twitter Link "
+              placeholder={'Enter Twitter Link'}
               labelColor={'#78828C'}
               borderColor={'#3C78F0'}
               value={edit.getValue('social_information_url_3')}

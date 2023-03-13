@@ -40,6 +40,7 @@ function AdminDashboard() {
   const [freeCount, setFreeCount] = useState<string | number>();
   const [paidCount, setPaidCount] = useState<string | number>();
   const [selectedTabVal, setSelectedTabVal] = useState<string | number>(0);
+  const [courseCountMentor, setCourseCountMentor] = useState<string | number>();
   const navigateTo = useNavigate();
   const { searchValue } = useSearchVal();
   const debValue = useDebounce(searchValue, 1000);
@@ -104,13 +105,14 @@ function AdminDashboard() {
         let params: any = {};
 
         const revenueResponse: any =
-        await API_SERVICES.enrollmentManagementService.getAllBy(
-          params
+          await API_SERVICES.enrollmentManagementService.getAllBy(params);
+        console.log(
+          revenueResponse,
+          'revenueResponserevenueResponserevenueResponse'
         );
-        console.log(revenueResponse, "revenueResponserevenueResponserevenueResponse")
-        console.log(revenueResponse?.data?.TotalAmount, "totalAmount")
-        COUNT.revenueCountMonth = revenueResponse?.data?.TotalAmount
-      
+        console.log(revenueResponse?.data?.TotalAmount, 'totalAmount');
+        COUNT.revenueCountMonth = revenueResponse?.data?.TotalAmount;
+
         setLoading(true);
         if (debValue !== '') {
           params.searchString = debValue;
@@ -170,15 +172,19 @@ function AdminDashboard() {
           API_SERVICES.instructorReportsService.getStudentEnrolled(
             userDetails.id,
             CurrentMonth
+          ),
+          API_SERVICES.instructorReportsService.getMentorCreatedCourse(
+            userDetails.id
           )
         ]);
         if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
           setRevenueCount(response[0]?.data);
         }
         if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
-          if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
-            setCourseCount(response[1]?.data);
-          }
+          setCourseCount(response[1]?.data);
+        }
+        if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
+          setCourseCountMentor(response[2]?.data);
         }
       } catch (err) {
       } finally {
@@ -285,6 +291,7 @@ function AdminDashboard() {
               <MentorDashboard
                 revenueCount={revenueCount}
                 courseCount={courseCount}
+                courseCountMentor={courseCountMentor}
               />
             </Grid>
           </>

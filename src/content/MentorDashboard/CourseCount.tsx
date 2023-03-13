@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 type Props = {
   heading?: string;
   icon?: any;
-  count?: string;
+  count?: any;
 
   handleClickIcon?: () => void;
 };

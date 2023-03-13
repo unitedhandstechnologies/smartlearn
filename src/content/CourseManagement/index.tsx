@@ -51,6 +51,12 @@ const COURSE_COUNT = {
   paidEnabled: 0,
   freeEnabled: 0
 };
+const MENTOR_COURSE_COUNT = {
+  coursesTotalCount: 0,
+  enabledCourse: 0,
+  pendingCourseCount: 0,
+  draftCourseCount: 0
+};
 function CourseManagement() {
   const classes = useStyles();
   const theme = useTheme();
@@ -59,58 +65,30 @@ function CourseManagement() {
   const [modalOpen, setModalOpen] = useState<any>({ open: false });
   const [courseCount, setCourseCount] = useState(COURSE_COUNT);
   const { userDetails } = useContext(UserInfoContext);
+  const [courseCountMentor, setCourseCountMentor] =
+    useState(MENTOR_COURSE_COUNT);
+  console.log(courseCountMentor, 'mmmmmmmmmmmmmmm');
 
   const courseDetails = [
     {
       icon: Chat,
       heading: 'Total ',
-      count: `50`,
-      reports: [
-        {
-          heading: '',
-          subText: ''
-        },
-        {
-          heading: '',
-          subText: ''
-        }
-      ]
+      count: courseCountMentor.coursesTotalCount
     },
     {
       icon: Chat,
       heading: 'Active',
-      count: '24',
-      reports: [
-        {
-          heading: '',
-          subText: ''
-        }
-      ]
+      count: courseCountMentor.enabledCourse
     },
     {
       icon: Chat,
       heading: 'Pending Review',
-      count: '40',
-      reports: [
-        {
-          heading: '',
-          subText: ''
-        }
-      ]
+      count: courseCountMentor.pendingCourseCount
     },
     {
       icon: Chat,
       heading: 'Draft',
-
-      count: '4',
-
-      reports: [
-        {
-          heading: '',
-
-          subText: ''
-        }
-      ]
+      count: courseCountMentor.draftCourseCount
     }
   ];
 
@@ -268,7 +246,10 @@ function CourseManagement() {
           DETECT_LANGUAGE[i18n.language],
           params
         ),
-        API_SERVICES.courseManagementService.getStatistic()
+        API_SERVICES.courseManagementService.getStatistic(),
+        API_SERVICES.instructorReportsService.getMentorCourseStatusCount(
+          userDetails.id
+        )
       ]);
 
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -287,6 +268,9 @@ function CourseManagement() {
       }
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
         setCourseCount(response[1]?.data?.courseStatus);
+      }
+      if (response[2]?.status < HTTP_STATUSES.BAD_REQUEST) {
+        setCourseCountMentor(response[2]?.data);
       }
     } catch (err) {
       toast.error(err?.message);

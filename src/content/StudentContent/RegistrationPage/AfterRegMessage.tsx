@@ -7,17 +7,19 @@ import { useNavigate, useLocation } from 'react-router';
 import { API_SERVICES } from 'src/Services';
 import { HTTP_STATUSES, USER_TYPE_ID } from 'src/Config/constant';
 import toast from 'react-hot-toast';
+import { ButtonComp } from 'src/components';
 
 const AfterRegMessage = () => {
   const theme = useTheme();
   const navigateTo = useNavigate();
   const { state }: any = useLocation();
   const data = { ...state?.data };
-
+  const resendTxt = `Dear ${data?.first_name}, We're happy signed up for smartLearn. But not yet verified  your email address ${data?.email_id}, Please Click send button to get a verification link.`;
+  const sendTxt = `We're happy signed up for smartLearn. To start with smartLearn , Please check your email address ${data?.email_id}. We sent an account activation link.`;
   const onClickResend = async () => {
     try {
       const response: any = await API_SERVICES.adminUserService.resendMail(
-        data.id
+        data?.id
       );
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
         toast.success('Verification link sent successfully');
@@ -71,7 +73,10 @@ const AfterRegMessage = () => {
               margin: theme.spacing(2, 0)
             }}
           >
-            Thanks for signing up / joining us, Mr.{data.first_name}!
+            {data.resend
+              ? `Email verification`
+              : `Thanks for signing up, Mr/Ms.
+            ${data?.first_name}!`}
           </Typography>
           <Grid sx={{ paddingTop: 2 }}>
             <img src={LineBarIcon} height={40} />
@@ -85,10 +90,31 @@ const AfterRegMessage = () => {
                 color: '#78828C'
               }}
             >
-              We're happy signed up for smartLearn. To start with smartLearn
-              Please check your email address {data.email_id}. We sent an
-              account activation link.
+              {data?.resend ? resendTxt : sendTxt}
             </Typography>
+
+            {data.resend && (
+              <Grid
+                container
+                item
+                sx={{
+                  justifyContent: 'center',
+                  paddingTop: 5
+                }}
+              >
+                <ButtonComp
+                  buttonText="Send"
+                  backgroundColor="#3C78F0"
+                  buttonTextColor={theme.Colors.white}
+                  buttonFontSize={16}
+                  buttonFontWeight={400}
+                  btnWidth={'fit-content'}
+                  height="40px"
+                  buttonFontFamily="Switzer"
+                  onClickButton={onClickResend}
+                />
+              </Grid>
+            )}
             <Grid
               style={{
                 display: 'flex',

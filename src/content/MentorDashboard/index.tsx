@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router';
 import { Chat, Persons, Rupee } from 'src/Assets';
 import Details from './Details';
 
-const MentorDashboard = ({ revenueCount, courseCount }) => {
+const MentorDashboard = ({ revenueCount, courseCount, courseCountMentor }) => {
   const navigateTo = useNavigate();
-  console.log(courseCount.totalEnrolledCoursesCount, 'mmmmmmmmmmmmmmm');
+
   const courseDetails = [
     {
       icon: Rupee,
@@ -25,19 +25,19 @@ const MentorDashboard = ({ revenueCount, courseCount }) => {
     {
       icon: Chat,
       heading: 'No. of Courses',
-      count: '24',
+      count: courseCountMentor.coursesCount,
       reports: [
         {
           heading: 'Recorded',
-          subText: '15'
+          subText: courseCountMentor.recordedCourseCount
         },
         {
           heading: 'Live',
-          subText: '15'
+          subText: courseCountMentor.liveCourseCount
         },
         {
           heading: 'Webinars',
-          subText: '15'
+          subText: courseCountMentor.webinarCount
         }
       ]
     },

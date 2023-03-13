@@ -20,6 +20,8 @@ import { Grid } from '@mui/material';
 import CountryCode from 'src/components/CountryCode';
 import { t } from 'i18next';
 import logo from '../../Assets/Images/Logo.svg';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 
 const useStyles = makeStyles((theme) => ({
   forgotTxt: {
@@ -63,6 +65,8 @@ const MentorProfile = () => {
   const { userDetails, updateUserInfo } = useUserInfo();
   const [profileImage, setProfileImage] = useState('No file choosen');
   const navigateTo = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   //const { updateStudentInfo } = useStudentInfo();
   const initialValues = {
     image_url: userDetails?.image_url || '',
@@ -83,7 +87,7 @@ const MentorProfile = () => {
         ? ''
         : userDetails?.social_information_url_3 || '',
     qualification: userDetails?.qualification || '',
-    about: userDetails?.about === 'undefined' ? '' : userDetails?.about || ''
+    about: userDetails?.about === 'undefined' ? '' : userDetails?.about
   };
   const edit = useEdit(initialValues);
   const [isEdit, setIsEdit] = useState<number>(0);
@@ -110,6 +114,12 @@ const MentorProfile = () => {
   const handleChange = (event) => {
     edit.update({ [event.target.name]: event.target.value });
   };
+  const onClickEyeIcon = () => {
+    setShowPassword(!showPassword);
+  };
+  const onClickEyeIconConfirm = () => {
+    setShowPasswordConfirm(!showPasswordConfirm);
+  };
 
   const handleSave = async () => {
     if (!Object.keys(edit.edits).length) {
@@ -122,6 +132,14 @@ const MentorProfile = () => {
       //    return toast.error('Please fill all the required fields');
       //  }
       //setLoading(true);
+      if (edit.getValue('confirmPassword') && edit.getValue('password')) {
+        if (
+          edit.getValue('confirmPassword') !== edit.getValue('password') ||
+          edit.getValue('password').length < 7
+        ) {
+          return setError(true);
+        }
+      }
       let data = { ...edit.edits };
 
       const response: any = await API_SERVICES.adminUserService.update(
@@ -432,6 +450,7 @@ const MentorProfile = () => {
             <Grid item xs={12} md={6}>
               <TextInputComponent
                 inputLabel="qualification"
+                placeholder={'Qualification'}
                 labelColor={'#78828C'}
                 borderColor={'#3C78F0'}
                 value={edit.getValue('qualification')}
@@ -449,6 +468,7 @@ const MentorProfile = () => {
             <Grid item xs={12} md={6}>
               <TextInputComponent
                 inputLabel="LinkedIn Link"
+                placeholder={'Enter LinkedIn Link'}
                 labelColor={'#78828C'}
                 borderColor={'#3C78F0'}
                 value={edit.getValue('social_information_url')}
@@ -466,6 +486,7 @@ const MentorProfile = () => {
             <Grid item xs={12} md={6}>
               <TextInputComponent
                 inputLabel="Instagram Link"
+                placeholder={'Enter Instagram Link'}
                 labelColor={'#78828C'}
                 borderColor={'#3C78F0'}
                 value={edit.getValue('social_information_url_2')}
@@ -483,6 +504,7 @@ const MentorProfile = () => {
             <Grid item xs={12} md={6}>
               <TextInputComponent
                 inputLabel="Twitter Link "
+                placeholder={'Enter Twitter Link'}
                 labelColor={'#78828C'}
                 borderColor={'#3C78F0'}
                 value={edit.getValue('social_information_url_3')}
@@ -500,6 +522,7 @@ const MentorProfile = () => {
             <Grid item xs={12} md={6}>
               <TextInputComponent
                 inputLabel="About"
+                placeholder={'About'}
                 labelColor={'#78828C'}
                 borderColor={'#3C78F0'}
                 value={edit.getValue('about')}
@@ -529,16 +552,31 @@ const MentorProfile = () => {
           <Grid container spacing={1} item style={{ paddingTop: 15 }}>
             <Grid item xs={12} md={6}>
               <TextInputComponent
-                placeholder={'Enter new password'}
                 inputLabel={'Password'}
-                borderColor={'#3C78F0'}
+                placeholder={'Enter new password'}
                 variant="outlined"
                 labelColor={'#78828C'}
+                borderColor={'#3C78F0'}
                 value={edit.getValue('password')}
+                size="medium"
+                type={showPassword ? 'text' : 'password'}
                 onChange={(e) => edit.update({ password: e.target.value })}
-                type={'password'}
-                inputProps={{
-                  maxLength: 12
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      //   className={styles.eyeIcon}
+                      onClick={onClickEyeIcon}
+                      disableFocusRipple
+                      disableRipple
+                      edge="end"
+                    >
+                      {showPassword ? (
+                        <VisibilityOutlinedIcon />
+                      ) : (
+                        <VisibilityOffOutlinedIcon />
+                      )}
+                    </IconButton>
+                  )
                 }}
                 helperText={
                   passwordError &&
@@ -556,21 +594,39 @@ const MentorProfile = () => {
             <Divider sx={{ color: '#F2F4F7', marginTop: 5, height: '1px' }} />
             <Grid item xs={12} md={6}>
               <TextInputComponent
-                inputLabel="Confirm Password"
+                inputLabel={'Confirm Password'}
                 placeholder={'Enter confirm password'}
-                borderColor={'#3C78F0'}
                 variant="outlined"
                 labelColor={'#78828C'}
+                borderColor={'#3C78F0'}
                 value={edit.getValue('confirmPassword')}
-                type={'password'}
+                size="medium"
+                type={showPasswordConfirm ? 'text' : 'password'}
+                onChange={(e) =>
+                  edit.update({ confirmPassword: e.target.value })
+                }
+                InputProps={{
+                  endAdornment: (
+                    <IconButton
+                      //   className={styles.eyeIcon}
+                      onClick={onClickEyeIconConfirm}
+                      disableFocusRipple
+                      disableRipple
+                      edge="end"
+                    >
+                      {showPasswordConfirm ? (
+                        <VisibilityOutlinedIcon />
+                      ) : (
+                        <VisibilityOffOutlinedIcon />
+                      )}
+                    </IconButton>
+                  )
+                }}
                 helperText={
                   confirmPasswordError &&
                   'Both password and confirm password should be same!'
                 }
                 isError={confirmPasswordError}
-                onChange={(e) =>
-                  edit.update({ confirmPassword: e.target.value })
-                }
               />
             </Grid>
 

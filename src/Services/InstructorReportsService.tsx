@@ -37,6 +37,20 @@ export const instructorReportsService = {
     });
     return apiRequest(options);
   },
+  getMentorCreatedCourse: async (mentorId: number) => {
+    const options = await apiOptions({
+      url: `${Config.BASE_URL}/api/getMentorCreatedCourse/mentor/${mentorId}`,
+      method: 'get'
+    });
+    return apiRequest(options);
+  },
+  getMentorCourseStatusCount: async (mentorId: number) => {
+    const options = await apiOptions({
+      url: `${Config.BASE_URL}/api/getMentorCourseStatusCount/mentor/${mentorId}`,
+      method: 'get'
+    });
+    return apiRequest(options);
+  },
   update: async (id, { data, successMessage }: PayoutProps) => {
     const options = await apiOptions({
       url: `${Config.BASE_URL}/api/updateMentorPayouts/${id}`,
