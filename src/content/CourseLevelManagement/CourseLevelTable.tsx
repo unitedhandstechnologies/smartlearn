@@ -43,7 +43,7 @@ const CourseLevelTable = ({
     const statusId = row?.status == 2 ? 1 : 2;
     try {
       let response: any =
-        await API_SERVICES.courseLevelService.updateCourseLevel(row.course_level_id, {
+        await API_SERVICES.courseLevelManagementService.updateCourseLevel(row.course_level_id, {
           data: { status: statusId },
           successMessage:
             row?.status === 1
@@ -138,7 +138,7 @@ const CourseLevelTable = ({
       setConfirmModal({ open: false });
     };
     const onConfirmClick = async () => {
-      const deleteRes: any = await API_SERVICES.courseLevelService.delete(
+      const deleteRes: any = await API_SERVICES.courseLevelManagementService.delete(
         rowItems?.course_level_id,
         { successMessage: 'Course Details deleted successfully!' }
       );

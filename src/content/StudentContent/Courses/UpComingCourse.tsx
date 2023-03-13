@@ -136,6 +136,7 @@ type CourseProps = {
   onSearchValChange?: (event) => void;
   handleClearSearchValue?: () => void;
   searchval?: string;
+  courseLevel?: any[];
 };
 
 const UpComingCourse = ({
@@ -144,7 +145,8 @@ const UpComingCourse = ({
   setChipIconText,
   onSearchValChange,
   handleClearSearchValue,
-  searchval
+  searchval,
+  courseLevel
 }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();

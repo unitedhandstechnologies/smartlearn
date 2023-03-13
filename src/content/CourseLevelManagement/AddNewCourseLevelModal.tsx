@@ -119,13 +119,13 @@ const AddNewCourseLevelModal = ({
 
       let response: any;
       if (types[type].handleType === 1) {
-        response = await API_SERVICES.courseLevelService.create({      
+        response = await API_SERVICES.courseLevelManagementService.create({      
           data: uData,
           successMessage: 'New Course Level Added successfully!',
           failureMessage: 'Sort Number already Exist'
         });
       } else if (types[type].handleType === 2) {
-        response = await API_SERVICES.courseLevelService.updateCourseLevel(
+        response = await API_SERVICES.courseLevelManagementService.updateCourseLevel(
           rowData?.course_level?.id,
           {
             data: uData,

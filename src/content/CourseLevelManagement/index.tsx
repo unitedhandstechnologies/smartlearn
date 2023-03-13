@@ -35,7 +35,7 @@ function CourseLevelManagement() {
       try {
         if (type === CONFIRM_MODAL.edit) {
           const response: any =
-            await API_SERVICES.courseLevelService.getCourseLevelById(
+            await API_SERVICES.courseLevelManagementService.getCourseLevelById(
               rowData?.course_level_id
             );
           if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
@@ -69,7 +69,7 @@ function CourseLevelManagement() {
       if (debValue !== '') {
         params.searchString = debValue;
       }
-      const response: any = await API_SERVICES.courseLevelService.getAllCourse(
+      const response: any = await API_SERVICES.courseLevelManagementService.getAllCourseLevels(
         getLanguageId,
         params
       );

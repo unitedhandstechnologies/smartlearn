@@ -10,8 +10,6 @@ import { instructorService } from './InstructorService';
 import { bannerManagementService } from './bannerManagementService';
 import { sectionAndLessonService } from './sectionAndLessonService';
 import { videoUploadService } from './videoUploadService';
-import { courseLevelManagementService } from './courseLevelManagementService';
-import { courseLevelService } from './courseLevelService';
 import { pageManagementService } from './pageManagementService';
 import { quizService } from './quizService';
 import { homeUserService } from './HomeUserService';
@@ -20,6 +18,7 @@ import { PreRecordedCourseVideoService } from './preRecordedCourseVideoService';
 import { AddToCartService } from './addToCartService';
 import {WishListService} from './wishListService'
 import { paymentService } from './paymentService'
+import {courseLevelManagementService} from './CourseLevelManagementService'
 
 export const API_SERVICES = {
   authService,
@@ -35,7 +34,6 @@ export const API_SERVICES = {
   sectionAndLessonService,
   videoUploadService,
   courseLevelManagementService,
-  courseLevelService,
   pageManagementService,
   quizService,
   homeUserService,

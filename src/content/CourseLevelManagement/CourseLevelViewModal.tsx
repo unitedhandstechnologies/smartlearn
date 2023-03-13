@@ -33,7 +33,7 @@ const CourseLevelViewModal = (props: Props) => {
     try {
       setcourseLevelData([]);
       const response: any = await (
-        API_SERVICES.courseLevelService.getCourseLevelById(
+        API_SERVICES.courseLevelManagementService.getCourseLevelById(
           rowData?.id,
         )
       );
