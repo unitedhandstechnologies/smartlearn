@@ -43,7 +43,6 @@ const Registration = () => {
   const navigateTo = useNavigate();
   const [permission, setPermission] = useState([]);
   const [userType, setUserType] = useState(USER_TYPE_ID.student);
-  const [instructorSignUp, setInstructorSignUp] = useState<boolean>(true);
   const [profileImage, setProfileImage] = useState('No file choosen');
 
   const onClickEyeIcon = () => {
@@ -68,7 +67,8 @@ const Registration = () => {
     code: '91' || '',
     language_id: 1 || DETECT_LANGUAGE[i18n.language],
     gender: '',
-    qualification: ''
+    qualification: '',
+    about: ''
   };
   const RequiredFields = [
     'first_name',
@@ -221,7 +221,6 @@ const Registration = () => {
   const handleClick = () => {
     setUserType(USER_TYPE_ID.mentors);
     setPermission([1, 4, 8]);
-    setInstructorSignUp(false);
   };
   return (
     <Grid
@@ -250,7 +249,7 @@ const Registration = () => {
               ? 'Sign up and start learning'
               : 'Instructor Signup '}
           </Typography>
-          {instructorSignUp ? (
+          {userType === USER_TYPE_ID.student ? (
             <Grid container item style={{ justifyContent: 'end' }}>
               <ButtonComp
                 buttonText="Instructor SignUp"
@@ -495,6 +494,46 @@ const Registration = () => {
             >
               <Avatar alt="SmartLearn" src={edit.getValue('image_url')} />
             </Grid>
+            {userType === USER_TYPE_ID.student ? (
+              <Grid item xs={12} md={12} sx={{ marginTop: '10px' }}>
+                <TextInputComponent
+                  inputLabel="Qualification"
+                  placeholder={'Qualification'}
+                  labelColor={'#78828C'}
+                  borderColor={'#3C78F0'}
+                  value={edit.getValue('qualification')}
+                  onChange={(e) =>
+                    edit.update({ qualification: e.target.value })
+                  }
+                />
+              </Grid>
+            ) : (
+              <>
+                <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
+                  <TextInputComponent
+                    inputLabel="Qualification"
+                    placeholder={'Qualification'}
+                    labelColor={'#78828C'}
+                    borderColor={'#3C78F0'}
+                    value={edit.getValue('qualification')}
+                    onChange={(e) =>
+                      edit.update({ qualification: e.target.value })
+                    }
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
+                  <TextInputComponent
+                    inputLabel="About"
+                    multiline
+                    placeholder={'About'}
+                    labelColor={'#78828C'}
+                    borderColor={'#3C78F0'}
+                    value={edit.getValue('about')}
+                    onChange={(e) => edit.update({ about: e.target.value })}
+                  />
+                </Grid>
+              </>
+            )}
 
             <Grid item xs={12} md={12} sx={{ marginTop: '10px' }}>
               <TextInputComponent
@@ -512,6 +551,7 @@ const Registration = () => {
             <Grid item xs={12} md={6} style={{ marginTop: '10px' }}>
               <TextInputComponent
                 inputLabel={'Password'}
+                required
                 variant="outlined"
                 labelColor={'#78828C'}
                 borderColor={'#3C78F0'}
@@ -546,6 +586,7 @@ const Registration = () => {
             <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
               <TextInputComponent
                 inputLabel={'Confirm Password'}
+                required
                 variant="outlined"
                 labelColor={'#78828C'}
                 borderColor={'#3C78F0'}
@@ -580,7 +621,6 @@ const Registration = () => {
               />
             </Grid>
           </Grid>
-
           <Grid item xs={12} sx={{ marginTop: '20px' }}>
             <ButtonComp
               buttonText="Register"
@@ -594,7 +634,6 @@ const Registration = () => {
               onClickButton={onClickRegister}
             />
           </Grid>
-
           <Grid
             style={{
               display: 'flex',
@@ -629,7 +668,7 @@ const Registration = () => {
                   cursor: 'pointer'
                 }}
                 onClick={
-                  instructorSignUp
+                  userType === USER_TYPE_ID.student
                     ? () => navigateTo('/home/user-login')
                     : () => navigateTo('/admin/login')
                 }
