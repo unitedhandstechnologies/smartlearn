@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Container, makeStyles, useTheme } from '@material-ui/core';
+import { Container,  makeStyles, useTheme } from '@material-ui/core';
 import { Grid, Typography } from '@mui/material';
 import { BasicStockIcon, LineBarIcon } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
@@ -8,6 +8,9 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { getUserId } from 'src/Utils';
 import { API_SERVICES } from 'src/Services';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import {  IconButton} from '@mui/material';
 import {
   DETECT_LANGUAGE,
   HTTP_STATUSES,
@@ -35,7 +38,14 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
   const navigateTo = useNavigate();
   const [whistList, setWishList] = useState([]);
   const userId = getUserId();
-
+  const [view, setView] = useState([0, 2]);
+    const handleNextClick = () => {
+      setView([view[0] + 2, view[1] + 2]);
+      console.log("course",courses)
+    };
+    const handlePrevClick = () => {
+      setView([view[0] - 2, view[1] - 2]);
+    };
   const fetchData = useCallback(async () => {
     try {
       const response: any = await API_SERVICES.courseManagementService.getAll(
@@ -135,6 +145,38 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
               }
             }}
           />
+          <Grid>
+            <IconButton
+              sx={{ color: '#3C78F0' }}
+              onClick={handlePrevClick}
+              disabled={view[0] <= 0}
+            >
+              <ChevronLeftIcon
+                style={{
+                  border: '1px solid #3C78F0',
+                  paddingTop: 1,
+                  width: 37,
+                  height: 50,
+                  borderRadius: 4
+                }}
+              />
+            </IconButton>
+            <IconButton
+              sx={{ color: '#3C78F0' }}
+              onClick={handleNextClick}
+              disabled={view[1] >= courses?.length}
+            >
+              <ChevronRightIcon
+                style={{
+                  border: '1px solid #3C78F0',
+                  paddingTop: 1,
+                  width: 37,
+                  height: 50,
+                  borderRadius: 4
+                }}
+              />
+            </IconButton>
+          </Grid>
 
           <Grid>
             <img src={LineBarIcon} alt="" />
@@ -151,7 +193,7 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
           }}
         >
           {courses?.length ? (
-            courses?.slice(0, 3)?.map((item, index) => {
+            courses?.slice(view[0], view[1])?.map((item, index) => {
               // const findActiveIcon: number = selectedItemId.length
               //   ? selectedItemId.findIndex((selId) => {
               //       return selId === item.id;
