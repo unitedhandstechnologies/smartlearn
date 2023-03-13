@@ -19,6 +19,8 @@ import useStudentInfo from 'src/hooks/useStudentInfo';
 import { Grid } from '@mui/material';
 import CountryCode from 'src/components/CountryCode';
 import { t } from 'i18next';
+import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import VisibilityOffOutlinedIcon from '@material-ui/icons/VisibilityOffOutlined';
 
 const useStyles = makeStyles((theme) => ({
   forgotTxt: {
@@ -60,6 +62,8 @@ const ProfileDetails = () => {
   const classes = useStyles();
   const { studentDetails, updateStudentInfo } = useStudentInfo();
   const [profileImage, setProfileImage] = useState('No file chosen');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
   const navigateTo = useNavigate();
   //const { updateStudentInfo } = useStudentInfo();
   const initialValues = {
@@ -102,6 +106,12 @@ const ProfileDetails = () => {
     edit.reset();
     setIsEdit(parseInt(editEvent.currentTarget.id));
   };
+  const onClickEyeIcon = () => {
+    setShowPassword(!showPassword);
+  };
+  const onClickEyeIconConfirm = () => {
+    setShowPasswordConfirm(!showPasswordConfirm);
+  };
 
   const handleChange = (event) => {
     edit.update({ [event.target.name]: event.target.value });
@@ -118,6 +128,14 @@ const ProfileDetails = () => {
       //    return toast.error('Please fill all the required fields');
       //  }
       //setLoading(true);
+      if (edit.getValue('confirmPassword') && edit.getValue('password')) {
+        if (
+          edit.getValue('confirmPassword') !== edit.getValue('password') ||
+          edit.getValue('password').length < 7
+        ) {
+          return setError(true);
+        }
+      }
       let data = { ...edit.edits };
 
       const response: any = await API_SERVICES.adminUserService.update(
@@ -443,16 +461,31 @@ const ProfileDetails = () => {
         <Grid container spacing={1} item style={{ paddingTop: 15 }}>
           <Grid item xs={12} md={6}>
             <TextInputComponent
-              placeholder={'Enter new password'}
               inputLabel={'Password'}
-              borderColor={'#3C78F0'}
+              placeholder={'Enter new password'}
               variant="outlined"
               labelColor={'#78828C'}
+              borderColor={'#3C78F0'}
               value={edit.getValue('password')}
+              size="medium"
+              type={showPassword ? 'text' : 'password'}
               onChange={(e) => edit.update({ password: e.target.value })}
-              type={'password'}
-              inputProps={{
-                maxLength: 12
+              InputProps={{
+                endAdornment: (
+                  <IconButton
+                    //   className={styles.eyeIcon}
+                    onClick={onClickEyeIcon}
+                    disableFocusRipple
+                    disableRipple
+                    edge="end"
+                  >
+                    {showPassword ? (
+                      <VisibilityOutlinedIcon />
+                    ) : (
+                      <VisibilityOffOutlinedIcon />
+                    )}
+                  </IconButton>
+                )
               }}
               helperText={
                 passwordError &&
@@ -470,19 +503,37 @@ const ProfileDetails = () => {
           <Divider sx={{ color: '#F2F4F7', marginTop: 5, height: '1px' }} />
           <Grid item xs={12} md={6}>
             <TextInputComponent
-              inputLabel="Confirm Password"
+              inputLabel={'Confirm Password'}
               placeholder={'Enter confirm password'}
-              borderColor={'#3C78F0'}
               variant="outlined"
               labelColor={'#78828C'}
+              borderColor={'#3C78F0'}
               value={edit.getValue('confirmPassword')}
-              type={'password'}
+              size="medium"
+              type={showPasswordConfirm ? 'text' : 'password'}
+              onChange={(e) => edit.update({ confirmPassword: e.target.value })}
+              InputProps={{
+                endAdornment: (
+                  <IconButton
+                    //   className={styles.eyeIcon}
+                    onClick={onClickEyeIconConfirm}
+                    disableFocusRipple
+                    disableRipple
+                    edge="end"
+                  >
+                    {showPasswordConfirm ? (
+                      <VisibilityOutlinedIcon />
+                    ) : (
+                      <VisibilityOffOutlinedIcon />
+                    )}
+                  </IconButton>
+                )
+              }}
               helperText={
                 confirmPasswordError &&
                 'Both password and confirm password should be same!'
               }
               isError={confirmPasswordError}
-              onChange={(e) => edit.update({ confirmPassword: e.target.value })}
             />
           </Grid>
 

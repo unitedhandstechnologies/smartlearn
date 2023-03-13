@@ -482,7 +482,17 @@ const Registration = () => {
                 }
               />
             </Grid>
-            <Grid item xs={12} md={6} sx={{ marginTop: 5 }}>
+            <Grid
+              item
+              xs={12}
+              md={6}
+              sx={{
+                marginTop: 5,
+                [theme.breakpoints.down('sm')]: {
+                  marginTop: 0
+                }
+              }}
+            >
               <Avatar alt="SmartLearn" src={edit.getValue('image_url')} />
             </Grid>
 
