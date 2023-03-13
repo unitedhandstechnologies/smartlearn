@@ -103,7 +103,11 @@ function AdminDashboard() {
         {userDetails.user_type === USER_TYPE_ID.mentors ? (
           <Grid>
             <Heading
-              headingText={'Reports'}
+              headingText={
+                userDetails.user_type === USER_TYPE_ID.mentors
+                  ? `${userDetails.first_name}'s Reports `
+                  : 'Reports'
+              }
               headerFontSize={'32px'}
               headerFontWeight={500}
               headingColor={'#3C414B'}

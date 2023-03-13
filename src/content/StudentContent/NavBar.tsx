@@ -364,9 +364,12 @@ function NavBar() {
                       ? studentDetails?.image_url
                       : avatar3
                   }
-                  width={30}
-                  height={30}
-                  style={{ marginRight: 10 }}
+                  style={{
+                    marginRight: 10,
+                    width: 30,
+                    height: 30,
+                    borderRadius: '50% '
+                  }}
                 />
                 {`${studentDetails?.first_name} ${studentDetails?.last_name}`}
               </Button>
@@ -386,7 +389,7 @@ function NavBar() {
               >
                 {`Profile`}
               </Button>
-              <Button
+              {/* <Button
                 style={{
                   display: 'block',
                   textTransform: 'none',
@@ -398,7 +401,7 @@ function NavBar() {
                 onClick={handleCartClick}
               >
                 {'Cart'}
-              </Button>
+              </Button> */}
 
               <Button
                 style={{

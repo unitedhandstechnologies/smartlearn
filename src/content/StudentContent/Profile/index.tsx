@@ -95,7 +95,7 @@ const Profile = () => {
     try {
       const response: any =
         await API_SERVICES.enrollmentManagementService.getById(userId, {
-          failureMessage: 'No course enrolled with the Student'
+          failureMessage: ''
         });
 
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {

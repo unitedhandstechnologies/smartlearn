@@ -380,12 +380,13 @@ const ProfileDetails = () => {
             />
           </Grid>
           <Grid item xs={12} md={6}>
-          <TextInputComponent
-            inputLabel="Qualification"
-            labelColor={'#78828C'}
-            borderColor={'#3C78F0'}
-            value={edit.getValue('qualification')}
-            inputRef={(ele) => {
+            <TextInputComponent
+              inputLabel="Qualification"
+              placeholder={'Enter qualification'}
+              labelColor={'#78828C'}
+              borderColor={'#3C78F0'}
+              value={edit.getValue('qualification')}
+              inputRef={(ele) => {
                 if (ele) {
                   ele.focus();
                 }
@@ -394,8 +395,8 @@ const ProfileDetails = () => {
               name="qualification"
               disabled={isEdit !== 4}
               iconEnd={<EditComp btnId={4} />}
-          />
-        </Grid>
+            />
+          </Grid>
 
           <Grid item xs={12} md={6}>
             <TextInputComponent

@@ -126,14 +126,18 @@ const InstructorReportsTable = ({
 
   return (
     <MuiTable
-      title={t('reports.instructorReports')}
+      title={
+        userDetails.user_type === USER_TYPE_ID.mentors
+          ? null
+          : t('reports.instructorReports')
+      }
       columns={columns}
       rows={rowItems}
       autoHeight={true}
-      getRowActions={renderRowActions}
-      // getRowActions={
-      //   userDetails.user_type === USER_TYPE_ID.mentors ? null : renderRowActions
-      // }
+      //getRowActions={renderRowActions}
+      getRowActions={
+        userDetails.user_type === USER_TYPE_ID.mentors ? null : renderRowActions
+      }
     />
   );
 };
