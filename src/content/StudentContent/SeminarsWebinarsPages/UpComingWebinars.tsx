@@ -47,77 +47,6 @@ const useStyle = makeStyles((theme) => ({
     }
   }
 }));
-const headerChipItem = [
-  {
-    name: 'Difficulty',
-    id: 0,
-    labelItems: [
-      {
-        id: 0,
-        label: 'All'
-      },
-      {
-        id: 1,
-        label: 'Beginner',
-        icon: BeginnerIcon
-      },
-      {
-        id: 2,
-        label: 'Intermediate',
-        icon: IntermediateIcon
-      },
-      {
-        id: 3,
-        label: 'Advanced',
-        icon: BarChartFillIcon
-      }
-    ]
-  },
-  {
-    name: 'Mode',
-    img: Offline,
-    id: 1,
-    labelItems: [
-      {
-        id: 0,
-        label: 'All'
-      },
-      {
-        id: 1,
-        label: 'Online',
-        icon: ZoomIcon
-      },
-      {
-        id: 2,
-        label: 'Offline',
-        icon: LocationIcon
-      }
-    ]
-  },
-  {
-    name: 'Language',
-    img: Language,
-    id: 2,
-    labelItems: [
-      {
-        id: 0,
-        label: 'All'
-      },
-      {
-        id: 1,
-        label: 'English'
-      },
-      {
-        id: 2,
-        label: 'Hindi'
-      },
-      {
-        id: 3,
-        label: 'Gujarati'
-      }
-    ]
-  }
-];
 
 type CourseProps = {
   courseDetails?: any[];
@@ -134,7 +63,7 @@ const UpComingWebinars = ({
   chipIconText,
   onSearchValChange,
   handleClearSearchValue,
-  searchval
+  searchval,
 }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
@@ -147,6 +76,68 @@ const UpComingWebinars = ({
   const navigateTo = useNavigate();
   const [whistList, setWishList] = useState([]);
   const userId = getUserId();
+  const [loading, setLoading] = useState(true);  
+
+  const [courseLevelData, setCourseLevelData] = useState([]);
+
+  const getCourseLevels =useMemo (async()=>{
+    try{
+      const response : any =
+        await API_SERVICES.courseLevelManagementService.getAllCourseLevels(DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english);
+        let tempCourseLevel=response?.data?.courseLevel;
+        const courseLevelArray = Array(tempCourseLevel.length+1).fill(0);
+        courseLevelArray[0] = {
+          id: 0,
+          label: 'All',
+        }
+        tempCourseLevel.map((item,index)=>{
+          
+          courseLevelArray[index+1] = {
+            id: item.course_level_id,
+            label: item.course_level_name,
+          }
+        
+        });
+        setCourseLevelData(courseLevelArray);
+    }catch(e){
+  
+    }finally {
+      setLoading(false);
+    }
+  },[]);
+  
+  
+  const headerChipItem = [
+    {
+      name: 'Difficulty',
+      id: 0,
+      labelItems: courseLevelData,
+    },
+    {
+      name: 'Language',
+      img: Language,
+      id: 1,
+      labelItems: [
+        {
+          id: 0,
+          label: 'All'
+        },
+        {
+          id: 1,
+          label: 'English'
+        },
+        {
+          id: 2,
+          label: 'Hindi'
+        },
+        {
+          id: 3,
+          label: 'Gujarati'
+        }
+      ]
+    }
+  ];
+
 
   const handleOpen = (event, item) => {
     setMenuItem({
@@ -182,27 +173,18 @@ const UpComingWebinars = ({
         (item) => item.course_level_id == chipFilterItem[0]
       );
     }
+    
     if (chipFilterItem[1] != 0) {
       filteredCourse = (
-        chipFilterItem[0] != 0 ? filteredCourse : courseDetails
-      ).filter(
-        (item) =>
-          item.course_mode ==
-          headerChipItem[1].labelItems[chipFilterItem[1]].label
-      );
-    }
-    if (chipFilterItem[2] != 0) {
-      filteredCourse = (
-        chipFilterItem[0] != 0 || chipFilterItem[1] != 0
+        chipFilterItem[0] != 0 
           ? filteredCourse
           : courseDetails
-      ).filter((item) => item.language_id == chipFilterItem[2]);
-      changeLanguage(chipFilterItem[2]);
+      ).filter((item) => item.language_id == chipFilterItem[1]);
+      changeLanguage(chipFilterItem[1]);
     }
     if (
       chipFilterItem[0] === 0 &&
-      chipFilterItem[1] === 0 &&
-      chipFilterItem[2] === 0
+      chipFilterItem[1] === 0 
     ) {
       setCourses([...courseDetails]);
     } else {
@@ -348,7 +330,7 @@ const UpComingWebinars = ({
                   key={index}
                   chipText={item.name}
                   checkboxText={
-                    headerChipItem[index].labelItems[chipIconText[index]].label
+                    headerChipItem[index]?.labelItems[chipIconText[index]]?.label
                   }
                   onClick={(event) => handleOpen(event, item)}
                   img={item.img}

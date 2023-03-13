@@ -41,6 +41,7 @@ import SearchComponent from '../SearchComponent';
 import { API_SERVICES } from 'src/Services';
 import { getUserId } from 'src/Utils';
 import { toast } from 'react-hot-toast';
+import { Loader } from 'src/components';
 const useStyle = makeStyles((theme) => ({
   eachItem: {
     '&.MuiGrid-item': {
@@ -48,56 +49,6 @@ const useStyle = makeStyles((theme) => ({
     }
   }
 }));
-const headerChipItem = [
-  {
-    name: 'Difficulty',
-    id: 0,
-    labelItems: [
-      {
-        id: 0,
-        label: 'All'
-      },
-      {
-        id: 1,
-        label: 'Beginner',
-        icon: BeginnerIcon
-      },
-      {
-        id: 2,
-        label: 'Intermediate',
-        icon: IntermediateIcon
-      },
-      {
-        id: 3,
-        label: 'Advanced',
-        icon: BarChartFillIcon
-      }
-    ]
-  },
-  {
-    name: 'Language',
-    img: Language,
-    id: 2,
-    labelItems: [
-      {
-        id: 0,
-        label: 'All'
-      },
-      {
-        id: 1,
-        label: 'English'
-      },
-      {
-        id: 2,
-        label: 'Hindi'
-      },
-      {
-        id: 3,
-        label: 'Gujarati'
-      }
-    ]
-  }
-];
 
 type CourseProps = {
   courseDetails?: any[];
@@ -106,6 +57,8 @@ type CourseProps = {
   onSearchValChange?: (event) => void;
   handleClearSearchValue?: () => void;
   searchval?: string;
+  chipFilterItem?:any;
+  setChipFilterItem?:any;
 };
 
 const UpComingSeminars = ({
@@ -114,12 +67,14 @@ const UpComingSeminars = ({
   setChipIconText,
   onSearchValChange,
   handleClearSearchValue,
-  searchval
+  searchval,
+  setChipFilterItem,
+  chipFilterItem,
 }: CourseProps) => {
   const theme = useTheme();
   const classes = useStyle();
   const { i18n } = useTranslation();
-  const [chipFilterItem, setChipFilterItem] = useState([0, 1]);
+  //const [chipFilterItem, setChipFilterItem] = useState([0, 1]);
   const [menuItem, setMenuItem] = useState<any>({});
   const [anchorEl, setAnchorEl] = useState(null);
   const [courses, setCourses] = useState([]);
@@ -127,6 +82,68 @@ const UpComingSeminars = ({
   const navigateTo = useNavigate();
   const [whistList, setWishList] = useState([]);
   const userId = getUserId();
+  const [loading, setLoading] = useState(true);  
+
+  const [courseLevelData, setCourseLevelData] = useState([]);
+
+  const getCourseLevels =useMemo (async()=>{
+    try{
+      const response : any =
+        await API_SERVICES.courseLevelManagementService.getAllCourseLevels(DETECT_LANGUAGE[i18n.language] ?? LANGUAGE_ID.english);
+        let tempCourseLevel=response?.data?.courseLevel;
+        const courseLevelArray = Array(tempCourseLevel.length+1).fill(0);
+        courseLevelArray[0] = {
+          id: 0,
+          label: 'All',
+        }
+        tempCourseLevel.map((item,index)=>{
+          
+          courseLevelArray[index+1] = {
+            id: item.course_level_id,
+            label: item.course_level_name,
+          }
+        
+        });
+        setCourseLevelData(courseLevelArray);
+    }catch(e){
+  
+    }finally {
+      setLoading(false);
+    }
+  },[]);
+  
+  
+  const headerChipItem = [
+    {
+      name: 'Difficulty',
+      id: 0,
+      labelItems: courseLevelData,
+    },
+    {
+      name: 'Language',
+      img: Language,
+      id: 1,
+      labelItems: [
+        {
+          id: 0,
+          label: 'All'
+        },
+        {
+          id: 1,
+          label: 'English'
+        },
+        {
+          id: 2,
+          label: 'Hindi'
+        },
+        {
+          id: 3,
+          label: 'Gujarati'
+        }
+      ]
+    }
+  ];
+
 
   const handleOpen = (event, item) => {
     setMenuItem({
@@ -138,7 +155,7 @@ const UpComingSeminars = ({
   };
 
   const handleChange = (index) => {
-    chipFilterItem[menuItem.chipId] = index;
+    chipFilterItem[menuItem.chipId] = index;    
     setChipFilterItem([...chipFilterItem]);
   };
 
@@ -156,18 +173,20 @@ const UpComingSeminars = ({
   };
 
   const handleApply = () => {
-    let filteredCourse = [];
+    let filteredCourse = [];    
     if (chipFilterItem[0] != 0) {
+      let indexValue = chipFilterItem[0];  
       filteredCourse = courseDetails.filter(
-        (item) => item.course_level_id == chipFilterItem[0]
+        (item) => item.course_level_id == headerChipItem[0].labelItems[indexValue].id
       );
     }
-    if (chipFilterItem[1] != 0) {
+    
+    if (chipFilterItem[1] !== 0) {
       filteredCourse = (
-        chipFilterItem[0] != 0 || chipFilterItem[1] != 0
+        chipFilterItem[0] !== 0 
           ? filteredCourse
           : courseDetails
-      ).filter((item) => item.language_id == chipFilterItem[1]);
+      ).filter((item) => item.language_id === chipFilterItem[1]);
       changeLanguage(chipFilterItem[1]);
     }
     if (chipFilterItem[0] === 0 && chipFilterItem[1] === 0) {
@@ -180,6 +199,7 @@ const UpComingSeminars = ({
   };
 
   const changeLanguage = (chipValue) => {
+     
     if (chipValue === 1) {
       return i18n.changeLanguage('en');
     } else if (chipValue === 2) {
@@ -272,7 +292,9 @@ const UpComingSeminars = ({
       toast.error('Please login');
     }
   };
-
+  if (loading) {
+    return <Loader />;
+  } else {
   return (
     <Grid container sx={{ position: 'relative' }}>
       <SeminarWebinarBanner
@@ -315,7 +337,7 @@ const UpComingSeminars = ({
                   key={index}
                   chipText={item.name}
                   checkboxText={
-                    headerChipItem[index].labelItems[chipIconText[index]].label
+                    headerChipItem[index]?.labelItems[chipIconText[index]]?.label
                   }
                   onClick={(event) => handleOpen(event, item)}
                   img={item.img}
@@ -425,6 +447,7 @@ const UpComingSeminars = ({
       />
     </Grid>
   );
+}
 };
 
 export default UpComingSeminars;

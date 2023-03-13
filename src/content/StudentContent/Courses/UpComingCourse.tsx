@@ -92,34 +92,9 @@ const UpComingCourse = ({
         
         });
         setCourseLevelData(courseLevelArray);
-
-        
-        /* return ([
-          {
-            id: 0,
-            label: 'All'
-          },
-          {
-            id: 1,
-            label: 'Beginner',
-            icon: BeginnerIcon
-          },
-          {
-            id: 2,
-            label: 'Intermediate',
-            icon: IntermediateIcon
-          },
-          {
-            id: 3,
-            label: 'Advanced',
-            icon: BarChartFillIcon
-          }
-        ]); */
     }catch(e){
   
-    }
-    
-   
+    }   
   },[]);
   
 
@@ -225,7 +200,6 @@ const UpComingCourse = ({
   const handleApply = () => {
     let filteredCourse = [];
     if (chipFilterItem[0] != 0) {
-    //labelItems[chipFilterItem[0]]   
       let indexValue = chipFilterItem[0];  
       filteredCourse = courseDetails.filter(
         (item) =>         

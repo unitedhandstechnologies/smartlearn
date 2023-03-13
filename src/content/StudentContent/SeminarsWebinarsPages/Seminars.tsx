@@ -1,6 +1,6 @@
 import { useTheme, Container } from '@material-ui/core';
 import { Grid, Box } from '@mui/material';
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { Loader } from 'src/components';
@@ -8,12 +8,14 @@ import {
   COURSE_STATUS_NAME,
   COURSE_TYPE_NAME,
   DETECT_LANGUAGE,
-  HTTP_STATUSES
+  HTTP_STATUSES,
+  LANGUAGE_ID
 } from 'src/Config/constant';
 import { useDebounce } from 'src/hooks/useDebounce';
 import { API_SERVICES } from 'src/Services';
 import UpComingSeminars from './UpComingSeminars';
 import UpComingWebinars from './UpComingWebinars';
+import Language from '../../../Assets/Images/Language.svg';
 
 const Seminars = () => {
   const theme = useTheme();
@@ -25,7 +27,8 @@ const Seminars = () => {
   const { i18n } = useTranslation();
   const [searchval, setSearchVal] = useState('');
   const debValue = useDebounce(searchval, 1000);
-
+  const [chipFilterItem, setChipFilterItem] = useState([0, 1]);
+  
   const handleSearchValue = (value) => {
     setSearchVal(value);
   };
@@ -89,6 +92,8 @@ const Seminars = () => {
             onSearchValChange={handleSearchValue}
             handleClearSearchValue={handleClearSearchValue}
             searchval={searchval}
+            setChipFilterItem={setChipFilterItem}
+            chipFilterItem={chipFilterItem}
           />
           <UpComingWebinars
             courseDetails={webinarCourseDetails}
