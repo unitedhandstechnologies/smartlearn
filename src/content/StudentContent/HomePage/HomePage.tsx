@@ -173,7 +173,7 @@ const HomePage = () => {
           }}
         >
           <FAQs faqDetails={faqDetails} />
-          <PaytmCheckouts />
+          {/* <PaytmCheckouts /> */}
         </Grid>
       </Grid>
     );
