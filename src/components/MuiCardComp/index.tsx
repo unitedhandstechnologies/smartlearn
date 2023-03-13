@@ -357,7 +357,8 @@ const MuiCardComp = ({
                 }}
               />
             ) : (
-              <h4 style={{ color: '#3cc878', textAlign: 'center' }}>Free</h4>
+              null
+              // <h4 style={{ color: '#3cc878', textAlign: 'center' }}>Free</h4>
             )}
           </Grid>
           <Grid item xs>

@@ -201,7 +201,8 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
               );
             })
           ) : (
-            <Typography>No Related Courses</Typography>
+            null
+            // <Typography>No Related Courses</Typography>
           )}
         </Grid>
       </Grid>
