@@ -68,7 +68,7 @@ const SearchComponent = ({
             <img
               src={searchval === '' ? SearchIconImg : CloseIcon}
               width={searchval === '' ? '40px' : '18px'}
-              height={searchval === '' ? '40px' : '18px'}
+              height={searchval === '' ? '35px' : '18px'}
             />
           </IconButton>
         </InputAdornment>
