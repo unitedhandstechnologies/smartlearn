@@ -56,7 +56,7 @@ const RateYourExperience = ({ courseDetails }) => {
     try {
       if (!edit.allFilled(...RequiredFields)) {
         setError(true);
-        return toast.error('Please fill all the fields');
+        return toast.error('Please select the stars');
       }
       let userData = { ...data, ...edit.edits };
       const response: any = await API_SERVICES.homeUserService.create(
@@ -203,7 +203,7 @@ const RateYourExperience = ({ courseDetails }) => {
           <FormControl error={true}>
             <FormControlLabel
               labelPlacement="top"
-              label="Hi"
+              label=""
               control={
                 <Rating
                   sx={{ color: '#3C78F0' }}
@@ -214,7 +214,6 @@ const RateYourExperience = ({ courseDetails }) => {
                   }}
                 />
               }
-              
             />
           </FormControl>
         </Grid>
