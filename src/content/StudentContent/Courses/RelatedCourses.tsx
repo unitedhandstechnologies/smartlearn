@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Container,  makeStyles, useTheme } from '@material-ui/core';
+import { Container, makeStyles, useTheme } from '@material-ui/core';
 import { Grid, Typography } from '@mui/material';
 import { BasicStockIcon, LineBarIcon } from 'src/Assets';
 import MuiCardComp from 'src/components/MuiCardComp';
@@ -10,7 +10,7 @@ import { getUserId } from 'src/Utils';
 import { API_SERVICES } from 'src/Services';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import {  IconButton} from '@mui/material';
+import { IconButton } from '@mui/material';
 import {
   DETECT_LANGUAGE,
   HTTP_STATUSES,
@@ -38,14 +38,14 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
   const navigateTo = useNavigate();
   const [whistList, setWishList] = useState([]);
   const userId = getUserId();
-  const [view, setView] = useState([0, 2]);
-    const handleNextClick = () => {
-      setView([view[0] + 2, view[1] + 2]);
-      console.log("course",courses)
-    };
-    const handlePrevClick = () => {
-      setView([view[0] - 2, view[1] - 2]);
-    };
+  const [view, setView] = useState([0, 3]);
+  const handleNextClick = () => {
+    setView([view[0] + 2, view[1] + 2]);
+    console.log('course', courses);
+  };
+  const handlePrevClick = () => {
+    setView([view[0] - 2, view[1] - 2]);
+  };
   const fetchData = useCallback(async () => {
     try {
       const response: any = await API_SERVICES.courseManagementService.getAll(
@@ -126,25 +126,29 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
 
   return (
     <Container
-      maxWidth="lg"
-      style={{
-        maxWidth: '1200px'
-      }}
+    // maxWidth="lg"
+    // style={{ maxWidth: '1200px' }}
     >
       <Grid>
-        <Grid item style={{ padding: '0px 0px 40px 0px' }}>
-          <Heading
-            headingText={'Related Courses:'}
-            headerFontSize={'40px'}
-            headerFontWeight={500}
-            headingColor={'#3C414B'}
-            headerFontFamily={'Switzer'}
-            style={{
-              [theme.breakpoints.down('xs')]: {
-                fontSize: 15
-              }
-            }}
-          />
+        <Grid
+          container
+          justifyContent={'space-between'}
+          sx={{ padding: '0 0 40px 0px' }}
+        >
+          <Grid>
+            <Heading
+              headingText={'Related Courses:'}
+              headerFontSize={'40px'}
+              headerFontWeight={500}
+              headingColor={'#3C414B'}
+              headerFontFamily={'Switzer'}
+              style={{
+                [theme.breakpoints.down('xs')]: {
+                  fontSize: 15
+                }
+              }}
+            />
+          </Grid>
           <Grid>
             <IconButton
               sx={{ color: '#3C78F0' }}
@@ -176,9 +180,6 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
                 }}
               />
             </IconButton>
-          </Grid>
-
-          <Grid>
             <img src={LineBarIcon} alt="" />
           </Grid>
         </Grid>
@@ -192,60 +193,62 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
             }
           }}
         >
-          {courses?.length ? (
-            courses?.slice(view[0], view[1])?.map((item, index) => {
-              // const findActiveIcon: number = selectedItemId.length
-              //   ? selectedItemId.findIndex((selId) => {
-              //       return selId === item.id;
-              //     })
-              //   : -1;
-              // isActive = wishlistIds ?? findActiveIcon !== -1;
-              return (
-                <Grid
-                  key={index}
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  className={classes.eachItem}
-                >
-                  <MuiCardComp
-                    key={index}
-                    imgUrl={item.image_url ? item.image_url : BasicStockIcon}
-                    rightText={item.course_type}
-                    leftText={item.cost_type}
-                    heading={item.category_name}
-                    title={item.course_name}
-                    subText={item.course_description}
-                    courseLevel={item.course_level_name}
-                    courseLanguage={
-                      item.language_id === 1
-                        ? 'English'
-                        : item.language_id === 2
-                        ? 'Hindi'
-                        : 'Gujarati'
-                    }
-                    date={item.starting_date}
-                    endingDate={item.ending_date}
-                    zoomLink={item.meeting_link}
-                    locationName={item.meeting_location}
-                    subCategory={item.sub_category_name}
-                    courseType={item.course_type}
-                    prize={item.amount}
-                    onClickCardImage={() => onClickCardImage(item)}
-                    course_id={item.course_id}
-                    discount={item.discount}
-                    item={item}
-                    // isActive={isActive}
-                    // handleOnClick={() => handleOnClick(item)}
-                  />
-                </Grid>
-              );
-            })
-          ) : (
-            null
+          {
+            courses?.length
+              ? courses?.slice(view[0], view[1])?.map((item, index) => {
+                  // const findActiveIcon: number = selectedItemId.length
+                  //   ? selectedItemId.findIndex((selId) => {
+                  //       return selId === item.id;
+                  //     })
+                  //   : -1;
+                  // isActive = wishlistIds ?? findActiveIcon !== -1;
+                  return (
+                    <Grid
+                      key={index}
+                      item
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      className={classes.eachItem}
+                    >
+                      <MuiCardComp
+                        key={index}
+                        imgUrl={
+                          item.image_url ? item.image_url : BasicStockIcon
+                        }
+                        rightText={item.course_type}
+                        leftText={item.cost_type}
+                        heading={item.category_name}
+                        title={item.course_name}
+                        subText={item.course_description}
+                        courseLevel={item.course_level_name}
+                        courseLanguage={
+                          item.language_id === 1
+                            ? 'English'
+                            : item.language_id === 2
+                            ? 'Hindi'
+                            : 'Gujarati'
+                        }
+                        date={item.starting_date}
+                        endingDate={item.ending_date}
+                        zoomLink={item.meeting_link}
+                        locationName={item.meeting_location}
+                        subCategory={item.sub_category_name}
+                        courseType={item.course_type}
+                        prize={item.amount}
+                        onClickCardImage={() => onClickCardImage(item)}
+                        course_id={item.course_id}
+                        discount={item.discount}
+                        item={item}
+                        // isActive={isActive}
+                        // handleOnClick={() => handleOnClick(item)}
+                      />
+                    </Grid>
+                  );
+                })
+              : null
             // <Typography>No Related Courses</Typography>
-          )}
+          }
         </Grid>
       </Grid>
     </Container>
