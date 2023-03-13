@@ -92,9 +92,10 @@ const HomePage = () => {
       }
       if (response[4]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[4]?.data?.bannerManagement?.length) {
-          let enabledBannerManagement = response[4]?.data?.bannerManagement.filter((item) => {
-            return item.banner_status === COURSE_STATUS_ID.enabled
-          })
+          let enabledBannerManagement =
+            response[4]?.data?.bannerManagement.filter((item) => {
+              return item.banner_status === COURSE_STATUS_ID.enabled;
+            });
           setBannerManagement(enabledBannerManagement);
         }
       }
@@ -121,7 +122,7 @@ const HomePage = () => {
         <Grid
           container
           direction="column"
-          style={{ padding: theme.spacing(7, 7) }}
+          style={{ padding: theme.spacing(7, 0) }}
         >
           <USPs bannerManagement={bannerManagement} />
         </Grid>
@@ -129,7 +130,7 @@ const HomePage = () => {
           container
           direction="column"
           sx={{
-            padding: theme.spacing(7, 7),
+            padding: theme.spacing(7, 0),
             backgroundImage: `url(${BackgroundLine})`,
             [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
           }}
@@ -140,7 +141,7 @@ const HomePage = () => {
           container
           direction="column"
           style={{
-            padding: theme.spacing(7, 7),
+            padding: theme.spacing(7, 0),
             background: theme.Colors.white
           }}
         >
@@ -158,7 +159,7 @@ const HomePage = () => {
         <Grid
           container
           direction="column"
-          style={{ padding: theme.spacing(10, 7), background: '#F2F4F7' }}
+          style={{ padding: theme.spacing(10, 0), background: '#F2F4F7' }}
         >
           <Reviews ratingData={ratingData} />
         </Grid>
@@ -167,12 +168,12 @@ const HomePage = () => {
           container
           direction="column"
           style={{
-            padding: theme.spacing(7, 7),
+            padding: theme.spacing(7, 0),
             background: theme.Colors.white
           }}
         >
           <FAQs faqDetails={faqDetails} />
-          <PaytmCheckouts/>
+          <PaytmCheckouts />
         </Grid>
       </Grid>
     );

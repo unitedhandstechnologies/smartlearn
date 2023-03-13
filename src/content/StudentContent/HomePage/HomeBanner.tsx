@@ -31,7 +31,8 @@ const HomeBanner = ({ bannerManagement }) => {
           [theme.breakpoints.up('md')]: {
             padding: theme.spacing(4, 0, 2, 4),
             clipPath: 'polygon(0% 0%, 100% 0%, 94% 100%, 0% 100%)'
-          }
+          },
+          [theme.breakpoints.down('xs')]: { padding: theme.spacing(4, 4, 7, 4) }
         }}
       >
         <Typography
@@ -107,7 +108,7 @@ const HomeBanner = ({ bannerManagement }) => {
           height: '100%'
         }}
       >
-         <img
+        <img
           src={HomePageRight}
           style={{
             height: '100%'

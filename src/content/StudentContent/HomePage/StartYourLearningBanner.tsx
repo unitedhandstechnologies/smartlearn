@@ -17,8 +17,13 @@ const StartYourLearningBanner = () => {
         width: '100%',
         position: 'relative',
         overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
         [theme.breakpoints.down('sm')]: {
           padding: theme.spacing(2, 6)
+        },
+        [theme.breakpoints.down('xs')]: {
+          padding: theme.spacing(4, 0, 4, 0)
         }
       }}
     >
@@ -46,7 +51,6 @@ const StartYourLearningBanner = () => {
                 fontWeight: 700,
                 fontFamily: 'IBM Plex Serif',
                 lineHeight: '120%',
-                marginTop: 40
               }}
             >
               Start your journey of smarter{' '}
@@ -64,7 +68,7 @@ const StartYourLearningBanner = () => {
             justifyContent="flex-end"
             sx={{
               [theme.breakpoints.down('xs')]: {
-                justifyContent: 'center'
+                justifyContent: 'flex-start'
               },
               zIndex: 1
             }}
@@ -87,6 +91,7 @@ const StartYourLearningBanner = () => {
               height: '100%',
               position: 'absolute',
               right: '5.4%',
+              top: '0px',
               display: 'flex',
               [theme.breakpoints.down('sm')]: {
                 display: 'none'

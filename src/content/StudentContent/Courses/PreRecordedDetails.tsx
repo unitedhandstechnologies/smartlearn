@@ -118,6 +118,9 @@ const PreRecordedDetails = () => {
           padding: 5,
           [theme.breakpoints.down('sm')]: {
             flexDirection: 'column'
+          },
+          [theme.breakpoints.down('xs')]: {
+            padding: 0
           }
         }}
       >
