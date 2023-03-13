@@ -40,11 +40,11 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
   const userId = getUserId();
   const [view, setView] = useState([0, 3]);
   const handleNextClick = () => {
-    setView([view[0] + 2, view[1] + 2]);
+    setView([view[0] + 3, view[1] + 3]);
     console.log('course', courses);
   };
   const handlePrevClick = () => {
-    setView([view[0] - 2, view[1] - 2]);
+    setView([view[0] - 3, view[1] - 3]);
   };
   const fetchData = useCallback(async () => {
     try {
@@ -126,16 +126,14 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
 
   return (
     <Container
-    // maxWidth="lg"
-    // style={{ maxWidth: '1200px' }}
+      maxWidth="lg"
+      style={{
+        maxWidth: '1200px'
+      }}
     >
       <Grid>
-        <Grid
-          container
-          justifyContent={'space-between'}
-          sx={{ padding: '0 0 40px 0px' }}
-        >
-          <Grid>
+        <Grid container justifyContent={'space-between'}>
+          <Grid item style={{ padding: '0px 0px 40px 0px' }}>
             <Heading
               headingText={'Related Courses:'}
               headerFontSize={'40px'}
@@ -148,8 +146,11 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
                 }
               }}
             />
+            <Grid>
+              <img src={LineBarIcon} alt="" />
+            </Grid>
           </Grid>
-          <Grid>
+          <Grid item>
             <IconButton
               sx={{ color: '#3C78F0' }}
               onClick={handlePrevClick}
@@ -180,7 +181,6 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
                 }}
               />
             </IconButton>
-            <img src={LineBarIcon} alt="" />
           </Grid>
         </Grid>
         <Grid
@@ -193,61 +193,52 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
             }
           }}
         >
-          {
-            courses?.length
-              ? courses?.slice(view[0], view[1])?.map((item, index) => {
-                  // const findActiveIcon: number = selectedItemId.length
-                  //   ? selectedItemId.findIndex((selId) => {
-                  //       return selId === item.id;
-                  //     })
-                  //   : -1;
-                  // isActive = wishlistIds ?? findActiveIcon !== -1;
-                  return (
-                    <Grid
+          {courses?.length
+            ? courses?.slice(view[0], view[1])?.map((item, index) => {
+                return (
+                  <Grid
+                    key={index}
+                    item
+                    xs={12}
+                    sm={6}
+                    md={4}
+                    className={classes.eachItem}
+                  >
+                    <MuiCardComp
                       key={index}
-                      item
-                      xs={12}
-                      sm={6}
-                      md={4}
-                      className={classes.eachItem}
-                    >
-                      <MuiCardComp
-                        key={index}
-                        imgUrl={
-                          item.image_url ? item.image_url : BasicStockIcon
-                        }
-                        rightText={item.course_type}
-                        leftText={item.cost_type}
-                        heading={item.category_name}
-                        title={item.course_name}
-                        subText={item.course_description}
-                        courseLevel={item.course_level_name}
-                        courseLanguage={
-                          item.language_id === 1
-                            ? 'English'
-                            : item.language_id === 2
-                            ? 'Hindi'
-                            : 'Gujarati'
-                        }
-                        date={item.starting_date}
-                        endingDate={item.ending_date}
-                        zoomLink={item.meeting_link}
-                        locationName={item.meeting_location}
-                        subCategory={item.sub_category_name}
-                        courseType={item.course_type}
-                        prize={item.amount}
-                        onClickCardImage={() => onClickCardImage(item)}
-                        course_id={item.course_id}
-                        discount={item.discount}
-                        item={item}
-                        // isActive={isActive}
-                        // handleOnClick={() => handleOnClick(item)}
-                      />
-                    </Grid>
-                  );
-                })
-              : null
-            // <Typography>No Related Courses</Typography>
+                      imgUrl={item.image_url ? item.image_url : BasicStockIcon}
+                      rightText={item.course_type}
+                      leftText={item.cost_type}
+                      heading={item.category_name}
+                      title={item.course_name}
+                      subText={item.course_description}
+                      courseLevel={item.course_level_name}
+                      courseLanguage={
+                        item.language_id === 1
+                          ? 'English'
+                          : item.language_id === 2
+                          ? 'Hindi'
+                          : 'Gujarati'
+                      }
+                      date={item.starting_date}
+                      endingDate={item.ending_date}
+                      zoomLink={item.meeting_link}
+                      locationName={item.meeting_location}
+                      subCategory={item.sub_category_name}
+                      courseType={item.course_type}
+                      prize={item.amount}
+                      onClickCardImage={() => onClickCardImage(item)}
+                      course_id={item.course_id}
+                      discount={item.discount}
+                      item={item}
+                      // isActive={isActive}
+                      // handleOnClick={() => handleOnClick(item)}
+                    />
+                  </Grid>
+                );
+              })
+            : null
+              // <Typography>No Related Courses</Typography>
           }
         </Grid>
       </Grid>

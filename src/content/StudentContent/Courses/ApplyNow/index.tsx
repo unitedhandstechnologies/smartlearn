@@ -91,16 +91,21 @@ type Props = {
   isActive?: boolean;
 };
 
-const ApplyNow = ({ course, timeType, duration, handleOnClick, isActive }: Props) => {
+const ApplyNow = ({
+  course,
+  timeType,
+  duration,
+  handleOnClick,
+  isActive
+}: Props) => {
   const { studentDetails } = useContext(StudentInfoContext);
   const { updateCartInfo } = useCartInfo();
   const navigateTo = useNavigate();
   const theme = useTheme();
-  let tax = (course?.amount * 10) / 100;
+  let tax = (course?.amount * course?.discount) / 100;
   let totalPrice = course?.amount - (course?.discount / 100) * course?.amount;
 
   const handleClick = async () => {
-    // if (course?.course_type !== 'Workshop') {
     if (studentDetails.id !== 0) {
       let data = {
         course_id: course?.course_id,
@@ -128,9 +133,6 @@ const ApplyNow = ({ course, timeType, duration, handleOnClick, isActive }: Props
         replace: true
       });
     }
-    // } else {
-    //   return null;
-    // }
   };
 
   const handleNavigate = () => {
@@ -293,19 +295,19 @@ const ApplyNow = ({ course, timeType, duration, handleOnClick, isActive }: Props
                 height: '41px'
               }}
             >
-             <IconButton
-              style={{
-                color: isActive ? '#3C78F0' : theme.Colors.darkGrayishBlue,
-                background: 'transparent',
-                [theme.breakpoints.down('md')]: {
-                  display: 'none'
-                }
-              }}
-              onClick={() => handleOnClick(course, isActive)}
-              disableRipple
-            >
-              {isActive ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-            </IconButton>
+              <IconButton
+                style={{
+                  color: isActive ? '#3C78F0' : theme.Colors.darkGrayishBlue,
+                  background: 'transparent',
+                  [theme.breakpoints.down('md')]: {
+                    display: 'none'
+                  }
+                }}
+                onClick={() => handleOnClick(course, isActive)}
+                disableRipple
+              >
+                {isActive ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              </IconButton>
             </Grid>
           </>
         )}
