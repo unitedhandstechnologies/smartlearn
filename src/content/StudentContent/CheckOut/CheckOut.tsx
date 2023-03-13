@@ -9,10 +9,12 @@ import useCartInfo from 'src/hooks/useCartInfo';
 import { API_SERVICES } from 'src/Services';
 import CheckoutScreen from './CheckoutScreen';
 import Summary from './Summary';
+import useStudentInfo from 'src/hooks/useStudentInfo';
 
 const CheckOut = () => {
   const theme = useTheme();
   const { cartDetails, updateCartInfo } = useCartInfo();
+  const { studentDetails } = useStudentInfo();
   const { t } = useTranslation();
   const [confirmModal, setConfirmModal] = useState<any>({ open: false });
   const navigateTo = useNavigate();
@@ -34,33 +36,76 @@ const CheckOut = () => {
   let totalAmount = total + tax;
 
   const onClickCheckout = async (amount) => {
-    let data = {
-      status_id: 1,
-      enrolled_date: new Date().toLocaleDateString(),
-      amount: amount
-    };
-    const enrollRes: any =
-      await API_SERVICES.enrollmentManagementService.create(
-        studentId,
-        courseId,
-        {
-          data: data,
-          successMessage: 'Course enrolled successfully',
-          failureMessage: 'There is something wrong to enroll the course'
+    try {
+      let req = { user_id: studentDetails.id, amount: 1, email:studentDetails.email_id, mobile_no:studentDetails.phone_number };
+      const response: any = await API_SERVICES.paymentService.create({
+        data: req
+      });
+      if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
+        var config = {
+          root: '',
+          flow: 'DEFAULT',
+          data: {
+            orderId: response.data.orderId,
+            token: response.data.response.body.txnToken,
+            tokenType: 'TXN_TOKEN',
+            amount: '1.00'
+          },
+          merchant: {
+            mid: 'JAINAM95623432247480',
+            redirect: false
+          },
+          handler: {
+            transactionStatus: async function transactionStatus(paymentStatus) {
+              if (paymentStatus.STATUS === 'TXN_SUCCESS') {
+                let data = {
+                  status_id: 1,
+                  enrolled_date: new Date().toLocaleDateString(),
+                  amount: 1
+                };
+                const enrollRes: any =
+                  await API_SERVICES.enrollmentManagementService.create(
+                    studentId,
+                    courseId,
+                    {
+                      data: data,
+                      successMessage: 'Course enrolled successfully',
+                      failureMessage:
+                        'There is something wrong to enroll the course'
+                    }
+                  );
+                if (enrollRes?.status < HTTP_STATUSES.BAD_REQUEST) {
+                  const removeCart: any =
+                    await API_SERVICES.AddToCartService.delete(rowId, {});
+                  if (removeCart?.status < HTTP_STATUSES.BAD_REQUEST) {
+                    updateCartInfo(studentId);
+                    (window as any).Paytm.CheckoutJS.close();
+                    navigateTo('/home/thankyou-page', {
+                      state: courseName,
+                      replace: true
+                    });
+                  }
+                }
+              }
+            },
+            notifyMerchant: function notifyMerchant(eventName, data) {
+            
+            }
+          }
+        };
+
+        if ((window as any).Paytm && (window as any).Paytm.CheckoutJS) {
+          (window as any).Paytm.CheckoutJS.init(config)
+            .then(function onSuccess() {
+              (window as any).Paytm.CheckoutJS.invoke();
+            })
+            .catch(function onError(error) {
+              console.log('error => ', error);
+            });
         }
-      );
-    if (enrollRes?.status < HTTP_STATUSES.BAD_REQUEST) {
-      const removeCart: any = await API_SERVICES.AddToCartService.delete(
-        rowId,
-        {}
-      );
-      if (removeCart?.status < HTTP_STATUSES.BAD_REQUEST) {
-        updateCartInfo(studentId);
-        navigateTo('/home/thankyou-page', {
-          state: courseName,
-          replace: true
-        });
       }
+    } catch (error) {
+      console.error(error, 'error');
     }
   };
 

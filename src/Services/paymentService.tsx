@@ -11,7 +11,7 @@ type PaymentProps = {
 export const paymentService = {
   create: async ({ data, successMessage, failureMessage }: PaymentProps) => {
     const options = await apiOptions({
-      url: `http://localhost:5000/api/CreatePaytm`,
+      url: `${Config.BASE_URL}/api/createPayment`,
       method: 'post',
       data: data
     });
