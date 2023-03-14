@@ -35,14 +35,14 @@ const CourseBegin = () => {
   const [sectionData, setSectionData] = useState<any[]>([]);
   const [quizData, setQuizData] = useState<any[]>([]);
   const [testTopic, setTestTopic] = useState(false);
-  const [showCertificate,setShowCertificate] = useState(false);
+  const [showCertificate, setShowCertificate] = useState(false);
   const [videoDetails, setVideoDetails] = useState<any[]>([]);
   const [videoPlaying, setVideoPlaying] = useState<Number>(0.0);
   const [completedCourse, setCompletedCourse] = useState(false);
-  const [showQuizUnlockedMsg,setShowQuizUnlockedMsg]=useState(true);
-  const [completedQuiz,setCompletedQuiz]=useState(false);
-  const [showNotes, setShowNotes]=useState(false);
-  const [lessonPlaying, setLessonPlaying]=useState(true);
+  const [showQuizUnlockedMsg, setShowQuizUnlockedMsg] = useState(true);
+  const [completedQuiz, setCompletedQuiz] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
+  const [lessonPlaying, setLessonPlaying] = useState(true);
 
   const [autoPlay, setAutoPlay] = useState(true);
   const { state }: any = useLocation();
@@ -51,6 +51,8 @@ const CourseBegin = () => {
     lessonNumber: 0
   });
   const data = state;
+
+  console.log(state, 'state........');
   const fetchData = useCallback(async () => {
     let id = state?.course_id;
     const userId = getUserId();
@@ -125,7 +127,7 @@ const CourseBegin = () => {
                             itemVideo.user_id === userId &&
                             itemVideo.lesson_id === item.lesson_id
                         );
-                        console.log("PDF url",item.pdf_url)
+                        console.log('PDF url', item.pdf_url);
                         tempVideoDetails[sectionNumber - 1][index] = {
                           pdfUrl: item.pdf_url,
                           videoUrl: item.video_url,
@@ -133,7 +135,8 @@ const CourseBegin = () => {
                           videoId: item.lesson_id,
                           videoDuration: item.duration,
                           videoPlayedFraction: tempPercentagePlayed[0].played,
-                          videoPlayedFractionFromDB:tempPercentagePlayed[0].played
+                          videoPlayedFractionFromDB:
+                            tempPercentagePlayed[0].played
                         };
                       });
                     }
@@ -163,36 +166,31 @@ const CourseBegin = () => {
     }
   }, []);
 
- const fetchLevelCompleted = useCallback(async() => {
+  const fetchLevelCompleted = useCallback(async () => {
     try {
       let id = state?.course_id;
       const userId = getUserId();
       const responseCourseCompleted: any =
         await API_SERVICES.enrollmentManagementService.getByCourseIdUserId(
           userId,
-          id,
+          id
         );
-        if(responseCourseCompleted?.status < HTTP_STATUSES.BAD_REQUEST){
-          let islevelMax;
-          let responseData = responseCourseCompleted?.data?.enrolledCourse[0];
-          if(parseInt(responseData?.level) === 100)
-          {
-            islevelMax=true;
-          }else{
-            islevelMax=false;
-          }
-          setCompletedCourse(islevelMax);
-          setCompletedQuiz(responseData.quiz_completed);
-          if(responseData?.level===100  &&
-            responseData.quiz_completed===1)
-              {
-                setShowQuizUnlockedMsg(false);
-              }
+      if (responseCourseCompleted?.status < HTTP_STATUSES.BAD_REQUEST) {
+        let islevelMax;
+        let responseData = responseCourseCompleted?.data?.enrolledCourse[0];
+        if (parseInt(responseData?.level) === 100) {
+          islevelMax = true;
+        } else {
+          islevelMax = false;
         }
-    }catch(e){
-
-    }
-  },[]); 
+        setCompletedCourse(islevelMax);
+        setCompletedQuiz(responseData.quiz_completed);
+        if (responseData?.level === 100 && responseData.quiz_completed === 1) {
+          setShowQuizUnlockedMsg(false);
+        }
+      }
+    } catch (e) {}
+  }, []);
 
   //const fetchSectionsCompletedDetails
   useEffect(() => {

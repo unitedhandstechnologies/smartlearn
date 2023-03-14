@@ -101,6 +101,8 @@ type Props = {
   backBtnRoute?: string;
   neededQuiz?: boolean;
   handleTakeQuiz?: any;
+  viewCertificate?: boolean;
+  handleCertificate?: any;
 };
 const MuiCardComp = ({
   imgUrl,
@@ -133,7 +135,9 @@ const MuiCardComp = ({
   backBtnTxt,
   backBtnRoute,
   neededQuiz,
-  handleTakeQuiz
+  handleTakeQuiz,
+  viewCertificate,
+  handleCertificate
 }: Props) => {
   const theme = useTheme();
   const navigateTo = useNavigate();
@@ -443,6 +447,17 @@ const MuiCardComp = ({
             buttonTextColor={theme.Colors.whitePure}
             buttonText={'Take Quiz'}
             onClickButton={handleTakeQuiz}
+            height={40}
+            btnWidth={'100%'}
+          />
+        </Grid>
+      )}
+      {viewCertificate && (
+        <Grid sx={{ paddingTop: 1 }}>
+          <ButtonComp
+            buttonTextColor={theme.Colors.whitePure}
+            buttonText={'View Certificate'}
+            onClickButton={handleCertificate}
             height={40}
             btnWidth={'100%'}
           />

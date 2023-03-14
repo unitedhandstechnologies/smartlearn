@@ -68,7 +68,20 @@ const USPs = ({ bannerManagement }) => {
             }
           }}
         ></Grid>
-        <Carousel>
+        <Carousel
+          prevIcon={
+            <span
+              style={{ marginRight: 140 }}
+              className="carousel-control-prev-icon"
+            />
+          }
+          nextIcon={
+            <span
+              style={{ marginLeft: 140 }}
+              className="carousel-control-next-icon"
+            />
+          }
+        >
           {bannerManagement.length
             ? bannerManagement?.map((item, index) => {
                 return (

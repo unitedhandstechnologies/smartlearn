@@ -29,7 +29,7 @@ const MyLibrary = ({ enrollCourse }) => {
   const navigateTo = useNavigate();
   const [chipValue, setChipValue] = useState([FILTER_CHIPS[0]]);
   const { wishlistDetails, updateWishlistInfo } = useWishlistInfo();
-  const [quizOpen,setQuizOpen]=useState<any>({open:false})
+  const [quizOpen, setQuizOpen] = useState<any>({ open: false });
   let wishlistIds = [];
   wishlistDetails?.filter((item) => wishlistIds.push(item.id));
 
@@ -76,11 +76,16 @@ const MyLibrary = ({ enrollCourse }) => {
     });
   };
 
-  const handleClickTakeQuiz = (course)=>{
+  const handleClickTakeQuiz = (course) => {
     setQuizOpen({
       open: true,
-      courseDataFromLib: course,
-    })
+      courseDataFromLib: course
+    });
+  };
+  const handleCertificate = () => {
+    navigateTo('/home/certificate', {
+      replace: true
+    });
   };
 
   return (
@@ -170,9 +175,14 @@ const MyLibrary = ({ enrollCourse }) => {
                   backBtnTxt={'All Courses'}
                   backBtnRoute={'/home/profilehome'}
                   neededQuiz={
-                    (chipValue[0] === FILTER_CHIPS[0] || chipValue[0] === FILTER_CHIPS[1]) ?
-                    true : false}
-                  handleTakeQuiz={() =>handleClickTakeQuiz(item)}
+                    chipValue[0] === FILTER_CHIPS[0] ||
+                    chipValue[0] === FILTER_CHIPS[1]
+                      ? true
+                      : false
+                  }
+                  handleTakeQuiz={() => handleClickTakeQuiz(item)}
+                  viewCertificate={item.status_id === 2 ? true : false}
+                  handleCertificate={handleCertificate}
                 />
               </Grid>
             );
@@ -198,10 +208,10 @@ const MyLibrary = ({ enrollCourse }) => {
       ) : null}
 
       {quizOpen.open && (
-            <TakeQuizModal
-                onClose={() => setQuizOpen({ open: false })}
-                {...quizOpen}
-            />
+        <TakeQuizModal
+          onClose={() => setQuizOpen({ open: false })}
+          {...quizOpen}
+        />
       )}
     </Grid>
   );

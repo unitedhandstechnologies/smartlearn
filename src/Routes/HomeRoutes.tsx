@@ -22,6 +22,7 @@ import WishListCourse from 'src/content/StudentContent/Profile/WishListCourse';
 import AfterRegMessage from 'src/content/StudentContent/RegistrationPage/AfterRegMessage';
 import MentorProfile from 'src/content/MentorDashboard/MentorProfile';
 import ViewNotifications from 'src/content/StudentContent/Courses/Notifications/ViewNotifications';
+import Certificate from 'src/content/StudentContent/Profile/Certificate';
 
 export const HomeRoutes: RouteObject[] = [
   {
@@ -55,7 +56,8 @@ export const HomeRoutes: RouteObject[] = [
       { path: 'afterRegMessage', element: <AfterRegMessage /> },
       { path: 'thankyou-page', element: <ThankyouEnrolling /> },
       { path: 'wish-list', element: <WishListCourse /> },
-      { path: 'view-notifications', element: <ViewNotifications /> }
+      { path: 'view-notifications', element: <ViewNotifications /> },
+      { path: 'certificate', element: <Certificate /> }
     ]
   }
 ];
