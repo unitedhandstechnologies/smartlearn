@@ -24,7 +24,7 @@ const InputTitleAndDescription = ({ selectedLanguage, edit }) => {
     if (field === 'course_name') {
       data[updateIndex].course_name = event.target.value;
     } else if (field === 'course_description') {
-      data[updateIndex].course_description = event.target.value;
+      data[updateIndex].course_description = event;
     } else {
       data[updateIndex].requirements = event.target.value;
     }
@@ -50,22 +50,6 @@ const InputTitleAndDescription = ({ selectedLanguage, edit }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        {/* <TextInputComponent
-          multiline={true}
-          maxRows={4}
-          inputHeight={100}
-          inputLabel="Description"
-          placeholderText="Describe the Course"
-          variant="outlined"
-          //required={true}
-          containerStyle={{
-            marginTop: 10
-          }}
-          value={getInputValues[0]?.course_description}
-          onChange={(event) => {
-            onChangeInput(event, 'course_description');
-          }}
-        /> */}
         <RichTextInput
             value={getInputValues[0]?.course_description}
             onChange={(value) => {              

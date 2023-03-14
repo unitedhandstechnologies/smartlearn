@@ -1,11 +1,9 @@
-import { Typography, useTheme } from '@material-ui/core';
-import { Grid } from '@mui/material';
+import {  useTheme } from '@material-ui/core';
+import { Typography, Grid } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { ArrowNext, HomePageRight, whiteLine } from 'src/Assets';
 import { ButtonComp } from 'src/components';
-import Carousel from 'react-bootstrap/Carousel';
-import 'bootstrap/dist/css/bootstrap.css';
 
 const HomeBanner = ({ bannerManagement }) => {
   const theme = useTheme();
@@ -36,12 +34,15 @@ const HomeBanner = ({ bannerManagement }) => {
         }}
       >
         <Typography
-          style={{
+          sx={{
             color: 'white',
             fontSize: '48px',
             fontWeight: 700,
             fontFamily: 'IBM Plex Serif',
-            lineHeight: '120%'
+            lineHeight: '120%',
+            [theme.breakpoints.down('xs')]: {
+              fontSize: '34px'
+            }
           }}
         >
           Financial learning made
@@ -51,11 +52,14 @@ const HomeBanner = ({ bannerManagement }) => {
           <img src={whiteLine} />
         </Grid>
         <Typography
-          style={{
+          sx={{
             color: 'white',
             fontSize: '18px',
             fontWeight: 400,
-            fontFamily: 'Switzer'
+            fontFamily: 'Switzer',
+            [theme.breakpoints.down('xs')]: {
+              fontSize: '14px'
+            }
           }}
         >
           From basics to professionals of stock market, investment, finance

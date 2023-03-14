@@ -68,7 +68,7 @@ const USPs = ({ bannerManagement }) => {
             }
           }}
         ></Grid>
-        <Carousel indicators={false}>
+        <Carousel>
           {bannerManagement.length
             ? bannerManagement?.map((item, index) => {
                 return (

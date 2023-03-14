@@ -41,10 +41,9 @@ const RelatedCourses = ({ courseDetails }: CourseProps) => {
   const [view, setView] = useState([0, 3]);
   const handleNextClick = () => {
     setView([view[0] + 3, view[1] + 3]);
-    console.log('course', courses);
   };
   const handlePrevClick = () => {
-    setView([view[0] - 3, view[1] - 3]);
+    setView([view[0] - 1, view[1] - 1]);
   };
   const fetchData = useCallback(async () => {
     try {
