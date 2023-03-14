@@ -53,14 +53,16 @@ const Seminars = () => {
           let seminarCourse = response?.data?.courses.filter((item) => {
             return (
               item.course_type === COURSE_TYPE_NAME[1] &&
-              item.course_status === COURSE_STATUS_NAME[1]
+              item.course_status === COURSE_STATUS_NAME[1]&&
+              item.course_name !== ""
             );
           });
           setSeminarCourseDetails(seminarCourse);
           let webinarCourse = response?.data?.courses.filter((item) => {
             return (
               item.course_type === COURSE_TYPE_NAME[3] &&
-              item.course_status === COURSE_STATUS_NAME[1]
+              item.course_status === COURSE_STATUS_NAME[1]&&
+              item.course_name !== ""
             );
           });
           setWebinarCourseDetails(webinarCourse);

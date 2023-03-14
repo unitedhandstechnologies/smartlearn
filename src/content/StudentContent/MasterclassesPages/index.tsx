@@ -61,7 +61,7 @@ const Masterclasses = () => {
       if (response[1]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[1]?.data?.users?.length) {
           let acceptedMentor = response[1]?.data?.users.filter((item) => {
-            return item.user_type === USER_TYPES.mentor && item.status_id === 2;
+            return item.user_type === USER_TYPES.mentor && item.status_id === 2 && item.course_name !== "";
           });
           console.log(response[1]?.data, 'mentors');
           setMentorDetails(acceptedMentor);

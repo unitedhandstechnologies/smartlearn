@@ -49,7 +49,8 @@ const WorkShop = () => {
           const workShop = response?.data?.courses.filter(
             (item) =>
               item.course_type === COURSE_TYPE_NAME[4] &&
-              item.course_status === COURSE_STATUS_NAME[1]
+              item.course_status === COURSE_STATUS_NAME[1]&&
+              item.course_name !== ""
           );
           setWorkshopDetails(workShop);
         }

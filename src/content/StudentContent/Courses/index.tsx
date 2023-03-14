@@ -51,7 +51,7 @@ const Courses = () => {
       if (response[0]?.status < HTTP_STATUSES.BAD_REQUEST) {
         if (response[0]?.data?.courses) {
           let enabledCourse = response[0]?.data?.courses.filter((item) => {
-            return item.course_status === COURSE_STATUS_NAME[1];
+            return item.course_status === COURSE_STATUS_NAME[1] && item.course_name !== "";
           });
           setCourseDetails(enabledCourse);
         }
