@@ -302,7 +302,6 @@ const CourseDescription = ({
       if (hours > 11) {
         AMorPM = 'PM';
       }
-      //console.log(hours)
       if(hours==='12'){
         hours=12;
       }else{
