@@ -299,10 +299,16 @@ const CourseDescription = ({
     let currentTime;
     if (hours >= 0 && hours <= 24) {
       let AMorPM = 'AM';
-      if (hours > 12) {
+      if (hours > 11) {
         AMorPM = 'PM';
       }
-      hours = hours % 12;
+      //console.log(hours)
+      if(hours==='12'){
+        hours=12;
+      }else{
+        hours = hours % 12;
+      }
+      
       currentTime = hours + ':' + min + ' ' + AMorPM;
     }
     return currentTime;
