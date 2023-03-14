@@ -65,7 +65,7 @@ const Profile = () => {
     {
       label: 'My certificates',
       id: 3,
-      component: () => <h1>My certificates</h1>
+      component: () => <h1>My Certificates</h1>
     },
     {
       label: 'Payment history',
