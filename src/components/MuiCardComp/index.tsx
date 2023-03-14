@@ -169,7 +169,7 @@ const MuiCardComp = ({
     >
       <CardActionArea sx={{ background: 'black' }}>
         {imgUrl ? (
-          <ImageListItem>
+          <ImageListItem onClick={onClickCardImage}>
             <img
               src={imgUrl}
               alt=""

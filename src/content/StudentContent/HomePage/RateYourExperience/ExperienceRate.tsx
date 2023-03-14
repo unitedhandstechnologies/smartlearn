@@ -3,7 +3,6 @@ import {
   Grid,
   Typography,
   Rating,
-  useTheme,
   FormControl,
   FormControlLabel
 } from '@mui/material';
@@ -15,6 +14,8 @@ import { HTTP_STATUSES } from 'src/Config/constant';
 import { useEdit } from 'src/hooks/useEdit';
 import toast from 'react-hot-toast';
 import { capitalizeFirstLetter, getUserId } from 'src/Utils';
+import { FormHelperText, useTheme } from '@material-ui/core';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 const typoGraphyStyle = {
   fontFamily: 'Switzer',
@@ -38,6 +39,8 @@ const RateYourExperience = ({ courseDetails }) => {
   const RequiredFields = ['command', 'course_rating', 'mentor_rating'];
   const edit = useEdit(data);
   const commandError = error && !edit.allFilled('command');
+  const courseError = error && !edit.allFilled('course_rating');
+  const mentorError = error && !edit.allFilled('mentor_rating');
 
   const handleClickOpen = () => {
     setOpen([true]);
@@ -192,43 +195,79 @@ const RateYourExperience = ({ courseDetails }) => {
           1. How was your experience with the course?
         </Typography>
         <Grid style={{ padding: 10 }}>
-          {/* <Rating
-            sx={{ color: '#3C78F0' }}
-            size="large"
-            value={courseRating}
-            onChange={(event, newValue) => {
-              setCourseRating(newValue);
-            }}
-          /> */}
-          <FormControl error={true}>
+          <FormControl>
             <FormControlLabel
               labelPlacement="top"
               label=""
               control={
                 <Rating
-                  sx={{ color: '#3C78F0' }}
+                  sx={{ color: theme.Colors.secondary }}
                   size="large"
                   value={courseRating}
                   onChange={(event, newValue) => {
                     setCourseRating(newValue);
                   }}
+                  emptyIcon={
+                    <StarBorderIcon
+                      fontSize="inherit"
+                      style={{ color: courseError ? theme.Colors.redPrimary : theme.Colors.whiteGreyLight }}
+                    />
+                  }
                 />
               }
             />
+            {courseError ? (
+              <FormHelperText
+                style={{
+                  color: theme.Colors.redPrimary,
+                  textTransform: 'none',
+                  fontSize: theme.MetricsSizes.small_x,
+                  fontWeight: theme.fontWeight.regular
+                }}
+              >
+                Please give the ratings for the Course
+              </FormHelperText>
+            ) : null}
           </FormControl>
         </Grid>
         <Typography style={typoGraphyStyle}>
           2. How was your experience with your instructor?
         </Typography>
         <Grid style={{ padding: 10 }}>
-          <Rating
-            sx={{ color: '#3C78F0' }}
-            size="large"
-            value={mentorRating}
-            onChange={(event, newValue) => {
-              setMentorRating(newValue);
-            }}
-          />
+          <FormControl error={true}>
+            <FormControlLabel
+              labelPlacement="top"
+              label=""
+              control={
+                <Rating
+                  sx={{ color: theme.Colors.secondary }}
+                  size="large"
+                  value={mentorRating}
+                  onChange={(event, newValue) => {
+                    setMentorRating(newValue);
+                  }}
+                  emptyIcon={
+                    <StarBorderIcon
+                      fontSize="inherit"
+                      style={{ color: mentorError ? theme.Colors.redPrimary : theme.Colors.whiteGreyLight }}
+                    />
+                  }
+                />
+              }
+            />
+            {mentorError ? (
+              <FormHelperText
+                style={{
+                  color: theme.Colors.redPrimary,
+                  textTransform: 'none',
+                  fontSize: theme.MetricsSizes.small_x,
+                  fontWeight: theme.fontWeight.regular
+                }}
+              >
+                Please give the ratings for the Mentor
+              </FormHelperText>
+            ) : null}
+          </FormControl>
         </Grid>
         <Typography style={typoGraphyStyle}>
           3. How can we improve to provide you a better experience?
