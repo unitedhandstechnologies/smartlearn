@@ -1,36 +1,25 @@
 import { Radio, useTheme } from '@material-ui/core';
 import { FormControlLabel, Grid, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { LineBarIcon, PayTMIcom } from 'src/Assets';
 import { ButtonComp, Heading, TextInputComponent } from 'src/components';
 import { useEdit } from 'src/hooks/useEdit';
 import { capitalizeFirstLetter, isValidPinCode } from 'src/Utils';
 
-const city = [
-  {
-    id: 1,
-    name: 'Bangalore'
-  },
-  {
-    id: 2,
-    name: 'Chennai'
-  },
-  {
-    id: 3,
-    name: 'Madurai'
-  },
-  {
-    id: 4,
-    name: 'Tirunelveli'
-  },
-  {
-    id: 5,
-    name: 'Rajapalayam'
-  }
-];
 const CheckoutScreen = ({ total, onClickCheckout }) => {
   const theme = useTheme();
   const [isChecked, setIsChecked] = useState(false);
+  const [error, setError] = useState(false);
+
+  const RequiredFields = [
+    'first_name',
+    'last_name',
+    'full_address',
+    'state',
+    'city',
+    'pincode'
+  ];
 
   const initialValues = {
     first_name: '',
@@ -52,8 +41,13 @@ const CheckoutScreen = ({ total, onClickCheckout }) => {
       edit.allFilled('pincode') &&
       !isValidPinCode(edit.getValue('pincode')));
 
-  const handleChange = (e) => {
-    setIsChecked(!isChecked);
+  const handleChange = () => {
+    if (!edit.allFilled(...RequiredFields)) {
+      setError(true);
+      return toast.error('Please fill all the details');
+    } else {
+      setIsChecked(!isChecked);
+    }
   };
 
   return (
@@ -210,7 +204,7 @@ const CheckoutScreen = ({ total, onClickCheckout }) => {
         >
           <FormControlLabel
             labelPlacement="end"
-            control={<Radio onChange={handleChange} />}
+            control={<Radio checked={isChecked} onChange={handleChange} />}
             label={
               <Grid
                 sx={{

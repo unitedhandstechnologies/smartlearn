@@ -279,7 +279,7 @@ function NavBar() {
                   btnWidth={240}
                   height={40}
                   buttonFontFamily="Switzer"
-                  buttonFontSize={theme.MetricsSizes.small_xxx}
+                  buttonFontSize={theme.MetricsSizes.regular}
                   backgroundColor={'#3C78F0'}
                   buttonTextColor={theme.Colors.white}
                   btnBorderRadius={4}

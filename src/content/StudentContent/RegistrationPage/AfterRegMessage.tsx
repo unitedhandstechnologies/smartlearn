@@ -64,21 +64,23 @@ const AfterRegMessage = () => {
           />
         </Grid>
         <Grid>
-          <Typography
-            style={{
-              fontSize: 32,
-              fontWeight: 500,
-              fontFamily: 'IBM Plex Serif',
-              color: '#3C414B',
-              margin: theme.spacing(2, 0)
-            }}
-          >
-            {data.resend
-              ? `Email verification`
-              : `Thanks for signing up, Mr/Ms.
-            ${data?.first_name}!`}
-          </Typography>
           <Grid sx={{ paddingTop: 2 }}>
+            <Typography
+              style={{
+                fontSize: 32,
+                fontWeight: 500,
+                fontFamily: 'IBM Plex Serif',
+                color: '#3C414B',
+                margin: theme.spacing(2, 0),
+                textAlign: 'center'
+              }}
+            >
+              {data.resend
+                ? `Email verification`
+                : `Thanks for signing up, Mr/Ms.
+            ${data?.first_name}!`}
+            </Typography>
+
             <img src={LineBarIcon} height={40} />
           </Grid>
           <Grid sx={{ paddingTop: 4 }}>

@@ -476,7 +476,7 @@ const Registration = () => {
                 //isError={imageError}
                 helperText={
                   imageError
-                    ? 'Please upload the profile image'
+                    ? ''
                     : 'Only .png, .jpg, .jpeg, .bmp format is allowed & max size 2 MB with 270 X 350 resolution'
                 }
               />
@@ -494,44 +494,16 @@ const Registration = () => {
             >
               <Avatar alt="SmartLearn" src={edit.getValue('image_url')} />
             </Grid>
-            {userType === USER_TYPE_ID.student ? (
-              <Grid item xs={12} md={12} sx={{ marginTop: '10px' }}>
-                <TextInputComponent
-                  inputLabel="Qualification"
-                  labelColor={'#78828C'}
-                  borderColor={'#3C78F0'}
-                  value={edit.getValue('qualification')}
-                  onChange={(e) =>
-                    edit.update({ qualification: e.target.value })
-                  }
-                />
-              </Grid>
-            ) : (
-              <>
-                <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
-                  <TextInputComponent
-                    inputLabel="Qualification"
-                    labelColor={'#78828C'}
-                    borderColor={'#3C78F0'}
-                    value={edit.getValue('qualification')}
-                    onChange={(e) =>
-                      edit.update({ qualification: e.target.value })
-                    }
-                  />
-                </Grid>
-                <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
-                  <TextInputComponent
-                    inputLabel="About"
-                    multiline
-                    labelColor={'#78828C'}
-                    borderColor={'#3C78F0'}
-                    value={edit.getValue('about')}
-                    onChange={(e) => edit.update({ about: e.target.value })}
-                  />
-                </Grid>
-              </>
-            )}
 
+            <Grid item xs={12} md={12} sx={{ marginTop: '10px' }}>
+              <TextInputComponent
+                inputLabel="Qualification"
+                labelColor={'#78828C'}
+                borderColor={'#3C78F0'}
+                value={edit.getValue('qualification')}
+                onChange={(e) => edit.update({ qualification: e.target.value })}
+              />
+            </Grid>
             <Grid item xs={12} md={12} sx={{ marginTop: '10px' }}>
               <TextInputComponent
                 inputLabel={'User Name'}
@@ -617,6 +589,20 @@ const Registration = () => {
                 isError={confirmPasswordError}
               />
             </Grid>
+            {userType === USER_TYPE_ID.student ? null : (
+              <Grid item xs={12} md={12} sx={{ marginTop: '10px' }}>
+                <TextInputComponent
+                  inputLabel="About"
+                  multiline={true}
+                  maxRows={4}
+                  inputHeight={100}
+                  labelColor={'#78828C'}
+                  borderColor={'#3C78F0'}
+                  value={edit.getValue('about')}
+                  onChange={(e) => edit.update({ about: e.target.value })}
+                />
+              </Grid>
+            )}
           </Grid>
           <Grid item xs={12} sx={{ marginTop: '20px' }}>
             <ButtonComp
