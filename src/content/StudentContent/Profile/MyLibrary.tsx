@@ -169,7 +169,9 @@ const MyLibrary = ({ enrollCourse }) => {
                   item={item}
                   backBtnTxt={'All Courses'}
                   backBtnRoute={'/home/profilehome'}
-                  neededQuiz={true}
+                  neededQuiz={
+                    (chipValue[0] === FILTER_CHIPS[0] || chipValue[0] === FILTER_CHIPS[1]) ?
+                    true : false}
                   handleTakeQuiz={() =>handleClickTakeQuiz(item)}
                 />
               </Grid>
