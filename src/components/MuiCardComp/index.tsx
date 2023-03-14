@@ -150,7 +150,7 @@ const MuiCardComp = ({
   const monthEnd = end.toLocaleString('default', { month: 'short' });
   const yearEnd = end.getFullYear();
   const endingDates = dateEnd + ' ' + monthEnd + ' ' + yearEnd;
-  const sessionDate = dates + '-' + endingDates;
+  const sessionDate = dates + ' ' + month + '-' + endingDates;
 
   return (
     <Card

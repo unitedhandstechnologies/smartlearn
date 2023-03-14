@@ -185,7 +185,7 @@ const ProfileDetails = () => {
         }
       } else {
         alert(`Sorry, this image doesn't look like the size we wanted. It's
-      ${img.width} x ${img.height} but we require 250 x 250 size image or below this size.`);
+      ${img.width} x ${img.height} but we require 270 X 350 size image or below this size.`);
       }
     };
   };
