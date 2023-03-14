@@ -498,7 +498,6 @@ const Registration = () => {
               <Grid item xs={12} md={12} sx={{ marginTop: '10px' }}>
                 <TextInputComponent
                   inputLabel="Qualification"
-                  placeholder={'Qualification'}
                   labelColor={'#78828C'}
                   borderColor={'#3C78F0'}
                   value={edit.getValue('qualification')}
@@ -512,7 +511,6 @@ const Registration = () => {
                 <Grid item xs={12} md={6} sx={{ marginTop: '10px' }}>
                   <TextInputComponent
                     inputLabel="Qualification"
-                    placeholder={'Qualification'}
                     labelColor={'#78828C'}
                     borderColor={'#3C78F0'}
                     value={edit.getValue('qualification')}
@@ -525,7 +523,6 @@ const Registration = () => {
                   <TextInputComponent
                     inputLabel="About"
                     multiline
-                    placeholder={'About'}
                     labelColor={'#78828C'}
                     borderColor={'#3C78F0'}
                     value={edit.getValue('about')}
