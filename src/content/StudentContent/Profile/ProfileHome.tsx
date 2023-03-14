@@ -104,6 +104,8 @@ const ProfileHome = () => {
     fetchData();
   }, []);
 
+  
+
   /*  const completedCourse = enrollCourse.filter((item) => {
     if (item.status_id === 2) {
       setRating(true);
@@ -111,6 +113,13 @@ const ProfileHome = () => {
     }
     return item.status_id === 2;
   }); */
+  let enrollCourseIds = enrollCourse.map(i => i.course_id);
+  let separatedList = courseDetails.filter(item => {
+    if(!enrollCourseIds.includes(item.id)){
+      return item;
+    }
+  })
+
   if (loading) {
     return <Loader />;
   } else {
@@ -153,7 +162,7 @@ const ProfileHome = () => {
             [theme.breakpoints.down('xs')]: { backgroundImage: 'none' }
           }}
         >
-          <MoreUpcomingSession courseDetails={courseDetails} />
+          <MoreUpcomingSession courseDetails={separatedList} />
         </Grid>
         <Container>
           <LearnTheWayBox />

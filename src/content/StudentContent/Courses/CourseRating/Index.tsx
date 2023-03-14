@@ -42,9 +42,14 @@ const CourseRating = ({ course }) => {
       img: chatIcon
     },
     {
-      name: COURSE_LEVEL_NAME[course?.course_level_id] || 'Beginner',
+      name: course?.course_level_name.trim(),
       subText: 'Difficulty level',
-      img: levelIcons[course?.course_level_id]
+      img:
+        course?.course_level_name.trim().toLowerCase() === 'beginner'
+          ? BeginnerIcon
+          : course?.course_level_name.trim().toLowerCase() === 'intermediate'
+          ? IntermediateIcon
+          : BarChartFillIcon
     },
     {
       name: course?.course_mode || 'Offline',
