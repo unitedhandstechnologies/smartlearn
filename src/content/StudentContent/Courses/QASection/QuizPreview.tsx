@@ -1,19 +1,33 @@
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
 import { memo } from 'react';
-import { DividerLine } from 'src/components';
+import { ButtonComp, DividerLine } from 'src/components';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@material-ui/core';
 
 type Props = {
   quizDataDetails: any[];
   setPreviewResult: any;
+  fromLibrary?:any;
+  onClose?:any;
+  setTestTopic?:any;
+  setShowQuizUnlockedMsg?:any;
 };
 
-const quizPreview = ({ quizDataDetails, setPreviewResult }: Props) => {
+const quizPreview = ({ quizDataDetails, setPreviewResult, fromLibrary, onClose,setTestTopic,setShowQuizUnlockedMsg }: Props) => {
   const theme = useTheme();
 
   const { i18n } = useTranslation();
+
+  const handleClickContinue = ()=>{
+    if(fromLibrary){
+      onClose();
+    }
+    else{   
+        setTestTopic(false);
+        setShowQuizUnlockedMsg(false);  
+    }
+  };
 
   return (
     <Grid
@@ -29,7 +43,24 @@ const quizPreview = ({ quizDataDetails, setPreviewResult }: Props) => {
           paddingBottom: '24px'
         }}
       >
-        <Typography>Quiz : {quizDataDetails[0]?.quizName}</Typography>
+        { fromLibrary ? (
+        <Typography
+          sx={{
+            fontSize: theme.MetricsSizes.regular_xx,
+            fontWeight: theme.fontWeight.mediumBold
+          }}
+        >
+         {quizDataDetails[0]?.quizName}
+        </Typography>):(
+          <Typography
+          sx={{
+            fontSize: theme.MetricsSizes.regular_xx,
+            fontWeight: theme.fontWeight.mediumBold
+          }}
+          >
+          Quiz : {quizDataDetails[0]?.quizName}
+        </Typography>)}        
+        {/* <Typography>Quiz : {quizDataDetails[0]?.quizName}</Typography> */}
       </Grid>
 
       {quizDataDetails?.map((item, index) => {
@@ -42,7 +73,12 @@ const quizPreview = ({ quizDataDetails, setPreviewResult }: Props) => {
                 padding: '24px 0px'
               }}
             >
-              <Typography>
+              <Typography
+                sx={{
+                  fontSize: theme.MetricsSizes.regular_x,
+                  fontWeight: theme.fontWeight.medium,
+                }}
+              >
                 {quizDataDetails[index]?.question_number}.
                 {quizDataDetails[index]?.question}
               </Typography>
@@ -167,13 +203,29 @@ const quizPreview = ({ quizDataDetails, setPreviewResult }: Props) => {
               )}
             </Grid>
 
-            <DividerLine
+            {
+              (index<quizDataDetails.length-1) &&
+              <DividerLine
               marginValue={60}
               backgroundColor={theme.Colors.greyLightMedium}
-            />
+            /> }
           </>
         );
       })}
+      <Grid
+        container
+        sx={{
+          justifyContent:"flex-end",
+          padding:"30px 0px"
+        }}
+      >
+        <ButtonComp
+                buttonTextColor={theme.Colors.whitePure}
+                buttonText={'Continue learning'}
+                onClickButton={handleClickContinue}
+  
+        ></ButtonComp>
+      </Grid>
     </Grid>
   );
 };

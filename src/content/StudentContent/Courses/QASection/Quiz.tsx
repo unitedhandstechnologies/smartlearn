@@ -97,16 +97,17 @@ const Quiz = ({
     return <Loader />;
   } else {
     return (
-      <Grid container>
-        {!quizResult ? (
+      <Grid container>        
+        {!quizResult && quizDataDetails?.length ? (
           <QuestionAndAnswer
             quizDataDetails={quizDataDetails}
             setQuizDataDetails={setQuizDataDetails}
             setQuestionToDisplayIndex={setQuestionToDisplayIndex}
             questionToDisplayIndex={questionToDisplayIndex}
             setQuizResult={setQuizResult}
+            fromLibrary={fromLibrary}
           />
-        ) : (
+        ) : quizResult ? (
           <QuizResult
             quizDataDetails={quizDataDetails}
             updateQuizCompleted={updateQuizCompleted}
@@ -116,7 +117,11 @@ const Quiz = ({
             setTestTopic={setTestTopic}
             setShowQuizUnlockedMsg={setShowQuizUnlockedMsg}
           />
-        )}
+        ):
+        
+        "No Quiz Details to Show"
+        
+        }       
       </Grid>
     );
   }

@@ -127,6 +127,10 @@ const QuizResult = ({
         <QuizPreview
           quizDataDetails={quizDataDetails}
           setPreviewResult={setPreviewResult}
+          fromLibrary={fromLibrary}
+          onClose={onClose}
+          setTestTopic={setTestTopic}
+          setShowQuizUnlockedMsg={setShowQuizUnlockedMsg}
         />
       )}
     </Grid>

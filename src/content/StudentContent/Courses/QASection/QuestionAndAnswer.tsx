@@ -13,6 +13,7 @@ type Props = {
   questionToDisplayIndex: any;
   setQuestionToDisplayIndex: any;
   setQuizResult: any;
+  fromLibrary?: any;
 };
 
 const QuestionAndAnswer = ({
@@ -20,7 +21,8 @@ const QuestionAndAnswer = ({
   setQuizDataDetails,
   questionToDisplayIndex,
   setQuestionToDisplayIndex,
-  setQuizResult
+  setQuizResult,
+  fromLibrary
 }: Props) => {
   const theme = useTheme();
 
@@ -65,10 +67,27 @@ const QuestionAndAnswer = ({
           paddingBottom: '24px'
         }}
       >
-        <Typography>
+        { fromLibrary ? (
+        <Typography
+          sx={{
+            fontSize: theme.MetricsSizes.regular_xx,
+            fontWeight: theme.fontWeight.mediumBold
+          }}
+        >
+         {quizDataDetails[questionToDisplayIndex]?.quizName}
+        </Typography>):(
+          <Typography
+          sx={{
+            fontSize: theme.MetricsSizes.regular_xx,
+            fontWeight: theme.fontWeight.mediumBold
+          }}
+          >
           Quiz : {quizDataDetails[questionToDisplayIndex]?.quizName}
-        </Typography>
+        </Typography>)}        
       </Grid>
+      <Grid sx={{
+       
+      }}>
       <Grid
         item
         xs={12}
@@ -76,7 +95,12 @@ const QuestionAndAnswer = ({
           padding: '24px 0px'
         }}
       >
-        <Typography>
+        <Typography
+          sx={{
+            fontSize: theme.MetricsSizes.regular_x,
+            fontWeight: theme.fontWeight.medium,
+          }}
+        >
           {quizDataDetails[questionToDisplayIndex]?.question_number}.
           {quizDataDetails[questionToDisplayIndex]?.question}
         </Typography>
@@ -189,6 +213,7 @@ const QuestionAndAnswer = ({
           onClickButton={handleClickNextQuestion}
           iconImage={<ArrowForwardIcon />}
         ></ButtonComp>
+      </Grid>
       </Grid>
     </Grid>
   );
