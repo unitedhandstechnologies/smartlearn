@@ -100,12 +100,6 @@ const Smtp = () => {
     edit.getValue('password') &&
     edit.getValue('password').length < 7);
 
-  const emailError =
-  (error && !edit.allFilled('host')) ||
-  (error &&
-    edit.allFilled('host') &&
-    !isValidEmail(edit.getValue('host')));
-
   const fetchData = async () => {
     const response: any =
       await API_SERVICES.settingsPageService.getSmtpConfiguration();
@@ -122,12 +116,7 @@ const Smtp = () => {
         setError(true);
         return toast.error('Please fill all the required fields');
       }
-      if (!isValidEmail(edit.getValue('host'))) {
-        setError(true);
-        return toast.error('Please enter valid SMTP Host');
-      } else {
-        setError(false);
-      }
+      
       let response: any =
         await API_SERVICES.settingsPageService.updateSmtpConfiguration(id, {
           data: updateAppConfig,
@@ -160,8 +149,8 @@ const Smtp = () => {
                 edit.update({ host: e.target.value });
               }}
               required
-              isError={emailError}
-              helperText={emailError && 'Please enter valid SMTP host'}
+              isError={error && !edit.getValue('host')}
+              helperText={error && !edit.getValue('host') && 'Please enter valid SMTP host'}
             />
           </Grid>
 

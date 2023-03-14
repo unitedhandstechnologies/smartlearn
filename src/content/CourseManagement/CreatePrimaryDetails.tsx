@@ -331,6 +331,7 @@ const CreatePrimaryDetails = ({
             required
             isError={startTimeError}
             helperText={startTimeError && 'Please select a Start time'}
+            disabled={(edit.getValue('course_type') === 'Recorded Course')? true : false }
           />
         </Grid>
         <Grid item xs>
@@ -342,6 +343,7 @@ const CreatePrimaryDetails = ({
             required
             isError={endTimeError}
             helperText={endTimeError && 'Please select a Start time'}
+            disabled={(edit.getValue('course_type') === 'Recorded Course')? true : false }
           />
         </Grid>
       </Grid>
@@ -355,6 +357,8 @@ const CreatePrimaryDetails = ({
             required
             isError={startDateError}
             helperText={startDateError && 'Please select a Start Date'}
+            disabled={(edit.getValue('course_type') === 'Recorded Course')? true : false }
+
           />
         </Grid>
         <Grid item xs>
@@ -366,6 +370,7 @@ const CreatePrimaryDetails = ({
             required
             isError={endDateError}
             helperText={endDateError && 'Please select an ending date'}
+            disabled={(edit.getValue('course_type') === 'Recorded Course')? true : false }
           />
         </Grid>
       </Grid>

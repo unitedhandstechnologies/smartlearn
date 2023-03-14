@@ -196,10 +196,6 @@ const AddNewCourseModal = ({
     'category_name',
     'sub_category_name',
     'cost_type',
-    'starting_date',
-    'ending_date',
-    'starting_time',
-    'ending_time',
     'course_level_name'
   ];
 
@@ -323,13 +319,13 @@ const AddNewCourseModal = ({
           'Starting Date should be a Date previous to Ending Date'
         );
       }
-      if (edit.getValue('course_type') !== 'Webinar' && dateFrom == dateTo) {
-        setError(true);
-        setDateError(true);
-        return toast.error(
-          'Starting Date should be a Date previous to Ending Date'
-        );
-      }
+      // if (edit.getValue('course_type') !== 'Webinar' && dateFrom == dateTo) {
+      //   setError(true);
+      //   setDateError(true);
+      //   return toast.error(
+      //     'Starting Date should be a Date previous to Ending Date'
+      //   );
+      // }
 
       if (edit.getValue('starting_time') > edit.getValue('ending_time')) {
         setError(true);
