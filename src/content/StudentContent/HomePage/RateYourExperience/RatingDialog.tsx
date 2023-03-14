@@ -7,6 +7,7 @@ import {
   Divider,
 } from '@mui/material';
 import DialogueTitle from './DialogTitle';
+import { useTheme } from '@material-ui/core';
 
 const DialogBox = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -37,6 +38,7 @@ const ReUseableDialogBox = (props: Props) => {
     dialogActions,
     dialogWidth
   } = props;
+  const theme = useTheme();
 
   return (
     <>
@@ -53,7 +55,7 @@ const ReUseableDialogBox = (props: Props) => {
             {dialogTitle}
           </DialogueTitle>
         ) : null}
-        {divider ? <Divider /> : null}
+        {divider ? <Divider style={{ background: theme.Colors.greyLightMedium }}/> : null}
         {dialogContent ? (
           <DialogContent style={{ padding: 15 }}>{dialogContent}</DialogContent>
         ) : null}

@@ -259,6 +259,7 @@ const MuiCardComp = ({
             <IconTextComp
               icon={DateSvg}
               value={date === endingDate ? startingDate : sessionDate}
+              textContentStyle={{ marginLeft: 5 }}
             />
           </Grid>
         ) : null}
@@ -293,6 +294,7 @@ const MuiCardComp = ({
                   : BeginnerIcon
               }
               value={courseLevel}
+              textContentStyle={{ marginLeft: 5 }}
             />
           </Grid>
         ) : null}

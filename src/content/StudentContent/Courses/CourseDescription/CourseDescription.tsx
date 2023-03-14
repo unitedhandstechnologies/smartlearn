@@ -19,6 +19,7 @@ import {
 } from 'src/Config/constant';
 import { API_SERVICES } from 'src/Services';
 import { useTranslation } from 'react-i18next';
+import { RichTextInput } from 'src/components/RichTextInput';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -307,7 +308,6 @@ const CourseDescription = ({
       }else{
         hours = hours % 12;
       }
-      
       currentTime = hours + ':' + min + ' ' + AMorPM;
     }
     return currentTime;
@@ -341,9 +341,15 @@ const CourseDescription = ({
       <Grid item xs={12}>
         <Grid paddingTop={0}>
           <Heading headingText={'Course description'} {...headingProps} />
-          <Typography style={typographyStyleProps}>
-            {courseDescription?.course_description}
-          </Typography>
+           <RichTextInput
+              value={courseDescription?.course_description}
+              readOnly={true}
+              displayToolBar={'none'}
+              heightValue={'auto'}
+              borderSize={'0px'}
+              textColor={'#78828C'}
+              paddingValue={"0px"}
+            />
         </Grid>
         {courseDescription?.course_type !== 'Recorded Course' && (
           <Grid paddingTop={4} xs={12} md={10}>
@@ -424,11 +430,6 @@ const CourseDescription = ({
         </Grid>
         <Grid paddingTop={4}>
           <Heading headingText={'Requirements'} {...headingProps} />
-          {/* <Grid item>
-            <Typography style={typographyStyleProps}>
-              {courseDescription?.requirements}
-            </Typography>
-          </Grid> */}
           <Grid container alignItems={'center'}>
             <Grid item>
               <FiberManualRecordIcon

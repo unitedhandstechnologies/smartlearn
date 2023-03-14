@@ -14,7 +14,7 @@ import { HTTP_STATUSES } from 'src/Config/constant';
 import { useEdit } from 'src/hooks/useEdit';
 import toast from 'react-hot-toast';
 import { capitalizeFirstLetter, getUserId } from 'src/Utils';
-import { FormHelperText, useTheme } from '@material-ui/core';
+import { Divider, FormHelperText, useTheme } from '@material-ui/core';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 const typoGraphyStyle = {
@@ -71,8 +71,9 @@ const RateYourExperience = ({ courseDetails }) => {
           failureMessage: 'Ratings already Given'
         }
       );
+
       if (response?.status < HTTP_STATUSES.BAD_REQUEST) {
-        setOpen([false]);
+        setOpen([true, true]);
         setCourseRating(0);
         setMentorRating(0);
         edit.reset();
@@ -175,22 +176,6 @@ const RateYourExperience = ({ courseDetails }) => {
   const RatingDialogContent = () => {
     return (
       <>
-        {/* {reviewQuestions?.map((question) => {
-          return (
-            <>
-              <Typography style={typoGraphyStyle}>{question}</Typography>
-              <Grid style={{ padding: 10 }}>
-                <Rating
-                  sx={{ color: '#3C78F0' }}
-                  size="large"
-                  value={value}
-                  onChange={(newValue) => handleChange}
-                />
-              </Grid>
-              <Divider sx={{ borderStyle: 'dashed', borderSpacing: 1 }} />
-            </>
-          );
-        })} */}
         <Typography style={typoGraphyStyle}>
           1. How was your experience with the course?
         </Typography>
@@ -210,7 +195,11 @@ const RateYourExperience = ({ courseDetails }) => {
                   emptyIcon={
                     <StarBorderIcon
                       fontSize="inherit"
-                      style={{ color: courseError ? theme.Colors.redPrimary : theme.Colors.whiteGreyLight }}
+                      style={{
+                        color: courseError
+                          ? theme.Colors.redPrimary
+                          : theme.Colors.whiteGreyLight
+                      }}
                     />
                   }
                 />
@@ -249,7 +238,11 @@ const RateYourExperience = ({ courseDetails }) => {
                   emptyIcon={
                     <StarBorderIcon
                       fontSize="inherit"
-                      style={{ color: mentorError ? theme.Colors.redPrimary : theme.Colors.whiteGreyLight }}
+                      style={{
+                        color: mentorError
+                          ? theme.Colors.redPrimary
+                          : theme.Colors.whiteGreyLight
+                      }}
                     />
                   }
                 />

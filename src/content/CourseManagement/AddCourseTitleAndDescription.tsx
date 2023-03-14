@@ -1,6 +1,7 @@
 import { Grid, makeStyles, useTheme } from '@material-ui/core';
 import React, { useState } from 'react';
 import { MuiTabComponent, TextInputComponent } from 'src/components';
+import { RichTextInput } from 'src/components/RichTextInput';
 
 const useStyles = makeStyles((theme) => ({
   selectedTab: {
@@ -49,7 +50,7 @@ const InputTitleAndDescription = ({ selectedLanguage, edit }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <TextInputComponent
+        {/* <TextInputComponent
           multiline={true}
           maxRows={4}
           inputHeight={100}
@@ -64,6 +65,23 @@ const InputTitleAndDescription = ({ selectedLanguage, edit }) => {
           onChange={(event) => {
             onChangeInput(event, 'course_description');
           }}
+        /> */}
+        <RichTextInput
+            value={getInputValues[0]?.course_description}
+            onChange={(value) => {              
+              onChangeInput(value, 'course_description');
+            }}
+            modules={{
+              toolbar: {
+                container: [
+                  "bold",
+                  "italic",
+                  // { list: "bullet" },
+                  // { list: "ordered" },                                 
+                ],
+              },
+            }}
+            heightValue = {'150px'} 
         />
       </Grid>
       <Grid item xs={12}>

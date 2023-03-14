@@ -64,7 +64,7 @@ const IconTextComp = (props: UHIconTextProps) => {
       <Grid
         item
         xs
-        style={{ marginLeft: theme.spacing(0), ...textContentStyle }}
+        style={{ marginLeft: theme.spacing(1.2), ...textContentStyle }}
       >
         {renderComponent && renderComponent()}
         {value ? (
