@@ -302,9 +302,9 @@ const AddNewCourseModal = ({
         RequiredFields = RequiredFieldsForOthers;
       }
     }
-    const date = new Date();
-    const dateFrom = new Date(edit.getValue('starting_date'));
-    const dateTo = new Date(edit.getValue('ending_date'));
+    const date = new Date().toLocaleDateString();
+    const dateFrom = new Date(edit.getValue('starting_date')).toLocaleDateString();
+    const dateTo = new Date(edit.getValue('ending_date')).toLocaleDateString();
 
     try {
       if (dateFrom < date) {

@@ -323,6 +323,7 @@ const CreatePrimaryDetails = ({
       </Grid>
       <Grid container item xs={6} spacing={1}>
         <Grid item xs>
+        {edit.getValue('course_type') === COURSE_TYPE_NAME[6] ? null : (
           <TextInputComponent
             inputLabel={'Start Time'}
             type="time"
@@ -333,8 +334,10 @@ const CreatePrimaryDetails = ({
             helperText={startTimeError && 'Please select a Start time'}
             disabled={(edit.getValue('course_type') === 'Recorded Course')? true : false }
           />
+        )}
         </Grid>
         <Grid item xs>
+        {edit.getValue('course_type') === COURSE_TYPE_NAME[6] ? null : (
           <TextInputComponent
             inputLabel={'End Time'}
             type="time"
@@ -345,23 +348,31 @@ const CreatePrimaryDetails = ({
             helperText={endTimeError && 'Please select a Start time'}
             disabled={(edit.getValue('course_type') === 'Recorded Course')? true : false }
           />
+        )}
         </Grid>
       </Grid>
       <Grid container item xs={6} spacing={1}>
         <Grid item xs>
+        {edit.getValue('course_type') === COURSE_TYPE_NAME[6] ? null : (
           <TextInputComponent
             type="date"
             inputLabel={'From Date'}
-            value={edit.getValue('starting_date')}
-            onChange={(e) => edit.update({ starting_date: e.target.value })}
+            value={edit.getValue('course_type') !== COURSE_TYPE_NAME[6] ? edit.getValue('starting_date'): null}
+            onChange={(e) => { if(edit.getValue('course_type') === COURSE_TYPE_NAME[6]){
+              edit.update({ starting_date: null})
+            }else{
+              edit.update({ starting_date: e.target.value })
+            }
+              //  edit.update({ starting_date: e.target.value })
+              }}
             required
             isError={startDateError}
             helperText={startDateError && 'Please select a Start Date'}
-            disabled={(edit.getValue('course_type') === 'Recorded Course')? true : false }
-
           />
+        )} 
         </Grid>
         <Grid item xs>
+        {edit.getValue('course_type') === COURSE_TYPE_NAME[6] ? null : (
           <TextInputComponent
             type="date"
             inputLabel={'To Date'}
@@ -370,8 +381,8 @@ const CreatePrimaryDetails = ({
             required
             isError={endDateError}
             helperText={endDateError && 'Please select an ending date'}
-            disabled={(edit.getValue('course_type') === 'Recorded Course')? true : false }
           />
+         )} 
         </Grid>
       </Grid>
 
